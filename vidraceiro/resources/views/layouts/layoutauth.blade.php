@@ -14,10 +14,10 @@
 {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
 
 <!-- Fonts -->
-    {{--<link rel="dns-prefetch" href="https://fonts.gstatic.com">--}}
-    {{--<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">--}}
+{{--<link rel="dns-prefetch" href="https://fonts.gstatic.com">--}}
+{{--<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">--}}
 
-    <!-- Bootstrap core CSS -->
+<!-- Bootstrap core CSS -->
     <link href="{{ asset('css/reset.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -26,9 +26,16 @@
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
 </head>
 <body>
-
-@yield('content')
-
+<section id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+    @yield('content-footer')
+</section>
 <script src="{{ asset('js/jquery.min.js') }}" defer></script>
 <script src="{{ asset('js/popper.js') }}" defer></script>
 <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
