@@ -22,13 +22,13 @@ body {
 }
 
 .btn-custom {
-    background-color: #00d1b2 !important;
-    border-color: #00d1b2 !important;
+    background-color: #4264FB !important;
+    border-color: #4264FB !important;
 }
 
 .btn-custom:hover {
-    background-color: #1ab9a4 !important;
-    border-color: #1ab9a4 !important;
+    background-color: #4240FB !important;
+    border-color: #4240FB !important;
 }
 
 #login {
