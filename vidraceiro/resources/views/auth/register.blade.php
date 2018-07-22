@@ -1,4 +1,4 @@
-@extends('layouts.layoutauth')
+@extends('layouts.auth')
 
 @section('content')
     <form id="formulario" class="card-shadow-2dp" role="form" method="POST" action="{{ route('register') }}"

@@ -3,77 +3,157 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+{{--<!-- Scripts -->--}}
+{{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+{{--<!-- Fonts -->--}}
+{{--<link rel="dns-prefetch" href="https://fonts.gstatic.com">--}}
+{{--<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">--}}
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<!-- Styles -->
+    <link href="{{ asset('css/reset.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+          integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 nomp-flex">
+            <div id="menu-dashboard" class="sidebar">
+                <div class="logo">
+                    <a href="{{ url('/') }}" class="simple-text">
+                        {{ config('app.name', 'Vidraceiro') }}
+                    </a>
+                </div>
+                <ul class="nav">
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <i class="pe-7s-graph"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="user.html">
+                            <i class="pe-7s-user"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="table.html">
+                            <i class="pe-7s-note2"></i>
+                            <p>Categorias</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="typography.html">
+                            <i class="pe-7s-news-paper"></i>
+                            <p>Produtos</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="icons.html">
+                            <i class="pe-7s-science"></i>
+                            <p>Materiais</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="maps.html">
+                            <i class="pe-7s-map-marker"></i>
+                            <p>Orçamentos</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html">
+                            <i class="pe-7s-bell"></i>
+                            <p>Ordens de serviço</p>
+                        </a>
+                    </li>
+                    <li class="active-pro">
+                        <a href="upgrade.html">
+                            <i class="pe-7s-rocket"></i>
+                            <p>Fornecedores</p>
+                        </a>
+                    </li>
+                    <li class="active-pro">
+                        <a href="upgrade.html">
+                            <i class="pe-7s-rocket"></i>
+                            <p>Empresa</p>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="upgrade.html">
+                            <i class="pe-7s-rocket"></i>
+                            <div class="account">
+                                <p>Usuario</p>
+                                <p>Logout</p>
+                            </div>
 
-                    </ul>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
+            <div class="main-panel">
+                <nav class="navbar navbar-expand-md navbar-light bg-light navbar-shadow">
+                    <a class="navbar-brand" href="{{ route('home') }}">{{ $title }}</a>
+                    <div class="collapse navbar-collapse" id="navbarsExample0233">
+                        <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                <a class="nav-link dropdown-toggle minhaconta" href="https://example.com"
+                                   id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <p>{{ Auth::user()->name }}</p>
+                                    <small class="admin">Admin</small>
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                <div class="dropdown-menu" aria-labelledby="dropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
                                         @csrf
                                     </form>
+                                    <a class="dropdown-item" href="#">Action</a>
                                 </div>
                             </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                        </ul>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#"
+                            aria-controls="#" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+                <section id="painel">
+                    @yield('content')
+                </section>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+                <footer class="shadow-top">
+                    <p>© 2018 Vidraceiro.</p>
+                </footer>
+            </div>
+
+
+        </div>
     </div>
+</div>
+
+
+<script src="{{ asset('js/jquery.min.js') }}" defer></script>
+<script src="{{ asset('js/popper.js') }}" defer></script>
+<script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
+<script src="{{ asset('js/dashboard.js') }}" defer></script>
 </body>
 </html>
