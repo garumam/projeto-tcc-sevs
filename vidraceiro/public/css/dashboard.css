@@ -258,11 +258,17 @@ body {
 }
 
 .topo {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
     padding: 1rem;
     height: 60px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+.topo button{
 
+}
 .formulario {
     padding: 1rem;
 }
@@ -300,7 +306,7 @@ td {
 
 .titulo {
     color: #191919;
-    padding: 0 0 1rem 0;
+    padding: 0;
     font-size: 1.5rem;
 }
 

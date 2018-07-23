@@ -5,6 +5,8 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
+                <a class="btn-link" href="{{ route('createUser') }}"><button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button></a>
+
             </div>
 
             <div class="table-responsive">
