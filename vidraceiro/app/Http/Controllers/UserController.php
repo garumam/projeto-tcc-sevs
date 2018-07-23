@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -23,7 +24,8 @@ class UserController extends Controller
 
     public function read()
     {
-        return view('dashboard.list.listuser')->with('title', 'Listar usuarios');
+        $users = User::all();
+        return view('dashboard.list.listuser',compact('users'))->with('title', 'Listar usuarios');
     }
 
     public function update()

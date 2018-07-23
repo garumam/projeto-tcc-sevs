@@ -11,40 +11,27 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th class="noborder" scope="col">#</th>
-                        <th class="noborder" scope="col">First</th>
-                        <th class="noborder" scope="col">Last</th>
-                        <th class="noborder" scope="col">Action</th>
+                        <th class="noborder" scope="col">Id</th>
+                        <th class="noborder" scope="col">Nome</th>
+                        <th class="noborder" scope="col">E-mail</th>
+                        <th class="noborder" scope="col">Ação</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>
-                            <button class="btn btn-warning mb-1">Edit</button>
-                            <button class="btn btn-danger mb-1">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>
-                            <button class="btn btn-warning mb-1">Edit</button>
-                            <button class="btn btn-danger mb-1">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>Larry the Bird</td>
-                        <td>
-                            <button class="btn btn-warning mb-1">Edit</button>
-                            <button class="btn btn-danger mb-1">Delete</button>
-                        </td>
-                    </tr>
+                    @forelse($users as $user)
+                        <tr>
+                            <th scope="row">{{ $user->id }}</th>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <a class="btn-link" href="{{ route('updateUser',['id' => $user->id]) }}"> <button class="btn btn-warning mb-1">Edit</button></a>
+                                <a class="btn-link" href="{{ route('deleteUser',['id' => $user->id]) }}"><button class="btn btn-danger mb-1">Delete</button></a>
+                            </td>
+                        </tr>
+                    @empty
+                        <p>Sem usuarios</p>
+                    @endforelse
+
                     </tbody>
                 </table>
 
