@@ -37,7 +37,7 @@
                 </div>
                 <ul class="nav">
                     <li class="active">
-                        <a href="dashboard.html">
+                        <a href="{{route('home')}}">
                             <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
@@ -111,7 +111,7 @@
 
             <div class="main-panel">
                 <nav class="navbar navbar-expand-md navbar-light bg-light navbar-shadow">
-                    <a class="navbar-brand" href="{{ route('home') }}">{{ $title }}</a>
+                    <a class="navbar-brand" href="{{ Request::url() }}">{{ $title }}</a>
                     <div class="collapse navbar-collapse" id="navbarsExample0233">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">

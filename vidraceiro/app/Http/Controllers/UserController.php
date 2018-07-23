@@ -11,16 +11,28 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function create(){
+    public function index()
+    {
+        return view('dashboard.create.createuser')->with('title', 'Criar usuario');
+    }
+
+    public function create()
+    {
 
     }
-    public function read(){
+
+    public function read()
+    {
+        return view('dashboard.list.listuser')->with('title', 'Listar usuarios');
+    }
+
+    public function update()
+    {
 
     }
-    public function update(){
 
-    }
-    public function delete(){
+    public function delete()
+    {
 
     }
 }

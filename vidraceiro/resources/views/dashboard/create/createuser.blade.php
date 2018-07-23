@@ -5,7 +5,7 @@
         <div class="card-material custom-card">
 
             <div class="topo">
-                <h4 class="titulo">Adicionar Usuarios </h4>
+                <h4 class="titulo">{{$title}}</h4>
             </div>
 
             <form class="formulario" method="POST" role="form">

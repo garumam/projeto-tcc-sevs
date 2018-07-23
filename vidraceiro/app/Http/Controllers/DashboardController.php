@@ -25,12 +25,4 @@ class DashboardController extends Controller
     {
         return view('dashboard.home')->with('title','Dashboard');
     }
-
-    public function list(){
-        return view('dashboard.list')->with('title','Lista');
-    }
-
-    public function create(){
-        return view('dashboard.createuser')->with('title','Criar');
-    }
 }

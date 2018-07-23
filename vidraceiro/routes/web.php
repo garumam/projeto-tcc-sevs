@@ -11,15 +11,26 @@
 |
 */
 
+//Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/home', 'DashboardController@index')->name('home');
 Route::get('/list','DashboardController@list')->name('list');
-Route::get('/create','DashboardController@create')->name('create');
 
-//Auth::routes();
+
+
+//rotas do usuario
+Route::get('/create/user','UserController@index')->name('createUser');
+Route::post('/create/user','UserController@create');
+Route::get('/update/user/{id}','UserController@update')->name('editUser');
+Route::post('/update/user/{id}','UserController@update');
+Route::get('/delete/user/{id}','UserController@delete')->name('deleteUser');
+Route::get('/read/user','UserController@read')->name('readUser');
+
+
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

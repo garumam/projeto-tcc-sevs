@@ -4,7 +4,7 @@
         <div class="card-material custom-card">
 
             <div class="topo">
-                <h4 class="titulo">Lista de usuarios </h4>
+                <h4 class="titulo">{{$title}}</h4>
             </div>
 
             <div class="table-responsive">
