@@ -31,7 +31,7 @@
         <div class="col-12 nomp-flex">
             <div id="menu-dashboard" class="sidebar">
                 <div class="logo">
-                    <a href="{{ url('/') }}" class="simple-text">
+                    <a href="{{ route('home') }}" class="simple-text">
                         {{ config('app.name', 'Vidraceiro') }}
                     </a>
                 </div>
@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="user.html">
+                        <a href="{{ route('listUser') }}">
                             <i class="pe-7s-user"></i>
                             <p>Usuarios</p>
                         </a>
