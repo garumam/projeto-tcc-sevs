@@ -37,10 +37,21 @@ class UserController extends Controller
         return view('dashboard.list.user', compact('users'))->with('title', 'Listar usuarios');
     }
 
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('dashboard.create.user',compact('user'))->with('title','Atualizar usuario');
+    }
     public function update(Request $request, $id)
     {
-
         $user = User::find($id);
+        $validado = $this->rules_update_users($request->all());
+        if ($validado->fails()){
+            return redirect()->back()->withErrors($validado);
+        }
+        $user->update($request->except(['_token']));
+        if ($user)
+            return redirect()->back()->with('success', 'Usuario atualizado com sucesso');
 
         return view('dashboard.create.user',compact('user'))->with('title','Atualizar usuario');
     }
@@ -55,6 +66,17 @@ class UserController extends Controller
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        return $validator;
+    }
+
+    public function rules_update_users(array $data)
+    {
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|',
             'password' => 'required|string|min:6',
         ]);
 
