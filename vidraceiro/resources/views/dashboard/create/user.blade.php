@@ -26,12 +26,12 @@
 
                     <div class="form-group col-md-4">
                         <label for="name">Nome</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Nome" required>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->name or old('name') }}" placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="email">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $user->email or old('email') }}"
                                placeholder="E-mail" required>
                     </div>
 
