@@ -17,9 +17,9 @@ class UserController extends Controller
         return view('dashboard.create.createuser')->with('title', 'Criar usuario');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-
+        return $request;
     }
 
     public function read()
