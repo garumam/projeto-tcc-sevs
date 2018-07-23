@@ -25,10 +25,10 @@ Route::get('/list','DashboardController@list')->name('list');
 //rotas do usuario
 Route::get('/create/user','UserController@index')->name('createUser');
 Route::post('/create/user','UserController@create');
-Route::get('/update/user/{id}','UserController@update')->name('editUser');
+Route::get('/update/user/{id}','UserController@update')->name('updateUser');
 Route::post('/update/user/{id}','UserController@update');
 Route::get('/delete/user/{id}','UserController@delete')->name('deleteUser');
-Route::get('/read/user','UserController@read')->name('readUser');
+Route::get('/read/user','UserController@read')->name('listUser');
 
 
 
