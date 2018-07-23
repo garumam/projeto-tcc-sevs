@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('listUser') }}">
+                        <a href="{{ route('users.index') }}">
                             <i class="pe-7s-user"></i>
                             <p>Usuarios</p>
                         </a>

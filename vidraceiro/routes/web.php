@@ -23,12 +23,13 @@ Route::get('/list','DashboardController@list')->name('list');
 
 
 //rotas do usuario
-Route::get('/create/user','UserController@index')->name('createUser');
-Route::post('/create/user','UserController@create');
-Route::get('/update/user/{id}','UserController@edit')->name('updateUser');
-Route::post('/update/user/{id}','UserController@update');
-Route::post('/delete/user/{id}','UserController@delete')->name('deleteUser');
-Route::get('/read/user','UserController@read')->name('listUser');
+Route::get('/users','UserController@index')->name('users.index');
+Route::get('/users/create','UserController@create')->name('users.create');
+Route::post('/users','UserController@store')->name('users.store');
+Route::get('/users/{user}','UserController@show')->name('users.show');
+Route::get('/users/{id}/edit','UserController@edit')->name('users.edit');
+Route::patch('/users/{id}','UserController@update')->name('users.update');
+Route::delete('/users/{id}','UserController@destroy')->name('users.destroy');
 
 
 

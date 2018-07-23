@@ -8,9 +8,11 @@
                 <h4 class="titulo">{{$title}}</h4>
             </div>
             @if(isset($user))
-                <form class="formulario" method="POST" role="form" action="{{route('updateUser',['id'=> $user->id])}}">
+                <form class="formulario" method="POST" role="form"
+                      action="{{route('users.update',['id'=> $user->id])}}">
+                    <input type="hidden" name="_method" value="PATCH">
                     @else
-                        <form class="formulario" method="POST" role="form" action="{{route('createUser')}}">
+                        <form class="formulario" method="POST" role="form" action="{{route('users.store')}}">
                             @endif
                             @csrf
                             <div class="form-row">

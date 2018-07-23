@@ -56,7 +56,6 @@ body {
     text-decoration: none !important;
 }
 
-
 /* auxiliar */
 
 .nomp {
@@ -72,9 +71,7 @@ body {
     width: 100%;
 }
 
-
 /* fim auxiliar */
-
 
 /* navbar */
 
@@ -148,9 +145,7 @@ body {
     font-weight: 600;
 }
 
-
 /* fim navbar */
-
 
 /* sidebar */
 
@@ -195,7 +190,7 @@ body {
     height: 40px;
 }
 
-.sidebar .nav li>a {
+.sidebar .nav li > a {
     color: white;
     border-radius: 4px;
     text-decoration: none;
@@ -221,7 +216,6 @@ body {
 .sidebar .nav p:hover {
     background: rgba(255, 255, 255, 0.23);
 }
-
 
 /* fim sidebar*/
 
@@ -253,6 +247,10 @@ body {
     border-top: none !important;
 }
 
+.alerta {
+    padding: 1rem 1rem 0 1rem;
+}
+
 .custom-card {
     border-radius: .4rem !important;
 }
@@ -266,9 +264,11 @@ body {
     height: 60px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.topo button{
+
+.topo button {
 
 }
+
 .formulario {
     padding: 1rem;
 }
@@ -372,13 +372,13 @@ footer p {
     font-weight: 500;
 }
 
-
 /* responsivo */
 
 @media (min-width: 768px) {
     .sidebar {
         display: block !important;
     }
+
     .navbar {
         padding: 0 !important;
     }
@@ -388,9 +388,11 @@ footer p {
     footer {
         left: 0;
     }
+
     .main-panel {
         margin-left: 0;
     }
+
     .navbar-brand {
         margin-left: 0;
     }
@@ -401,7 +403,6 @@ footer p {
         max-width: 185px;
     }
 }
-
 
 /* shadow */
 
