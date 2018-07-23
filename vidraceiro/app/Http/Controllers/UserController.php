@@ -15,16 +15,12 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('dashboard.create.createuser')->with('title', 'Criar usuario');
+        return view('dashboard.create.user')->with('title', 'Criar usuario');
     }
 
     public function create(Request $request)
     {
-        $validado = Validator::make($request->all(),[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+        $validado = $this->rules_users($request->all());
         if ($validado->fails()){
             return redirect()->back()->withErrors($validado);
         }
@@ -38,16 +34,30 @@ class UserController extends Controller
     public function read()
     {
         $users = User::all();
-        return view('dashboard.list.listuser', compact('users'))->with('title', 'Listar usuarios');
+        return view('dashboard.list.user', compact('users'))->with('title', 'Listar usuarios');
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
 
+        $user = User::find($id);
+
+        return view('dashboard.create.user',compact('user'))->with('title','Atualizar usuario');
     }
 
     public function delete()
     {
 
+    }
+
+    public function rules_users(array $data)
+    {
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        return $validator;
     }
 }
