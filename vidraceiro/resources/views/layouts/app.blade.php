@@ -91,14 +91,20 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="upgrade.html">
-                            <i class="pe-7s-rocket"></i>
-                            <div class="account">
-                                <p>Usuario</p>
-                                <p>Logout</p>
-                            </div>
+                        <i class="pe-7s-rocket"></i>
+                        <div class="borda-top"></div>
+                            <a href="{{ route('home') }}">
+                                <p>{{ Auth::user()->name }}</p>
+                            </a>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-nav').submit();">
+                                <p>{{ __('Logout') }}</p>
+                            </a>
+                        <form id="logout-nav" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                        </form>
 
-                        </a>
                     </li>
                 </ul>
             </div>

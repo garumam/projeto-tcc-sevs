@@ -31,6 +31,6 @@ class DashboardController extends Controller
     }
 
     public function create(){
-        return view('dashboard.create')->with('title','Criar');
+        return view('dashboard.createuser')->with('title','Criar');
     }
 }
