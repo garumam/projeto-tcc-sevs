@@ -27,7 +27,7 @@ Route::get('/create/user','UserController@index')->name('createUser');
 Route::post('/create/user','UserController@create');
 Route::get('/update/user/{id}','UserController@update')->name('updateUser');
 Route::post('/update/user/{id}','UserController@update');
-Route::get('/delete/user/{id}','UserController@delete')->name('deleteUser');
+Route::post('/delete/user/{id}','UserController@delete')->name('deleteUser');
 Route::get('/read/user','UserController@read')->name('listUser');
 
 
