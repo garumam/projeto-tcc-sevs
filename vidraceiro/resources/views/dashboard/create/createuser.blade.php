@@ -11,9 +11,22 @@
             <form class="formulario" method="POST" role="form" action="{{route('createUser')}}">
                 @csrf
                 <div class="form-row">
+                    <div class="form-group col-md-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
