@@ -36,55 +36,55 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="active">
+                    <li {{ Request::is('home') ? 'class=active' : '' }}>
                         <a href="{{route('home')}}">
                             <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('users') ? 'class=active' : '' }}>
                         <a href="{{ route('users.index') }}">
                             <i class="pe-7s-user"></i>
                             <p>Usuarios</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="table.html">
                             <i class="pe-7s-note2"></i>
                             <p>Categorias</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="typography.html">
                             <i class="pe-7s-news-paper"></i>
                             <p>Produtos</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="icons.html">
                             <i class="pe-7s-science"></i>
                             <p>Materiais</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="maps.html">
                             <i class="pe-7s-map-marker"></i>
                             <p>Orçamentos</p>
                         </a>
                     </li>
-                    <li>
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="notifications.html">
                             <i class="pe-7s-bell"></i>
                             <p>Ordens de serviço</p>
                         </a>
                     </li>
-                    <li class="active-pro">
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="upgrade.html">
                             <i class="pe-7s-rocket"></i>
                             <p>Fornecedores</p>
                         </a>
                     </li>
-                    <li class="active-pro">
+                    <li {{ Request::is('') ? 'class=active' : '' }}>
                         <a href="upgrade.html">
                             <i class="pe-7s-rocket"></i>
                             <p>Empresa</p>
