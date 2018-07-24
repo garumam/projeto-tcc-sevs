@@ -44,16 +44,10 @@
                                 <a class="btn-link" href="{{ route('users.edit',['id' => $user->id]) }}">
                                     <button class="btn btn-warning mb-1">Edit</button>
                                 </a>
-                                <a class="btn-link" onclick="event.preventDefault(); document.getElementById('del-user-{{ $user
-                                 ->id}}').submit();">
+                                <a class="btn-link" onclick="f(this.id)" id="{{ $user->id }}">
                                     <button class="btn btn-danger mb-1">Delete</button>
                                 </a>
-                                <form id="del-user-{{ $user->id }}"
-                                      action="{{ route('users.destroy',['id' => $user->id]) }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                    <input type="hidden" name="_method" value="DELETE">
-                                </form>
+
                             </td>
                         </tr>
                     @empty
@@ -67,5 +61,17 @@
             </div>
         </div>
     </div>
+    <form id="del-user" action="#" method="POST" style="display: none;">
+        @csrf
+        <input type="hidden" name="_method" value="DELETE">
+    </form>
+    <script>
+        function f(id) {
+            var form = document.getElementById('del-user');
+            form.action = "/users/" + id;
+            event.preventDefault();
+            form.submit();
+        }
 
+    </script>
 @endsection
