@@ -13,8 +13,9 @@ $(document).ready(function () {
         }
     });
     $('.dropdown-menu li img').click(function () {
-        $('#url-image').val($(this).attr('src'));
-        $('#image-selecionar').attr("src", $('#url-image').val());
+        let value = $('#url-image');
+        value.val($(this).attr('src'));
+        $('#image-selecionar').attr("src", value.val());
     });
 
 });
