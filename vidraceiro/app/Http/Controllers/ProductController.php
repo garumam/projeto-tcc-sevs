@@ -11,7 +11,15 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        return view('dashboard.list.product')->with('title', 'Produto');
+    }
+
+
     public function create(){
+
+        return view('dashboard.create.product')->with('title', 'Criar Produto');
 
     }
     public function read(){

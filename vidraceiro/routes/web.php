@@ -31,7 +31,9 @@ Route::get('/users/{id}/edit','UserController@edit')->name('users.edit');
 Route::patch('/users/{id}','UserController@update')->name('users.update');
 Route::delete('/users/{id}','UserController@destroy')->name('users.destroy');
 
-
+//rotas de produto
+Route::get('/product','ProductController@index')->name('product.index');
+Route::get('/product/create','ProductController@create')->name('product.create');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

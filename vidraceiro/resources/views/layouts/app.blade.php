@@ -54,8 +54,8 @@
                             <p>Categorias</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="typography.html">
+                    <li {{ Request::is('product') ? 'class=active' : '' }}>
+                        <a href="{{ route('product.index') }}">
                             <i class="pe-7s-news-paper"></i>
                             <p>Produtos</p>
                         </a>
