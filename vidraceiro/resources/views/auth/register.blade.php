@@ -50,7 +50,7 @@
 
 @endsection
 @section('content-footer')
-    <a class="btn btn-link text-muted text text-center w-100" href="{{ route('login') }}">
+    <a class="botao text-muted" href="{{ route('login') }}">
         Already have an Account ?
     </a>
 @endsection

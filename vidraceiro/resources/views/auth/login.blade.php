@@ -44,7 +44,7 @@
 
 
 @section('content-footer')
-    <a class="btn btn-link text-muted text text-center w-100" href="{{ route('password.request') }}">
+    <a class="botao text-muted" href="{{ route('password.request') }}">
         {{ __('Forgot Your Password?') }}
     </a>
 @endsection
