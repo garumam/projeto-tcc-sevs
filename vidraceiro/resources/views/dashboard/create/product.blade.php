@@ -50,19 +50,19 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                                         <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">
+                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
                                                 <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
-                                            </a>
+                                            {{--</a>--}}
                                         </li>
                                         <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">
+                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
                                                 <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
-                                            </a>
+                                            {{--</a>--}}
                                         </li>
                                         <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">
+                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
                                                 <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
-                                            </a>
+                                            {{--</a>--}}
                                         </li>
                                     </ul>
                                 </div>
