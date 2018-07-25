@@ -45,13 +45,16 @@
 
                                 <div id="dropmenu-imagem" class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                                        <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
+                                        <img id="image-selecionar" src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
                                         <span class="caret"></span>
                                     </button>
+                                    <label for="image-selected"></label>
+                                    <input type="text" id="url-image" name="url-image">
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+
                                         <li role="presentation">
                                             {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                                <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
+                                                <img src="{{ asset('img/bxa1.png')}}" class="img-fluid" alt="Responsive image">
                                             {{--</a>--}}
                                         </li>
                                         <li role="presentation">
