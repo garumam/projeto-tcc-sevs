@@ -348,7 +348,7 @@ td {
 .main-panel {
     width: 100%;
     overflow-x: auto;
-    min-height: 500px;
+    min-height: 100%;
     margin-left: 220px;
 }
 
