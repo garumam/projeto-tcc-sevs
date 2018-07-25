@@ -17,10 +17,10 @@ html,
 body {
     margin: 0;
     padding: 0;
+    color: white !important;
 }
 
 body {
-    color: white;
     background-color: #eff3f6;
     letter-spacing: .30px;
     -webkit-text-size-adjust: 100%;
@@ -44,6 +44,7 @@ body {
 .btn-custom {
     background-color: #4264FB !important;
     border-color: #4264FB !important;
+    color: white !important;
 }
 
 .btn-custom:hover {
@@ -267,6 +268,22 @@ body {
 
 .topo button {
 
+}
+
+#dropmenu-imagem button {
+    width: 100px;
+}
+
+#dropmenu-imagem ul {
+    overflow-x: auto !important;
+    height: 350px;
+    position: absolute !important;
+    bottom: 0;
+    top: 100px !important;
+}
+
+#dropmenu-imagem ul li {
+    padding: 1rem;
 }
 
 .formulario {

@@ -21,18 +21,18 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"> </input>
+                                <label>Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Descrição</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Descrição"> </input>
+                                <label>Descrição</label>
+                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Tipo</label>
-                                <select class="custom-select">
+                                <label for="select">Tipo</label>
+                                <select class="custom-select" title="select">
                                     <option selected>Selecione um tipo</option>
                                     <option value="1">Tipo 1</option>
                                     <option value="2">Tipo 2</option>
@@ -41,9 +41,9 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Imagem</label>
+                                <label>Imagem</label>
 
-                                <div class="dropdown">
+                                <div id="dropmenu-imagem" class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
                                         <img src="{{ asset('img/bootstrap-solid.svg')}}" class="img-fluid" alt="Responsive image">
                                         <span class="caret"></span>
@@ -70,7 +70,8 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Enviar</button>
+                        <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Enviar
+                        </button>
 
                     </form>
 
@@ -82,7 +83,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"> </input>
+                                <input type="text" class="form-control" id="nome_material" name="nome_material" placeholder="Nome">
                             </div>
 
                             <div class="form-group col-md-4">
