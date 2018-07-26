@@ -18,4 +18,9 @@ $(document).ready(function () {
         $('#image-selecionar').attr("src", value.val());
     });
 
+    $('#gridImagens div img').click(function () {
+        let value = $('#url-image2');
+        value.val($(this).attr('src'));
+        $('#image-selecionar2').attr("src", value.val());
+    });
 });

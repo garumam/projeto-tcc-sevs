@@ -41,6 +41,13 @@
                             </div>
 
                             <div class="form-group col-md-4">
+
+                                <img id="image-selecionar2" src="{{ asset('img/semimagem.png') }}" class="img-fluid" alt="Responsive image">
+                                <a href="#" class="btn btn-lg btn-primary btn-custom w-3277" data-toggle="modal" data-target="#imagensModal">Buscar</a>
+                                <label for="url-image2"></label><input type="text" id="url-image2" name="url-image2" style="display: none;">
+                            </div>
+
+                            <div class="form-group col-md-4">
                                 <label>Imagem</label>
 
                                 <div id="dropmenu-imagem" class="dropdown">
@@ -104,6 +111,57 @@
 
 
 
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="imagensModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Titulo do modal</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div id="gridImagens" class="row justify-content-center align-items-center">
+
+                            <div class="col-auto">
+
+                                <img src="{{ asset('img/Box diversos/bxa1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+
+                            </div>
+
+
+                            <div class="col-auto">
+
+                                <img src="{{ asset('img/Box diversos/bxa2.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+
+                            </div>
+
+
+                            <div class="col-auto">
+
+                                <img src="{{ asset('img/Box diversos/bxc1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
