@@ -312,6 +312,10 @@ body {
     border: 5px solid #0acf97;
 }
 
+.modal-title {
+    color: #191919;
+}
+
 #dropmenu-imagem button {
     width: 180px;
     height: auto;
