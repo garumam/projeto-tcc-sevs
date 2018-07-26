@@ -150,7 +150,7 @@
                         <div id="gridImagens" class="row">
                             @for($i = 0; $i < count($boxdiversos); $i++ )
                                 <div class="col-">
-                                    <img src="{{ asset('img/boxdiversos/'.$boxdiversos[$i].'.png')}}" class="img-fluid img-thumbnail"
+                                    <img src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}" class="img-fluid img-thumbnail"
                                          alt="Responsive image">
                                 </div>
                             @endfor

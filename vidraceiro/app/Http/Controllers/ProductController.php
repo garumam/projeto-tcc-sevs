@@ -35,12 +35,12 @@ class ProductController extends Controller
 
     public function retornaNomes($folder)
     {
-        $nomes = [];
+        $filename = [];
         $files = File::files(public_path() . $folder);
         foreach ($files as $file) {
-            $nomes[] = pathinfo($file, PATHINFO_FILENAME);
+            $filename[] = pathinfo($file, PATHINFO_BASENAME);
         }
-        return $nomes;
+        return $filename;
     }
 
     public function read()
