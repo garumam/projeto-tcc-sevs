@@ -27,7 +27,27 @@ $(document).ready(function () {
     });
 
     $('#select-categoria').change(function () {
-        $('#form-product').submit();
+        var valueSelected = $('#select-categoria option:selected').val();
+        $('#boxdiversos').removeClass('esconder-div');
+        $('#boxpadrao').removeClass('esconder-div');
+        switch (valueSelected) {
+            case "boxdiversos":
+                $('#boxdiversos').addClass('esconder-div');
+                break;
+            case "boxpadrao":
+                $('#boxpadrao').addClass('esconder-div');
+                break;
+            case "ferragem1000":
+
+                break;
+            case "ferragem3000":
+
+                break;
+            default:
+
+                break;
+        }
+
     });
 
     // $('#form-product').on('submit',function (e) {

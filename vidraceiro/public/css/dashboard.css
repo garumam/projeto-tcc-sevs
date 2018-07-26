@@ -427,6 +427,10 @@ td {
     box-shadow: 0px 3px 8px 0px rgba(23, 24, 32, 0.1);
 }
 
+.esconder-div {
+    display: none;
+}
+
 footer {
     bottom: 0;
     right: 0;

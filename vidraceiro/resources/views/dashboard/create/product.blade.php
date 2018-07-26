@@ -43,10 +43,10 @@
                                 {{$dado}}
                                 <select id="select-categoria" name="select" class="custom-select">
                                     <option selected>Selecione uma categoria</option>
-                                    <option value="1">Box diversos</option>
-                                    <option value="2">Box padrão</option>
-                                    <option value="3">Ferragem 1000</option>
-                                    <option value="3">Ferragem 3000</option>
+                                    <option value="boxdiversos">Box diversos</option>
+                                    <option value="boxpadrao">Box padrão</option>
+                                    <option value="ferragem1000">Ferragem 1000</option>
+                                    <option value="ferragem3000">Ferragem 3000</option>
                                 </select>
                             </div>
 
@@ -151,8 +151,8 @@
 
                     <div class="container-fluid">
                         <div id="gridImagens" class="row">
-                            @switch("boxpadrao")
-                                @case("boxdiversos")
+
+                            <div id="boxdiversos">
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
@@ -160,8 +160,9 @@
                                              alt="Responsive image">
                                     </div>
                                 @endfor
-                                @break
-                                @case("boxpadrao")
+                            </div>
+
+                            <div id="boxpadrao">
                                 @for($i = 0; $i < count($boxpadrao); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
@@ -169,8 +170,7 @@
                                              alt="Responsive image">
                                     </div>
                                 @endfor
-                                @break
-                            @endswitch
+                            </div>
 
 
                             {{--<div class="col-">--}}
