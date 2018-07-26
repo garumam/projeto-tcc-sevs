@@ -40,7 +40,6 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Categoria</label>
-                                {{$dado}}
                                 <select id="select-categoria" name="select" class="custom-select">
                                     <option selected>Selecione uma categoria</option>
                                     <option value="boxdiversos">Box diversos</option>
@@ -152,7 +151,7 @@
                     <div class="container-fluid">
                         <div id="gridImagens" class="row">
 
-                            <div id="boxdiversos">
+                            <div id="boxdiversos" style="display: none;">
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
@@ -162,10 +161,30 @@
                                 @endfor
                             </div>
 
-                            <div id="boxpadrao">
+                            <div id="boxpadrao" style="display: none;">
                                 @for($i = 0; $i < count($boxpadrao); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
+                                             class="img-fluid img-thumbnail"
+                                             alt="Responsive image">
+                                    </div>
+                                @endfor
+                            </div>
+
+                            <div id="ferragem1000" style="display: none;">
+                                @for($i = 0; $i < count($ferragem1000); $i++ )
+                                    <div class="col-">
+                                        <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
+                                             class="img-fluid img-thumbnail"
+                                             alt="Responsive image">
+                                    </div>
+                                @endfor
+                            </div>
+
+                            <div id="ferragem3000" style="display: none;">
+                                @for($i = 0; $i < count($ferragem3000); $i++ )
+                                    <div class="col-">
+                                        <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
                                              class="img-fluid img-thumbnail"
                                              alt="Responsive image">
                                     </div>

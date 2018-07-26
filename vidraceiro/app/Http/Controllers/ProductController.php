@@ -24,12 +24,6 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-
-        $dado =  $request->input('select');
-
-
-        var_dump($dado);
-
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
@@ -37,7 +31,7 @@ class ProductController extends Controller
 
 
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.product', compact('dado','boxdiversos','boxpadrao','ferragem1000','ferragem3000'))->with('title', 'Criar Produto');
+        return view('dashboard.create.product', compact('boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000'))->with('title', 'Criar Produto');
 
     }
 

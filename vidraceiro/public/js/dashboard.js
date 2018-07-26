@@ -27,24 +27,43 @@ $(document).ready(function () {
     });
 
     $('#select-categoria').change(function () {
-        var valueSelected = $('#select-categoria option:selected').val();
-        $('#boxdiversos').removeClass('esconder-div');
-        $('#boxpadrao').removeClass('esconder-div');
+        let valueSelected = $('#select-categoria option:selected').val();
+        let boxdiversos = $('#boxdiversos');
+        let boxpadrao = $('#boxpadrao');
+        let ferragem1000 = $('#ferragem1000');
+        let ferragem3000 = $('#ferragem3000');
+        boxdiversos.css("display", "none");
+        boxpadrao.css("display", "none");
+        ferragem1000.css("display", "none");
+        ferragem3000.css("display", "none");
         switch (valueSelected) {
             case "boxdiversos":
-                $('#boxdiversos').addClass('esconder-div');
+                boxdiversos.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                });
                 break;
             case "boxpadrao":
-                $('#boxpadrao').addClass('esconder-div');
+                boxpadrao.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                });
                 break;
             case "ferragem1000":
+                ferragem1000.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                });
 
                 break;
             case "ferragem3000":
-
+                ferragem1000.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                });
                 break;
             default:
-
+                $('#' + valueSelected).css("display", "none");
                 break;
         }
 
