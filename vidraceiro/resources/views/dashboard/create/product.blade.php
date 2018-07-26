@@ -22,7 +22,8 @@
                 <div class="tab-pane fade show active" id="nav-adicionar-produto" role="tabpanel"
                      aria-labelledby="nav-adicionar-produto-tab">
 
-                    <form class="formulario" method="POST" role="form">
+                    <form id="form-product" class="formulario" method="POST" role="form" action="{{route('product.create')}}">
+                        <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
@@ -38,12 +39,14 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="select">Tipo</label>
-                                <select class="custom-select" title="select">
-                                    <option selected>Selecione um tipo</option>
-                                    <option value="1">Tipo 1</option>
-                                    <option value="2">Tipo 2</option>
-                                    <option value="3">Tipo 3</option>
+                                <label for="select-categoria">Categoria</label>
+                                {{$dado}}
+                                <select id="select-categoria" name="select" class="custom-select">
+                                    <option selected>Selecione uma categoria</option>
+                                    <option value="1">Box diversos</option>
+                                    <option value="2">Box padrão</option>
+                                    <option value="3">Ferragem 1000</option>
+                                    <option value="3">Ferragem 3000</option>
                                 </select>
                             </div>
 
@@ -148,22 +151,37 @@
 
                     <div class="container-fluid">
                         <div id="gridImagens" class="row">
-                            @for($i = 0; $i < count($boxdiversos); $i++ )
-                                <div class="col-">
-                                    <img src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}" class="img-fluid img-thumbnail"
-                                         alt="Responsive image">
-                                </div>
-                            @endfor
+                            @switch("boxpadrao")
+                                @case("boxdiversos")
+                                @for($i = 0; $i < count($boxdiversos); $i++ )
+                                    <div class="col-">
+                                        <img src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
+                                             class="img-fluid img-thumbnail"
+                                             alt="Responsive image">
+                                    </div>
+                                @endfor
+                                @break
+                                @case("boxpadrao")
+                                @for($i = 0; $i < count($boxpadrao); $i++ )
+                                    <div class="col-">
+                                        <img src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
+                                             class="img-fluid img-thumbnail"
+                                             alt="Responsive image">
+                                    </div>
+                                @endfor
+                                @break
+                            @endswitch
+
 
                             {{--<div class="col-">--}}
-                                {{--<img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid img-thumbnail"--}}
-                                     {{--alt="Responsive image">--}}
+                            {{--<img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid img-thumbnail"--}}
+                            {{--alt="Responsive image">--}}
                             {{--</div>--}}
 
 
                             {{--<div class="col-">--}}
-                                {{--<img src="{{ asset('img/boxdiversos/bxc1.png')}}" class="img-fluid img-thumbnail"--}}
-                                     {{--alt="Responsive image">--}}
+                            {{--<img src="{{ asset('img/boxdiversos/bxc1.png')}}" class="img-fluid img-thumbnail"--}}
+                            {{--alt="Responsive image">--}}
                             {{--</div>--}}
 
 

@@ -65,6 +65,10 @@
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
+
+@endsection
+
+@section('scripts')
     <script>
         function f(id) {
             var form = document.getElementById('del-user');

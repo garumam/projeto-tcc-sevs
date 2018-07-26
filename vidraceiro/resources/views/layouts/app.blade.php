@@ -161,5 +161,7 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
 <script src="{{ asset('js/dashboard.js') }}" defer></script>
+
+@yield('scripts')
 </body>
 </html>

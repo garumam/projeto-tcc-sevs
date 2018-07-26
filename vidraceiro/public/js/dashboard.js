@@ -23,4 +23,22 @@ $(document).ready(function () {
         value.val($(this).attr('src'));
         $('#image-selecionar2').attr("src", value.val());
     });
+
+    $('#select-categoria').change(function () {
+        $('#form-product').submit();
+    });
+
+    // $('#form-product').on('submit',function (e) {
+    //     e.preventDefault();
+    //     // let formData = $('form').serializeArray();
+    //     // $.ajax({
+    //     //     type: "POST",
+    //     //     url: window.location.href,
+    //     //     data: {formData, "_token": $('#_token').val()},
+    //     //     success: function( ) {
+    //     //         alert('sucesso');
+    //     //     },
+    //     // });
+    //
+    // });
 });
