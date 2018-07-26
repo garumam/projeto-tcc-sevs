@@ -47,8 +47,8 @@ class ProductController extends Controller
         $nomes = [];
         $novonome = [];
         $files = File::files(public_path() . $folder);
-        foreach ($files as $path) {
-            $nomes[] = pathinfo($path);
+        foreach ($files as $file) {
+            $nomes[] = pathinfo($file);
         }
         for ($i = 0; $i < count($files); $i++) {
             $novonome[$i] = $nomes[$i]['filename'];
