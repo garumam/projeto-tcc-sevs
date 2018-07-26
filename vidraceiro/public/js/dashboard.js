@@ -26,12 +26,19 @@ $(document).ready(function () {
         $(this).addClass('thumbnail');
     });
 
+
     $('#select-categoria').change(function () {
+        f();
+    });
+
+    function f() {
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');
         let boxpadrao = $('#boxpadrao');
         let ferragem1000 = $('#ferragem1000');
         let ferragem3000 = $('#ferragem3000');
+        let selecionecategoria = $('#selecione-categoria');
+        selecionecategoria.css("display", "none");
         boxdiversos.css("display", "none");
         boxpadrao.css("display", "none");
         ferragem1000.css("display", "none");
@@ -63,11 +70,10 @@ $(document).ready(function () {
                 });
                 break;
             default:
-                $('#' + valueSelected).css("display", "none");
+                selecionecategoria.css("display", "block");
                 break;
         }
-
-    });
+    }
 
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();

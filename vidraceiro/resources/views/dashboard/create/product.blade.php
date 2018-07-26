@@ -41,7 +41,7 @@
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Categoria</label>
                                 <select id="select-categoria" name="select" class="custom-select">
-                                    <option selected>Selecione uma categoria</option>
+                                    <option value="0" selected>Selecione uma categoria</option>
                                     <option value="boxdiversos">Box diversos</option>
                                     <option value="boxpadrao">Box padrão</option>
                                     <option value="ferragem1000">Ferragem 1000</option>
@@ -150,7 +150,7 @@
 
                     <div class="container-fluid">
                         <div id="gridImagens" class="row">
-
+                            <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma categoria</p>
                             <div id="boxdiversos" style="display: none;">
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
