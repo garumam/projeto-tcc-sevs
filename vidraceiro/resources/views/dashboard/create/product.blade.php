@@ -59,17 +59,17 @@
 
                                         <li role="presentation">
                                             {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                                <img src="{{ asset('boxdiversos')}}" class="img-fluid" alt="Responsive image">
+                                                <img src="{{ asset('img/boxdiversos/bxa1.png')}}" class="img-fluid" alt="Responsive image">
                                             {{--</a>--}}
                                         </li>
                                         <li role="presentation">
                                             {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                                <img src="{{ asset('img/Box diversos/bxa2.png')}}" class="img-fluid" alt="Responsive image">
+                                                <img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid" alt="Responsive image">
                                             {{--</a>--}}
                                         </li>
                                         <li role="presentation">
                                             {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                                <img src="{{ asset('img/Box diversos/bxc1.png')}}" class="img-fluid" alt="Responsive image">
+                                                <img src="{{ asset('img/boxdiversos/bxc1.png')}}" class="img-fluid" alt="Responsive image">
                                             {{--</a>--}}
                                         </li>
                                     </ul>
@@ -134,21 +134,21 @@
 
                             <div class="col-auto">
 
-                                <img src="{{ asset('img/Box diversos/bxa1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+                                <img src="{{ asset('img/boxdiversos/bxa1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
 
                             </div>
 
 
                             <div class="col-auto">
 
-                                <img src="{{ asset('img/Box diversos/bxa2.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+                                <img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
 
                             </div>
 
 
                             <div class="col-auto">
 
-                                <img src="{{ asset('img/Box diversos/bxc1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
+                                <img src="{{ asset('img/boxdiversos/bxc1.png')}}" class="img-fluid img-thumbnail" alt="Responsive image">
 
                             </div>
 
