@@ -21,16 +21,7 @@ class ProductController extends Controller
 
     public function create()
     {
-//        $nomes = [];
-//        $novonome = [];
-//        $files = File::files(public_path().'/img/boxdiversos/');
-//        foreach($files as $path)
-//        {
-//            $nomes[] = pathinfo($path);
-//        }
-//        for ($i = 0; $i < count($files); $i++){
-//            $novonome[$i] = $nomes[$i]['filename'];
-//        }
+
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
@@ -45,15 +36,11 @@ class ProductController extends Controller
     public function retornaNomes($folder)
     {
         $nomes = [];
-        $novonome = [];
         $files = File::files(public_path() . $folder);
         foreach ($files as $file) {
-            $nomes[] = pathinfo($file);
+            $nomes[] = pathinfo($file, PATHINFO_FILENAME);
         }
-        for ($i = 0; $i < count($files); $i++) {
-            $novonome[$i] = $nomes[$i]['filename'];
-        }
-        return $novonome;
+        return $nomes;
     }
 
     public function read()
