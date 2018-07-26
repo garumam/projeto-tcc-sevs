@@ -22,6 +22,8 @@ $(document).ready(function () {
         let value = $('#url-image2');
         value.val($(this).attr('src'));
         $('#image-selecionar2').attr("src", value.val());
+        $('img').removeClass('thumbnail');
+        $(this).addClass('thumbnail');
     });
 
     $('#select-categoria').change(function () {

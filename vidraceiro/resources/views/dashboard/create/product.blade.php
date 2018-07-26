@@ -155,7 +155,7 @@
                                 @case("boxdiversos")
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
-                                        <img src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
+                                        <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
                                              class="img-fluid img-thumbnail"
                                              alt="Responsive image">
                                     </div>
@@ -164,7 +164,7 @@
                                 @case("boxpadrao")
                                 @for($i = 0; $i < count($boxpadrao); $i++ )
                                     <div class="col-">
-                                        <img src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
+                                        <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
                                              class="img-fluid img-thumbnail"
                                              alt="Responsive image">
                                     </div>
