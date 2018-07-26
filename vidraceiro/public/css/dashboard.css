@@ -90,6 +90,7 @@ body {
 
 .nomp {
     padding: 0 !important;
+    margin: 0 !important;
 }
 
 .nomp-flex {
@@ -277,6 +278,14 @@ body {
     border-top: none !important;
 }
 
+#image-selecionar2 {
+    max-width: 50%;
+    max-height: 150px;
+}
+.img-thumbnail{
+    margin: .3rem;
+    height: 110px;
+}
 .alerta {
     padding: 1rem 1rem 0 1rem;
 }
@@ -442,6 +451,9 @@ footer p {
 
     .navbar {
         padding: 0 !important;
+    }
+    .modal {
+        left: 220px;
     }
 }
 
