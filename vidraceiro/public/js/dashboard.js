@@ -28,10 +28,6 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        f();
-    });
-
-    function f() {
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');
         let boxpadrao = $('#boxpadrao');
@@ -43,6 +39,7 @@ $(document).ready(function () {
         boxpadrao.css("display", "none");
         ferragem1000.css("display", "none");
         ferragem3000.css("display", "none");
+
         switch (valueSelected) {
             case "boxdiversos":
                 boxdiversos.css({
@@ -73,7 +70,8 @@ $(document).ready(function () {
                 selecionecategoria.css("display", "block");
                 break;
         }
-    }
+    });
+
 
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
