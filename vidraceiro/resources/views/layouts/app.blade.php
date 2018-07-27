@@ -49,7 +49,7 @@
                         </a>
                     </li>
                     <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="table.html">
+                        <a href="{{ route('category.index') }}">
                             <i class="pe-7s-note2"></i>
                             <p>Categorias</p>
                         </a>

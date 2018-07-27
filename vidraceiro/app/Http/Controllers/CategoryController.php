@@ -11,8 +11,13 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
-    public function create(){
+    public function index()
+    {
+        return view('dashboard.list.category')->with('title', 'Categoria');
+    }
 
+    public function create(){
+        return view('dashboard.create.category')->with('title', 'Adicionar Categoria');
     }
     public function read(){
 

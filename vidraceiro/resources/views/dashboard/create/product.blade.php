@@ -9,10 +9,10 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active noborder-left" id="nav-adicionar-produto-tab" data-toggle="tab"
                        href="#nav-adicionar-produto" role="tab" aria-controls="nav-adicionar-produto"
-                       aria-selected="true">Adicionar Produto</a>
+                       aria-selected="true">{{$titulotabs['tab1']}}</a>
                     <a class="nav-item nav-link" id="nav-adicionar-material-tab" data-toggle="tab"
                        href="#nav-adicionar-material" role="tab" aria-controls="nav-adicionar-material"
-                       aria-selected="false">Adicionar Material</a>
+                       aria-selected="false">{{$titulotabs['tab2']}}</a>
                 </div>
             </nav>
             <!-- Fim tab de Produto-->

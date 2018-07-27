@@ -36,6 +36,13 @@ Route::get('/product','ProductController@index')->name('product.index');
 Route::get('/product/create','ProductController@create')->name('product.create');
 Route::post('/product/create','ProductController@create')->name('product.create');
 
+
+//rotas de categoria
+Route::get('/category','CategoryController@index')->name('category.index');
+Route::get('/category/create','CategoryController@create')->name('category.create');
+Route::post('/product/create','CategoryController@create')->name('category.create');
+
+
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
