@@ -48,44 +48,44 @@
                             <p>Usuarios</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
+                    <li {{ Request::is('categories') ? 'class=active' : '' }}>
                         <a href="{{ route('category.index') }}">
                             <i class="pe-7s-note2"></i>
                             <p>Categorias</p>
                         </a>
                     </li>
-                    <li {{ Request::is('product') ? 'class=active' : '' }}>
+                    <li {{ Request::is('products') ? 'class=active' : '' }}>
                         <a href="{{ route('product.index') }}">
                             <i class="pe-7s-news-paper"></i>
                             <p>Produtos</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="icons.html">
+                    <li {{ Request::is('materials') ? 'class=active' : '' }}>
+                        <a href="{{ route('materials.index') }}">
                             <i class="pe-7s-science"></i>
                             <p>Materiais</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="maps.html">
+                    <li {{ Request::is('budgets') ? 'class=active' : '' }}>
+                        <a href="{{ route('budgets.index') }}">
                             <i class="pe-7s-map-marker"></i>
                             <p>Orçamentos</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="notifications.html">
+                    <li {{ Request::is('orders') ? 'class=active' : '' }}>
+                        <a href="{{ route('orders.index') }}">
                             <i class="pe-7s-bell"></i>
                             <p>Ordens de serviço</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="upgrade.html">
+                    <li {{ Request::is('providers') ? 'class=active' : '' }}>
+                        <a href="{{ route('providers.index') }}">
                             <i class="pe-7s-rocket"></i>
                             <p>Fornecedores</p>
                         </a>
                     </li>
-                    <li {{ Request::is('') ? 'class=active' : '' }}>
-                        <a href="upgrade.html">
+                    <li {{ Request::is('companies') ? 'class=active' : '' }}>
+                        <a href="{{ route('companies.index') }}">
                             <i class="pe-7s-rocket"></i>
                             <p>Empresa</p>
                         </a>
