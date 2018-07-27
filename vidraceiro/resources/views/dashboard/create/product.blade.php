@@ -23,7 +23,7 @@
                      aria-labelledby="nav-adicionar-produto-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{route('product.create')}}">
+                          action="{{route('products.create')}}">
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                         <div class="form-row">
 
@@ -126,7 +126,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('product.create') }}">
+                                <a class="btn-link mb-3" href="{{ route('products.create') }}">
                                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                                 </a>
                             </div>
