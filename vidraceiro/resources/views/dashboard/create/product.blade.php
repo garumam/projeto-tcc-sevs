@@ -156,19 +156,65 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
-                                        <tr>
+
+                                        <tr class="tabela-vidro">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço m²</th>
                                             <th class="noborder" scope="col">Ação</th>
                                         </tr>
+
+                                        <tr class="tabela-aluminio" style="display: none;">
+                                            <th class="noborder" scope="col">Id</th>
+                                            <th class="noborder" scope="col">Perfil</th>
+                                            <th class="noborder" scope="col">Medida</th>
+                                            <th class="noborder" scope="col">Peso</th>
+                                            <th class="noborder" scope="col">Preço</th>
+                                            <th class="noborder" scope="col">Ação</th>
+                                        </tr>
+
+                                        <tr class="tabela-componente" style="display: none;">
+                                            <th class="noborder" scope="col">Id</th>
+                                            <th class="noborder" scope="col">Nome</th>
+                                            <th class="noborder" scope="col">Preço</th>
+                                            <th class="noborder" scope="col">Qtd</th>
+                                            <th class="noborder" scope="col">Ação</th>
+                                        </tr>
+
                                         </thead>
                                         <tbody>
 
-                                        <tr>
+                                        <tr class="tabela-vidro">
                                             <th scope="row">1</th>
                                             <td>Vidro temperado 08mm</td>
                                             <td>100.0</td>
+                                            <td>
+                                                <a class="btn-link">
+                                                    <button class="btn btn-danger mb-1">Delete</button>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tabela-aluminio" style="display: none;">
+                                            <th scope="row">1</th>
+                                            <td>xt-201</td>
+                                            <td>6000.0m</td>
+                                            <td>1.6kg</td>
+                                            <td>22.0</td>
+                                            <td>
+                                                <a class="btn-link">
+                                                    <button class="btn btn-danger mb-1">Delete</button>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tabela-componente" style="display: none;">
+                                            <th scope="row">1</th>
+                                            <td>Roldana</td>
+                                            <td>1.0</td>
+                                            <td>1</td>
                                             <td>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
