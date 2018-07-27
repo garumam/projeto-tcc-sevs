@@ -11,16 +11,39 @@ class MaterialController extends Controller
         $this->middleware('auth');
     }
 
-    public function create(){
+    public function index()
+    {
 
     }
-    public function read(){
+
+    public function create()
+    {
 
     }
-    public function update(){
+
+    public function store()
+    {
 
     }
-    public function delete(){
+
+    public function show()
+    {
+
+    }
+
+    public function edit()
+    {
+
+    }
+
+
+    public function update()
+    {
+
+    }
+
+    public function destroy()
+    {
 
     }
 }

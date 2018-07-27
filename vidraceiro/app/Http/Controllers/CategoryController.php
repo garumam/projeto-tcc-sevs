@@ -16,16 +16,34 @@ class CategoryController extends Controller
         return view('dashboard.list.category')->with('title', 'Categoria');
     }
 
-    public function create(){
+    public function create()
+    {
         return view('dashboard.create.category')->with('title', 'Adicionar Categoria');
     }
-    public function read(){
+
+    public function store()
+    {
 
     }
-    public function update(){
+
+    public function show()
+    {
 
     }
-    public function delete(){
+
+    public function edit()
+    {
+
+    }
+
+
+    public function update()
+    {
+
+    }
+
+    public function destroy()
+    {
 
     }
 }
