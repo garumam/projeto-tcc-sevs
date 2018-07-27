@@ -31,6 +31,12 @@
                     <a class="nav-item nav-link" id="nav-total-tab" data-toggle="tab"
                        href="#nav-total" role="tab" aria-controls="nav-total"
                        aria-selected="false">Total</a>
+
+                    <div class="topo-tab">
+                        <a id="bt-budget-pdf" class="btn-link" href="">
+                            <button class="btn btn-primary btn-block btn-custom" type="submit">Gerar PDF</button>
+                        </a>
+                    </div>
                 </div>
             </nav>
             <!-- Fim tab de Produto-->
@@ -470,7 +476,46 @@
                     <form class="formulario" method="POST" role="form">
 
 
+                        <div class="form-row">
+                            <div class="card-material custom-card custom-card-total col-md p-3">
+                                <h4 class="card-title text-primary">Total</h4>
+                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <label class="card-text">Produto BX-01</label>
+                                <label class="card-text">Produto BX-01</label>
+                                <label class="card-text">Produto BX-01</label>
+                                <label class="card-text">Produto BX-01</label>
+                                <label class="card-text">Produto BX-01</label>
+                                <label class="card-text">Produto BX-01</label>
 
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="card-material custom-card custom-card-total col-md p-3">
+                                <h4 class="card-title text-primary">Materiais</h4>
+                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <label class="card-text">Vidro 1</label>
+                                <label class="card-text">Vidro 1</label>
+                                <label class="card-text">Vidro 1</label>
+                                <label class="card-text">Vidro 1</label>
+                                <label class="card-text">Vidro 1</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="card-material custom-card custom-card-total col-md p-3">
+                                <h4 class="card-title text-primary">Componentes</h4>
+                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <label class="card-text">Roldana</label>
+                                <label class="card-text">Roldana</label>
+                                <label class="card-text">Roldana</label>
+                            </div>
+
+                        </div>
 
 
                     </form>
