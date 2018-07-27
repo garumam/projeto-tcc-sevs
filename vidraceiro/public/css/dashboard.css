@@ -278,6 +278,11 @@ body {
     border-top: none !important;
 }
 
+.topo-tab{
+    padding: 1rem;
+    margin-left: auto;
+}
+
 #image-selecionar {
     max-width: 120px;
     max-height: 150px;

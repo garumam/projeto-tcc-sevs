@@ -22,7 +22,13 @@
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
+                        <div class="topo-tab">
+                            <a class="btn-link" href="{{ route('users.create') }}">
+                                <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                            </a>
+                        </div>
                 </div>
+
             </nav>
             <!-- Fim tab de Produto-->
 
@@ -32,17 +38,6 @@
                            aria-labelledby="nav-adicionar-{{$titulotabs[0]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
-
-
-                        <div class="form-row mt-3 align-items-end">
-
-                            <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('products.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
 
                         <div class="form-row">
 
@@ -164,17 +159,6 @@
 
                     <form class="formulario" method="POST" role="form">
 
-
-                        <div class="form-row mt-3 align-items-end">
-
-                            <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('products.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
                         <div class="form-row">
 
                             <div class="form-group col-12">
@@ -293,16 +277,6 @@
                      aria-labelledby="nav-adicionar-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
-
-                        <div class="form-row mt-3 align-items-end">
-
-                            <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('products.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
 
                         <div class="form-row">
 
