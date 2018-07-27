@@ -29,10 +29,11 @@ class ProductController extends Controller
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
+        $kitsacada = $this->retornaNomes('/img/kitsacada/');
 
 
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.product', compact('categorias', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000'))->with('title', 'Criar Produto');
+        return view('dashboard.create.product', compact('categorias', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000','kitsacada'))->with('title', 'Criar Produto');
 
     }
 

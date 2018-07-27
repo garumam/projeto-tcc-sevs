@@ -169,6 +169,16 @@
                                 @endfor
                             </div>
 
+                            <div id="kitsacada" style="display: none;">
+                                @for($i = 0; $i < count($kitsacada); $i++ )
+                                    <div class="col-">
+                                        <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"
+                                             class="img-fluid img-thumbnail"
+                                             alt="Responsive image">
+                                    </div>
+                                @endfor
+                            </div>
+
 
                             {{--<div class="col-">--}}
                             {{--<img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid img-thumbnail"--}}

@@ -38,6 +38,7 @@ $(document).ready(function () {
         let boxpadrao = $('#boxpadrao');
         let ferragem1000 = $('#ferragem1000');
         let ferragem3000 = $('#ferragem3000');
+        let kitsacada = $('#kitsacada');
         let selecionecategoria = $('#selecione-categoria');
         selecionecategoria.css("display", "none");
         boxdiversos.css("display", "none");
@@ -70,6 +71,13 @@ $(document).ready(function () {
                 break;
             case "ferragem3000":
                 ferragem1000.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
+                });
+                break;
+            case "kitsacada":
+                kitsacada.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
