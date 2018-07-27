@@ -28,9 +28,8 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        let base_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        base_url = base_url.substring(0, base_url.lastIndexOf("public/"));
-        base_url = base_url + "public/img/semimagem.png";
+        let base_url = window.location.protocol + "//" + window.location.host;
+        base_url = base_url + "/img/semimagem.png";
         $('#url-image2').val(base_url);
         $('#image-selecionar2').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
