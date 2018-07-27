@@ -101,13 +101,13 @@
                         <div class="form-row">
                             <div class="form-group col-md-8">
                                 <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                    <label class="btn btn-primary active w-100">
+                                    <label class="btn btn-primary active w-33">
                                         <input type="radio" name="options" id="option1" autocomplete="off" checked> Vidro
                                     </label>
-                                    <label class="btn btn-primary w-100">
+                                    <label class="btn btn-primary w-33">
                                         <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
                                     </label>
-                                    <label class="btn btn-primary w-100">
+                                    <label class="btn btn-primary w-33">
                                         <input type="radio" name="options" id="option3" autocomplete="off"> Componente
                                     </label>
                                 </div>
