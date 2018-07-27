@@ -13,7 +13,7 @@
 
                     <div class="form-group col-md-7">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"> </input>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
                     </div>
 
                 </div>

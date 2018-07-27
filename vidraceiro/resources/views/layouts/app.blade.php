@@ -49,13 +49,13 @@
                         </a>
                     </li>
                     <li {{ Request::is('categories') ? 'class=active' : '' }}>
-                        <a href="{{ route('category.index') }}">
+                        <a href="{{ route('categories.index') }}">
                             <i class="pe-7s-note2"></i>
                             <p>Categorias</p>
                         </a>
                     </li>
                     <li {{ Request::is('products') ? 'class=active' : '' }}>
-                        <a href="{{ route('product.index') }}">
+                        <a href="{{ route('products.index') }}">
                             <i class="pe-7s-news-paper"></i>
                             <p>Produtos</p>
                         </a>
