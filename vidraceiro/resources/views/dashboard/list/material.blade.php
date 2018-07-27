@@ -22,11 +22,11 @@
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
-                        <div class="topo-tab">
-                            <a class="btn-link" href="{{ route('users.create') }}">
-                                <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
-                            </a>
-                        </div>
+                    <div class="topo-tab">
+                        <a class="btn-link" href="{{ route('users.create') }}">
+                            <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                        </a>
+                    </div>
                 </div>
 
             </nav>
@@ -35,7 +35,7 @@
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-adicionar-{{$titulotabs[0]}}" role="tabpanel"
-                           aria-labelledby="nav-adicionar-{{$titulotabs[0]}}-tab">
+                     aria-labelledby="nav-adicionar-{{$titulotabs[0]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -43,7 +43,7 @@
 
                             <div class="form-group col-12">
                                 <div class="topo">
-                                    <h4 class="titulo">Vidros</h4>
+                                    <h4 class="titulo">{{$titulotabs[0]}}</h4>
                                 </div>
 
                                 @if(session('success'))
@@ -101,6 +101,9 @@
                                             <td>Vidro temperado 08mm</td>
                                             <td>100.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -117,6 +120,9 @@
                                             <td>1.6kg</td>
                                             <td>22.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -132,6 +138,9 @@
                                             <td>1.0</td>
                                             <td>1</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -163,7 +172,7 @@
 
                             <div class="form-group col-12">
                                 <div class="topo">
-                                    <h4 class="titulo">Aluminio</h4>
+                                    <h4 class="titulo">{{$titulotabs[1]}}</h4>
                                 </div>
 
                                 @if(session('success'))
@@ -221,6 +230,9 @@
                                             <td>Vidro temperado 08mm</td>
                                             <td>100.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -237,6 +249,9 @@
                                             <td>1.6kg</td>
                                             <td>22.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -252,6 +267,9 @@
                                             <td>1.0</td>
                                             <td>1</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -282,7 +300,7 @@
 
                             <div class="form-group col-12">
                                 <div class="topo">
-                                    <h4 class="titulo">Componente</h4>
+                                    <h4 class="titulo">{{$titulotabs[2]}}</h4>
                                 </div>
 
                                 @if(session('success'))
@@ -340,6 +358,9 @@
                                             <td>Vidro temperado 08mm</td>
                                             <td>100.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -356,6 +377,9 @@
                                             <td>1.6kg</td>
                                             <td>22.0</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>
@@ -371,6 +395,9 @@
                                             <td>1.0</td>
                                             <td>1</td>
                                             <td>
+                                                <a class="btn-link" href="">
+                                                    <button class="btn btn-warning mb-1">Edit</button>
+                                                </a>
                                                 <a class="btn-link">
                                                     <button class="btn btn-danger mb-1">Delete</button>
                                                 </a>

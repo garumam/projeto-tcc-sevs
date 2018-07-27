@@ -13,7 +13,7 @@ class MaterialController extends Controller
 
     public function index()
     {
-        $titulotabs = ['Vidro','Aluminio','Componente'];
+        $titulotabs = ['Vidros','Aluminios','Componentes'];
         return view('dashboard.list.material',compact('titulotabs'))->with('title','Adicionar material');
     }
 
