@@ -73,7 +73,7 @@
 
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Criar
+                        <button class="btn btn-lg btn-primary btn-custom w-50" type="submit">Criar
                         </button>
 
                     </form>
@@ -185,7 +185,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block btn-custom w-33" type="submit">Enviar</button>
+                        <button class="btn btn-lg btn-primary btn-block btn-custom w-50" type="submit">Enviar</button>
 
                     </form>
 
