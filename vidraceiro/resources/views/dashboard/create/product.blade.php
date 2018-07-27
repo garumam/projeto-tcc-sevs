@@ -331,7 +331,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+                    <button type="button" class="btn btn-custom" data-dismiss="modal">Confirmar</button>
                 </div>
             </div>
         </div>
