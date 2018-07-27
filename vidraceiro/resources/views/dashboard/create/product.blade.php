@@ -50,53 +50,21 @@
                             </div>
 
                             <div class="form-group col-md-4">
-
-                                <img id="image-selecionar2" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
-                                     alt="Responsive image">
-                                <a href="#" class="btn btn-lg btn-primary btn-custom w-3277" data-toggle="modal"
-                                   data-target="#imagensModal">Buscar</a>
-                                <label for="url-image2"></label><input type="text" id="url-image2" name="url-image2"
-                                                                       style="display: none;">
-                            </div>
-
-                            <div class="form-group col-md-4">
                                 <label>Imagem</label>
-
-                                <div id="dropmenu-imagem" class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1"
-                                            data-toggle="dropdown">
-                                        <img id="image-selecionar" src="{{ asset('img/bootstrap-solid.svg')}}"
-                                             class="img-fluid" alt="Responsive image">
-                                    </button>
-                                    <label for="url-image"></label><input type="text" id="url-image" name="url-image"
-                                                                          style="display: none;">
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-
-                                        <li role="presentation">
-                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                            <img src="{{ asset('img/boxdiversos/bxa1.png')}}" class="img-fluid"
-                                                 alt="Responsive image">
-                                            {{--</a>--}}
-                                        </li>
-                                        <li role="presentation">
-                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                            <img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid"
-                                                 alt="Responsive image">
-                                            {{--</a>--}}
-                                        </li>
-                                        <li role="presentation">
-                                            {{--<a role="menuitem" tabindex="-1" href="#">--}}
-                                            <img src="{{ asset('img/boxdiversos/bxc1.png')}}" class="img-fluid"
-                                                 alt="Responsive image">
-                                            {{--</a>--}}
-                                        </li>
-                                    </ul>
+                                <div class="imagem-modal">
+                                    <img id="image-selecionar2" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                         alt="Responsive image">
+                                    <a href="#" class="btn btn-lg btn-primary btn-custom w-50" data-toggle="modal"
+                                       data-target="#imagensModal">Buscar</a>
+                                    <label for="url-image2"></label>
+                                    <input type="text" id="url-image2" name="url-image2" style="display: none;">
                                 </div>
 
                             </div>
 
+
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Enviar
+                        <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Criar
                         </button>
 
                     </form>
