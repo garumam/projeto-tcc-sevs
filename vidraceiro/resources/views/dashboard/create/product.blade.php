@@ -43,8 +43,13 @@
                                 <label for="select-categoria">Categoria</label>
                                 <select id="select-categoria" name="select" class="custom-select">
                                     <option value="0" selected>Selecione uma categoria</option>
+
                                     @foreach($categorias as $categoria)
-                                        <option value="{{$categoria}}">{{$categoria}}</option>
+                                        @php
+                                        $categorianova = str_replace('ã', 'a', $categoria);
+                                        $categorianova = str_replace(' ', '', strtolower($categorianova));
+                                        @endphp
+                                        <option value="{{$categorianova}}">{{$categoria}}</option>
                                     @endforeach
 
                                     {{--<option value="boxpadrao">Box padrão</option>--}}
