@@ -83,18 +83,105 @@
                      aria-labelledby="nav-adicionar-material-tab">
 
                     <form class="formulario" method="POST" role="form">
+
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome_material" name="nome_material"
-                                       placeholder="Nome">
+                                <label for="id">id</label>
+                                <input class="form-control" type="text" placeholder="1" readonly>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                       placeholder="Password">
+                                <label for="nome">Produto</label>
+                                <input class="form-control" type="text" placeholder="bx-01" readonly>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Vidro
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" name="options" id="option3" autocomplete="off"> Componente
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row mt-3 align-items-end">
+
+                            <div class="form-group col-md-4">
+                                <label for="select-categoria">Vidros</label>
+                                <select id="select-categoria" class="custom-select">
+                                    <option value="0" selected>Selecione um vidro</option>
+                                    <option value="">Vidro temperado</option>
+                                    <option value="">Vidro azul</option>
+                                    <option value="">Vidro blindado</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <a class="btn-link mb-3" href="{{ route('product.create') }}">
+                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-12">
+                                <div class="topo">
+                                    <h4 class="titulo">Vidros</h4>
+                                </div>
+
+                                @if(session('success'))
+                                    <div class="alerta">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="noborder" scope="col">Id</th>
+                                            <th class="noborder" scope="col">Nome</th>
+                                            <th class="noborder" scope="col">Preço m²</th>
+                                            <th class="noborder" scope="col">Ação</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Vidro temperado 08mm</td>
+                                            <td>100.0</td>
+                                            <td>
+                                                <a class="btn-link">
+                                                    <button class="btn btn-danger mb-1">Delete</button>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
                             </div>
 
                         </div>
