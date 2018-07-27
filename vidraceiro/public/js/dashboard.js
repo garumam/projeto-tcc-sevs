@@ -50,18 +50,21 @@ $(document).ready(function () {
                 boxdiversos.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
                 });
                 break;
             case "boxpadrao":
                 boxpadrao.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
                 });
                 break;
             case "ferragem1000":
                 ferragem1000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
                 });
 
                 break;
@@ -69,6 +72,7 @@ $(document).ready(function () {
                 ferragem1000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
                 });
                 break;
             default:
