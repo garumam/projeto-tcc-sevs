@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.category')->with('title', 'Categoria');
+        return view('dashboard.list.category')->with('title', 'Categorias');
     }
 
     public function create()

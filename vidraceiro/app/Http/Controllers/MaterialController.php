@@ -14,7 +14,7 @@ class MaterialController extends Controller
     public function index()
     {
         $titulotabs = ['Vidros','Aluminios','Componentes'];
-        return view('dashboard.list.material',compact('titulotabs'))->with('title','Adicionar material');
+        return view('dashboard.list.material',compact('titulotabs'))->with('title','Materiais');
     }
 
     public function create(Request $request)

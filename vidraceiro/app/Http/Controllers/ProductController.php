@@ -17,7 +17,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.product')->with('title', 'Produto');
+        return view('dashboard.list.product')->with('title', 'Produtos');
     }
 
 
