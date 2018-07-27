@@ -45,6 +45,7 @@ $(document).ready(function () {
         boxpadrao.css("display", "none");
         ferragem1000.css("display", "none");
         ferragem3000.css("display", "none");
+        selecionecategoria.css("display", "none");
 
         switch (valueSelected) {
             case "boxdiversos":
