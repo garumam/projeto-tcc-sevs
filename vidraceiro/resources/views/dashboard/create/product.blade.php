@@ -52,12 +52,12 @@
                             <div class="form-group col-md-4">
                                 <label>Imagem</label>
                                 <div class="imagem-modal">
-                                    <img id="image-selecionar2" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                    <img id="image-selecionar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                          alt="Responsive image">
                                     <a href="#" class="btn btn-lg btn-primary btn-custom w-50" data-toggle="modal"
                                        data-target="#imagensModal">Buscar</a>
-                                    <label for="url-image2"></label>
-                                    <input type="text" id="url-image2" name="url-image2" style="display: none;">
+                                    <label for="url-image"></label>
+                                    <input type="text" id="url-image" name="url-image" style="display: none;">
                                 </div>
 
                             </div>
@@ -108,7 +108,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Titulo do modal</h5>
+                    <h5 class="modal-title">Imagens</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>

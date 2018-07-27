@@ -12,16 +12,16 @@ $(document).ready(function () {
             container.hide();
         }
     });
-    $('.dropdown-menu li img').click(function () {
+    // $('.dropdown-menu li img').click(function () {
+    //     let value = $('#url-image');
+    //     value.val($(this).attr('src'));
+    //     $('#image-selecionar').attr("src", value.val());
+    // });
+
+    $('#gridImagens div img').click(function () {
         let value = $('#url-image');
         value.val($(this).attr('src'));
         $('#image-selecionar').attr("src", value.val());
-    });
-
-    $('#gridImagens div img').click(function () {
-        let value = $('#url-image2');
-        value.val($(this).attr('src'));
-        $('#image-selecionar2').attr("src", value.val());
         $('img').removeClass('thumbnail');
         $(this).addClass('thumbnail');
     });
@@ -30,8 +30,8 @@ $(document).ready(function () {
     $('#select-categoria').change(function () {
         let base_url = window.location.protocol + "//" + window.location.host;
         base_url = base_url + "/img/semimagem.png";
-        $('#url-image2').val(base_url);
-        $('#image-selecionar2').attr("src", base_url);
+        $('#url-image').val(base_url);
+        $('#image-selecionar').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');

@@ -278,7 +278,7 @@ body {
     border-top: none !important;
 }
 
-#image-selecionar2 {
+#image-selecionar {
     max-width: 120px;
     max-height: 150px;
     margin-bottom: 1rem;
@@ -309,10 +309,6 @@ body {
     padding: 1rem;
     height: 60px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.topo button {
-
 }
 
 .thumbnail{
