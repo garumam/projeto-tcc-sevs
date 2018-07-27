@@ -89,6 +89,17 @@ $(document).ready(function () {
                 break;
         }
     });
+    $('#bt-material').attr("href",'/materials/create/?material=vidro');
+
+    $('#nav-adicionar-Vidros-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?material=vidro');
+    });
+    $('#nav-adicionar-Aluminios-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?material=aluminio');
+    });
+    $('#nav-adicionar-Componentes-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?material=componente');
+    });
 
 
     // $('#form-product').on('submit',function (e) {

@@ -23,7 +23,7 @@
                         @endif
                     @endfor
                     <div class="topo-tab">
-                        <a class="btn-link" href="{{ route('users.create') }}">
+                        <a id="bt-material" class="btn-link" href="">
                             <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                         </a>
                     </div>

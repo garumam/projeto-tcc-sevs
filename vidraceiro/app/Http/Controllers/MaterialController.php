@@ -17,9 +17,9 @@ class MaterialController extends Controller
         return view('dashboard.list.material',compact('titulotabs'))->with('title','Adicionar material');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-
+        echo $_GET['material'];
     }
 
     public function store()
