@@ -7,7 +7,7 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-adicionar-produto-tab" data-toggle="tab"
+                    <a class="nav-item nav-link active noborder-left" id="nav-adicionar-produto-tab" data-toggle="tab"
                        href="#nav-adicionar-produto" role="tab" aria-controls="nav-adicionar-produto"
                        aria-selected="true">Adicionar Produto</a>
                     <a class="nav-item nav-link" id="nav-adicionar-material-tab" data-toggle="tab"
