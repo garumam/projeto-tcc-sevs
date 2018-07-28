@@ -114,6 +114,14 @@ $(document).ready(function () {
         $('#bt-order-invisible').click();
     });
 
+    $('#bt-product-visible').click(function () {
+        $('#bt-produto-product-invisible').click();
+    });
+
+    $('#bt-product-visible').click(function () {
+        $('#bt-material-product-invisible').click();
+    });
+
     $('#bt-provider-visible').click(function () {
         $('#bt-provider-invisible').click();
     });
