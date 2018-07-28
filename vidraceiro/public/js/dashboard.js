@@ -98,6 +98,10 @@ $(document).ready(function () {
         $('#botao-create-category').click();
     });
 
+    $('#bt-create-order').click(function () {
+        $('#botao-create-order').click();
+    });
+
     $('#nav-Orçamento-tab').click(function () {
         changeTextBtBudget("Salvar");
     });

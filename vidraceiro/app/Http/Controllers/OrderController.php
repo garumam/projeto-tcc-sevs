@@ -13,12 +13,12 @@ class OrderController extends Controller
 
     public function index()
     {
-
+        return view('dashboard.list.order')->with('title', 'Ordens de serviço');
     }
 
     public function create()
     {
-
+        return view('dashboard.create.order')->with('title', 'Nova Ordem de serviço');
     }
 
     public function store()
