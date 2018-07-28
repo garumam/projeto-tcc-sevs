@@ -162,6 +162,10 @@ $(document).ready(function () {
     });
     //fim orçamento form
 
+    $('#bt-budget-visible').click(function () {
+        //
+    });
+
 
     $('#bt-provider-visible').click(function () {
         $('#bt-provider-invisible').click();
