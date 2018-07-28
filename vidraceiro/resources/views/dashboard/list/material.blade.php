@@ -9,16 +9,16 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-adicionar-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
-                               href="#nav-adicionar-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-adicionar-{{$titulotabs[$i]}}"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab"
+                               aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link" id="nav-adicionar-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
-                               href="#nav-adicionar-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-adicionar-{{$titulotabs[$i]}}"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab"
+                               aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
@@ -34,8 +34,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-adicionar-{{$titulotabs[0]}}" role="tabpanel"
-                     aria-labelledby="nav-adicionar-{{$titulotabs[0]}}-tab">
+                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -162,8 +162,8 @@
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-adicionar-{{$titulotabs[1]}}" role="tabpanel"
-                     aria-labelledby="nav-adicionar-{{$titulotabs[1]}}-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -289,8 +289,8 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="nav-adicionar-{{$titulotabs[2]}}" role="tabpanel"
-                     aria-labelledby="nav-adicionar-{{$titulotabs[2]}}-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 

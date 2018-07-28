@@ -119,13 +119,13 @@ $(document).ready(function () {
     });
 
 
-    $('#nav-adicionar-Vidros-tab').click(function () {
+    $('#nav-Vidros-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
     });
-    $('#nav-adicionar-Aluminios-tab').click(function () {
+    $('#nav-Aluminios-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?tipo=aluminio');
     });
-    $('#nav-adicionar-Componentes-tab').click(function () {
+    $('#nav-Componentes-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?tipo=componente');
     });
 
