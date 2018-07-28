@@ -500,11 +500,10 @@
 
                     <form class="formulario" method="POST" role="form">
 
-
                         <div class="form-row">
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
-                                    <h4 class="card-title text-primary">Total</h4>
+                                    <h4 class="card-title cor-texto">Total</h4>
                                 </div>
                                 <label class="card-text">Produto BX-01</label>
                                 <label class="card-text">Produto BX-01</label>
@@ -520,7 +519,7 @@
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
-                                    <h4 class="card-title text-primary">Materiais</h4>
+                                    <h4 class="card-title cor-texto">Materiais</h4>
                                 </div>
                                 <label class="card-text">Vidro 1</label>
                                 <label class="card-text">Vidro 1</label>
@@ -536,7 +535,7 @@
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
-                                    <h4 class="card-title text-primary">Componentes</h4>
+                                    <h4 class="card-title cor-texto">Componentes</h4>
                                 </div>
                                 <label class="card-text">Roldana</label>
                                 <label class="card-text">Roldana</label>

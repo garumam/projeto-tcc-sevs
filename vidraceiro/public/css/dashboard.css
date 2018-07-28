@@ -88,6 +88,9 @@ body {
 
 /* auxiliar */
 
+.cor-texto {
+    color: #4264FB;
+}
 .nomp {
     padding: 0 !important;
     margin: 0 !important;
