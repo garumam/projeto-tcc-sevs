@@ -6,12 +6,11 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <a id="bt-{{$tipo}}-visible" class="btn-link" href="">
-                    <button class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
-                </a>
+                <button id="bt-{{$tipo}}-visible" class="btn btn-primary btn-custom" type="submit">Salvar</button>
             </div>
 
-            <form class="formulario" method="POST" role="form">
+            <form class="formulario" method="POST" role="form" action="{{route('materials.create')}}">
+                @csrf
                 <div class="form-row">
 
                     <div class="form-group col-md-4">

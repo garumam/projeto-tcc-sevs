@@ -20,7 +20,7 @@
                     @endfor
                     <div class="topo-tab">
 
-                        <button id="bt-product-visible" class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                        <button id="bt-product-visible" class="btn btn-primary btn-custom" type="submit">Adicionar</button>
 
                     </div>
                 </div>
@@ -34,7 +34,7 @@
 
                     <form id="form-product" class="formulario" method="POST" role="form"
                           action="{{route('products.create')}}">
-                        <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+                        @csrf
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
@@ -91,8 +91,8 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
-
+                    <form class="formulario" method="POST" role="form" action="{{route('products.create')}}">
+                        @csrf
                         <div class="form-row">
 
                             <div class="form-group col-md-4">

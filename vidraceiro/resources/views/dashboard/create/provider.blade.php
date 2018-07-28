@@ -6,12 +6,11 @@
 
             <div class="topo">
                 <h4 class="titulo">{{ $title }}</h4>
-                <a id="bt-provider-visible" class="btn-link" href="{{ route('providers.create') }}">
-                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
-                </a>
+                <button id="bt-provider-visible" class="btn btn-primary btn-custom" type="submit">Adicionar</button>
             </div>
 
-            <form class="formulario" method="POST" role="form">
+            <form class="formulario" method="POST" role="form" action="{{route('providers.create')}}">
+                @csrf
                 <div class="form-row">
 
                     <div class="form-group col-md-4">

@@ -8,7 +8,8 @@
                 <h4 class="titulo">Adicionar Usuarios </h4>
             </div>
 
-            <form class="formulario" method="POST" role="form">
+            <form class="formulario" method="POST" role="form" action="{{route('companies.create')}}">
+                @csrf
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
