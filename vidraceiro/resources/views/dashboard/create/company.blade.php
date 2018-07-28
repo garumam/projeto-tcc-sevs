@@ -36,7 +36,7 @@
                     <div class="form-group col-md-4">
                         <label for="uf">Selecione uma UF</label>
                         <select class="custom-select" id="uf" required>
-                            <option selected>Selecione...</option>
+                            <option value="" selected>Selecione...</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
