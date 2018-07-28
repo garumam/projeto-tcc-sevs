@@ -35,7 +35,8 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-situacao">Situação</label>
-                        <select id="select-situacao" name="select" class="custom-select">
+                        <select id="select-situacao" name="select" class="custom-select" required>
+                            <option value="" selected>Selecione algo...</option>
                             <option value="">Em aberto</option>
                             <option value="">Em andamento</option>
                             <option value="">Concluída</option>
@@ -49,8 +50,8 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-orcamentos">Orçamentos</label>
-                        <select id="select-orcamentos" class="custom-select">
-                            <option value="0" selected>Selecione um orçamento</option>
+                        <select id="select-orcamentos" class="custom-select" required>
+                            <option value="" selected>Selecione um orçamento</option>
                             <option value="">Orçamento 1</option>
                             <option value="">Orçamento 2</option>
                             <option value="">Orçamento 3</option>

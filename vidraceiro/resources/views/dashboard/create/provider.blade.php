@@ -20,7 +20,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="situacao">Situação</label>
-                        <select class="custom-select" id="situacao">
+                        <select class="custom-select" id="situacao" required>
                             <option selected>Selecione...</option>
                             <option value="1">Ativo</option>
                             <option value="2">Desativado</option>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="uf">UF</label>
-                        <select class="custom-select" id="uf">
+                        <select class="custom-select" id="uf" required>
                             <option selected>Selecione...</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>

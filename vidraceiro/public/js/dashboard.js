@@ -167,6 +167,9 @@ $(document).ready(function () {
         $('#bt-provider-invisible').click();
     });
 
+    $('#bt-company-visible').click(function () {
+        $('#bt-company-invisible').click();
+    });
 
     $('#nav-Vidros-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?tipo=vidro');

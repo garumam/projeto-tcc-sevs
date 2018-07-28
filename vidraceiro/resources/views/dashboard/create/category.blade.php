@@ -13,36 +13,25 @@
                 @csrf
                 <div class="form-row">
 
-                    <div class="form-group col-md-7">
+                    <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
                     </div>
 
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-7">
-                        <label for="tipo">Selecione o tipo</label>
-                        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                            <label class="btn btn-primary active w-33 p-1">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Vidro
-                            </label>
-                            <label class="btn btn-primary w-33 p-1">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
-                            </label>
-                            <label class="btn btn-primary w-33 p-1">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Componente
-                            </label>
-                        </div>
+                    <div class="form-group col-md-4">
+                        <label for="select-categoria">Selecione um material</label>
+                        <select id="select-categoria" class="custom-select" required>
+                            <option value="" selected>Selecione aqui...</option>
+                            <option value="">Vidro</option>
+                            <option value="">Aluminio</option>
+                            <option value="">Componente</option>
+                        </select>
                     </div>
 
-                </div>
-
-                <div class="form-row mb-4">
-                    <div class="form-group col-md-7">
+                    <div class="form-group col-md-4">
                         <label for="select-categoria">Selecione o grupo de imagens</label>
-                        <select id="select-categoria" class="custom-select">
-                            <option value="0" selected>Selecione um grupo</option>
+                        <select id="select-categoria" class="custom-select" required>
+                            <option value="" selected>Selecione um grupo</option>
                             <option value="">Box diversos</option>
                             <option value="">Box padrão</option>
                             <option value="">ferragem 1000</option>
@@ -50,6 +39,7 @@
                             <option value="">Kit sacada</option>
                         </select>
                     </div>
+
                 </div>
 
                 <button id="bt-category-invisible" class="d-none" type="submit"></button>

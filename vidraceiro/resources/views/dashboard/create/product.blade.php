@@ -51,8 +51,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Categoria</label>
-                                <select id="select-categoria" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione uma categoria</option>
+                                <select id="select-categoria" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione uma categoria</option>
 
                                     @foreach($categorias as $categoria)
                                         @php
@@ -127,8 +127,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Vidros</label>
-                                <select id="select-categoria" class="custom-select">
-                                    <option value="0" selected>Selecione um vidro</option>
+                                <select id="select-categoria" class="custom-select" required>
+                                    <option value="" selected>Selecione um vidro</option>
                                     <option value="">Vidro temperado</option>
                                     <option value="">Vidro azul</option>
                                     <option value="">Vidro blindado</option>

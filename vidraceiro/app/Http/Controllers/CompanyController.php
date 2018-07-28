@@ -13,12 +13,12 @@ class CompanyController extends Controller
 
     public function index()
     {
-
+        return view('dashboard.create.company')->with('title','Dados da Empresa');
     }
 
     public function create()
     {
-
+        return view('dashboard.create.company')->with('title','Dados da Empresa');
     }
 
     public function store()

@@ -106,8 +106,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-UF">UF</label>
-                                <select id="select-UF" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione uma UF</option>
+                                <select id="select-UF" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione uma UF</option>
                                     <option value="">RJ</option>
                                     <option value="">MG</option>
                                     <option value="">SP</option>
@@ -158,8 +158,8 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione um produto</option>
+                                <select id="select-produto" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione um produto</option>
                                     <option value="">bx-a1</option>
                                     <option value="">bx-c1</option>
                                     <option value="">r2-d2</option>
@@ -227,8 +227,8 @@
 
                             <div class="form-group col-md">
                                 <label for="select-tipo">Selecione um tipo</label>
-                                <select id="select-tipo" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione um tipo</option>
+                                <select id="select-tipo" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione um tipo</option>
                                     <option value="">box diversos</option>
                                     <option value="">box padrão</option>
                                     <option value="">ferragem 1000</option>
@@ -248,8 +248,8 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione um produto</option>
+                                <select id="select-produto" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione um produto</option>
                                     <option value="">bx-a1</option>
                                     <option value="">bx-c1</option>
                                     <option value="">r2-d2</option>
@@ -322,8 +322,8 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select">
-                                    <option value="0" selected>Selecione um produto</option>
+                                <select id="select-produto" name="select" class="custom-select" required>
+                                    <option value="" selected>Selecione um produto</option>
                                     <option value="">bx-a1</option>
                                     <option value="">bx-c1</option>
                                     <option value="">r2-d2</option>
@@ -356,8 +356,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Vidros</label>
-                                <select id="select-categoria" class="custom-select">
-                                    <option value="0" selected>Selecione um vidro</option>
+                                <select id="select-categoria" class="custom-select" required>
+                                    <option value="" selected>Selecione um vidro</option>
                                     <option value="">Vidro temperado</option>
                                     <option value="">Vidro azul</option>
                                     <option value="">Vidro blindado</option>
