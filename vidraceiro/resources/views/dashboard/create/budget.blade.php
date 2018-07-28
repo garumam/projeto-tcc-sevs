@@ -134,7 +134,7 @@
 
                         </div>
 
-                        <button id="bt-orcamento-invisible" class="d-none" type="submit"></button>
+                        <button id="bt-orcamento-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -210,7 +210,7 @@
 
                         </div>
 
-                        <button id="bt-edit-orca-invisible" class="d-none" type="submit"></button>
+                        <button id="bt-edit-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -300,7 +300,7 @@
 
                         </div>
 
-                        <button id="bt-add-orca-invisible" class="d-none" type="submit"></button>
+                        <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -494,7 +494,7 @@
                         </div>
                         <!-- FIM DA TABELA DE MATERIAL DO MATERIAL -->
 
-                        <button id="bt-material-orca-invisible" class="d-none" type="submit"></button>
+                        <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -549,7 +549,7 @@
 
                         </div>
 
-                        <button id="bt-total-orca-invisible" class="d-none" type="submit"></button>
+                        <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
