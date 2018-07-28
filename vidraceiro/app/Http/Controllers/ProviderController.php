@@ -13,12 +13,12 @@ class ProviderController extends Controller
 
     public function index()
     {
-
+        return view('dashboard.list.provider')->with('title','Fornecedores');
     }
 
     public function create()
     {
-
+        return view('dashboard.create.provider')->with('title','Criar fornecedor');
     }
 
     public function store()
