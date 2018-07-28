@@ -89,7 +89,7 @@ $(document).ready(function () {
                 break;
         }
     });
-    $('#bt-material').attr("href",'/materials/create/?material=vidro');
+    $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
 
     $('#bt-create-user').click(function () {
        $('#botao-create-user').click();
@@ -120,13 +120,13 @@ $(document).ready(function () {
 
 
     $('#nav-adicionar-Vidros-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?material=vidro');
+        $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
     });
     $('#nav-adicionar-Aluminios-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?material=aluminio');
+        $('#bt-material').attr("href",'/materials/create/?tipo=aluminio');
     });
     $('#nav-adicionar-Componentes-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?material=componente');
+        $('#bt-material').attr("href",'/materials/create/?tipo=componente');
     });
 
     function changeTextBtBudget($texto) {

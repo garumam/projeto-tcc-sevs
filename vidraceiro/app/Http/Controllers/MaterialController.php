@@ -19,7 +19,8 @@ class MaterialController extends Controller
 
     public function create(Request $request)
     {
-        echo $_GET['material'];
+        $tipo = $request->tipo;
+        return view('dashboard.create.material',compact('tipo'))->with('title','Criar '.$tipo);
     }
 
     public function store()
