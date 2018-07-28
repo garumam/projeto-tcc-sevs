@@ -40,8 +40,8 @@
                        {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
-                        <a id="bt-budget-pdf" class="btn-link" href="">
-                            <button class="btn btn-primary btn-block btn-custom" type="submit">Gerar PDF</button>
+                        <a class="btn-link" href="">
+                            <button id="bt-budget-pdf" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
                         </a>
                     </div>
                 </div>

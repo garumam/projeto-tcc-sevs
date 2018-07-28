@@ -98,6 +98,27 @@ $(document).ready(function () {
         $('#botao-create-category').click();
     });
 
+    $('#nav-Orçamento-tab').click(function () {
+        changeTextBtBudget("Salvar");
+    });
+
+    $('#nav-Editar-tab').click(function () {
+        changeTextBtBudget("Salvar");
+    });
+
+    $('#nav-Adicionar-tab').click(function () {
+        changeTextBtBudget("Salvar");
+    });
+
+    $('#nav-Material-tab').click(function () {
+        changeTextBtBudget("Salvar");
+    });
+
+    $('#nav-Total-tab').click(function () {
+        changeTextBtBudget("Gerar PDF");
+    });
+
+
     $('#nav-adicionar-Vidros-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?material=vidro');
     });
@@ -108,7 +129,9 @@ $(document).ready(function () {
         $('#bt-material').attr("href",'/materials/create/?material=componente');
     });
 
-
+    function changeTextBtBudget($texto) {
+        $('#bt-budget-pdf').text($texto);
+    }
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
     //     // let formData = $('form').serializeArray();
