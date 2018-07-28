@@ -450,7 +450,9 @@ td {
 }
 
 .custom-card-total {
-    box-shadow: 0px 3px 8px 0px rgba(23, 24, 32, 0.1);
+    /*box-shadow: 0px 3px 8px 0px rgba(23, 24, 32, 0.1);*/
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
 }
 
 footer {

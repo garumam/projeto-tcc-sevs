@@ -503,8 +503,9 @@
 
                         <div class="form-row">
                             <div class="card-material custom-card custom-card-total col-md p-3">
-                                <h4 class="card-title text-primary">Total</h4>
-                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <div class="topo px-0 py-0 h-auto">
+                                    <h4 class="card-title text-primary">Total</h4>
+                                </div>
                                 <label class="card-text">Produto BX-01</label>
                                 <label class="card-text">Produto BX-01</label>
                                 <label class="card-text">Produto BX-01</label>
@@ -518,8 +519,9 @@
                         <div class="form-row">
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
-                                <h4 class="card-title text-primary">Materiais</h4>
-                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <div class="topo px-0 py-0 h-auto">
+                                    <h4 class="card-title text-primary">Materiais</h4>
+                                </div>
                                 <label class="card-text">Vidro 1</label>
                                 <label class="card-text">Vidro 1</label>
                                 <label class="card-text">Vidro 1</label>
@@ -533,8 +535,9 @@
                         <div class="form-row">
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
-                                <h4 class="card-title text-primary">Componentes</h4>
-                                <span class="card-shadow-1dp col-md mb-2"></span>
+                                <div class="topo px-0 py-0 h-auto">
+                                    <h4 class="card-title text-primary">Componentes</h4>
+                                </div>
                                 <label class="card-text">Roldana</label>
                                 <label class="card-text">Roldana</label>
                                 <label class="card-text">Roldana</label>
