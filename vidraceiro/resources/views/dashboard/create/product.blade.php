@@ -19,9 +19,9 @@
                         @endif
                     @endfor
                     <div class="topo-tab">
-                        <a id="bt-product-visible" class="btn-link" href="">
-                            <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
-                        </a>
+
+                        <button id="bt-product-visible" class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+
                     </div>
                 </div>
             </nav>

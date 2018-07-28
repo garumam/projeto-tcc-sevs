@@ -116,9 +116,51 @@ $(document).ready(function () {
         $('#bt-order-invisible').click();
     });
 
+    //inicio produto form
     $('#bt-product-visible').click(function () {
-        //
+        if($('#nav-Produto-tab').hasClass('active')){
+            //form tab produto
+            $('#bt-produto-product-invisible').click();
+        }else{
+            //form tab material
+            $('#bt-material-product-invisible').click();
+        }
     });
+    //fim produto form
+
+    //inicio orçamento form
+    $('#bt-budget-visible').click(function () {
+
+        switch(true){
+            case $('#nav-Orçamento-tab').hasClass('active'):
+
+                $('#bt-orcamento-budget-invisible').click();
+
+                break;
+            case $('#nav-Editar-tab').hasClass('active'):
+
+                $('#bt-edit-budget-invisible').click();
+
+                break;
+            case $('#nav-Adicionar-tab').hasClass('active'):
+
+                $('#bt-add-budget-invisible').click();
+
+                break;
+            case $('#nav-Material-tab').hasClass('active'):
+
+                $('#bt-material-budget-invisible').click();
+
+                break;
+            case $('#nav-Total-tab').hasClass('active'):
+
+                $('#bt-total-budget-invisible').click();
+
+                break;
+        }
+
+    });
+    //fim orçamento form
 
 
     $('#bt-provider-visible').click(function () {
@@ -159,7 +201,7 @@ $(document).ready(function () {
 
 
     function changeTextBtBudget($texto) {
-        $('#bt-budget-pdf').text($texto);
+        $('#bt-budget-visible').text($texto);
     }
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();

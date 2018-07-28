@@ -40,9 +40,7 @@
                        {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
-                        <a class="btn-link" href="">
                             <button id="bt-budget-visible" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
-                        </a>
                     </div>
                 </div>
             </nav>
