@@ -91,8 +91,8 @@ $(document).ready(function () {
     });
     $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
 
-    $('#bt-create-user').click(function () {
-       $('#botao-create-user').click();
+    $('#bt-user-visible').click(function () {
+       $('#bt-user-invisible').click();
     });
     $('#bt-create-category').click(function () {
         $('#botao-create-category').click();
