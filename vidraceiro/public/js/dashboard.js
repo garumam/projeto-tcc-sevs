@@ -94,12 +94,28 @@ $(document).ready(function () {
     $('#bt-user-visible').click(function () {
        $('#bt-user-invisible').click();
     });
-    $('#bt-create-category').click(function () {
-        $('#botao-create-category').click();
+    $('#bt-category-visible').click(function () {
+        $('#bt-category-invisible').click();
+    });
+
+    $('#bt-vidro-visible').click(function () {
+        $('#bt-category-invisible').click();
+    });
+
+    $('#bt-aluminio-visible').click(function () {
+        $('#bt-category-invisible').click();
+    });
+
+    $('#bt-componente-visible').click(function () {
+        $('#bt-category-invisible').click();
     });
 
     $('#bt-order-visible').click(function () {
         $('#bt-order-invisible').click();
+    });
+
+    $('#bt-provider-visible').click(function () {
+        $('#bt-provider-invisible').click();
     });
 
     $('#nav-Orçamento-tab').click(function () {

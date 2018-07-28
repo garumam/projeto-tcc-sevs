@@ -6,8 +6,8 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <a class="btn-link" href="">
-                    <button id="bt-{{$tipo}}-visible" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
+                <a id="bt-{{$tipo}}-visible" class="btn-link" href="">
+                    <button class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
                 </a>
             </div>
 
