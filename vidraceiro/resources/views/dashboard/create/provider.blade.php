@@ -6,7 +6,7 @@
 
             <div class="topo">
                 <h4 class="titulo">{{ $title }}</h4>
-                <a class="btn-link" href="{{ route('providers.create') }}">
+                <a id="bt-provider-visible" class="btn-link" href="{{ route('providers.create') }}">
                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                 </a>
             </div>
@@ -102,7 +102,7 @@
                     </div>
 
                 </div>
-                <button class="d-none" type="submit">Enviar</button>
+                <button id="bt-provider-invisible" class="d-none" type="submit"></button>
 
             </form>
         </div>

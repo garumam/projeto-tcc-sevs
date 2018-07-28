@@ -13,6 +13,11 @@
                     <a class="nav-item nav-link" id="nav-adicionar-material-tab" data-toggle="tab"
                        href="#nav-adicionar-material" role="tab" aria-controls="nav-adicionar-material"
                        aria-selected="false">{{$titulotabs['tab2']}}</a>
+                    <div class="topo-tab">
+                        <a id="bt-produto-visible" class="btn-link" href="">
+                            <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                        </a>
+                    </div>
                 </div>
             </nav>
             <!-- Fim tab de Produto-->
@@ -73,8 +78,7 @@
 
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-custom w-50" type="submit">Criar
-                        </button>
+                        <button id="bt-produto-product-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -240,7 +244,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block btn-custom w-50" type="submit">Enviar</button>
+                        <button id="bt-material-product-invisible" class="d-none" type="submit"></button>
 
                     </form>
 

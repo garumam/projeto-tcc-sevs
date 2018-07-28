@@ -6,7 +6,7 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <a id="bt-create-user" class="btn-link" href="#">
+                <a id="bt-user-visible" class="btn-link" href="#">
                     <button class="btn btn-primary btn-block btn-custom" type="button">Adicionar</button>
                 </a>
             </div>
@@ -51,8 +51,7 @@
                     </div>
 
                 </div>
-                <button id="botao-create-user" class="btn btn-lg btn-primary btn-block btn-custom w-33 d-none" type="submit">Enviar
-                </button>
+                <button id="bt-user-invisible" class="d-none" type="submit"></button>
 
             </form>
         </div>
