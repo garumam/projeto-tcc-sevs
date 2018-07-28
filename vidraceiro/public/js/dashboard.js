@@ -120,6 +120,10 @@ $(document).ready(function () {
         //
     });
 
+    $('#bt-budget-visible').click(function () {
+        //
+    });
+
 
     $('#bt-provider-visible').click(function () {
         $('#bt-provider-invisible').click();
