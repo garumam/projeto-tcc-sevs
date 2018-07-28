@@ -96,7 +96,7 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
-                                <label for="id">id</label>
+                                <label for="id">Id</label>
                                 <input class="form-control" type="text" placeholder="1" readonly>
                             </div>
 
@@ -109,17 +109,14 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-8">
-                                <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                    <label class="btn btn-primary active w-33">
-                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Vidro
-                                    </label>
-                                    <label class="btn btn-primary w-33">
-                                        <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
-                                    </label>
-                                    <label class="btn btn-primary w-33">
-                                        <input type="radio" name="options" id="option3" autocomplete="off"> Componente
-                                    </label>
-                                </div>
+
+                                <label for="select-material">Materiais</label>
+                                <select id="select-material" class="custom-select">
+                                    <option value="">Vidros</option>
+                                    <option value="">Aluminios</option>
+                                    <option value="">Componentes</option>
+                                </select>
+
                             </div>
                         </div>
 
