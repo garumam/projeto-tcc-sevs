@@ -91,6 +91,13 @@ $(document).ready(function () {
     });
     $('#bt-material').attr("href",'/materials/create/?material=vidro');
 
+    $('#bt-create-user').click(function () {
+       $('#botao-create-user').click();
+    });
+    $('#bt-create-category').click(function () {
+        $('#botao-create-category').click();
+    });
+
     $('#nav-adicionar-Vidros-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?material=vidro');
     });

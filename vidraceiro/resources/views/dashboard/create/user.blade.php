@@ -6,9 +6,12 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
+                <a id="bt-create-user" class="btn-link" href="#">
+                    <button class="btn btn-primary btn-block btn-custom" type="button">Adicionar</button>
+                </a>
             </div>
 
-            <form class="formulario" method="POST" role="form"
+            <form id="formulario-create-user" class="formulario" method="POST" role="form"
                   action="{{ Request::is('users/*/edit') ? route('users.update',['id'=> $user->id]) : route('users.store') }}">
                 @if(Request::is('users/*/edit'))
                     <input type="hidden" name="_method" value="PATCH">
@@ -48,7 +51,7 @@
                     </div>
 
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-custom w-33" type="submit">Enviar
+                <button id="botao-create-user" class="btn btn-lg btn-primary btn-block btn-custom w-33 d-none" type="submit">Enviar
                 </button>
 
             </form>

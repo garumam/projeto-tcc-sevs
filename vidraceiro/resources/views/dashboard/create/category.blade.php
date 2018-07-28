@@ -6,6 +6,9 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
+                <a id="bt-create-category" class="btn-link" href="#">
+                    <button class="btn btn-primary btn-block btn-custom" type="button">Adicionar</button>
+                </a>
             </div>
 
             <form class="formulario" method="POST" role="form">
@@ -50,7 +53,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block btn-custom w-50" type="submit">Enviar</button>
+                <button id="botao-create-category" class="btn btn-lg btn-primary btn-block btn-custom w-50 d-none" type="submit">Enviar</button>
 
             </form>
         </div>
