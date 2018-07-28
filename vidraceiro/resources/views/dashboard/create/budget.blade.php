@@ -41,7 +41,7 @@
 
                     <div class="topo-tab">
                         <a class="btn-link" href="">
-                            <button id="bt-budget-pdf" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
+                            <button id="bt-budget-visible" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
                         </a>
                     </div>
                 </div>
@@ -133,8 +133,8 @@
 
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-custom w-50" type="submit">Criar
-                        </button>
+
+                        <button id="bt-orcamento-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -209,6 +209,8 @@
                             </div>
 
                         </div>
+
+                        <button id="bt-edit-orca-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -297,6 +299,8 @@
                             </div>
 
                         </div>
+
+                        <button id="bt-add-orca-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -490,6 +494,7 @@
                         </div>
                         <!-- FIM DA TABELA DE MATERIAL DO MATERIAL -->
 
+                        <button id="bt-material-orca-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
@@ -544,6 +549,7 @@
 
                         </div>
 
+                        <button id="bt-total-orca-invisible" class="d-none" type="submit"></button>
 
                     </form>
 
