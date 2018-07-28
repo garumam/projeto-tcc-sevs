@@ -98,8 +98,8 @@ $(document).ready(function () {
         $('#botao-create-category').click();
     });
 
-    $('#bt-create-order').click(function () {
-        $('#botao-create-order').click();
+    $('#bt-order-visible').click(function () {
+        $('#bt-order-invisible').click();
     });
 
     $('#nav-Orçamento-tab').click(function () {
