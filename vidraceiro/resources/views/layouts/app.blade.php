@@ -90,6 +90,12 @@
                             <p>Empresa</p>
                         </a>
                     </li>
+                    <li {{ Request::is('pdf') ? 'class=active' : '' }}>
+                        <a href="{{ route('pdf.index') }}">
+                            <i class="pe-7s-rocket"></i>
+                            <p>Gerar PDF</p>
+                        </a>
+                    </li>
                     <li class="">
                         <i class="pe-7s-rocket"></i>
                         <div class="borda-top"></div>

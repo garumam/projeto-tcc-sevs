@@ -103,6 +103,16 @@ Route::patch('/companies/{id}','CompanyController@update')->name('companies.upda
 Route::delete('/companies/{id}','CompanyController@destroy')->name('companies.destroy');
 
 
+//rotas da gerar pdf
+Route::get('/pdf','PdfController@index')->name('pdf.index');
+Route::get('/pdf/create','PdfController@create')->name('pdf.create');
+Route::post('/pdf','PdfController@store')->name('pdf.store');
+Route::get('/pdf/{user}','PdfController@show')->name('pdf.show');
+Route::get('/pdf/{id}/edit','PdfController@edit')->name('pdf.edit');
+Route::patch('/pdf/{id}','PdfController@update')->name('pdf.update');
+Route::delete('/pdf/{id}','PdfController@destroy')->name('pdf.destroy');
+
+
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

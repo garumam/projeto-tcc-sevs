@@ -171,6 +171,12 @@ $(document).ready(function () {
         $('#bt-company-invisible').click();
     });
 
+    $('#bt-pdf-visible').click(function () {
+        $('#bt-pdf-invisible').click();
+    });
+
+
+
     $('#nav-Vidros-tab').click(function () {
         $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
     });
