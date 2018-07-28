@@ -18,7 +18,8 @@ class BudgetController extends Controller
 
     public function create()
     {
-        return view('dashboard.create.budget')->with('title', 'Novo Orçamento');
+        $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
+        return view('dashboard.create.budget',compact('titulotabs'))->with('title', 'Novo Orçamento');
     }
 
     public function store()

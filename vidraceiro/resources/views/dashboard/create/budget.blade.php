@@ -7,30 +7,37 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    @for($i = 0; $i < count($titulotabs); $i++)
+                        @if($i == 0)
+                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="true">{{$titulotabs[$i]}}</a>
+                        @else
+                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                    @endif
+                @endfor
 
-                    <a class="nav-item nav-link active noborder-left" id="nav-orcamento-tab" data-toggle="tab"
-                       href="#nav-orcamento" role="tab" aria-controls="nav-orcamento"
-                       aria-selected="true">Orçamento</a>
+                {{--<!-- INICIO ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
 
-                    <!-- INICIO ABA EXTRA AO EDITAR ORÇAMENTO -->
+                    {{--<a class="nav-item nav-link" id="nav-editar-tab" data-toggle="tab"--}}
+                       {{--href="#nav-editar" role="tab" aria-controls="nav-editar"--}}
+                       {{--aria-selected="false">Editar</a>--}}
 
-                    <a class="nav-item nav-link" id="nav-editar-tab" data-toggle="tab"
-                       href="#nav-editar" role="tab" aria-controls="nav-editar"
-                       aria-selected="false" >Editar</a>
+                    {{--<!-- FIM ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
 
-                    <!-- FIM ABA EXTRA AO EDITAR ORÇAMENTO -->
+                    {{--<a class="nav-item nav-link" id="nav-adicionar-tab" data-toggle="tab"--}}
+                       {{--href="#nav-adicionar" role="tab" aria-controls="nav-adicionar"--}}
+                       {{--aria-selected="false">Adicionar</a>--}}
 
-                    <a class="nav-item nav-link" id="nav-adicionar-tab" data-toggle="tab"
-                       href="#nav-adicionar" role="tab" aria-controls="nav-adicionar"
-                       aria-selected="false">Adicionar</a>
+                    {{--<a class="nav-item nav-link" id="nav-material-tab" data-toggle="tab"--}}
+                       {{--href="#nav-material" role="tab" aria-controls="nav-material"--}}
+                       {{--aria-selected="false">Material</a>--}}
 
-                    <a class="nav-item nav-link" id="nav-material-tab" data-toggle="tab"
-                       href="#nav-material" role="tab" aria-controls="nav-material"
-                       aria-selected="false">Material</a>
-
-                    <a class="nav-item nav-link" id="nav-total-tab" data-toggle="tab"
-                       href="#nav-total" role="tab" aria-controls="nav-total"
-                       aria-selected="false">Total</a>
+                    {{--<a class="nav-item nav-link" id="nav-total-tab" data-toggle="tab"--}}
+                       {{--href="#nav-total" role="tab" aria-controls="nav-total"--}}
+                       {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
                         <a id="bt-budget-pdf" class="btn-link" href="">
@@ -43,8 +50,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-orcamento" role="tabpanel"
-                     aria-labelledby="nav-orcamento-tab">
+                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
                           action="{{route('budgets.create')}}">
@@ -65,13 +72,15 @@
 
                             <div class="form-group col-md-4">
                                 <label>Telefone</label>
-                                <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(00)0000-0000"
+                                <input type="tel" class="form-control" id="telefone" name="telefone"
+                                       placeholder="(00)0000-0000"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Rua</label>
-                                <input type="text" class="form-control" id="rua" name="rua" placeholder="av. de algum lugar"
+                                <input type="text" class="form-control" id="rua" name="rua"
+                                       placeholder="av. de algum lugar"
                                        required>
                             </div>
 
@@ -83,7 +92,8 @@
 
                             <div class="form-group col-md-4">
                                 <label>N°</label>
-                                <input type="number" class="form-control" id="numero-rua" name="numero-rua" placeholder="100"
+                                <input type="number" class="form-control" id="numero-rua" name="numero-rua"
+                                       placeholder="100"
                                        required>
                             </div>
 
@@ -131,8 +141,8 @@
                 </div>
 
                 <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
-                <div class="tab-pane fade" id="nav-editar" role="tabpanel"
-                     aria-labelledby="nav-editar-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -141,7 +151,8 @@
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                                 <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto" style="display: none;">
+                                <input type="text" id="url-image-produto" name="url-image-produto"
+                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
@@ -158,7 +169,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Descrição</label>
-                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"
+                                <input type="text" class="form-control" id="descricao" name="descricao"
+                                       placeholder="Descrição"
                                        required>
                             </div>
 
@@ -170,25 +182,29 @@
 
                             <div class="form-group col-md-4">
                                 <label>Largura</label>
-                                <input type="number" class="form-control" id="largura" name="largura" placeholder="1,200"
+                                <input type="number" class="form-control" id="largura" name="largura"
+                                       placeholder="1,200"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="quantidade"
+                                <input type="number" class="form-control" id="quantidade" name="quantidade"
+                                       placeholder="quantidade"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Localização</label>
-                                <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="Localização"
+                                <input type="text" class="form-control" id="localizacao" name="localizacao"
+                                       placeholder="Localização"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra" placeholder=""
+                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra"
+                                       placeholder=""
                                        required>
                             </div>
 
@@ -199,8 +215,8 @@
                 </div>
                 <!-- FIM CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
 
-                <div class="tab-pane fade" id="nav-adicionar" role="tabpanel"
-                     aria-labelledby="nav-adicionar-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -223,7 +239,8 @@
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                                 <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto" style="display: none;">
+                                <input type="text" id="url-image-produto" name="url-image-produto"
+                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
@@ -240,7 +257,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Descrição</label>
-                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"
+                                <input type="text" class="form-control" id="descricao" name="descricao"
+                                       placeholder="Descrição"
                                        required>
                             </div>
 
@@ -252,25 +270,29 @@
 
                             <div class="form-group col-md-4">
                                 <label>Largura</label>
-                                <input type="number" class="form-control" id="largura" name="largura" placeholder="1,200"
+                                <input type="number" class="form-control" id="largura" name="largura"
+                                       placeholder="1,200"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="quantidade"
+                                <input type="number" class="form-control" id="quantidade" name="quantidade"
+                                       placeholder="quantidade"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Localização</label>
-                                <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="Localização"
+                                <input type="text" class="form-control" id="localizacao" name="localizacao"
+                                       placeholder="Localização"
                                        required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra" placeholder=""
+                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra"
+                                       placeholder=""
                                        required>
                             </div>
 
@@ -279,8 +301,8 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade" id="nav-material" role="tabpanel"
-                           aria-labelledby="nav-material-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
@@ -289,7 +311,8 @@
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                                 <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto" style="display: none;">
+                                <input type="text" id="url-image-produto" name="url-image-produto"
+                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
@@ -309,7 +332,8 @@
                             <div class="form-group col-md-8">
                                 <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
                                     <label class="btn btn-primary active w-33">
-                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Vidro
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                                        Vidro
                                     </label>
                                     <label class="btn btn-primary w-33">
                                         <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
@@ -336,7 +360,8 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <a class="btn-link mb-3" href="{{ route('budgets.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
+                                    </button>
                                 </a>
                             </div>
                         </div>
@@ -470,8 +495,8 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="nav-total" role="tabpanel"
-                     aria-labelledby="nav-total-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 
