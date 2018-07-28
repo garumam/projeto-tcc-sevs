@@ -14,7 +14,7 @@
                        href="#nav-adicionar-material" role="tab" aria-controls="nav-adicionar-material"
                        aria-selected="false">{{$titulotabs['tab2']}}</a>
                     <div class="topo-tab">
-                        <a id="bt-produto-visible" class="btn-link" href="">
+                        <a id="bt-product-visible" class="btn-link" href="">
                             <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                         </a>
                     </div>
