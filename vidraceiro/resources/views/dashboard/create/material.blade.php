@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
                 <a class="btn-link" href="">
-                    <button id="bt-{{$tipo}}" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
+                    <button id="bt-{{$tipo}}-visible" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
                 </a>
             </div>
 
@@ -38,7 +38,7 @@
 
 
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-custom w-3277" type="submit">Enviar</button>
+                <button id="bt-{{$tipo}}-invisible" class="d-none" type="submit"></button>
 
             </form>
         </div>

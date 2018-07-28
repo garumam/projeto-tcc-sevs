@@ -6,7 +6,7 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <a id="bt-create-order" class="btn-link" href="#">
+                <a id="bt-order-visible" class="btn-link" href="#">
                     <button class="btn btn-primary btn-block btn-custom" type="button">Adicionar</button>
                 </a>
             </div>
@@ -126,7 +126,7 @@
                 <!-- FIM DA TABELA DE ORÇAMENTO -->
 
 
-                <button id="botao-create-order" class="btn btn-lg btn-primary btn-block btn-custom w-3277 d-none" type="submit">Enviar</button>
+                <button id="bt-order-invisible" class="d-none" type="submit"></button>
 
             </form>
         </div>
