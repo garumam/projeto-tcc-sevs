@@ -9,38 +9,41 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
                             <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
-                    @endif
-                @endfor
+                        @endif
+                    @endfor
 
-                {{--<!-- INICIO ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
+                    {{--<!-- INICIO ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
 
                     {{--<a class="nav-item nav-link" id="nav-editar-tab" data-toggle="tab"--}}
-                       {{--href="#nav-editar" role="tab" aria-controls="nav-editar"--}}
-                       {{--aria-selected="false">Editar</a>--}}
+                    {{--href="#nav-editar" role="tab" aria-controls="nav-editar"--}}
+                    {{--aria-selected="false">Editar</a>--}}
 
                     {{--<!-- FIM ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
 
                     {{--<a class="nav-item nav-link" id="nav-adicionar-tab" data-toggle="tab"--}}
-                       {{--href="#nav-adicionar" role="tab" aria-controls="nav-adicionar"--}}
-                       {{--aria-selected="false">Adicionar</a>--}}
+                    {{--href="#nav-adicionar" role="tab" aria-controls="nav-adicionar"--}}
+                    {{--aria-selected="false">Adicionar</a>--}}
 
                     {{--<a class="nav-item nav-link" id="nav-material-tab" data-toggle="tab"--}}
-                       {{--href="#nav-material" role="tab" aria-controls="nav-material"--}}
-                       {{--aria-selected="false">Material</a>--}}
+                    {{--href="#nav-material" role="tab" aria-controls="nav-material"--}}
+                    {{--aria-selected="false">Material</a>--}}
 
                     {{--<a class="nav-item nav-link" id="nav-total-tab" data-toggle="tab"--}}
-                       {{--href="#nav-total" role="tab" aria-controls="nav-total"--}}
-                       {{--aria-selected="false">Total</a>--}}
+                    {{--href="#nav-total" role="tab" aria-controls="nav-total"--}}
+                    {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
-                            <button id="bt-budget-visible" class="btn btn-primary btn-block btn-custom" type="submit">Salvar</button>
+                        <button id="bt-budget-visible" class="btn btn-primary btn-block btn-custom" type="submit">
+                            Salvar
+                        </button>
                     </div>
                 </div>
             </nav>
@@ -142,8 +145,8 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
-
+                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                        @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
@@ -218,8 +221,8 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
-
+                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                        @csrf
                         <div class="form-row">
 
                             <div class="form-group col-md">
@@ -306,8 +309,8 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
-
+                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                        @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
@@ -501,8 +504,8 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
-
+                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                        @csrf
                         <div class="form-row">
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
