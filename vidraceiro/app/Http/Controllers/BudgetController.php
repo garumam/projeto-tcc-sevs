@@ -13,7 +13,7 @@ class BudgetController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.budget')->with('title', 'Orçamento');
+        return view('dashboard.list.budget')->with('title', 'Orçamentos');
     }
 
     public function create()
