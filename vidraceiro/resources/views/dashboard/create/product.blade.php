@@ -7,12 +7,17 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active noborder-left" id="nav-adicionar-produto-tab" data-toggle="tab"
-                       href="#nav-adicionar-produto" role="tab" aria-controls="nav-adicionar-produto"
-                       aria-selected="true">{{$titulotabs['tab1']}}</a>
-                    <a class="nav-item nav-link" id="nav-adicionar-material-tab" data-toggle="tab"
-                       href="#nav-adicionar-material" role="tab" aria-controls="nav-adicionar-material"
-                       aria-selected="false">{{$titulotabs['tab2']}}</a>
+                    @for($i = 0; $i < count($titulotabs); $i++)
+                        @if($i == 0)
+                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="true">{{$titulotabs[$i]}}</a>
+                        @else
+                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                        @endif
+                    @endfor
                     <div class="topo-tab">
                         <a id="bt-product-visible" class="btn-link" href="">
                             <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
@@ -24,8 +29,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-adicionar-produto" role="tabpanel"
-                     aria-labelledby="nav-adicionar-produto-tab">
+                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
                           action="{{route('products.create')}}">
@@ -83,8 +88,8 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade" id="nav-adicionar-material" role="tabpanel"
-                     aria-labelledby="nav-adicionar-material-tab">
+                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form">
 

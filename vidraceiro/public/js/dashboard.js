@@ -98,33 +98,44 @@ $(document).ready(function () {
         $('#bt-category-invisible').click();
     });
 
+    // forms dos materiais
     $('#bt-vidro-visible').click(function () {
-        $('#bt-category-invisible').click();
+        $('#bt-vidro-invisible').click();
     });
 
     $('#bt-aluminio-visible').click(function () {
-        $('#bt-category-invisible').click();
+        $('#bt-aluminio-invisible').click();
     });
 
     $('#bt-componente-visible').click(function () {
-        $('#bt-category-invisible').click();
+        $('#bt-componente-invisible').click();
     });
+    // fim dos materiais
 
     $('#bt-order-visible').click(function () {
         $('#bt-order-invisible').click();
     });
 
     $('#bt-product-visible').click(function () {
-        $('#bt-produto-product-invisible').click();
+        //
     });
 
-    $('#bt-product-visible').click(function () {
-        $('#bt-material-product-invisible').click();
-    });
 
     $('#bt-provider-visible').click(function () {
         $('#bt-provider-invisible').click();
     });
+
+
+    $('#nav-Vidros-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
+    });
+    $('#nav-Aluminios-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?tipo=aluminio');
+    });
+    $('#nav-Componentes-tab').click(function () {
+        $('#bt-material').attr("href",'/materials/create/?tipo=componente');
+    });
+
 
     $('#nav-Orçamento-tab').click(function () {
         changeTextBtBudget("Salvar");
@@ -146,16 +157,6 @@ $(document).ready(function () {
         changeTextBtBudget("Gerar PDF");
     });
 
-
-    $('#nav-Vidros-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
-    });
-    $('#nav-Aluminios-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=aluminio');
-    });
-    $('#nav-Componentes-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=componente');
-    });
 
     function changeTextBtBudget($texto) {
         $('#bt-budget-pdf').text($texto);
