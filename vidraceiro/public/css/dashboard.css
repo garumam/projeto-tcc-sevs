@@ -163,11 +163,11 @@ body {
 }
 
 .navbar-shadow {
-    box-shadow: 0px 3px 8px 0px rgba(23, 24, 32, 0.1);
+    box-shadow: 0 3px 8px 0 rgba(23, 24, 32, 0.1);
 }
 
 .shadow-top {
-    box-shadow: 3px 0 8px 0px rgba(23, 24, 32, 0.1);
+    box-shadow: 3px 0 8px 0 rgba(23, 24, 32, 0.1);
 }
 
 .navbar-nav {
@@ -454,7 +454,7 @@ td {
 
 .card-material:hover {
     transition: box-shadow 0.3s ease-in-out;
-    box-shadow: 0px 3px 8px 0px rgba(23, 24, 32, 0.1);
+    box-shadow: 0 3px 8px 0 rgba(23, 24, 32, 0.1);
 }
 
 .custom-card-total {
