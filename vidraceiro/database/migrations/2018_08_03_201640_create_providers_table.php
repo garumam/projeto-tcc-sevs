@@ -27,7 +27,6 @@ class CreateProvidersTable extends Migration
             $table->string('email');
             $table->string('cidade');
             $table->string('uf');
-            $table->timestamps();
         });
     }
 
