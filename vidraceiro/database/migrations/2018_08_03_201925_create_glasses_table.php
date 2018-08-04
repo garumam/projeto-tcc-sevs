@@ -16,10 +16,10 @@ class CreateGlassesTable extends Migration
         Schema::create('glasses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('descricao');
-            $table->string('tipo');
+            $table->string('descricao')->nullable();
+            $table->string('tipo')->nullable();
             $table->integer('espessura');
-            $table->float('preco');
+            $table->float('preco')->nullable();
             $table->integer('is_modelo');
             $table->integer('categoria_vidro_id')->unsigned();
             $table->foreign('categoria_vidro_id')->references('id')->on('categories');

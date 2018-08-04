@@ -16,11 +16,11 @@ class CreateAluminumsTable extends Migration
         Schema::create('aluminums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('perfil');
-            $table->string('descricao');
-            $table->float('medida');
+            $table->string('descricao')->nullable();
+            $table->float('medida')->nullable();
             $table->integer('qtd');
-            $table->float('peso');
-            $table->float('preco');
+            $table->float('peso')->nullable();
+            $table->float('preco')->nullable();
             $table->integer('tipo_medida');
             $table->integer('is_modelo');
             $table->integer('categoria_aluminio_id')->unsigned();

@@ -16,17 +16,17 @@ class CreateProvidersTable extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('situacao');
-            $table->string('telefone');
-            $table->string('celular');
-            $table->string('cnpj');
+            $table->string('situacao')->nullable();
+            $table->string('telefone')->nullable();
+            $table->string('celular')->nullable();
+            $table->string('cnpj')->nullable();
             $table->integer('numero_endereco');
             $table->integer('cep');
-            $table->string('rua');
-            $table->string('bairro');
-            $table->string('email');
-            $table->string('cidade');
-            $table->string('uf');
+            $table->string('rua')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('email')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('uf')->nullable();
         });
     }
 

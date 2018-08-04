@@ -16,10 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('data_inicial');
-            $table->float('total');
-            $table->string('data_final');
-            $table->string('situacao');
+            $table->string('data_inicial')->nullable();
+            $table->float('total')->nullable();
+            $table->string('data_final')->nullable();
+            $table->string('situacao')->nullable();
         });
 
         Schema::create('order_budget', function (Blueprint $table) {

@@ -16,17 +16,17 @@ class CreateBudgetsTable extends Migration
         Schema::create('budgets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('data');
-            $table->string('telefone');
+            $table->string('data')->nullable();
+            $table->string('telefone')->nullable();
             $table->integer('cep');
             $table->integer('numero_endereco');
-            $table->string('rua');
-            $table->string('bairro');
-            $table->string('uf');
-            $table->string('cidade');
-            $table->string('complemento');
-            $table->float('total');
-            $table->float('margem_lucro');
+            $table->string('rua')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('uf')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('complemento')->nullable();
+            $table->float('total')->nullable();
+            $table->float('margem_lucro')->nullable();
             $table->timestamps();
         });
 
