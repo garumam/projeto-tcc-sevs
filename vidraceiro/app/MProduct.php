@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MProduct extends Model
 {
+
+    protected $guarded = [];
+
     public function glasses(){
         return $this->belongsToMany(
             Glass::class,

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Budget extends Model
 {
+
+    protected $guarded = [];
+
     public function products(){
         return $this->belongsToMany(
             Product::class,

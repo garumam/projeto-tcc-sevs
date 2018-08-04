@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Glass extends Model
 {
+
+    protected $guarded = [];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'categoria_vidro_id');

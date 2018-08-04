@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aluminum extends Model
 {
+
+    protected $guarded = [];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'categoria_aluminio_id');
