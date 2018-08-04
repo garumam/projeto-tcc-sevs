@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\Category;
+
 class Glass extends Model
 {
     public function products(){
