@@ -11,6 +11,6 @@ class CarregaItens extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }
