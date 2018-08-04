@@ -20,6 +20,8 @@ class CreateComponentsTable extends Migration
             $table->float('preco')->nullable();
             $table->string('imagem');
             $table->integer('is_modelo');
+            $table->integer('categoria_componente_id')->unsigned();
+            $table->foreign('categoria_componente_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

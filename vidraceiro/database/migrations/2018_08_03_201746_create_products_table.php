@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('localizacao')->nullable();
             $table->float('valor_mao_obra')->nullable();
             $table->integer('m_produto_id')->unsigned();
-            $table->foreign('m_produto_id')->references('id')->on('m_products');
+            $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');;
         });
 
         Schema::create('product_aluminum', function (Blueprint $table) {

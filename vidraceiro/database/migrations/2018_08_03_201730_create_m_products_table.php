@@ -19,7 +19,7 @@ class CreateMProductsTable extends Migration
             $table->string('descricao')->nullable();
             $table->string('imagem');
             $table->integer('categoria_produto_id')->unsigned();
-            $table->foreign('categoria_produto_id')->references('id')->on('categories');
+            $table->foreign('categoria_produto_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
 

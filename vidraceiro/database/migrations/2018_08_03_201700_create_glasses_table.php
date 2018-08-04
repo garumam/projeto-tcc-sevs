@@ -22,7 +22,7 @@ class CreateGlassesTable extends Migration
             $table->float('preco')->nullable();
             $table->integer('is_modelo');
             $table->integer('categoria_vidro_id')->unsigned();
-            $table->foreign('categoria_vidro_id')->references('id')->on('categories');
+            $table->foreign('categoria_vidro_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
