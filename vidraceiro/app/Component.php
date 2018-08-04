@@ -20,4 +20,13 @@ class Component extends Model
             'produto_id'
         );
     }
+
+    public function mProducts(){
+        return $this->belongsToMany(
+            MProduct::class,
+            'm_product_component',
+            'componente_id',
+            'm_produto_id'
+        );
+    }
 }

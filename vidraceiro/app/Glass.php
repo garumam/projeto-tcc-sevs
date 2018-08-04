@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Product;
-use App\Category;
 
 class Glass extends Model
 {
@@ -24,4 +22,12 @@ class Glass extends Model
     }
 
 
+    public function mProducts(){
+        return $this->belongsToMany(
+            MProduct::class,
+            'm_product_glass',
+            'vidro_id',
+            'm_produto_id'
+        );
+    }
 }

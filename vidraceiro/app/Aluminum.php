@@ -20,4 +20,13 @@ class Aluminum extends Model
             'produto_id'
         );
     }
+
+    public function mProducts(){
+        return $this->belongsToMany(
+            MProduct::class,
+            'm_product_aluminum',
+            'aluminio_id',
+            'm_produto_id'
+        );
+    }
 }
