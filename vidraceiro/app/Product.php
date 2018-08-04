@@ -9,6 +9,10 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function mproduct(){
+        return $this->hasOne(MProduct::class,'m_produto_id');
+    }
+
     public function glasses(){
         return $this->belongsToMany(
             Glass::class,
