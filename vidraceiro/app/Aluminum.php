@@ -10,4 +10,14 @@ class Aluminum extends Model
     {
         return $this->belongsTo(Category::class, 'categoria_aluminio_id');
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'product_aluminum',
+            'aluminio_id',
+            'produto_id'
+        );
+    }
 }

@@ -8,6 +8,11 @@ use App\Category;
 
 class Glass extends Model
 {
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categoria_vidro_id');
+    }
+
     public function products()
     {
         return $this->belongsToMany(
@@ -18,8 +23,5 @@ class Glass extends Model
         );
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'categoria_vidro_id');
-    }
+
 }
