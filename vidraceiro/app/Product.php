@@ -30,4 +30,13 @@ class Product extends Model
             'componente_id'
         );
     }
+
+    public function budgets(){
+        return $this->belongsToMany(
+            Budget::class,
+            'budget_product',
+            'produto_id',
+            'orcamento_id'
+        );
+    }
 }
