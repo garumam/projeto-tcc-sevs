@@ -36,17 +36,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($products as $product)
+                    @foreach($mProducts as $mProduct)
                         <tr>
-                            <th scope="row">{{ $product->id }}</th>
-                            <td>{{ $product->nome }}</td>
-                            <td>{{ $product->descricao }}</td>
-                            <td>{{ $product->category->nome }}</td>
+                            <th scope="row">{{ $mProduct->id }}</th>
+                            <td>{{ $mProduct->nome }}</td>
+                            <td>{{ $mProduct->descricao }}</td>
+                            <td>{{ $mProduct->category->nome }}</td>
                             <td>
-                                <a class="btn-link" href="{{ route('products.edit',['id'=> $product->id]) }}">
+                                <a class="btn-link" href="{{ route('products.edit',['id'=> $mProduct->id]) }}">
                                     <button class="btn btn-warning mb-1">Edit</button>
                                 </a>
-                                <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $product->id }}">
+                                <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $mProduct->id }}">
                                     <button class="btn btn-danger mb-1">Delete</button>
                                 </a>
                             </td>
