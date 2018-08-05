@@ -35,7 +35,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($users as $user)
+                    @foreach($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
@@ -47,13 +47,9 @@
                                 <a class="btn-link" onclick="f(this.id)" id="{{ $user->id }}">
                                     <button class="btn btn-danger mb-1">Delete</button>
                                 </a>
-
                             </td>
                         </tr>
-                    @empty
-                        <p>Sem usuarios</p>
-                    @endforelse
-
+                    @endforeach
                     </tbody>
                 </table>
 

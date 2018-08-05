@@ -36,7 +36,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($categories as $category)
+                    @foreach($categories as $category)
                         <tr>
                             <th scope="row">{{$category->id}}</th>
                             <td>{{$category->nome}}</td>
@@ -52,9 +52,7 @@
 
                             </td>
                         </tr>
-                    @empty
-                        <p>Sem usuarios</p>
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
 
