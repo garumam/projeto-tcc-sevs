@@ -44,7 +44,7 @@
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
                                     <button class="btn btn-warning mb-1">Edit</button>
                                 </a>
-                                <a class="btn-link" onclick="f(this.id)" id="{{ $provider->id }}">
+                                <a class="btn-link" onclick="deletar(this.id,'providers')" id="{{ $provider->id }}">
                                     <button class="btn btn-danger mb-1">Delete</button>
                                 </a>
                             </td>
@@ -57,21 +57,9 @@
             </div>
         </div>
     </div>
-    <form id="del-provider" action="#" method="POST" style="display: none;">
+    <form id="delete-form" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
 
-@endsection
-
-@section('scripts')
-    <script>
-        function f(id) {
-            var form = document.getElementById('del-provider');
-            form.action = "/providers/" + id;
-            event.preventDefault();
-            form.submit();
-        }
-
-    </script>
 @endsection

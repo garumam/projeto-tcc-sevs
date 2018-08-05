@@ -46,7 +46,7 @@
                             <a class="btn-link" href="{{ route('products.edit',['id'=> $product->id]) }}">
                                 <button class="btn btn-warning mb-1">Edit</button>
                             </a>
-                            <a class="btn-link" onclick="f(this.id)" id="{{ $product->id }}">
+                            <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $product->id }}">
                                 <button class="btn btn-danger mb-1">Delete</button>
                             </a>
                         </td>
@@ -59,21 +59,9 @@
             </div>
         </div>
     </div>
-    <form id="del-produto" action="#" method="POST" style="display: none;">
+    <form id="delete-form" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
 
-@endsection
-
-@section('scripts')
-    <script>
-        function f(id) {
-            var form = document.getElementById('del-produto');
-            form.action = "/products/" + id;
-            event.preventDefault();
-            form.submit();
-        }
-
-    </script>
 @endsection

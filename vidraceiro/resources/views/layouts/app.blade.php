@@ -99,13 +99,13 @@
                     <li class="">
                         <i class="pe-7s-rocket"></i>
                         <div class="borda-top"></div>
-                            <a href="{{ route('home') }}">
-                                <p>{{ Auth::user()->name }}</p>
-                            </a>
-                            <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-nav').submit();">
-                                <p>{{ __('Logout') }}</p>
-                            </a>
+                        <a href="{{ route('home') }}">
+                            <p>{{ Auth::user()->name }}</p>
+                        </a>
+                        <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-nav').submit();">
+                            <p>{{ __('Logout') }}</p>
+                        </a>
                         <form id="logout-nav" action="{{ route('logout') }}" method="POST"
                               style="display: none;">
                             @csrf
@@ -168,6 +168,13 @@
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
 <script src="{{ asset('js/dashboard.js') }}" defer></script>
 
-@yield('scripts')
+<script>
+    function deletar(id, nome) {
+        var form = document.getElementById('delete-form');
+        form.action = "/" + nome + "/" + id;
+        event.preventDefault();
+        form.submit();
+    }
+</script>
 </body>
 </html>
