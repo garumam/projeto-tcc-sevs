@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -13,7 +13,8 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.category')->with('title', 'Categorias');
+        $categories = Category::all();
+        return view('dashboard.list.category', compact('categories'))->with('title', 'Categorias');
     }
 
     public function create()

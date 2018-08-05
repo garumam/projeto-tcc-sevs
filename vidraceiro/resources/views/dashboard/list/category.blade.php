@@ -36,23 +36,25 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @forelse($categories as $category)
+                        <tr>
+                            <th scope="row">{{$category->id}}</th>
+                            <td>{{$category->nome}}</td>
+                            <td>{{$category->tipo}}</td>
+                            <td>{{$category->grupo_imagem}}</td>
+                            <td>
+                                <a class="btn-link" href="{{ route('categories.edit',['id'=> $category->id]) }}">
+                                    <button class="btn btn-warning mb-1">Edit</button>
+                                </a>
+                                <a class="btn-link" onclick="f(this.id)" id="{{ $category->id }}">
+                                    <button class="btn btn-danger mb-1">Delete</button>
+                                </a>
 
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Box diversos</td>
-                        <td>Vidro</td>
-                        <td>Box diversos</td>
-                        <td>
-                            <a class="btn-link" href="#">
-                                <button class="btn btn-warning mb-1">Edit</button>
-                            </a>
-                            <a class="btn-link">
-                                <button class="btn btn-danger mb-1">Delete</button>
-                            </a>
-
-                        </td>
-                    </tr>
-
+                            </td>
+                        </tr>
+                    @empty
+                        <p>Sem usuarios</p>
+                    @endforelse
                     </tbody>
                 </table>
 
@@ -60,9 +62,21 @@
             </div>
         </div>
     </div>
-    <form id="del-produto" action="#" method="POST" style="display: none;">
+    <form id="del-categories" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
 
+@endsection
+
+@section('scripts')
+    <script>
+        function f(id) {
+            var form = document.getElementById('del-categories');
+            form.action = "/categories/" + id;
+            event.preventDefault();
+            form.submit();
+        }
+
+    </script>
 @endsection
