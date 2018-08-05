@@ -9,6 +9,10 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function mProducts(){
+        return $this->hasMany(MProduct::class,'categoria_produto_id');
+    }
+
     public function glasses()
     {
         return $this->hasMany(Glass::class, 'categoria_vidro_id');

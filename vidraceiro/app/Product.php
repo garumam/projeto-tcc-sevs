@@ -9,7 +9,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function mproduct(){
+    public function mProduct(){
         return $this->belongsTo(MProduct::class, 'm_produto_id');
     }
 
