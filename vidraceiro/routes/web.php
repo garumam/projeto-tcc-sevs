@@ -62,7 +62,7 @@ Route::prefix('materials')->group(function () {
     Route::get('/{user}', 'MaterialController@show')->name('materials.show');
     Route::get('/{type}/{id}/edit', 'MaterialController@edit')->name('materials.edit');
     Route::patch('/{id}', 'MaterialController@update')->name('materials.update');
-    Route::delete('/{id}', 'MaterialController@destroy')->name('materials.destroy');
+    Route::delete('/{type}/{id}', 'MaterialController@destroy')->name('materials.destroy');
 });
 
 //rotas dos orçamentos

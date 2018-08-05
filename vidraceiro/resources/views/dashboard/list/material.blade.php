@@ -108,7 +108,7 @@
                                                        href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
                                                         <button class="btn btn-warning mb-1">Edit</button>
                                                     </a>
-                                                    <a class="btn-link">
+                                                    <a class="btn-link" onclick="deletar(this.id,'materials/glass')" id="{{ $glass->id }}">
                                                         <button class="btn btn-danger mb-1">Delete</button>
                                                     </a>
                                                 </td>
@@ -259,7 +259,7 @@
                                                        href="{{ route('materials.edit',['type'=>'aluminum','id'=> $aluminum->id]) }}">
                                                         <button class="btn btn-warning mb-1">Edit</button>
                                                     </a>
-                                                    <a class="btn-link">
+                                                    <a class="btn-link" onclick="deletar(this.id,'materials/aluminum')" id="{{ $aluminum->id }}">
                                                         <button class="btn btn-danger mb-1">Delete</button>
                                                     </a>
                                                 </td>
@@ -408,7 +408,7 @@
                                                        href="{{ route('materials.edit',['type'=>'component','id'=> $component->id]) }}">
                                                         <button class="btn btn-warning mb-1">Edit</button>
                                                     </a>
-                                                    <a class="btn-link">
+                                                    <a class="btn-link" onclick="deletar(this.id,'materials/component')" id="{{ $component->id }}">
                                                         <button class="btn btn-danger mb-1">Delete</button>
                                                     </a>
                                                 </td>
