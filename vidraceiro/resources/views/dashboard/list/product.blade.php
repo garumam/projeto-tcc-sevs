@@ -31,28 +31,27 @@
                         <th class="noborder" scope="col">Id</th>
                         <th class="noborder" scope="col">Produto</th>
                         <th class="noborder" scope="col">Descrição</th>
-                        <th class="noborder" scope="col">Tipo</th>
+                        <th class="noborder" scope="col">Categoria</th>
                         <th class="noborder" scope="col">Ação</th>
                     </tr>
                     </thead>
                     <tbody>
-
+                    @foreach($products as $product)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>bx-a1</td>
-                        <td>Box de abrir com dobradiça automática, em vidro temperado 08mm</td>
-                        <td>Box diversos</td>
+                        <th scope="row">{{ $product->id }}</th>
+                        <td>{{ $product->nome }}</td>
+                        <td>{{ $product->descricao }}</td>
+                        <td>{{ $product->categoria_produto_id }}</td>
                         <td>
-                            <a class="btn-link" href="#">
+                            <a class="btn-link" href="{{ route('products.edit',['id'=> $product->id]) }}">
                                 <button class="btn btn-warning mb-1">Edit</button>
                             </a>
-                            <a class="btn-link">
+                            <a class="btn-link" onclick="f(this.id)" id="{{ $product->id }}">
                                 <button class="btn btn-danger mb-1">Delete</button>
                             </a>
-
                         </td>
                     </tr>
-
+                    @endforeach
                     </tbody>
                 </table>
 
@@ -65,4 +64,16 @@
         <input type="hidden" name="_method" value="DELETE">
     </form>
 
+@endsection
+
+@section('scripts')
+    <script>
+        function f(id) {
+            var form = document.getElementById('del-produto');
+            form.action = "/products/" + id;
+            event.preventDefault();
+            form.submit();
+        }
+
+    </script>
 @endsection

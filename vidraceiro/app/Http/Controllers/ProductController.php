@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\MProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -17,7 +15,8 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.product')->with('title', 'Produtos');
+        $products = MProduct::all();
+        return view('dashboard.list.product', compact('products'))->with('title', 'Produtos');
     }
 
 
