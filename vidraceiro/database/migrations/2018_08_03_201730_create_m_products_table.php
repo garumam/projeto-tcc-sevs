@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMProductsTable extends Migration
 {
@@ -29,7 +29,6 @@ class CreateMProductsTable extends Migration
             $table->integer('aluminio_id')->unsigned();
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('aluminio_id')->references('id')->on('aluminums')->onDelete('cascade');
-            $table->timestamps();
         });
 
         Schema::create('m_product_component', function (Blueprint $table) {
@@ -38,7 +37,6 @@ class CreateMProductsTable extends Migration
             $table->integer('componente_id')->unsigned();
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('componente_id')->references('id')->on('components')->onDelete('cascade');
-            $table->timestamps();
         });
 
         Schema::create('m_product_glass', function (Blueprint $table) {
@@ -47,7 +45,6 @@ class CreateMProductsTable extends Migration
             $table->integer('vidro_id')->unsigned();
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('vidro_id')->references('id')->on('glasses')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

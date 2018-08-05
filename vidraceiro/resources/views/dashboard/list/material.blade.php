@@ -68,6 +68,7 @@
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço m²</th>
+                                            <th class="noborder" scope="col">Modelo</th>
                                             <th class="noborder" scope="col">Ação</th>
                                         </tr>
                                         <!--FIM HEAD DO VIDRO-->
@@ -101,6 +102,7 @@
                                                 <th scope="row">{{ $glass->id }}</th>
                                                 <td>{{ $glass->nome }}</td>
                                                 <td>R${{ $glass->preco }}</td>
+                                                <td>{{ $glass->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
@@ -209,6 +211,7 @@
                                             <th class="noborder" scope="col">Medida</th>
                                             <th class="noborder" scope="col">Peso</th>
                                             <th class="noborder" scope="col">Preço</th>
+                                            <th class="noborder" scope="col">Modelo</th>
                                             <th class="noborder" scope="col">Ação</th>
                                         </tr>
                                         <!--FIM HEAD DO ALUMINIO-->
@@ -250,6 +253,7 @@
                                                 <td>{{ $aluminum->medida }}</td>
                                                 <td>{{ $aluminum->peso }}kg</td>
                                                 <td>R${{ $aluminum->preco }}</td>
+                                                <td>{{ $aluminum->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'aluminum','id'=> $aluminum->id]) }}">
@@ -348,6 +352,7 @@
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço</th>
                                             <th class="noborder" scope="col">Qtd</th>
+                                            <th class="noborder" scope="col">Modelo</th>
                                             <th class="noborder" scope="col">Ação</th>
                                         </tr>
                                         <!--FIM HEAD DO COMPONENTE-->
@@ -397,6 +402,7 @@
                                                 <td>{{ $component->nome }}</td>
                                                 <td>{{ $component->preco }}</td>
                                                 <td>{{ $component->qtd }}</td>
+                                                <td>{{ $component->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'component','id'=> $component->id]) }}">

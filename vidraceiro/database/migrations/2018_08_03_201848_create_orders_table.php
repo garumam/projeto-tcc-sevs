@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrdersTable extends Migration
 {
@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->float('total')->nullable();
             $table->string('data_final')->nullable();
             $table->string('situacao')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('order_budget', function (Blueprint $table) {
@@ -28,7 +29,6 @@ class CreateOrdersTable extends Migration
             $table->integer('orcamento_id')->unsigned();
             $table->foreign('ordem_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('orcamento_id')->references('id')->on('budgets')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
