@@ -15,7 +15,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = MProduct::all();
+//        $products = MProduct::all();
+        $products = MProduct::with('category')->get();
+//        dd($relations);
+//        dd($products);
         return view('dashboard.list.product', compact('products'))->with('title', 'Produtos');
     }
 

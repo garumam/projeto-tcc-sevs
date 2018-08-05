@@ -37,20 +37,20 @@
                     </thead>
                     <tbody>
                     @foreach($products as $product)
-                    <tr>
-                        <th scope="row">{{ $product->id }}</th>
-                        <td>{{ $product->nome }}</td>
-                        <td>{{ $product->descricao }}</td>
-                        <td>{{ $product->categoria_produto_id }}</td>
-                        <td>
-                            <a class="btn-link" href="{{ route('products.edit',['id'=> $product->id]) }}">
-                                <button class="btn btn-warning mb-1">Edit</button>
-                            </a>
-                            <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $product->id }}">
-                                <button class="btn btn-danger mb-1">Delete</button>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row">{{ $product->id }}</th>
+                            <td>{{ $product->nome }}</td>
+                            <td>{{ $product->descricao }}</td>
+                            <td>{{ $product->category->nome }}</td>
+                            <td>
+                                <a class="btn-link" href="{{ route('products.edit',['id'=> $product->id]) }}">
+                                    <button class="btn btn-warning mb-1">Edit</button>
+                                </a>
+                                <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $product->id }}">
+                                    <button class="btn btn-danger mb-1">Delete</button>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
