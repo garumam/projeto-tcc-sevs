@@ -35,25 +35,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{--@forelse($users as $user)--}}
+                    @foreach($providers as $provider)
                         <tr>
-                            {{--<th scope="row">{{ $user->id }}</th>--}}
-                            {{--<td>{{ $user->name }}</td>--}}
-                            {{--<td>{{ $user->email }}</td>--}}
+                            <th scope="row">{{ $provider->id }}</th>
+                            <td>{{ $provider->name }}</td>
+                            <td>{{ $provider->email }}</td>
                             <td>
-                                {{--<a class="btn-link" href="{{ route('users.edit',['id' => $user->id]) }}">--}}
-                                    {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                {{--</a>--}}
-                                {{--<a class="btn-link" onclick="f(this.id)" id="{{ $user->id }}">--}}
-                                    {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                {{--</a>--}}
-
+                                <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
+                                    <button class="btn btn-warning mb-1">Edit</button>
+                                </a>
+                                <a class="btn-link" onclick="f(this.id)" id="{{ $provider->id }}">
+                                    <button class="btn btn-danger mb-1">Delete</button>
+                                </a>
                             </td>
                         </tr>
-                    {{--@empty--}}
-                        {{--<p>Sem usuarios</p>--}}
-                    {{--@endforelse--}}
-
+                    @endforeach
                     </tbody>
                 </table>
 
@@ -61,7 +57,7 @@
             </div>
         </div>
     </div>
-    <form id="del-user" action="#" method="POST" style="display: none;">
+    <form id="del-provider" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
@@ -71,8 +67,8 @@
 @section('scripts')
     <script>
         function f(id) {
-            var form = document.getElementById('del-user');
-            form.action = "/users/" + id;
+            var form = document.getElementById('del-provider');
+            form.action = "/providers/" + id;
             event.preventDefault();
             form.submit();
         }

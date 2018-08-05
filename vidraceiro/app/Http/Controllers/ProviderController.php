@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Provider;
 
 class ProviderController extends Controller
 {
@@ -13,7 +13,8 @@ class ProviderController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.provider')->with('title','Fornecedores');
+        $providers = Provider::all();
+        return view('dashboard.list.provider', compact('providers'))->with('title', 'Fornecedores');
     }
 
     public function create()
