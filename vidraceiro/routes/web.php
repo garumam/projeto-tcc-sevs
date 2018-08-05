@@ -60,7 +60,7 @@ Route::prefix('materials')->group(function () {
     Route::get('/create', 'MaterialController@create')->name('materials.create');
     Route::post('', 'MaterialController@store')->name('materials.store');
     Route::get('/{user}', 'MaterialController@show')->name('materials.show');
-    Route::get('/{id}/edit', 'MaterialController@edit')->name('materials.edit');
+    Route::get('/{type}/{id}/edit', 'MaterialController@edit')->name('materials.edit');
     Route::patch('/{id}', 'MaterialController@update')->name('materials.update');
     Route::delete('/{id}', 'MaterialController@destroy')->name('materials.destroy');
 });

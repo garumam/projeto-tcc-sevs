@@ -39,9 +39,9 @@ class MaterialController extends Controller
 
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
-
+        echo $request->type;
     }
 
 

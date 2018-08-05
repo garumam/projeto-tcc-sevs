@@ -72,82 +72,84 @@
                                         </tr>
                                         <!--FIM HEAD DO VIDRO-->
 
-                                        <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Perfil</th>
-                                            <th class="noborder" scope="col">Medida</th>
-                                            <th class="noborder" scope="col">Peso</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO ALUMINIO-->
+                                        {{--<!--INICIO HEAD DO ALUMINIO-->--}}
+                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Perfil</th>--}}
+                                        {{--<th class="noborder" scope="col">Medida</th>--}}
+                                        {{--<th class="noborder" scope="col">Peso</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO ALUMINIO-->--}}
 
-                                        <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Qtd</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO COMPONENTE-->
+                                        {{--<!--INICIO HEAD DO COMPONENTE-->--}}
+                                        {{--<tr class="tabela-componente" style="display: none;">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Nome</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço</th>--}}
+                                        {{--<th class="noborder" scope="col">Qtd</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO COMPONENTE-->--}}
 
                                         </thead>
                                         <tbody>
                                         <!--INICIO BODY DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th scope="row">1</th>
-                                            <td>Vidro temperado 08mm</td>
-                                            <td>100.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                        @foreach($glasses as $glass)
+                                            <tr class="tabela-vidro">
+                                                <th scope="row">{{ $glass->id }}</th>
+                                                <td>{{ $glass->nome }}</td>
+                                                <td>R${{ $glass->preco }}</td>
+                                                <td>
+                                                    <a class="btn-link"
+                                                       href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
+                                                        <button class="btn btn-warning mb-1">Edit</button>
+                                                    </a>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         <!--FIM BODY DO VIDRO-->
 
-                                        <!--INICIO BODY DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>xt-201</td>
-                                            <td>6000.0m</td>
-                                            <td>1.6kg</td>
-                                            <td>22.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<!--INICIO BODY DO ALUMINIO-->--}}
+                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>xt-201</td>--}}
+                                        {{--<td>6000.0m</td>--}}
+                                        {{--<td>1.6kg</td>--}}
+                                        {{--<td>22.0</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO ALUMINIO-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO ALUMINIO-->--}}
 
-                                        <!--INICIO BODY DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>Roldana</td>
-                                            <td>1.0</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<!--INICIO BODY DO COMPONENTE-->--}}
+                                        {{--<tr class="tabela-componente" style="display: none;">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>Roldana</td>--}}
+                                        {{--<td>1.0</td>--}}
+                                        {{--<td>1</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO COMPONENTE-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO COMPONENTE-->--}}
                                         </tbody>
                                     </table>
 
@@ -191,17 +193,17 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
-                                        <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço m²</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO VIDRO-->
+                                        {{--<!--INICIO HEAD DO VIDRO-->--}}
+                                        {{--<tr class="tabela-vidro">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Nome</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço m²</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO VIDRO-->--}}
 
                                         <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
+                                        <tr class="tabela-aluminio">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Perfil</th>
                                             <th class="noborder" scope="col">Medida</th>
@@ -211,71 +213,73 @@
                                         </tr>
                                         <!--FIM HEAD DO ALUMINIO-->
 
-                                        <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Qtd</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO COMPONENTE-->
+                                        {{--<!--INICIO HEAD DO COMPONENTE-->--}}
+                                        {{--<tr class="tabela-componente" style="display: none;">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Nome</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço</th>--}}
+                                        {{--<th class="noborder" scope="col">Qtd</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO COMPONENTE-->--}}
 
                                         </thead>
                                         <tbody>
-                                        <!--INICIO BODY DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th scope="row">1</th>
-                                            <td>Vidro temperado 08mm</td>
-                                            <td>100.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<!--INICIO BODY DO VIDRO-->--}}
+                                        {{--<tr class="tabela-vidro">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>Vidro temperado 08mm</td>--}}
+                                        {{--<td>100.0</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO VIDRO-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO VIDRO-->--}}
 
                                         <!--INICIO BODY DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>xt-201</td>
-                                            <td>6000.0m</td>
-                                            <td>1.6kg</td>
-                                            <td>22.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                        @foreach($aluminums as $aluminum)
+                                            <tr class="tabela-aluminio">
+                                                <th scope="row">{{ $aluminum->id }}</th>
+                                                <td>{{ $aluminum->perfil }} {{ $aluminum->descricao }}</td>
+                                                <td>{{ $aluminum->medida }}</td>
+                                                <td>{{ $aluminum->peso }}kg</td>
+                                                <td>R${{ $aluminum->preco }}</td>
+                                                <td>
+                                                    <a class="btn-link"
+                                                       href="{{ route('materials.edit',['type'=>'aluminum','id'=> $aluminum->id]) }}">
+                                                        <button class="btn btn-warning mb-1">Edit</button>
+                                                    </a>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         <!--FIM BODY DO ALUMINIO-->
 
                                         <!--INICIO BODY DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>Roldana</td>
-                                            <td>1.0</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<tr class="tabela-componente" style="display: none;">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>Roldana</td>--}}
+                                        {{--<td>1.0</td>--}}
+                                        {{--<td>1</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO COMPONENTE-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO COMPONENTE-->--}}
                                         </tbody>
                                     </table>
 
@@ -318,28 +322,28 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
-                                        <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço m²</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO VIDRO-->
+                                        {{--<!--INICIO HEAD DO VIDRO-->--}}
+                                        {{--<tr class="tabela-vidro">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Nome</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço m²</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO VIDRO-->--}}
 
-                                        <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Perfil</th>
-                                            <th class="noborder" scope="col">Medida</th>
-                                            <th class="noborder" scope="col">Peso</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO ALUMINIO-->
+                                        {{--<!--INICIO HEAD DO ALUMINIO-->--}}
+                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
+                                        {{--<th class="noborder" scope="col">Id</th>--}}
+                                        {{--<th class="noborder" scope="col">Perfil</th>--}}
+                                        {{--<th class="noborder" scope="col">Medida</th>--}}
+                                        {{--<th class="noborder" scope="col">Peso</th>--}}
+                                        {{--<th class="noborder" scope="col">Preço</th>--}}
+                                        {{--<th class="noborder" scope="col">Ação</th>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM HEAD DO ALUMINIO-->--}}
 
                                         <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
+                                        <tr class="tabela-componente">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço</th>
@@ -350,58 +354,60 @@
 
                                         </thead>
                                         <tbody>
-                                        <!--INICIO BODY DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th scope="row">1</th>
-                                            <td>Vidro temperado 08mm</td>
-                                            <td>100.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<!--INICIO BODY DO VIDRO-->--}}
+                                        {{--<tr class="tabela-vidro">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>Vidro temperado 08mm</td>--}}
+                                        {{--<td>100.0</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO VIDRO-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO VIDRO-->--}}
 
-                                        <!--INICIO BODY DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>xt-201</td>
-                                            <td>6000.0m</td>
-                                            <td>1.6kg</td>
-                                            <td>22.0</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        {{--<!--INICIO BODY DO ALUMINIO-->--}}
+                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
+                                        {{--<th scope="row">1</th>--}}
+                                        {{--<td>xt-201</td>--}}
+                                        {{--<td>6000.0m</td>--}}
+                                        {{--<td>1.6kg</td>--}}
+                                        {{--<td>22.0</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a class="btn-link" href="">--}}
+                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
+                                        {{--</a>--}}
+                                        {{--<a class="btn-link">--}}
+                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                        {{--</a>--}}
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO ALUMINIO-->
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<!--FIM BODY DO ALUMINIO-->--}}
 
                                         <!--INICIO BODY DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>Roldana</td>
-                                            <td>1.0</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a class="btn-link" href="">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                        @foreach($components as $component)
+                                            <tr class="tabela-componente">
+                                                <th scope="row">{{ $component->id }}</th>
+                                                <td>{{ $component->nome }}</td>
+                                                <td>{{ $component->preco }}</td>
+                                                <td>{{ $component->qtd }}</td>
+                                                <td>
+                                                    <a class="btn-link"
+                                                       href="{{ route('materials.edit',['type'=>'component','id'=> $component->id]) }}">
+                                                        <button class="btn btn-warning mb-1">Edit</button>
+                                                    </a>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         <!--FIM BODY DO COMPONENTE-->
                                         </tbody>
                                     </table>
