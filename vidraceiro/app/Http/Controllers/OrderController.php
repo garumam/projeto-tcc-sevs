@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Order;
 
 class OrderController extends Controller
 {
@@ -13,7 +13,8 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.order')->with('title', 'Ordens de serviço');
+        $orders = Order::all();
+        return view('dashboard.list.order', compact('orders'))->with('title', 'Ordens de serviço');
     }
 
     public function create()

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Budget;
 
 class BudgetController extends Controller
 {
@@ -13,7 +13,8 @@ class BudgetController extends Controller
 
     public function index()
     {
-        return view('dashboard.list.budget')->with('title', 'Orçamentos');
+        $budgets = Budget::all();
+        return view('dashboard.list.budget', compact('budgets'))->with('title', 'Orçamentos');
     }
 
     public function create()
