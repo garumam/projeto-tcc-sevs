@@ -46,7 +46,7 @@
                                 <a class="btn-link" href="{{ route('categories.edit',['id'=> $category->id]) }}">
                                     <button class="btn btn-warning mb-1">Edit</button>
                                 </a>
-                                <a class="btn-link" onclick="f(this.id)" id="{{ $category->id }}">
+                                <a class="btn-link" onclick="deletar(this.id,'categories')" id="{{ $category->id }}">
                                     <button class="btn btn-danger mb-1">Delete</button>
                                 </a>
 

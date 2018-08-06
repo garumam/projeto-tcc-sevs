@@ -44,8 +44,14 @@ class BudgetController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-
+        $budget = Budget::find($id);
+        if ($budget) {
+            $budget->delete();
+            return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao deletar orçamento');
+        }
     }
 }

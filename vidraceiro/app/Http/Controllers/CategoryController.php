@@ -43,8 +43,14 @@ class CategoryController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-
+        $category = Category::find($id);
+        if ($category) {
+            $category->delete();
+            return redirect()->back()->with('success', 'Categoria deletada com sucesso');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao deletar categoria');
+        }
     }
 }

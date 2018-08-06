@@ -50,8 +50,28 @@ class MaterialController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($type, $id)
     {
+        switch($type){
+            case 'glass':
+                $material = Glass::find($id);
+                $tipoNome = 'Vidro';
+                break;
+            case 'aluminum':
+                $material = Aluminum::find($id);
+                $tipoNome = 'Alumínio';
+                break;
+            case 'component':
+                $material = Component::find($id);
+                $tipoNome = 'Componente';
+                break;
+        }
 
+        if ($material) {
+            $material->delete();
+            return redirect()->back()->with('success', "$tipoNome deletado com sucesso");
+        } else {
+            return redirect()->back()->with('error', "Erro ao deletar $tipoNome");
+        }
     }
 }
