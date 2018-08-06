@@ -60,21 +60,10 @@
             </div>
         </div>
     </div>
-    <form id="del-categories" action="#" method="POST" style="display: none;">
+    <form id="delete-form" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>
 
 @endsection
 
-@section('scripts')
-    <script>
-        function f(id) {
-            var form = document.getElementById('del-categories');
-            form.action = "/categories/" + id;
-            event.preventDefault();
-            form.submit();
-        }
-
-    </script>
-@endsection

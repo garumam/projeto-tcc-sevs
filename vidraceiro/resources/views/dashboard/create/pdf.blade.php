@@ -17,7 +17,9 @@
                         <label for="orcamento">Selecione um Orçamento</label>
                         <select class="custom-select" id="orcamento" required>
                             <option value="" selected>Selecione...</option>
-                            <option value="">Orçamento 1</option>
+                            @foreach($budgets as $budget)
+                                <option value="{{$budget->id}}">{{$budget->nome}}</option>
+                            @endforeach
                         </select>
                     </div>
 

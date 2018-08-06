@@ -30,27 +30,32 @@
                     <tr>
                         <th class="noborder" scope="col">Id</th>
                         <th class="noborder" scope="col">Nome</th>
-                        <th class="noborder" scope="col">Data</th>
+                        <th class="noborder" scope="col">Situação</th>
+                        <th class="noborder" scope="col">Data inicial</th>
+                        <th class="noborder" scope="col">Data final</th>
+                        <th class="noborder" scope="col">Total</th>
                         <th class="noborder" scope="col">Ação</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Ordem de serviço 1</td>
-                        <td>20/20/2020</td>
-                        <td>
-                            <a class="btn-link" href="#">
-                                <button class="btn btn-warning mb-1">Edit</button>
-                            </a>
-                            <a class="btn-link">
-                                <button class="btn btn-danger mb-1">Delete</button>
-                            </a>
-
-                        </td>
-                    </tr>
-
+                    @foreach($orders as $order)
+                        <tr>
+                            <th scope="row">{{$order->id}}</th>
+                            <td>{{$order->nome}}</td>
+                            <td>{{$order->situacao}}</td>
+                            <td>{{$order->data_inicial}}</td>
+                            <td>{{$order->data_final}}</td>
+                            <td>R${{$order->total}}</td>
+                            <td>
+                                <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
+                                    <button class="btn btn-warning mb-1">Edit</button>
+                                </a>
+                                <a class="btn-link" onclick="deletar(this.id,'orders')" id="{{$order->id}}">
+                                    <button class="btn btn-danger mb-1">Delete</button>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
 
@@ -58,7 +63,7 @@
             </div>
         </div>
     </div>
-    <form id="del-produto" action="#" method="POST" style="display: none;">
+    <form id="delete-form" action="#" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="_method" value="DELETE">
     </form>

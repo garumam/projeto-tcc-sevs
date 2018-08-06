@@ -31,6 +31,7 @@
                         <th class="noborder" scope="col">Id</th>
                         <th class="noborder" scope="col">Nome</th>
                         <th class="noborder" scope="col">E-mail</th>
+                        <th class="noborder" scope="col">Situação</th>
                         <th class="noborder" scope="col">Ação</th>
                     </tr>
                     </thead>
@@ -38,8 +39,9 @@
                     @foreach($providers as $provider)
                         <tr>
                             <th scope="row">{{ $provider->id }}</th>
-                            <td>{{ $provider->name }}</td>
+                            <td>{{ $provider->nome }}</td>
                             <td>{{ $provider->email }}</td>
+                            <td>{{ $provider->situacao }}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
                                     <button class="btn btn-warning mb-1">Edit</button>

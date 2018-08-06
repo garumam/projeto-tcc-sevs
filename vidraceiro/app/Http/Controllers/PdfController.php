@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Budget;
 
 class PdfController extends Controller
 {
@@ -13,7 +13,8 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('dashboard.create.pdf')->with('title','Gerar PDF');
+        $budgets = Budget::all();
+        return view('dashboard.create.pdf', compact('budgets'))->with('title', 'Gerar PDF');
     }
 
     public function create()
