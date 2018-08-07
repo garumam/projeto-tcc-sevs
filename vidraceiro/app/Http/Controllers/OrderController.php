@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Budget;
 use App\Order;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -19,11 +21,16 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('dashboard.create.order')->with('title', 'Nova Ordem de serviço');
+        $budgets = Budget::all();
+        return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $ids = $request->id_orcamento;
+        foreach ($ids as $id) {
+            echo $id . "\n";
+        }
 
     }
 

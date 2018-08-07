@@ -89,10 +89,10 @@ $(document).ready(function () {
                 break;
         }
     });
-    $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
+    $('#bt-material').attr("href", '/materials/create/?tipo=vidro');
 
     $('#bt-user-visible').click(function () {
-       $('#bt-user-invisible').click();
+        $('#bt-user-invisible').click();
     });
     $('#bt-category-visible').click(function () {
         $('#bt-category-invisible').click();
@@ -118,10 +118,10 @@ $(document).ready(function () {
 
     //inicio produto form
     $('#bt-product-visible').click(function () {
-        if($('#nav-Produto-tab').hasClass('active')){
+        if ($('#nav-Produto-tab').hasClass('active')) {
             //form tab produto
             $('#bt-produto-product-invisible').click();
-        }else{
+        } else {
             //form tab material
             $('#bt-material-product-invisible').click();
         }
@@ -131,7 +131,7 @@ $(document).ready(function () {
     //inicio orçamento form
     $('#bt-budget-visible').click(function () {
 
-        switch(true){
+        switch (true) {
             case $('#nav-Orçamento-tab').hasClass('active'):
 
                 $('#bt-orcamento-budget-invisible').click();
@@ -176,15 +176,14 @@ $(document).ready(function () {
     });
 
 
-
     $('#nav-Vidros-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=vidro');
+        $('#bt-material').attr("href", '/materials/create/?tipo=vidro');
     });
     $('#nav-Aluminios-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=aluminio');
+        $('#bt-material').attr("href", '/materials/create/?tipo=aluminio');
     });
     $('#nav-Componentes-tab').click(function () {
-        $('#bt-material').attr("href",'/materials/create/?tipo=componente');
+        $('#bt-material').attr("href", '/materials/create/?tipo=componente');
     });
 
 
@@ -212,6 +211,20 @@ $(document).ready(function () {
     function changeTextBtBudget($texto) {
         $('#bt-budget-visible').text($texto);
     }
+
+    $('#bt-add-orcamento-order').click(function () {
+        let select = $('#select-orcamentos').val();
+        let id_init = $('.id_orcamento').attr('value');
+        let id_final = $('.id_orcamento').last().attr('value');
+        if (select.length === 0) {
+            alert('Selecione um orçamento para adicionar');
+        } else if (id_init !== select && id_final !== select) {
+            $('#ids').append('<input type="number" class="id_orcamento" name="id_orcamento[]" value="' + select + '" />');
+        } else {
+            alert('Orçamento ja foi adicionado');
+        }
+
+    });
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
     //     // let formData = $('form').serializeArray();
