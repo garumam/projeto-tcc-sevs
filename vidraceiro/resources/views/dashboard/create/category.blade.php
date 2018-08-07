@@ -37,7 +37,7 @@
                         <select id="select-categoria" name="tipo" class="custom-select" required>
                             @foreach($types as $value => $name)
                                 <option value="{{$value}}"
-                                @if($category){{ $category->tipo == $value ? 'selected' :''}} @endif>{{$name}}</option>
+                                @if(!empty($category)){{ $category->tipo == $value ? 'selected' :''}} @endif>{{$name}}</option>
                                 {{--<option value="0">Produto</option>--}}
                                 {{--<option value="1">Vidro</option>--}}
                                 {{--<option value="2">Aluminio</option>--}}
@@ -51,7 +51,7 @@
                         <select id="select-categoria" name="grupo_imagem" class="custom-select" required>
                             @foreach($group_images as $value => $name)
                                 <option value="{{$value}}"
-                                @if($category){{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
+                                @if(!empty($category)){{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
                                 {{--<option value="1">Box diversos</option>--}}
                                 {{--<option value="2">Box padrão</option>--}}
                                 {{--<option value="3">Ferragem 1000</option>--}}
