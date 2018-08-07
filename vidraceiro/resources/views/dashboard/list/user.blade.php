@@ -57,9 +57,5 @@
             </div>
         </div>
     </div>
-    <form id="delete-form" action="#" method="POST" style="display: none;">
-        @csrf
-        <input type="hidden" name="_method" value="DELETE">
-    </form>
 
 @endsection
