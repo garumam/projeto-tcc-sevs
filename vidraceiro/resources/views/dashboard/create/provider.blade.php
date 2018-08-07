@@ -10,94 +10,101 @@
                         type="submit">{{empty($provider) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('providers.create')}}">
+            <form class="formulario" method="POST" role="form"
+                  action="{{ !empty($provider) ?  route('providers.update',['id'=>$provider->id]) :  route('providers.store')}}">
+                @if(!empty($provider))
+                    <input type="hidden" name="_method" value="PATCH">
+                @endif
                 @csrf
                 <div class="form-row">
 
+                    <div class="form-group col-md-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                        <input type="text" class="form-control" id="nome" name="nome"
+                               value="{{ $provider->nome or old('nome')}}" placeholder="Nome">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="situacao">Situação</label>
-                        <select class="custom-select" id="situacao" required>
-                            <option selected>Selecione...</option>
-                            <option value="1">Ativo</option>
-                            <option value="2">Desativado</option>
+                        <select class="custom-select" id="situacao" name="situacao" required>
+                            <option value="ativo" @if(!empty($provider)){{$provider->situacao == 'ativo'? 'selected' :''}} @endif>Ativo</option>
+                            <option value="desativado" @if(!empty($provider)){{$provider->situacao == 'desativado'? 'selected' :''}} @endif>Desativado</option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cnpj">CNPJ</label>
-                        <input type="number" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ">
+                        <input type="number" class="form-control" id="cnpj" name="cnpj"
+                               value="{{ $provider->cnpj or old('cnpj')}}" placeholder="CNPJ">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
-                        <input type="number" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+                        <input type="number" class="form-control" id="telefone" name="telefone"
+                               value="{{ $provider->telefone or old('telefone')}}" placeholder="Telefone">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="celular">Celular</label>
-                        <input type="number" class="form-control" id="celular" name="celular" placeholder="Celular">
+                        <input type="number" class="form-control" id="celular" name="celular"
+                               value="{{ $provider->celular or old('celular')}}" placeholder="Celular">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="email">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+                        <input type="email" class="form-control" id="email" name="email"
+                               value="{{ $provider->email or old('email')}}" placeholder="E-mail">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço">
+                        <label for="cep">Cep</label>
+                        <input type="number" class="form-control" id="cep" name="cep"
+                               value="{{ $provider->cep or old('cep')}}" placeholder="Cep" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="numerocasa">N°</label>
-                        <input type="number" class="form-control" id="numerocasa" name="numerocasa" placeholder="N°">
+                        <label for="rua">Rua</label>
+                        <input type="text" class="form-control" id="rua" name="rua"
+                               value="{{ $provider->rua or old('rua')}}" placeholder="Rua">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="numero_endereco">N°</label>
+                        <input type="number" class="form-control" id="numero_endereco" name="numero_endereco"
+                               value="{{ $provider->numero_endereco or old('numero_endereco')}}" placeholder="N°">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
+                        <input type="text" class="form-control" id="bairro" name="bairro"
+                               value="{{ $provider->bairro or old('bairro')}}" placeholder="Bairro">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
+                        <input type="text" class="form-control" id="cidade" name="cidade"
+                               value="{{ $provider->cidade or old('cidade')}}" placeholder="Cidade">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="uf">UF</label>
-                        <select class="custom-select" id="uf" required>
-                            <option selected>Selecione...</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
+                        <select class="custom-select" id="uf" name="uf" required>
+                            @foreach ($states as $uf => $estado)
+                                <option value="{{$uf}}"
+                                @if(!empty($provider)){{ $provider->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                            @endforeach
                         </select>
                     </div>
 
