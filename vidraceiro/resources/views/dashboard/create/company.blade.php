@@ -11,7 +11,8 @@
                             class="btn btn-danger ml-auto mr-3" type="button">Deletar
                     </button>
                 @endif
-                <button id="bt-company-visible" class="btn btn-primary btn-custom" type="button">Adicionar</button>
+                <button id="bt-company-visible" class="btn btn-primary btn-custom"
+                        type="button">{{empty($company) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
             <form class="formulario" method="POST" role="form"

@@ -6,7 +6,8 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <button id="bt-user-visible" class="btn btn-primary btn-custom" type="button">Adicionar</button>
+                <button id="bt-user-visible" class="btn btn-primary btn-custom"
+                        type="button">{{empty($user) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
             <form id="formulario-create-user" class="formulario" method="POST" role="form"

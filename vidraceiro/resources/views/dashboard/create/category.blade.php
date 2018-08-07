@@ -6,7 +6,8 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <button id="bt-category-visible" class="btn btn-primary btn-custom" type="button">Adicionar</button>
+                <button id="bt-category-visible" class="btn btn-primary btn-custom"
+                        type="button">{{empty($category) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
             <form class="formulario" method="POST" role="form" action="{{ route('categories.store') }}">

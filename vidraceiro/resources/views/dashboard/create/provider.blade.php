@@ -6,7 +6,8 @@
 
             <div class="topo">
                 <h4 class="titulo">{{ $title }}</h4>
-                <button id="bt-provider-visible" class="btn btn-primary btn-custom" type="submit">Adicionar</button>
+                <button id="bt-provider-visible" class="btn btn-primary btn-custom"
+                        type="submit">{{empty($provider) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
             <form class="formulario" method="POST" role="form" action="{{route('providers.create')}}">

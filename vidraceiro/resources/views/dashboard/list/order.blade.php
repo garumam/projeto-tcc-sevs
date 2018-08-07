@@ -48,10 +48,10 @@
                             <td>R${{$order->total}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
-                                    <button class="btn btn-warning mb-1">Edit</button>
+                                    <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
                                 <a class="btn-link" onclick="deletar(this.id,'orders')" id="{{$order->id}}">
-                                    <button class="btn btn-danger mb-1">Delete</button>
+                                    <button class="btn btn-danger mb-1">Deletar</button>
                                 </a>
                             </td>
                         </tr>

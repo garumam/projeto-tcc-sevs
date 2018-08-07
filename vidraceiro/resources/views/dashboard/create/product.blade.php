@@ -20,7 +20,8 @@
                     @endfor
                     <div class="topo-tab">
 
-                        <button id="bt-product-visible" class="btn btn-primary btn-custom" type="submit">Adicionar</button>
+                        <button id="bt-product-visible" class="btn btn-primary btn-custom"
+                                type="submit">{{empty($product) ? 'Adicionar': 'Atualizar'}}</button>
 
                     </div>
                 </div>
