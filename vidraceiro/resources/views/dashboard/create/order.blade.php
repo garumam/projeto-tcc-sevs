@@ -10,7 +10,11 @@
                         type="button">{{empty($order) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('orders.create')}}">
+            <form class="formulario" method="POST" role="form"
+                  action="{{ !empty($order) ? route('orders.update',['id'=> $order->id]) : route('orders.store') }}">
+                @if(!empty($order))
+                    <input type="hidden" name="_method" value="PATCH">
+                @endif
                 @csrf
                 <div class="form-row">
 

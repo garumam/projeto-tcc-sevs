@@ -34,7 +34,10 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{route('products.create')}}">
+                          action="{{ !empty($product) ? route('products.update',['id'=> $product->id]) : route('products.store') }}">
+                        @if(!empty($product))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row">
 
@@ -92,7 +95,11 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
-                    <form class="formulario" method="POST" role="form" action="{{route('products.create')}}">
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($product) ? route('products.update',['id'=> $product->id]) : route('products.store') }}">
+                        @if(!empty($product))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row">
 
