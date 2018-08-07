@@ -9,20 +9,35 @@
                 <button id="bt-category-visible" class="btn btn-primary btn-custom" type="button">Adicionar</button>
             </div>
 
-            <form class="formulario" method="get" role="form" action="{{ route('categories.create') }}">
+            <form class="formulario" method="POST" role="form" action="{{ route('categories.store') }}">
                 @csrf
                 <div class="form-row">
 
+                    <div class="form-group col-md-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+                        <input type="text" class="form-control" name="nome" value="{{$category->nome or old('nome')}}"
+                               placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="select-categoria">Tipo</label>
                         <select id="select-categoria" name="tipo" class="custom-select" required>
                             @foreach($types as $value => $name)
-                                <option value="{{$value}}">{{$name}}</option>
+                                <option value="{{$value}}"
+                                @if($category){{ $category->tipo == $value ? 'selected' :''}} @endif>{{$name}}</option>
                                 {{--<option value="0">Produto</option>--}}
                                 {{--<option value="1">Vidro</option>--}}
                                 {{--<option value="2">Aluminio</option>--}}
@@ -35,7 +50,8 @@
                         <label for="select-categoria">Grupo de imagens</label>
                         <select id="select-categoria" name="grupo_imagem" class="custom-select" required>
                             @foreach($group_images as $value => $name)
-                                <option value="{{$value}}">{{$name}}</option>
+                                <option value="{{$value}}"
+                                @if($category){{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
                                 {{--<option value="1">Box diversos</option>--}}
                                 {{--<option value="2">Box padrão</option>--}}
                                 {{--<option value="3">Ferragem 1000</option>--}}
