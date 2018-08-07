@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Aluminum;
+use App\Budget;
+use App\Category;
+use App\Component;
+use App\Glass;
+use App\MProduct;
+use App\Order;
+use App\User;
 
 class DashboardController extends Controller
 {
@@ -23,6 +30,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.home')->with('title','Dashboard');
+        $totalusers = User::all()->count();
+        $totalcategories = Category::all()->count();
+        $totalproducts = MProduct::all()->count();
+        $totalbudgets = Budget::all()->count();
+        $totalmaterials = Aluminum::all()->count() + Glass::all()->count() + Component::all()->count();
+        $totalorders = Order::all()->count();
+        return view('dashboard.home', compact('totalusers', 'totalcategories', 'totalproducts', 'totalbudgets', 'totalorders', 'totalmaterials'))->with('title', 'Dashboard');
     }
 }

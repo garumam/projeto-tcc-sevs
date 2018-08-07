@@ -11,8 +11,8 @@
             </div>
 
             <form class="formulario" method="POST" role="form"
-                  action="{{ Request::is('categories/*/edit') ? route('categories.update',['id'=> $category->id]) : route('categories.store') }}">
-                @if(Request::is('categories/*/edit'))
+                  action="{{ !empty($category) ? route('categories.update',['id'=> $category->id]) : route('categories.store') }}">
+                @if(!empty($category))
                     <input type="hidden" name="_method" value="PATCH">
                 @endif
                 @csrf
