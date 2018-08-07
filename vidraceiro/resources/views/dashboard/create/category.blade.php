@@ -10,7 +10,11 @@
                         type="button">{{empty($category) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{ route('categories.store') }}">
+            <form class="formulario" method="POST" role="form"
+                  action="{{ Request::is('categories/*/edit') ? route('categories.update',['id'=> $category->id]) : route('categories.store') }}">
+                @if(Request::is('categories/*/edit'))
+                    <input type="hidden" name="_method" value="PATCH">
+                @endif
                 @csrf
                 <div class="form-row">
 

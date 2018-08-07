@@ -67,9 +67,12 @@ class CategoryController extends Controller
     }
 
 
-    public function update()
+    public function update(Request $request, $id)
     {
-
+        $category = Category::find($id);
+        $category->update($request->all());
+        if ($category)
+            return redirect()->back()->with('success', 'Categoria atualizada com sucesso');
     }
 
     public function destroy($id)
