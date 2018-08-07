@@ -70,8 +70,14 @@ class ProductController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-
+        $mproduct = MProduct::find($id);
+        if ($mproduct) {
+            $mproduct->delete();
+            return redirect()->back()->with('success', 'Modelo de produto deletado com sucesso');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao deletar modelo de produto');
+        }
     }
 }

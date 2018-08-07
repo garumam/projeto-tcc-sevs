@@ -43,8 +43,14 @@ class OrderController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-
+        $order = Order::find($id);
+        if ($order) {
+            $order->delete();
+            return redirect()->back()->with('success', 'Ordem de serviço deletado com sucesso');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao deletar ordem de serviço');
+        }
     }
 }
