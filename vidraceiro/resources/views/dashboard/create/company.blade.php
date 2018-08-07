@@ -6,75 +6,79 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}} </h4>
+                @if($company)
+                    <button id="{{$company->id}}" onclick="deletar(this.id,'companies')"
+                            class="btn btn-danger ml-auto mr-3" type="button">Deletar
+                    </button>
+                @endif
                 <button id="bt-company-visible" class="btn btn-primary btn-custom" type="button">Adicionar</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('companies.create')}}">
+            <form class="formulario" method="POST" role="form"
+                  action="{{($company) ?  route('companies.update',['id'=>$company->id]) :  route('companies.store')}}">
+                @if($company)
+                    <input type="hidden" name="_method" value="PATCH">
+                @endif
                 @csrf
                 <div class="form-row">
+                    <div class="form-group col-md-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    </div>
 
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                        <input type="text" class="form-control" name="nome" value="{{ $company->nome or old('nome')}}"
+                               placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço:" required>
+                        <input type="text" class="form-control" name="endereco"
+                               value="{{ $company->nome or old('endereco')}}" placeholder="Endereço:" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
+                        <input type="text" class="form-control" name="cidade"
+                               value="{{ $company->nome or old('cidade')}}" placeholder="Cidade" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" required>
+                        <input type="text" class="form-control" name="bairro"
+                               value="{{ $company->nome or old('bairro') }}" placeholder="Bairro" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="uf">Selecione uma UF</label>
-                        <select class="custom-select" id="uf" required>
-                            <option value="" selected>Selecione...</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
+                        <select id="uf" class="custom-select" name="uf" required>
+                            {{--<option value="" selected>Selecione...</option>--}}
+                            @foreach ($states as $uf => $estado)
+                                <option value="{{$uf}}"
+                                @if($company){{ $company->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" id="e-mail" name="e-mail" placeholder="E-mail:" required>
+                        <input type="email" class="form-control" name="email"
+                               value="{{ $company->email or old('email') }}" placeholder="E-mail:" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="" required>
+                        <input type="tel" class="form-control" name="telefone"
+                               value="{{ $company->telefone or old('telefone') }}" placeholder="Telefone" required>
                     </div>
 
                 </div>

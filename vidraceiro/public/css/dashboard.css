@@ -91,6 +91,7 @@ body {
 .cor-texto {
     color: #4264FB;
 }
+
 .nomp {
     padding: 0 !important;
     margin: 0 !important;
@@ -158,7 +159,7 @@ body {
     width: 100%;
 }
 
-.dropdown-item{
+.dropdown-item {
     font-weight: 500;
 }
 
@@ -286,12 +287,12 @@ body {
     border-top: none !important;
 }
 
-.topo-tab{
+.topo-tab {
     padding: 1rem;
     margin-left: auto;
 }
 
-.form-group .topo{
+.form-group .topo {
     padding: 0 !important;
 }
 
@@ -300,16 +301,18 @@ body {
     max-height: 150px;
     margin-bottom: 1rem;
 }
-.img-thumbnail{
+
+.img-thumbnail {
     margin: .3rem;
     height: 110px;
 }
 
-.imagem-modal{
+.imagem-modal {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
+
 .alerta {
     padding: 1rem 1rem 0 1rem;
 }
@@ -332,7 +335,8 @@ body {
     border-left: 0 !important;
     border-top: 0 !important;
 }
-.thumbnail{
+
+.thumbnail {
     border: 5px solid #0acf97;
 }
 
@@ -340,37 +344,34 @@ body {
     color: #191919;
 }
 
-
-
 /*#dropmenu-imagem button {*/
-    /*width: 180px;*/
-    /*height: auto;*/
-    /*padding: 1rem;*/
-    /*display: block;*/
-    /*background-color: #EFF3F6;*/
+/*width: 180px;*/
+/*height: auto;*/
+/*padding: 1rem;*/
+/*display: block;*/
+/*background-color: #EFF3F6;*/
 /*}*/
 /*#dropmenu-imagem button img {*/
-    /*width: 50%;*/
-    /*height: auto;*/
+/*width: 50%;*/
+/*height: auto;*/
 /*}*/
 
-
 /*#dropmenu-imagem button::after{*/
-    /*left: 1rem;*/
-    /*bottom: 0;*/
-    /*top: 0;*/
+/*left: 1rem;*/
+/*bottom: 0;*/
+/*top: 0;*/
 /*}*/
 
 /*#dropmenu-imagem ul {*/
-    /*overflow-x: auto !important;*/
-    /*height: 350px;*/
-    /*position: absolute !important;*/
-    /*bottom: 0;*/
-    /*top: 100px !important;*/
+/*overflow-x: auto !important;*/
+/*height: 350px;*/
+/*position: absolute !important;*/
+/*bottom: 0;*/
+/*top: 100px !important;*/
 /*}*/
 
 /*#dropmenu-imagem ul li {*/
-    /*padding: 1rem;*/
+/*padding: 1rem;*/
 /*}*/
 
 .formulario {
@@ -492,6 +493,7 @@ footer p {
     .navbar {
         padding: 0 !important;
     }
+
     .modal {
         left: 220px;
     }
