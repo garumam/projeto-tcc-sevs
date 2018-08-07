@@ -55,7 +55,10 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{route('budgets.create')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                        @if(!empty($budget))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                         <div class="form-row">
 
@@ -145,7 +148,11 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
-                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                        @if(!empty($budget))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
@@ -221,7 +228,11 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
-                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                        @if(!empty($budget))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row">
 
@@ -309,7 +320,11 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
-                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                        @if(!empty($budget))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
@@ -504,7 +519,11 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
-                    <form class="formulario" method="POST" role="form" action="{{route('budgets.create')}}">
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                        @if(!empty($budget))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         @csrf
                         <div class="form-row">
                             <div class="card-material custom-card custom-card-total col-md p-3">

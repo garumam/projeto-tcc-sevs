@@ -9,7 +9,11 @@
                 <button id="bt-{{$tipo}}-visible" class="btn btn-primary btn-custom" type="submit">Salvar</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('materials.create')}}">
+            <form class="formulario" method="POST" role="form"
+                  action="{{ !empty($material) ?  route('materials.update',['id'=>$material->id]) : route('materials.store')}}">
+                @if(!empty($material))
+                    <input type="hidden" name="_method" value="PATCH">
+                @endif
                 @csrf
                 <div class="form-row">
 
