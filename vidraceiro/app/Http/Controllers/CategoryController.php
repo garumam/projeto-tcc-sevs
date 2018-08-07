@@ -19,7 +19,25 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('dashboard.create.category')->with('title', 'Adicionar Categoria');
+        $types = array(
+            '' => 'Selecione..',
+            0 => 'Produto',
+            1 => 'Vidro',
+            2 => 'Aluminio',
+            3 => 'Componente'
+
+        );
+
+        $group_images = array(
+            '' => 'Selecione..',
+            1 => 'Box diversos',
+            2 => 'Box padrão',
+            3 => 'Ferragem 1000',
+            4 => 'Ferragem 3000',
+            5 => 'Kit sacada',
+            6 => 'Todas as imagens'
+        );
+        return view('dashboard.create.category', compact('types', 'group_images'))->with('title', 'Adicionar Categoria');
     }
 
     public function store()
