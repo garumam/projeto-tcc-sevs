@@ -21,21 +21,21 @@ class CategoryController extends Controller
     {
         $types = array(
             '' => 'Selecione..',
-            0 => 'Produto',
-            1 => 'Vidro',
-            2 => 'Aluminio',
-            3 => 'Componente'
+            'produto' => 'Produto',
+            'vidro' => 'Vidro',
+            'aluminio' => 'Aluminio',
+            'componente' => 'Componente'
 
         );
 
         $group_images = array(
             '' => 'Selecione..',
-            1 => 'Box diversos',
-            2 => 'Box padrão',
-            3 => 'Ferragem 1000',
-            4 => 'Ferragem 3000',
-            5 => 'Kit sacada',
-            6 => 'Todas as imagens'
+            'boxdiversos' => 'Box diversos',
+            'boxpadrao' => 'Box padrão',
+            'ferragem1000' => 'Ferragem 1000',
+            'ferragem3000' => 'Ferragem 3000',
+            'kitsacada' => 'Kit sacada',
+            'todasimagens' => 'Todas as imagens'
         );
         return view('dashboard.create.category', compact('types', 'group_images'))->with('title', 'Adicionar Categoria');
     }

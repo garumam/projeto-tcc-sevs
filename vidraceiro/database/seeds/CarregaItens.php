@@ -26,62 +26,62 @@ class CarregaItens extends Seeder
 
         Category::create([
             'nome' => 'Box Diversos',
-            'tipo' => 0,
-            'grupo_imagem' => 1
+            'tipo' => 'produto',
+            'grupo_imagem' => 'boxdiversos'
         ]);
 
         Category::create([
             'nome' => 'Box Padrão',
-            'tipo' => 0,
-            'grupo_imagem' => 2
+            'tipo' => 'produto',
+            'grupo_imagem' => 'boxpadrao'
         ]);
 
         Category::create([
             'nome' => 'Ferragem 1000',
-            'tipo' => 0,
-            'grupo_imagem' => 3
+            'tipo' => 'produto',
+            'grupo_imagem' => 'ferragem1000'
         ]);
 
         Category::create([
             'nome' => 'Ferragem 3000',
-            'tipo' => 0,
-            'grupo_imagem' => 4
+            'tipo' => 'produto',
+            'grupo_imagem' => 'ferragem3000'
         ]);
 
         Category::create([
             'nome' => 'Kit Sacada',
-            'tipo' => 0,
-            'grupo_imagem' => 5
+            'tipo' => 'produto',
+            'grupo_imagem' => 'kitsacada'
         ]);
 
         Category::create([
             'nome' => 'Todas as imagens',
-            'tipo' => 0,
-            'grupo_imagem' => 6
+            'tipo' => 'produto',
+            'grupo_imagem' => 'todasimagens'
         ]);
 
         Category::create([
             'nome' => 'Janelas',
-            'tipo' => 1,
-            'grupo_imagem' => 7
+            'tipo' => 'aluminio',
+            'grupo_imagem' => 'todasimagens'
         ]);
 
         Category::create([
             'nome' => 'Portões',
-            'tipo' => 1,
-            'grupo_imagem' => 8
+            'tipo' => 'aluminio',
+            'grupo_imagem' => 'todasimagens'
         ]);
 
         Category::create([
             'nome' => 'Linha Temperado',
-            'tipo' => 2,
-            'grupo_imagem' => 9
+            'tipo' => 'vidro',
+            'grupo_imagem' => 'todasimagens'
         ]);
 
         Category::create([
             'nome' => 'Linha Suprema',
-            'tipo' => 2,
-            'grupo_imagem' => 10
+            'tipo' => 'vidro',
+            'grupo_imagem' => 'todasimagens'
         ]);
 
         MProduct::create([
