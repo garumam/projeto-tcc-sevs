@@ -250,11 +250,6 @@ $(document).ready(function () {
 
     });
 
-
-    $('a').click(function () {
-        alert('clickado');
-    });
-
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
     //     // let formData = $('form').serializeArray();
