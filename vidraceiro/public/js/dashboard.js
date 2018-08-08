@@ -235,14 +235,18 @@ $(document).ready(function () {
                 "</tr>"
             );
 
-            var total = parseInt($('#option-' + idorcamento).attr('name'));
-            var inputTotal = isNaN(parseInt($('#total').val())) ? 0 : parseInt($('#total').val());
-            var inputtotalnovo = $('#total').val(parseInt(inputTotal + total));
+            let total = parseInt($('#option-' + idorcamento).attr('name'));
+            let valorTotal = $('#total');
+            let inputTotal = isNaN(parseInt(valorTotal.val())) ? 0 : parseInt(valorTotal.val());
+            valorTotal.val(inputTotal + total);
             let button = document.getElementsByClassName("deletar-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {
                         console.log(criaid);
+                        let removevalor = valorTotal.val();
+                        removevalor -= total;
+                        valorTotal.val(removevalor);
                         $('#' + criaid).remove();
                         $('.' + criaid).remove();
                     }
