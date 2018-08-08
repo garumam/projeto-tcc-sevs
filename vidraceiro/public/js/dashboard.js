@@ -113,7 +113,13 @@ $(document).ready(function () {
     // fim dos materiais
 
     $('#bt-order-visible').click(function () {
-        $('#bt-order-invisible').click();
+        let input = $('.id_orcamento').val();
+        if (input) {
+            $('#bt-order-invisible').click();
+        } else {
+            alert('adicione um orçamento a ordem de serviço');
+        }
+
     });
 
     //inicio produto form
