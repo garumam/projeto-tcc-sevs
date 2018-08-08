@@ -251,7 +251,6 @@ $(document).ready(function () {
                 '<td>' + selectname + '</td>' +
                 '<td>' +
                 "<button id=" + row + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
-                "</a>" +
                 "</td>" +
                 "</tr>"
             );
