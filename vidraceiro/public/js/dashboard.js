@@ -217,14 +217,15 @@ $(document).ready(function () {
         let idorcamento = $('#select-orcamentos').val();
         let nomeorcamento = $('#select-orcamentos option:selected').text();
         let idorcamentoinput = $('.id_orcamento').attr('value');
-        // let id_final = $('.id_orcamento').last().attr('value');
-        let linha = $('#linha-' + idorcamento).attr('id');
+        let table = $('tbody');
+        let pegaIdLinha = $('#linha-' + idorcamento).attr('id');
         let criaid = 'linha-' + idorcamento;
         if (idorcamento.length === 0) {
             alert('Selecione um orçamento para adicionar');
-        } else if (idorcamentoinput !== idorcamento && linha !== criaid) {
-            let table = $('#tbody');
-            $('#ids').append('<input type="number" class="id_orcamento ' + criaid + '" name="id_orcamento[]" value="' + idorcamento + '" />');
+        } else if (idorcamentoinput !== idorcamento && pegaIdLinha !== criaid) {
+            $('#ids').append(
+                '<input type="number" class="id_orcamento ' + criaid + '" name="id_orcamento[]" value="' + idorcamento + '" style="display: none;" />' +
+                '');
             table.append(
                 '<tr id="' + criaid + '">' +
                 '<th scope="row">' + idorcamento + '</th>' +
@@ -234,7 +235,6 @@ $(document).ready(function () {
                 "</td>" +
                 "</tr>"
             );
-
             let total = parseInt($('#option-' + idorcamento).attr('name'));
             let valorTotal = $('#total');
             let inputTotal = isNaN(parseInt(valorTotal.val())) ? 0 : parseInt(valorTotal.val());
@@ -243,10 +243,7 @@ $(document).ready(function () {
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {
-                        console.log(criaid);
-                        let removevalor = valorTotal.val();
-                        removevalor -= total;
-                        valorTotal.val(removevalor);
+                        valorTotal.val(valorTotal.val() - total);
                         $('#' + criaid).remove();
                         $('.' + criaid).remove();
                     }

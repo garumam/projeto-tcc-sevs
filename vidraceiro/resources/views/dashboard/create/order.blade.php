@@ -112,7 +112,7 @@
                                 </tr>
 
                                 </thead>
-                                <tbody id="tbody">
+                                <tbody>
 
                                 {{--<tr class="tabela-vidro">--}}
                                 {{--<th scope="row">1</th>--}}
