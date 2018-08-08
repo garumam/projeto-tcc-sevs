@@ -292,9 +292,9 @@ body {
     margin-left: auto;
 }
 
-.form-group .topo {
-    padding: 0 !important;
-}
+/*.form-group .topo {*/
+/*padding: 0 !important;*/
+/*}*/
 
 #image-selecionar {
     max-width: 120px;
