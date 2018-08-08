@@ -37,7 +37,6 @@
                 <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
 
                         <div class="form-row">
 
@@ -161,7 +160,7 @@
 
                         </div>
 
-                    </form>
+
 
                 </div>
 
@@ -169,7 +168,6 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
 
                         <div class="form-row">
 
@@ -293,14 +291,12 @@
 
                         </div>
 
-                    </form>
 
                 </div>
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
-                    <form class="formulario" method="POST" role="form">
 
                         <div class="form-row">
 
@@ -424,7 +420,6 @@
 
                         </div>
 
-                    </form>
 
                 </div>
             </div>

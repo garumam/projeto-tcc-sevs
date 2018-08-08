@@ -89,7 +89,7 @@ $(document).ready(function () {
                 break;
         }
     });
-    $('#bt-material').attr("href", '/materials/create/?tipo=vidro');
+    $('#bt-material').attr("href", '/materials/glass/create');
 
     $('#bt-user-visible').click(function () {
         $('#bt-user-invisible').click();
@@ -99,16 +99,16 @@ $(document).ready(function () {
     });
 
     // forms dos materiais
-    $('#bt-vidro-visible').click(function () {
-        $('#bt-vidro-invisible').click();
+    $('#bt-glass-visible').click(function () {
+        $('#bt-glass-invisible').click();
     });
 
-    $('#bt-aluminio-visible').click(function () {
-        $('#bt-aluminio-invisible').click();
+    $('#bt-aluminum-visible').click(function () {
+        $('#bt-aluminum-invisible').click();
     });
 
-    $('#bt-componente-visible').click(function () {
-        $('#bt-componente-invisible').click();
+    $('#bt-component-visible').click(function () {
+        $('#bt-component-invisible').click();
     });
     // fim dos materiais
 
@@ -177,13 +177,13 @@ $(document).ready(function () {
 
 
     $('#nav-Vidros-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/create/?tipo=vidro');
+        $('#bt-material').attr("href", '/materials/glass/create');
     });
     $('#nav-Aluminios-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/create/?tipo=aluminio');
+        $('#bt-material').attr("href", '/materials/aluminum/create');
     });
     $('#nav-Componentes-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/create/?tipo=componente');
+        $('#bt-material').attr("href", '/materials/component/create');
     });
 
 

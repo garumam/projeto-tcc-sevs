@@ -7,6 +7,7 @@ use App\Category;
 use App\Component;
 use App\Glass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
 {
@@ -26,24 +27,52 @@ class MaterialController extends Controller
 
     public function create(Request $request)
     {
-        $tipo = $request->tipo;
+        $tipo = $request->type;
         switch($tipo){
-            case 'vidro':
+            case 'glass':
                 $categories = Category::where('tipo','vidro')->get();
+                $nome = 'vidro';
                 break;
-            case 'aluminio':
+            case 'aluminum':
                 $categories = Category::where('tipo','aluminio')->get();
+                $nome = 'alumínio';
                 break;
-            case 'componente':
-                $categories = Category::where('tipo','componente')->get();
+            case 'component':
+                //$categories = Category::where('tipo','componente')->get();
+                $categories = Category::all();
+                $nome = 'componente';
                 break;
         }
-        return view('dashboard.create.material',compact('tipo','categories'))->with('title','Criar '.$tipo);
+        return view('dashboard.create.material',compact('tipo','categories'))->with('title','Criar '.$nome);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $type = $request->type;
+        switch($type){
+            case 'glass':
+                $validado = $this->rules_materiais($request->all(), 'glass');
+                $material = new Glass;
+                $nome = 'Vidro';
+                break;
+            case 'aluminum':
+                $validado = $this->rules_materiais($request->all(), 'aluminum');
+                $material = new Aluminum;
+                $nome = 'Alumínio';
+                break;
+            case 'component':
+                $validado = $this->rules_materiais($request->all(), 'component');
+                $material = new Component;
+                $nome = 'Componente';
+                break;
+        }
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+        $material = $material->create($request->except('type'));
 
+        if ($material)
+            return redirect()->back()->with('success', "$nome criado com sucesso");
     }
 
     public function show()
@@ -53,13 +82,77 @@ class MaterialController extends Controller
 
     public function edit(Request $request)
     {
-        echo $request->type;
+        $tipo = $request->type;
+        $id = $request->id;
+
+        switch($tipo){
+            case 'glass':
+                $material = Glass::find($id);
+                $categories = Category::where('tipo','vidro')->get();
+                $nome = 'vidro';
+                break;
+            case 'aluminum':
+                $material = Aluminum::find($id);
+                $categories = Category::where('tipo','aluminio')->get();
+                $nome = 'alumínio';
+                break;
+            case 'component':
+                $material = Component::find($id);
+                //$categories = Category::where('tipo','componente')->get();
+                $categories = Category::all();
+                $nome = 'componente';
+                break;
+        }
+
+        return view('dashboard.create.material',compact('tipo','material','categories'))->with('title','Atualizar '.$nome);
     }
 
 
-    public function update()
+    public function update(Request $request, $type, $id)
     {
 
+        switch($type){
+            case 'glass':
+                $material = Glass::find($id);
+                $nome = 'Vidro';
+                break;
+            case 'aluminum':
+                $material = Aluminum::find($id);
+                $nome = 'Alumínio';
+                break;
+            case 'component':
+                $material = Component::find($id);
+                $nome = 'Componente';
+                break;
+        }
+        $material->update($request->except(['type','_token']));
+        if ($material)
+            return redirect()->back()->with('success', "$nome atualizado com sucesso");
+
+
+    }
+
+    public function rules_materiais(array $data, $type)
+    {
+        switch($type){
+            case 'glass':
+                $validator = Validator::make($data, [
+                    'nome' => 'required|string|max:255'
+                ]);
+                break;
+            case 'aluminum':
+                $validator = Validator::make($data, [
+                    'perfil' => 'required|string|max:255'
+                ]);
+                break;
+            case 'component':
+                $validator = Validator::make($data, [
+                    'nome' => 'required|string|max:255'
+                ]);
+                break;
+        }
+
+        return $validator;
     }
 
     public function destroy($type, $id)

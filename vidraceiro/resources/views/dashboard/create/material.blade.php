@@ -10,14 +10,27 @@
             </div>
 
             <form class="formulario" method="POST" role="form"
-                  action="{{ !empty($material) ?  route('materials.update',['id'=>$material->id]) : route('materials.store')}}">
+                  action="{{ !empty($material) ?  route('materials.update',['id'=>$material->id, 'type' => $tipo]) : route('materials.store')}}">
                 @if(!empty($material))
                     <input type="hidden" name="_method" value="PATCH">
                 @endif
                 @csrf
                 <div class="form-row">
 
-                    @if($tipo == 'vidro')
+                    <div class="form-group col-md-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if($tipo == 'glass')
 
                         <div class="form-group col-md-4">
                             <label for="categoria_vidro_id">Categoria</label>
@@ -31,27 +44,32 @@
 
                         <div class="form-group col-md-4">
                             <label for="nome">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
+                                   value="{{$material->nome or old('nome')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="descricao">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição">
+                            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"
+                                   value="{{$material->descricao or old('descricao')}}">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="tipo">Tipo</label>
-                            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo">
+                            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo"
+                                   value="{{$material->tipo or old('tipo')}}">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="espessura">Espessura</label>
-                            <input type="number" class="form-control" id="espessura" name="espessura" placeholder="Espessura" required>
+                            <input type="number" class="form-control" id="espessura" name="espessura" placeholder="Espessura"
+                                   value="{{$material->espessura or old('espessura')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="preco">Preço</label>
-                            <input type="number" class="form-control" id="preco" name="preco" placeholder="preço">
+                            <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                                   value="{{$material->preco or old('preco')}}">
                         </div>
 
                         <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is('materials/create')? 1 : 0 }}">
@@ -60,7 +78,7 @@
                     @endif
 
 
-                    @if($tipo == 'aluminio')
+                    @if($tipo == 'aluminum')
 
                             <div class="form-group col-md-4">
                                 <label for="categoria_aluminio_id">Categoria</label>
@@ -74,32 +92,38 @@
 
                             <div class="form-group col-md-4">
                                 <label for="perfil">Perfil</label>
-                                <input type="text" class="form-control" id="perfil" name="perfil" placeholder="Perfil" required>
+                                <input type="text" class="form-control" id="perfil" name="perfil" placeholder="Perfil"
+                                       value="{{$material->perfil or old('perfil')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="descricao">Descrição</label>
-                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição">
+                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"
+                                       value="{{$material->descricao or old('descricao')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="medida">Medida</label>
-                                <input type="number" class="form-control" id="medida" name="medida" placeholder="Medida">
+                                <input type="number" class="form-control" id="medida" name="medida" placeholder="Medida"
+                                       value="{{$material->medida or old('medida')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="qtd">Quantidade</label>
-                                <input type="number" class="form-control" id="qtd" name="qtd" placeholder="Quantidade" required>
+                                <input type="number" class="form-control" id="qtd" name="qtd" placeholder="Quantidade"
+                                       value="{{$material->qtd or old('qtd')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="peso">Peso</label>
-                                <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso">
+                                <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso"
+                                       value="{{$material->peso or old('peso')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="preco">Preço do KG</label>
-                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço">
+                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                                       value="{{$material->preco or old('preco')}}">
                             </div>
 
                             <div class="form-group col-md-4">
@@ -119,7 +143,7 @@
                     @endif
 
 
-                    @if($tipo == 'componente')
+                    @if($tipo == 'component')
 
                             <div class="form-group col-md-4">
                                 <label for="categoria_componente_id">Categoria</label>
@@ -133,21 +157,26 @@
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
+                                       value="{{$material->nome or old('nome')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="qtd">Quantidade</label>
-                                <input type="number" class="form-control" id="qtd" name="qtd" placeholder="Quantidade">
+                                <input type="number" class="form-control" id="qtd" name="qtd" placeholder="Quantidade"
+                                       value="{{$material->qtd or old('qtd')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="preco">Preço</label>
-                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço">
+                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                                       value="{{$material->preco or old('preco')}}">
                             </div>
 
                             <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is('materials/create')? 1 : 0 }}">
                     @endif
+
+                    <input type="hidden" class="form-control" name="type" value="{{$tipo}}">
 
                 </div>
                 <button id="bt-{{$tipo}}-invisible" class="d-none" type="submit"></button>
