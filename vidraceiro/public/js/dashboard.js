@@ -214,32 +214,37 @@ $(document).ready(function () {
 
 
     $('#bt-add-orcamento-order').click(function () {
-        let select = $('#select-orcamentos').val();
-        let selectname = $('#select-orcamentos option:selected').text();
-        let id_init = $('.id_orcamento').attr('value');
-        let id_final = $('.id_orcamento').last().attr('value');
-        if (select.length === 0) {
+        let idorcamento = $('#select-orcamentos').val();
+        let nomeorcamento = $('#select-orcamentos option:selected').text();
+        let idorcamentoinput = $('.id_orcamento').attr('value');
+        // let id_final = $('.id_orcamento').last().attr('value');
+        let linha = $('#linha-' + idorcamento).attr('id');
+        let criaid = 'linha-' + idorcamento;
+        if (idorcamento.length === 0) {
             alert('Selecione um orçamento para adicionar');
-        } else if (id_init !== select && id_final !== select) {
+        } else if (idorcamentoinput !== idorcamento && linha !== criaid) {
             let table = $('#tbody');
-            let row = 'linha-' + select;
-            $('#ids').append('<input type="number" class="id_orcamento ' + row + '" name="id_orcamento[]" value="' + select + '" />');
+            $('#ids').append('<input type="number" class="id_orcamento ' + criaid + '" name="id_orcamento[]" value="' + idorcamento + '" />');
             table.append(
-                '<tr id="' + row + '">' +
-                '<th scope="row">' + select + '</th>' +
-                '<td>' + selectname + '</td>' +
+                '<tr id="' + criaid + '">' +
+                '<th scope="row">' + idorcamento + '</th>' +
+                '<td>' + nomeorcamento + '</td>' +
                 '<td>' +
-                "<button id=" + row + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                "<button id=" + criaid + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                 "</td>" +
                 "</tr>"
             );
+
+            var total = parseInt($('#option-' + idorcamento).attr('name'));
+            var inputTotal = isNaN(parseInt($('#total').val())) ? 0 : parseInt($('#total').val());
+            var inputtotalnovo = $('#total').val(parseInt(inputTotal + total));
             let button = document.getElementsByClassName("deletar-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
-                    if (e.target.id === row) {
-                        console.log(row);
-                        $('#' + row).remove();
-                        $('.' + row).remove();
+                    if (e.target.id === criaid) {
+                        console.log(criaid);
+                        $('#' + criaid).remove();
+                        $('.' + criaid).remove();
                     }
                 }, false);
             }

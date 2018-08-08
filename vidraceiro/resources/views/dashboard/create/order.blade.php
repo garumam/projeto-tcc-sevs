@@ -43,10 +43,10 @@
                     <div class="form-group col-md-4">
                         <label for="select-situacao">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
-                            <option value="" selected>Selecione algo...</option>
-                            <option value="">Em andamento</option>
-                            <option value="">Concluída</option>
-                            <option value="">Cancelada</option>
+                            <option value="" selected>Selecione...</option>
+                            <option value="andamento">Em andamento</option>
+                            <option value="concluida">Concluída</option>
+                            <option value="cancelada">Cancelada</option>
                         </select>
                     </div>
 
@@ -59,7 +59,8 @@
                         <select id="select-orcamentos" class="custom-select" required>
                             <option value="" selected>Selecione um orçamento</option>
                             @foreach($budgets as $budget)
-                                <option value="{{$budget->id}}">{{$budget->nome}}</option>
+                                <option id="option-{{$budget->id}}" name="{{$budget->total}}"
+                                        value="{{$budget->id}}">{{$budget->nome}}</option>
                             @endforeach
                         </select>
                     </div>
