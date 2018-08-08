@@ -107,23 +107,21 @@
                                 <tr class="tabela-vidro">
                                     <th class="noborder" scope="col">Id</th>
                                     <th class="noborder" scope="col">Nome</th>
-                                    <th class="noborder" scope="col">Data</th>
                                     <th class="noborder" scope="col">Ação</th>
                                 </tr>
 
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
 
-                                <tr class="tabela-vidro">
-                                    <th scope="row">1</th>
-                                    <td>Orçamento1</td>
-                                    <td>20/20/2020</td>
-                                    <td>
-                                        <a class="btn-link">
-                                            <button class="btn btn-danger mb-1">Delete</button>
-                                        </a>
-                                    </td>
-                                </tr>
+                                {{--<tr class="tabela-vidro">--}}
+                                {{--<th scope="row">1</th>--}}
+                                {{--<td>Orçamento1</td>--}}
+                                {{--<td>--}}
+                                {{--<a class="btn-link">--}}
+                                {{--<button class="btn btn-danger mb-1">Delete</button>--}}
+                                {{--</a>--}}
+                                {{--</td>--}}
+                                {{--</tr>--}}
 
                                 </tbody>
                             </table>

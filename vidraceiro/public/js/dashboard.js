@@ -212,19 +212,67 @@ $(document).ready(function () {
         $('#bt-budget-visible').text($texto);
     }
 
+
     $('#bt-add-orcamento-order').click(function () {
         let select = $('#select-orcamentos').val();
+        let selectname = $('#select-orcamentos option:selected').text();
         let id_init = $('.id_orcamento').attr('value');
         let id_final = $('.id_orcamento').last().attr('value');
         if (select.length === 0) {
             alert('Selecione um orçamento para adicionar');
         } else if (id_init !== select && id_final !== select) {
             $('#ids').append('<input type="number" class="id_orcamento" name="id_orcamento[]" value="' + select + '" />');
+            var table = document.getElementById('tbody');
+            var row = document.createElement("tr");
+            row.id = select;
+            var celula1 = document.createElement("th");
+            var celula2 = document.createElement("td");
+            var celula3 = document.createElement("td");
+            var textocelula1 = document.createTextNode(select);
+            var textocelula2 = document.createTextNode(selectname);
+            var button = document.createElement("button");
+            button.type = "button";
+            button.id = select;
+            button.className = "deletar-tabela btn btn-danger mb-1";
+            button.innerHTML = 'Deletar';
+            celula1.appendChild(textocelula1);
+            celula2.appendChild(textocelula2);
+            celula3.appendChild(button);
+            row.appendChild(celula1);
+            row.appendChild(celula2);
+            row.appendChild(celula3);
+            table.appendChild(row);
+            // $table.append(
+            //     '<th scope="row">'+select+'</th>' +
+            //     '<td>' + selectname + '</td>' +
+            //     '<td>' +
+            //     "<button id="+select+" class=\"deletar-tabela btn btn-danger mb-1\" type='button'>Delete</button>" +
+            //     "</a>" +
+            //     "</td>"
+            // );
+
+            // $table.html($table);
+            // $table.append($table);
+            var button1 = document.getElementsByClassName("deletar-tabela");
+            for (var i = 0; i < button1.length; i++) {
+                button1[i].addEventListener('click', function (e) {
+                    if (e.target.id === row.id) {
+                        console.log(row.id);
+                        row.remove();
+                    }
+                }, false);
+            }
         } else {
             alert('Orçamento ja foi adicionado');
         }
 
     });
+
+
+    $('a').click(function () {
+        alert('clickado');
+    });
+
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
     //     // let formData = $('form').serializeArray();

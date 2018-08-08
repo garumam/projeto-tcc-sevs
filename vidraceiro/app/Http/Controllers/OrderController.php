@@ -28,9 +28,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $ids = $request->id_orcamento;
-        foreach ($ids as $id) {
-            echo $id . "\n";
-        }
+        var_dump($ids);
+//        foreach ($ids as $id) {
+//            echo $id . "\n";
+//        }
 
     }
 
