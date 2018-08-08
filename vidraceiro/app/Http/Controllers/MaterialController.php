@@ -137,17 +137,20 @@ class MaterialController extends Controller
         switch($type){
             case 'glass':
                 $validator = Validator::make($data, [
-                    'nome' => 'required|string|max:255'
+                    'nome' => 'required|string|max:255',
+                    'is_modelo' => 'required|integer|between:0,1'
                 ]);
                 break;
             case 'aluminum':
                 $validator = Validator::make($data, [
-                    'perfil' => 'required|string|max:255'
+                    'perfil' => 'required|string|max:255',
+                    'is_modelo' => 'required|integer|between:0,1'
                 ]);
                 break;
             case 'component':
                 $validator = Validator::make($data, [
-                    'nome' => 'required|string|max:255'
+                    'nome' => 'required|string|max:255',
+                    'is_modelo' => 'required|integer|between:0,1'
                 ]);
                 break;
         }

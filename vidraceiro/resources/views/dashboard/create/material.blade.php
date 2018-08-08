@@ -72,7 +72,7 @@
                                    value="{{$material->preco or old('preco')}}">
                         </div>
 
-                        <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is('materials/create')? 1 : 0 }}">
+                        <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
 
 
                     @endif
@@ -138,7 +138,7 @@
                                 </select>
                             </div>
 
-                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is('materials/create')? 1 : 0 }}">
+                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
 
                     @endif
 
@@ -173,7 +173,7 @@
                                        value="{{$material->preco or old('preco')}}">
                             </div>
 
-                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is('materials/create')? 1 : 0 }}">
+                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
                     @endif
 
                     <input type="hidden" class="form-control" name="type" value="{{$tipo}}">
