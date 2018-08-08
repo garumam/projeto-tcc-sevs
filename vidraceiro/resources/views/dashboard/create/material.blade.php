@@ -6,11 +6,11 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <button id="bt-{{$tipo}}-visible" class="btn btn-primary btn-custom" type="submit">Salvar</button>
+                <button id="bt-{{$type}}-visible" class="btn btn-primary btn-custom" type="submit">Salvar</button>
             </div>
 
             <form class="formulario" method="POST" role="form"
-                  action="{{ !empty($material) ?  route('materials.update',['id'=>$material->id, 'type' => $tipo]) : route('materials.store')}}">
+                  action="{{ !empty($material) ?  route('materials.update',['id'=>$material->id, 'type' => $type]) : route('materials.store',['type'=>$type])}}">
                 @if(!empty($material))
                     <input type="hidden" name="_method" value="PATCH">
                 @endif
@@ -30,7 +30,7 @@
                         @endforeach
                     </div>
 
-                    @if($tipo == 'glass')
+                    @if($type == 'glass')
 
                         <div class="form-group col-md-4">
                             <label for="categoria_vidro_id">Categoria</label>
@@ -68,17 +68,14 @@
 
                         <div class="form-group col-md-4">
                             <label for="preco">Preço</label>
-                            <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                            <input type="number" step='0.001' class="form-control" id="preco" name="preco" placeholder="preço"
                                    value="{{$material->preco or old('preco')}}">
                         </div>
-
-                        <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
-
 
                     @endif
 
 
-                    @if($tipo == 'aluminum')
+                    @if($type == 'aluminum')
 
                             <div class="form-group col-md-4">
                                 <label for="categoria_aluminio_id">Categoria</label>
@@ -104,7 +101,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="medida">Medida</label>
-                                <input type="number" class="form-control" id="medida" name="medida" placeholder="Medida"
+                                <input type="number" step='0.001' class="form-control" id="medida" name="medida" placeholder="Medida"
                                        value="{{$material->medida or old('medida')}}">
                             </div>
 
@@ -116,13 +113,13 @@
 
                             <div class="form-group col-md-4">
                                 <label for="peso">Peso</label>
-                                <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso"
+                                <input type="number" step='0.001' class="form-control" id="peso" name="peso" placeholder="Peso"
                                        value="{{$material->peso or old('peso')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="preco">Preço do KG</label>
-                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                                <input type="number" step='0.001' class="form-control" id="preco" name="preco" placeholder="preço"
                                        value="{{$material->preco or old('preco')}}">
                             </div>
 
@@ -138,12 +135,11 @@
                                 </select>
                             </div>
 
-                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
 
                     @endif
 
 
-                    @if($tipo == 'component')
+                    @if($type == 'component')
 
                             <div class="form-group col-md-4">
                                 <label for="categoria_componente_id">Categoria</label>
@@ -169,17 +165,15 @@
 
                             <div class="form-group col-md-4">
                                 <label for="preco">Preço</label>
-                                <input type="number" class="form-control" id="preco" name="preco" placeholder="preço"
+                                <input type="number" step='0.001' class="form-control" id="preco" name="preco" placeholder="preço"
                                        value="{{$material->preco or old('preco')}}">
                             </div>
 
-                            <input type="hidden" class="form-control" name="is_modelo" value="{{$material->is_modelo or Request::is("materials/$tipo/create")? 1 : 0 }}">
                     @endif
 
-                    <input type="hidden" class="form-control" name="type" value="{{$tipo}}">
 
                 </div>
-                <button id="bt-{{$tipo}}-invisible" class="d-none" type="submit"></button>
+                <button id="bt-{{$type}}-invisible" class="d-none" type="submit"></button>
 
             </form>
         </div>

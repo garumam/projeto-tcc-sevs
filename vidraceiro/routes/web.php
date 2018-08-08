@@ -58,7 +58,7 @@ Route::prefix('categories')->group(function () {
 Route::prefix('materials')->group(function () {
     Route::get('/', 'MaterialController@index')->name('materials.index');
     Route::get('/{type}/create', 'MaterialController@create')->name('materials.create');
-    Route::post('', 'MaterialController@store')->name('materials.store');
+    Route::post('/{type}', 'MaterialController@store')->name('materials.store');
     Route::get('/{user}', 'MaterialController@show')->name('materials.show');
     Route::get('/{type}/{id}/edit', 'MaterialController@edit')->name('materials.edit');
     Route::patch('/{type}/{id}', 'MaterialController@update')->name('materials.update');
