@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aluminum;
+use App\Category;
 use App\Component;
 use App\Glass;
 use Illuminate\Http\Request;
@@ -26,7 +27,18 @@ class MaterialController extends Controller
     public function create(Request $request)
     {
         $tipo = $request->tipo;
-        return view('dashboard.create.material',compact('tipo'))->with('title','Criar '.$tipo);
+        switch($tipo){
+            case 'vidro':
+                $categories = Category::where('tipo','vidro')->get();
+                break;
+            case 'aluminio':
+                $categories = Category::where('tipo','aluminio')->get();
+                break;
+            case 'componente':
+                $categories = Category::where('tipo','componente')->get();
+                break;
+        }
+        return view('dashboard.create.material',compact('tipo','categories'))->with('title','Criar '.$tipo);
     }
 
     public function store()

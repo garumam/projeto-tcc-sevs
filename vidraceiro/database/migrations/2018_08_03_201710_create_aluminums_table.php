@@ -21,7 +21,7 @@ class CreateAluminumsTable extends Migration
             $table->integer('qtd');
             $table->float('peso')->nullable();
             $table->float('preco')->nullable();
-            $table->integer('tipo_medida');
+            $table->string('tipo_medida');
             $table->integer('is_modelo');
             $table->integer('categoria_aluminio_id')->unsigned();
             $table->foreign('categoria_aluminio_id')->references('id')->on('categories')->onDelete('cascade');

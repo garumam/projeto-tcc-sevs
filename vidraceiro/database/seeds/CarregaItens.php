@@ -171,7 +171,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 1.600,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -184,7 +184,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 4.200,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -197,7 +197,7 @@ class CarregaItens extends Seeder
         'qtd' => 1,
         'peso' => 2.000,
         'preco' => 22.0,
-        'tipo_medida' => 0,
+        'tipo_medida' => 'largura',
         'is_modelo' => 1,
         'categoria_aluminio_id' => 7
 
@@ -210,7 +210,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 0.300,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -223,7 +223,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 0.900,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -236,7 +236,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 1.000,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -249,7 +249,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 0.800,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -262,7 +262,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 0.700,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 7
 
@@ -275,7 +275,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 2.200,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -288,7 +288,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 1.800,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -301,7 +301,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 4.700,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -314,7 +314,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 1.800,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -327,7 +327,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 3.700,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -340,7 +340,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 5.000,
             'preco' => 22.0,
-            'tipo_medida' => 0,
+            'tipo_medida' => 'largura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -353,7 +353,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 6.300,
             'preco' => 22.0,
-            'tipo_medida' => 2,
+            'tipo_medida' => 'mlinear',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
@@ -366,7 +366,7 @@ class CarregaItens extends Seeder
             'qtd' => 1,
             'peso' => 6.000,
             'preco' => 22.0,
-            'tipo_medida' => 1,
+            'tipo_medida' => 'altura',
             'is_modelo' => 1,
             'categoria_aluminio_id' => 8
 
