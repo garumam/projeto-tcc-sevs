@@ -22,7 +22,7 @@
                 @endif
                 @csrf
                 <div class="form-row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 m-0">
                         @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}

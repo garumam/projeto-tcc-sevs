@@ -17,7 +17,21 @@
                 @endif
                 @csrf
                 <div class="form-row">
-
+                    <div class="form-group col-md-12 m-0">
+                        @if(session('success'))
+                            <div class="alerta p-0">
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            </div>
+                        @elseif(session('error'))
+                            <div class="alerta p-0">
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
@@ -35,10 +49,6 @@
                                placeholder="20/20/2020" required>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="total">Total</label>
-                        <input type="number" class="form-control" id="total" name="total" placeholder="R$" required>
-                    </div>
 
                     <div class="form-group col-md-4">
                         <label for="select-situacao">Situação</label>
@@ -48,6 +58,12 @@
                             <option value="concluida">Concluída</option>
                             <option value="cancelada">Cancelada</option>
                         </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="total">Total</label>
+                        <input type="number" class="form-control" id="total" name="total" placeholder="R$" required
+                               readonly>
                     </div>
 
                 </div>
@@ -86,20 +102,6 @@
                         <div class="topo pl-0">
                             <h4 class="titulo">Orçamentos</h4>
                         </div>
-
-                        @if(session('success'))
-                            <div class="alerta">
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            </div>
-                        @elseif(session('error'))
-                            <div class="alerta">
-                                <div class="alert alert-danger">
-                                    {{ session('error') }}
-                                </div>
-                            </div>
-                        @endif
 
                         <div class="table-responsive">
                             <table class="table table-hover">

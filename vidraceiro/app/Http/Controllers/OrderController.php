@@ -27,11 +27,13 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        $order = new Order;
+        $order = $order->create($request->except('id_orcamento', '_token'));
+        if ($order) {
+            $order->budgets()->attach($request->id_orcamento);
+            return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
+        }
 
-        var_dump($request->all());
-//        foreach ($ids as $id) {
-//            echo $id . "\n";
-//        }
 
     }
 
@@ -40,9 +42,10 @@ class OrderController extends Controller
 
     }
 
-    public function edit()
+    public function edit($id)
     {
-
+        $order = Order::with('budgets')->find($id);
+        dd($order);
     }
 
 
