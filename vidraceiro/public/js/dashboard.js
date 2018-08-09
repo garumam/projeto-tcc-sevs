@@ -117,7 +117,7 @@ $(document).ready(function () {
         if (input) {
             $('#bt-order-invisible').click();
         } else {
-            alert('adicione um orçamento a ordem de serviço');
+            mensagemAlerta('Adicione um orçamento a ordem de serviço');
         }
 
     });
