@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\Glass;
 use App\Aluminum;
-use App\Component;
-use App\Provider;
-use App\MProduct;
-use App\Product;
 use App\Budget;
+use App\Component;
+use App\Glass;
+use App\MProduct;
 use App\Order;
+use App\Product;
+use App\Provider;
+use Illuminate\Database\Seeder;
 
 class CarregaItensTeste extends Seeder
 {
@@ -95,7 +95,6 @@ class CarregaItensTeste extends Seeder
             'descricao'=> 'mproduto1',
             'imagem' => asset('img/boxdiversos/bxc1.png'),
             'nome'=> 'modelo produto1',
-            'categoria_produto_id' => 1
         ]);
 
         Product::create([
@@ -151,7 +150,7 @@ class CarregaItensTeste extends Seeder
             'rua'=> '',
             'telefone'=> '0',
             'total'=> 200.6056,
-            'uf'=> ''
+            'uf' => 'RJ'
         ]);
 
         Budget::create([
@@ -166,7 +165,7 @@ class CarregaItensTeste extends Seeder
             'rua'=> '',
             'telefone'=> '0',
             'total'=> 33.16572,
-            'uf'=> ''
+            'uf' => 'RJ'
         ]);
 
         $product = Product::find(1);
@@ -182,7 +181,7 @@ class CarregaItensTeste extends Seeder
             'data_final'=> '15/08/2018',
             'data_inicial'=> '08/08/2018',
             'nome'=> 'order1',
-            'situacao'=> 'em aberto',
+            'situacao' => 'aberta',
             'total'=> 233.7713
         ]);
 
@@ -190,7 +189,7 @@ class CarregaItensTeste extends Seeder
             'data_final'=> '09/08/2018',
             'data_inicial'=> '08/08/2018',
             'nome'=> 'order2',
-            'situacao'=> 'concluída',
+            'situacao' => 'concluida',
             'total'=> 200.6056
         ]);
 

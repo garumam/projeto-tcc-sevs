@@ -56,8 +56,8 @@
                         <label for="select-situacao">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
                             <option value="" selected>Selecione...</option>
-                            <option value="andamento" @if(!empty($order)) {{ $order->situacao == 'andamento' ? 'selected' : '' }} @endif>
-                                Em andamento
+                            <option value="aberta" @if(!empty($order)) {{ $order->situacao == 'andamento' ? 'selected' : '' }} @endif>
+                                Aberta
                             </option>
                             <option value="concluida" @if(!empty($order)) {{ $order->situacao == 'concluida' ? 'selected' : '' }} @endif>
                                 Concluída
@@ -124,17 +124,17 @@
 
                                 </thead>
                                 <tbody>
-
-                                {{--<tr class="tabela-vidro">--}}
-                                {{--<th scope="row">1</th>--}}
-                                {{--<td>Orçamento1</td>--}}
-                                {{--<td>--}}
-                                {{--<a class="btn-link">--}}
-                                {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                {{--</a>--}}
-                                {{--</td>--}}
-                                {{--</tr>--}}
-
+                                @foreach($budgets as $budget)
+                                    <tr id="linha-{{$budget->id}}">
+                                        <th scope="row">{{$budget->id}}</th>
+                                        <td>{{$budget->nome}}</td>
+                                        <td>
+                                            <button id="linha-{{$budget->id}}"
+                                                    class="deletar-tabela btn btn-danger mb-1" type="button">Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
