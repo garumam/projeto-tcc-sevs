@@ -56,7 +56,7 @@
                         <label for="select-situacao">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
                             <option value="" selected>Selecione...</option>
-                            <option value="aberta" @if(!empty($order)) {{ $order->situacao == 'andamento' ? 'selected' : '' }} @endif>
+                            <option value="aberta" @if(!empty($order)) {{ $order->situacao == 'aberta' ? 'selected' : '' }} @endif>
                                 Aberta
                             </option>
                             <option value="concluida" @if(!empty($order)) {{ $order->situacao == 'concluida' ? 'selected' : '' }} @endif>
