@@ -47,7 +47,7 @@ class OrderController extends Controller
         $order = Order::with('budgets')->find($id);
         if ($order) {
             $budgets = $order->budgets()->get();
-            return view('dashboard.create.order', compact('order', 'budgets'))->with('title', 'Atualizar');
+            return view('dashboard.create.order', compact('order', 'budgets'))->with('title', 'Atualizar ordem de serviço');
 
         }
         return redirect('orders')->with('error', 'Ordem não encontrada');

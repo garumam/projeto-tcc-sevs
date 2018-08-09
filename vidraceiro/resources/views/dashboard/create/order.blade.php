@@ -41,14 +41,14 @@
                     <div class="form-group col-md-4">
                         <label for="data_inicial">Data inicial</label>
                         <input type="date" class="form-control" id="data_inicial" name="data_inicial"
-                               value="{{$order->data_inicial or old('data_inicial')}}" placeholder="10/10/2010"
+                               value="{{$order->data_inicial or old('data_inicial')}}"
                                required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="data_final">Data de entrega</label>
                         <input type="date" class="form-control" id="data_final" name="data_final"
-                               value="{{$order->data_final or old('data_final')}}" placeholder="20/20/2020" required>
+                               value="{{$order->data_final or old('data_final')}}" required>
                     </div>
 
 
@@ -84,7 +84,7 @@
                         <select id="select-orcamentos" class="custom-select" required>
                             <option value="" selected>Selecione um orçamento</option>
                             @foreach($budgets as $budget)
-                                <option id="option-{{$budget->id}}" name="{{$budget->total}}"
+                                <option id="option-linha-{{$budget->id}}" name="{{$budget->total}}"
                                         value="{{$budget->id}}">{{$budget->nome}}</option>
                             @endforeach
                         </select>
@@ -103,7 +103,13 @@
 
                     <div class="form-group col-12">
                         <div id="ids">
-
+                            @if(!empty($order))
+                                @foreach($budgets as $budget)
+                                    <input type="number" class="id_orcamento linha-{{$budget->id}}"
+                                           name="id_orcamento[]"
+                                           value="{{$budget->id}}" style="display: none;"/>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -124,17 +130,20 @@
 
                                 </thead>
                                 <tbody>
-                                @foreach($budgets as $budget)
-                                    <tr id="linha-{{$budget->id}}">
-                                        <th scope="row">{{$budget->id}}</th>
-                                        <td>{{$budget->nome}}</td>
-                                        <td>
-                                            <button id="linha-{{$budget->id}}"
-                                                    class="deletar-tabela btn btn-danger mb-1" type="button">Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if(!empty($order))
+                                    @foreach($budgets as $budget)
+                                        <tr id="linha-{{$budget->id}}">
+                                            <th scope="row">{{$budget->id}}</th>
+                                            <td>{{$budget->nome}}</td>
+                                            <td>
+                                                <button id="linha-{{$budget->id}}"
+                                                        class="deletar-tabela btn btn-danger mb-1" type="button">Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
                                 </tbody>
                             </table>
                         </div>

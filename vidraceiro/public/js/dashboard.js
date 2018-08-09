@@ -218,6 +218,18 @@ $(document).ready(function () {
         $('#bt-budget-visible').text($texto);
     }
 
+    //codigo para atualzar tabela ordem de serviço
+    let button = document.getElementsByClassName("deletar-tabela");
+    for (let i = 0; i < button.length; i++) {
+        button[i].addEventListener('click', function (e) {
+            let valorTotal = $('#total');
+            let total = parseInt($('#option-' + e.target.id).attr('name'));
+            valorTotal.val(parseInt(valorTotal.val()) - total);
+            $('#' + e.target.id).remove();
+            $('.' + e.target.id).remove();
+        }, false);
+    }
+
 
     $('#bt-add-orcamento-order').click(function () {
         let idorcamento = $('#select-orcamentos').val();
@@ -241,7 +253,7 @@ $(document).ready(function () {
                 "</td>" +
                 "</tr>"
             );
-            let total = parseInt($('#option-' + idorcamento).attr('name'));
+            let total = parseInt($('#option-linha-' + idorcamento).attr('name'));
             let valorTotal = $('#total');
             let inputTotal = isNaN(parseInt(valorTotal.val())) ? 0 : parseInt(valorTotal.val());
             valorTotal.val(inputTotal + total);
@@ -261,6 +273,7 @@ $(document).ready(function () {
         }
 
     });
+
 
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();

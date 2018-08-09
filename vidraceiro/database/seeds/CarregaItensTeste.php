@@ -178,16 +178,16 @@ class CarregaItensTeste extends Seeder
         $product->budgets()->attach([2]);
 
         Order::create([
-            'data_final'=> '15/08/2018',
-            'data_inicial'=> '08/08/2018',
+            'data_final' => '2018-08-05',
+            'data_inicial' => '2018-08-03',
             'nome'=> 'order1',
             'situacao' => 'aberta',
             'total'=> 233.7713
         ]);
 
         Order::create([
-            'data_final'=> '09/08/2018',
-            'data_inicial'=> '08/08/2018',
+            'data_final' => '2018-08-05',
+            'data_inicial' => '2018-04-05',
             'nome'=> 'order2',
             'situacao' => 'concluida',
             'total'=> 200.6056
