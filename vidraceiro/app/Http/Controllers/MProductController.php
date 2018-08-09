@@ -39,9 +39,9 @@ class MProductController extends Controller
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $titulotabs = ['Produto', 'Material'];
-
+//        $mproduct = MProduct::find(1);
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs', 'mproduct', 'categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 

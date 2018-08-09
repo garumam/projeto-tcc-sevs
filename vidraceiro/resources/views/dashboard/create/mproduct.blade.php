@@ -7,23 +7,26 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    @if(session('success'))
-                        <script>
-                            $(document).ready(function () {
+                    {{--@if(session('success'))--}}
+                    {{--<script>--}}
+                    {{--$(document).ready(function () {--}}
 
-                                $('#nav-Material-tab').click();
+                    {{--$('#nav-Material-tab').click();--}}
 
-                            });
-                        </script>
-                    @endif
+                    {{--});--}}
+                    {{--</script>--}}
+                    {{--@endif--}}
+
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link {{ empty($mproduct) ? 'active' : 'disabled' }} noborder-left"
+                               id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                            <a class="nav-item nav-link {{ empty($mproduct) ? 'disabled' : 'active' }}"
+                               id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
@@ -40,7 +43,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                <div class="tab-pane fade {{ empty($mproduct) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}"
+                     role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
@@ -60,12 +64,14 @@
                             <div class="form-group col-md-4">
                                 <label for="descricao">Descrição</label>
                                 <input type="text" class="form-control" id="descricao" name="descricao"
-                                       value="{{$mproduct->descricao or old('descricao')}}" placeholder="Descrição" required>
+                                       value="{{$mproduct->descricao or old('descricao')}}" placeholder="Descrição"
+                                       required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Categoria</label>
-                                <select id="select-categoria" name="categoria_produto_id" class="custom-select" required>
+                                <select id="select-categoria" name="categoria_produto_id" class="custom-select"
+                                        required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->nome}}</option>
@@ -93,7 +99,8 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                <div class="tab-pane fade {{ !empty($mproduct) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}"
+                     role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
