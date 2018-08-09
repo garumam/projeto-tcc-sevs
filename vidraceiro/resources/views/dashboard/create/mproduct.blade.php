@@ -279,6 +279,7 @@
                             <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma
                                 categoria</p>
                             <div id="boxdiversos" style="display: none;">
+                                <h4 class="text-black-50 col-12 mt-2">Box diversos</h4>
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
@@ -289,6 +290,7 @@
                             </div>
 
                             <div id="boxpadrao" style="display: none;">
+                                <h4 class="text-black-50 col-12 mt-4">Box padrão</h4>
                                 @for($i = 0; $i < count($boxpadrao); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
@@ -299,6 +301,7 @@
                             </div>
 
                             <div id="ferragem1000" style="display: none;">
+                                <h4 class="text-black-50 col-12 mt-4">Ferragem 1000</h4>
                                 @for($i = 0; $i < count($ferragem1000); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
@@ -309,6 +312,7 @@
                             </div>
 
                             <div id="ferragem3000" style="display: none;">
+                                <h4 class="text-black-50 col-12 mt-4">Ferragem 3000</h4>
                                 @for($i = 0; $i < count($ferragem3000); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
@@ -319,6 +323,7 @@
                             </div>
 
                             <div id="kitsacada" style="display: none;">
+                                <h4 class="text-black-50 col-12 mt-4">Kit sacada</h4>
                                 @for($i = 0; $i < count($kitsacada); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"

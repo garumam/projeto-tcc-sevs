@@ -75,7 +75,7 @@ $(document).ready(function () {
                 if(valueSelected != '6')
                     break;
             case '4':
-                ferragem1000.css({
+                ferragem3000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
