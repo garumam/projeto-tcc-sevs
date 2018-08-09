@@ -224,7 +224,7 @@ $(document).ready(function () {
         button[i].addEventListener('click', function (e) {
             let valorTotal = $('#total');
             let total = parseInt($('#option-' + e.target.id).attr('name'));
-            valorTotal.val(parseInt(valorTotal.val()) - total);
+            valorTotal.val(parseFloat(parseInt(valorTotal.val()) - total).toFixed(2));
             $('#' + e.target.id).remove();
             $('.' + e.target.id).remove();
         }, false);
@@ -253,10 +253,10 @@ $(document).ready(function () {
                 "</td>" +
                 "</tr>"
             );
-            let total = parseInt($('#option-linha-' + idorcamento).attr('name'));
+            let total = parseFloat($('#option-linha-' + idorcamento).attr('name'));
             let valorTotal = $('#total');
-            let inputTotal = isNaN(parseInt(valorTotal.val())) ? 0 : parseInt(valorTotal.val());
-            valorTotal.val(inputTotal + total);
+            let inputTotal = isNaN(parseFloat(valorTotal.val())) ? 0 : parseFloat(valorTotal.val());
+            valorTotal.val(parseFloat(inputTotal + total).toFixed(2));
             let button = document.getElementsByClassName("deletar-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {

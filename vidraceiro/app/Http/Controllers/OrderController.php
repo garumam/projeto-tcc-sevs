@@ -45,18 +45,27 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('budgets')->find($id);
+        $budgets = Budget::all();
         if ($order) {
-            $budgets = $order->budgets()->get();
-            return view('dashboard.create.order', compact('order', 'budgets'))->with('title', 'Atualizar ordem de serviço');
+            $budgetsOrders = $order->budgets()->get();
+            return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
 
         }
         return redirect('orders')->with('error', 'Ordem não encontrada');
     }
 
 
-    public function update()
+    public function update(Request $request, $id)
     {
-
+        $order = Order::with('budgets')->find($id);
+        if ($order) {
+            $order->update($request->except('id_orcamento', '_token'));
+            if ($order) {
+                $order->budgets()->sync($request->id_orcamento);
+                return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
+            }
+        }
+        return redirect('orders')->with('error', 'Erro ao atualizar ordem de serviço');
     }
 
     public function destroy($id)

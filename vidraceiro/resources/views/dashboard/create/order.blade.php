@@ -81,7 +81,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-orcamentos">Orçamentos</label>
-                        <select id="select-orcamentos" class="custom-select" required>
+                        <select id="select-orcamentos" class="custom-select" {{empty($order) ? 'required': '' }}>
                             <option value="" selected>Selecione um orçamento</option>
                             @foreach($budgets as $budget)
                                 <option id="option-linha-{{$budget->id}}" name="{{$budget->total}}"
@@ -104,10 +104,10 @@
                     <div class="form-group col-12">
                         <div id="ids">
                             @if(!empty($order))
-                                @foreach($budgets as $budget)
-                                    <input type="number" class="id_orcamento linha-{{$budget->id}}"
+                                @foreach($budgetsOrders as $budgetOrder)
+                                    <input type="number" class="id_orcamento linha-{{$budgetOrder->id}}"
                                            name="id_orcamento[]"
-                                           value="{{$budget->id}}" style="display: none;"/>
+                                           value="{{$budgetOrder->id}}" style="display: none;"/>
                                 @endforeach
                             @endif
                         </div>
@@ -131,12 +131,12 @@
                                 </thead>
                                 <tbody>
                                 @if(!empty($order))
-                                    @foreach($budgets as $budget)
-                                        <tr id="linha-{{$budget->id}}">
-                                            <th scope="row">{{$budget->id}}</th>
-                                            <td>{{$budget->nome}}</td>
+                                    @foreach($budgetsOrders as $budgetOrder)
+                                        <tr id="linha-{{$budgetOrder->id}}">
+                                            <th scope="row">{{$budgetOrder->id}}</th>
+                                            <td>{{$budgetOrder->nome}}</td>
                                             <td>
-                                                <button id="linha-{{$budget->id}}"
+                                                <button id="linha-{{$budgetOrder->id}}"
                                                         class="deletar-tabela btn btn-danger mb-1" type="button">Delete
                                                 </button>
                                             </td>
