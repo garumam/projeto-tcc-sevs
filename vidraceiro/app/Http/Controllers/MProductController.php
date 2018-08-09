@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Aluminum;
 use App\Category;
+use App\Component;
+use App\Glass;
 use App\MProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -27,7 +30,9 @@ class MProductController extends Controller
     public function create(Request $request)
     {
         $categories = Category::where('tipo', 'produto')->get();
-
+        $aluminums = Aluminum::where('is_modelo', '1')->get();
+        $glasses = Glass::where('is_modelo', '1')->get();
+        $components = Component::where('is_modelo', '1')->get();
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
@@ -36,7 +41,7 @@ class MProductController extends Controller
         $titulotabs = ['Produto', 'Material'];
 
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 

@@ -112,9 +112,9 @@
 
                                 <label for="select-material">Materiais</label>
                                 <select id="select-material" class="custom-select">
-                                    <option value="">Vidros</option>
-                                    <option value="">Aluminios</option>
-                                    <option value="">Componentes</option>
+                                    <option value="0">Vidros</option>
+                                    <option value="1">Aluminios</option>
+                                    <option value="2">Componentes</option>
                                 </select>
 
                             </div>
