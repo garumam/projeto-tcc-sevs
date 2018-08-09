@@ -234,6 +234,7 @@ $(document).ready(function () {
     $('#bt-add-orcamento-order').click(function () {
         let idorcamento = $('#select-orcamentos').val();
         let nomeorcamento = $('#select-orcamentos option:selected').text();
+        let totalorcamento = $('#select-orcamentos option:selected').attr('name');
         let idorcamentoinput = $('.id_orcamento').attr('value');
         let table = $('tbody');
         let pegaIdLinha = $('#linha-' + idorcamento).attr('id');
@@ -248,6 +249,7 @@ $(document).ready(function () {
                 '<tr id="' + criaid + '">' +
                 '<th scope="row">' + idorcamento + '</th>' +
                 '<td>' + nomeorcamento + '</td>' +
+                '<td>' + totalorcamento + '</td>' +
                 '<td>' +
                 "<button id=" + criaid + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                 "</td>" +

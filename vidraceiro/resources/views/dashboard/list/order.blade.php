@@ -42,7 +42,7 @@
                         <tr>
                             <th scope="row">{{$order->id}}</th>
                             <td>{{$order->nome}}</td>
-                            <td>{{$order->situacao}}</td>
+                            <td>{{ucfirst($order->situacao)}}</td>
                             <td>{{$order->data_inicial}}</td>
                             <td>{{$order->data_final}}</td>
                             <td>R${{$order->total}}</td>

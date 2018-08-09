@@ -40,7 +40,7 @@
                         <tr>
                             <th scope="row">{{$category->id}}</th>
                             <td>{{$category->nome}}</td>
-                            <td>{{$category->tipo}}</td>
+                            <td>{{ucfirst($category->tipo)}}</td>
                             <td>{{$category->grupo_imagem}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('categories.edit',['id'=> $category->id]) }}">

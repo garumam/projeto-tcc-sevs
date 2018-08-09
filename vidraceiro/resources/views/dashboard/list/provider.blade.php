@@ -41,7 +41,7 @@
                             <th scope="row">{{ $provider->id }}</th>
                             <td>{{ $provider->nome }}</td>
                             <td>{{ $provider->email }}</td>
-                            <td>{{ $provider->situacao }}</td>
+                            <td>{{ ucfirst($provider->situacao) }}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>

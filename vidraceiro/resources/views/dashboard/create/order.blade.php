@@ -125,6 +125,7 @@
                                 <tr class="tabela-vidro">
                                     <th class="noborder" scope="col">Id</th>
                                     <th class="noborder" scope="col">Nome</th>
+                                    <th class="noborder" scope="col">Total</th>
                                     <th class="noborder" scope="col">Ação</th>
                                 </tr>
 
@@ -135,6 +136,7 @@
                                         <tr id="linha-{{$budgetOrder->id}}">
                                             <th scope="row">{{$budgetOrder->id}}</th>
                                             <td>{{$budgetOrder->nome}}</td>
+                                            <td>{{$budgetOrder->total}}</td>
                                             <td>
                                                 <button id="linha-{{$budgetOrder->id}}"
                                                         class="deletar-tabela btn btn-danger mb-1" type="button">Delete
