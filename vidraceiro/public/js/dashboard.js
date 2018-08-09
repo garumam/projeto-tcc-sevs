@@ -240,7 +240,7 @@ $(document).ready(function () {
         let pegaIdLinha = $('#linha-' + idorcamento).attr('id');
         let criaid = 'linha-' + idorcamento;
         if (idorcamento.length === 0) {
-            alert('Selecione um orçamento para adicionar');
+            mensagemAlerta('Selecione um orçamento para adicionar!');
         } else if (idorcamentoinput !== idorcamento && pegaIdLinha !== criaid) {
             $('#ids').append(
                 '<input type="number" class="id_orcamento ' + criaid + '" name="id_orcamento[]" value="' + idorcamento + '" style="display: none;" />' +
@@ -271,11 +271,16 @@ $(document).ready(function () {
             }
 
         } else {
-            alert('Orçamento ja foi adicionado');
+            mensagemAlerta('Orçamento ja foi adicionado!');
         }
 
     });
 
+
+    function mensagemAlerta(mensagem) {
+        $('#alertaMensagem').text(mensagem);
+        $('#bt-alert-modal').click();
+    }
 
     // $('#form-product').on('submit',function (e) {
     //     e.preventDefault();
