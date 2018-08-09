@@ -48,41 +48,47 @@ $(document).ready(function () {
         kitsacada.css("display", "none");
 
         switch (valueSelected) {
-            case "boxdiversos":
+            case '6':
+            case '1':
                 boxdiversos.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                break;
-            case "boxpadrao":
+                if(valueSelected != '6')
+                    break;
+            case '2':
                 boxpadrao.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                break;
-            case "ferragem1000":
+                if(valueSelected != '6')
+                    break;
+            case '3':
                 ferragem1000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
 
-                break;
-            case "ferragem3000":
+                if(valueSelected != '6')
+                    break;
+            case '4':
                 ferragem1000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                break;
-            case "kitsacada":
+                if(valueSelected != '6')
+                    break;
+            case '5':
                 kitsacada.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
+
                 break;
             default:
                 selecionecategoria.css("display", "block");
