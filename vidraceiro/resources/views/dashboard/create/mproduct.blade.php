@@ -69,8 +69,8 @@
                                 <div class="imagem-modal">
                                     <img id="image-selecionar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                          alt="Responsive image">
-                                    <a href="#" class="btn btn-lg btn-primary btn-custom w-50" data-toggle="modal"
-                                       data-target="#imagensModal">Buscar</a>
+                                    <a href="#" class="btn btn-md btn-primary btn-custom w-50" data-toggle="modal"
+                                       data-target="#imagensModal">Selecionar</a>
                                     <label for="url-image"></label>
                                     <input type="text" id="url-image" name="url-image" style="display: none;">
                                 </div>
@@ -124,11 +124,14 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Vidros</label>
-                                <select id="select-categoria" class="custom-select" required>
+                                <select id="select-categoria" name="id_vidro" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
-                                    <option value="">Vidro temperado</option>
-                                    <option value="">Vidro azul</option>
-                                    <option value="">Vidro blindado</option>
+                                    @foreach($glasses as $glasse)
+                                        <option value="{{$glasse->id}}">{{$glasse->nome}}</option>
+                                    @endforeach
+                                    {{--<option value="">Vidro temperado</option>--}}
+                                    {{--<option value="">Vidro azul</option>--}}
+                                    {{--<option value="">Vidro blindado</option>--}}
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
@@ -279,7 +282,7 @@
                             <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma
                                 categoria</p>
                             <div id="boxdiversos" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-0">Box diversos</h4>
+                                <h4 class="text-black-50 col-12 mt-2 pl-1">Box diversos</h4>
                                 @for($i = 0; $i < count($boxdiversos); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
@@ -290,7 +293,7 @@
                             </div>
 
                             <div id="boxpadrao" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-4 pl-0">Box padrão</h4>
+                                <h4 class="text-black-50 col-12 mt-2 pl-1">Box padrão</h4>
                                 @for($i = 0; $i < count($boxpadrao); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
@@ -301,7 +304,7 @@
                             </div>
 
                             <div id="ferragem1000" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-4 pl-0">Ferragem 1000</h4>
+                                <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 1000</h4>
                                 @for($i = 0; $i < count($ferragem1000); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
@@ -312,7 +315,7 @@
                             </div>
 
                             <div id="ferragem3000" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-4 pl-0">Ferragem 3000</h4>
+                                <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 3000</h4>
                                 @for($i = 0; $i < count($ferragem3000); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
@@ -323,7 +326,7 @@
                             </div>
 
                             <div id="kitsacada" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-4 pl-0">Kit sacada</h4>
+                                <h4 class="text-black-50 col-12 mt-2 pl-1">Kit sacada</h4>
                                 @for($i = 0; $i < count($kitsacada); $i++ )
                                     <div class="col-">
                                         <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"
