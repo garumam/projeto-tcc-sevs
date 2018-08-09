@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\MProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -25,7 +26,7 @@ class MProductController extends Controller
 
     public function create(Request $request)
     {
-        $categorias = ['Box diversos', 'Box padrão', 'Ferragem 1000', 'Ferragem 3000', 'Kit sacada'];
+        $categories = Category::where('tipo', 'produto')->get();
 
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
@@ -35,7 +36,7 @@ class MProductController extends Controller
         $titulotabs = ['Produto', 'Material'];
 
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.mproduct', compact('titulotabs', 'categorias', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 

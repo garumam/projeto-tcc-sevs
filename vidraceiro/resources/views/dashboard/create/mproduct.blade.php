@@ -9,7 +9,8 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
@@ -57,18 +58,9 @@
                                 <label for="select-categoria">Categoria</label>
                                 <select id="select-categoria" name="select" class="custom-select" required>
                                     <option value="" selected>Selecione uma categoria</option>
-
-                                    @foreach($categorias as $categoria)
-                                        @php
-                                        $categorianova = str_replace('ã', 'a', $categoria);
-                                        $categorianova = str_replace(' ', '', strtolower($categorianova));
-                                        @endphp
-                                        <option value="{{$categorianova}}">{{$categoria}}</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->nome}}</option>
                                     @endforeach
-
-                                    {{--<option value="boxpadrao">Box padrão</option>--}}
-                                    {{--<option value="ferragem1000">Ferragem 1000</option>--}}
-                                    {{--<option value="ferragem3000">Ferragem 3000</option>--}}
                                 </select>
                             </div>
 
@@ -141,7 +133,8 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <a class="btn-link mb-3" href="{{ route('mproducts.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
+                                    </button>
                                 </a>
                             </div>
                         </div>
