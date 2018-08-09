@@ -263,7 +263,7 @@ $(document).ready(function () {
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {
-                        valorTotal.val(valorTotal.val() - total);
+                        valorTotal.val(parseFloat(valorTotal.val()).toFixed(2) - total);
                         $('#' + criaid).remove();
                         $('.' + criaid).remove();
                     }
