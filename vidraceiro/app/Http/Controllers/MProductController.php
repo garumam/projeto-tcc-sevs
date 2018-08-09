@@ -27,7 +27,7 @@ class MProductController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function create()
     {
         $categories = Category::where('tipo', 'produto')->get();
         $aluminums = Aluminum::where('is_modelo', '1')->get();
@@ -55,9 +55,24 @@ class MProductController extends Controller
         return $filename;
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        switch($request->tabatual){
+            case 'produto':
 
+                $mproduto = new MProduct;
+                $mproduto->create($request->except('tabatual'));
+                if($mproduto)
+                    return redirect()->back()->with('success', 'Modelo de produto criado com sucesso');
+
+                break;
+            case 'material':
+
+
+
+                break;
+            default:
+        }
     }
 
     public function show()

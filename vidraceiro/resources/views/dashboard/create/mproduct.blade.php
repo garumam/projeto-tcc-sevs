@@ -7,6 +7,15 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    @if(session('success'))
+                        <script>
+                            $(document).ready(function () {
+
+                                $('#nav-Material-tab').click();
+
+                            });
+                        </script>
+                    @endif
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
                             <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
@@ -43,20 +52,20 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
-                                <label>Nome</label>
+                                <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
-                                       required>
+                                       value="{{$mproduct->nome or old('nome')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Descrição</label>
+                                <label for="descricao">Descrição</label>
                                 <input type="text" class="form-control" id="descricao" name="descricao"
-                                       placeholder="Descrição" required>
+                                       value="{{$mproduct->descricao or old('descricao')}}" placeholder="Descrição" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="select-categoria">Categoria</label>
-                                <select id="select-categoria" name="select" class="custom-select" required>
+                                <select id="select-categoria" name="categoria_produto_id" class="custom-select" required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->nome}}</option>
@@ -72,12 +81,12 @@
                                     <a href="#" class="btn btn-md btn-primary btn-custom w-50" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>
                                     <label for="url-image"></label>
-                                    <input type="text" id="url-image" name="url-image" style="display: none;">
+                                    <input type="text" id="url-image" name="imagem" style="display: none;">
                                 </div>
 
                             </div>
 
-
+                            <input type="hidden" name="tabatual" value="produto">
                         </div>
                         <button id="bt-produto-product-invisible" class="d-none" type="submit"></button>
 
@@ -248,7 +257,7 @@
 
                                 </div>
                             </div>
-
+                            <input type="hidden" name="tabatual" value="material">
                         </div>
                         <button id="bt-material-product-invisible" class="d-none" type="submit"></button>
 
