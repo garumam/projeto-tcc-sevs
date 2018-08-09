@@ -32,15 +32,15 @@ Route::prefix('users')->group(function () {
     Route::delete('/{id}', 'UserController@destroy')->name('users.destroy');
 });
 
-//rotas de produto
+//rotas de mproduto
 Route::prefix('products')->group(function () {
-    Route::get('/', 'MProductController@index')->name('products.index');
-    Route::get('/create', 'MProductController@create')->name('products.create');
-    Route::post('/', 'MProductController@store')->name('products.store');
-    Route::get('/{user}', 'MProductController@show')->name('products.show');
-    Route::get('/{id}/edit', 'MProductController@edit')->name('products.edit');
-    Route::patch('/{id}', 'MProductController@update')->name('products.update');
-    Route::delete('/{id}', 'MProductController@destroy')->name('products.destroy');
+    Route::get('/', 'MProductController@index')->name('mproducts.index');
+    Route::get('/create', 'MProductController@create')->name('mproducts.create');
+    Route::post('/', 'MProductController@store')->name('mproducts.store');
+    Route::get('/{user}', 'MProductController@show')->name('mproducts.show');
+    Route::get('/{id}/edit', 'MProductController@edit')->name('mproducts.edit');
+    Route::patch('/{id}', 'MProductController@update')->name('mproducts.update');
+    Route::delete('/{id}', 'MProductController@destroy')->name('mproducts.destroy');
 });
 
 //rotas de categoria

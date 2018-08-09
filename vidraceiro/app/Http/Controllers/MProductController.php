@@ -19,7 +19,7 @@ class MProductController extends Controller
         $mProducts = MProduct::with('category')->get();
 //        dd($relations);
 //        dd($mProducts);
-        return view('dashboard.list.product', compact('mProducts'))->with('title', 'Produtos');
+        return view('dashboard.list.mproduct', compact('mProducts'))->with('title', 'Produtos');
     }
 
 
@@ -35,7 +35,7 @@ class MProductController extends Controller
         $titulotabs = ['Produto', 'Material'];
 
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.product', compact('titulotabs', 'categorias', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs', 'categorias', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 

@@ -5,7 +5,7 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <a class="btn-link" href="{{ route('products.create') }}">
+                <a class="btn-link" href="{{ route('mproducts.create') }}">
                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                 </a>
             </div>
@@ -43,7 +43,7 @@
                             <td>{{ $mProduct->descricao }}</td>
                             <td>{{ $mProduct->category->nome }}</td>
                             <td>
-                                <a class="btn-link" href="{{ route('products.edit',['id'=> $mProduct->id]) }}">
+                                <a class="btn-link" href="{{ route('mproducts.edit',['id'=> $mProduct->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
                                 <a class="btn-link" onclick="deletar(this.id,'products')" id="{{ $mProduct->id }}">

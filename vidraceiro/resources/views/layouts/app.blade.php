@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li {{ Request::is('products') ? 'class=active' : '' }}>
-                        <a href="{{ route('products.index') }}">
+                        <a href="{{ route('mproducts.index') }}">
                             <i class="pe-7s-news-paper"></i>
                             <p>Produtos</p>
                         </a>

@@ -21,7 +21,7 @@
                     <div class="topo-tab">
 
                         <button id="bt-product-visible" class="btn btn-primary btn-custom"
-                                type="submit">{{empty($product) ? 'Adicionar': 'Atualizar'}}</button>
+                                type="submit">{{empty($mproduct) ? 'Adicionar': 'Atualizar'}}</button>
 
                     </div>
                 </div>
@@ -34,8 +34,8 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($product) ? route('products.update',['id'=> $product->id]) : route('products.store') }}">
-                        @if(!empty($product))
+                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store') }}">
+                        @if(!empty($mproduct))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -96,8 +96,8 @@
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($product) ? route('products.update',['id'=> $product->id]) : route('products.store') }}">
-                        @if(!empty($product))
+                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store') }}">
+                        @if(!empty($mproduct))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -140,7 +140,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('products.create') }}">
+                                <a class="btn-link mb-3" href="{{ route('mproducts.create') }}">
                                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                                 </a>
                             </div>
