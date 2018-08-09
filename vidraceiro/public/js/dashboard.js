@@ -224,7 +224,7 @@ $(document).ready(function () {
         button[i].addEventListener('click', function (e) {
             let valorTotal = $('#total');
             let total = $('#option-' + e.target.id).attr('name');
-            valorTotal.val(parseFloat(parseFloat(valorTotal.val()).toFixed(2) - total).toFixed(2));
+            valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
             $('#' + e.target.id).remove();
             $('.' + e.target.id).remove();
         }, false);
@@ -263,7 +263,7 @@ $(document).ready(function () {
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {
-                        valorTotal.val(parseFloat(parseFloat(valorTotal.val()).toFixed(2) - parseFloat(total).toFixed(2)).toFixed(2));
+                        valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - parseFloat(total)).toFixed(2));
                         $('#' + criaid).remove();
                         $('.' + criaid).remove();
                     }
