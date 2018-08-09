@@ -223,8 +223,8 @@ $(document).ready(function () {
     for (let i = 0; i < button.length; i++) {
         button[i].addEventListener('click', function (e) {
             let valorTotal = $('#total');
-            let total = parseInt($('#option-' + e.target.id).attr('name'));
-            valorTotal.val(parseFloat(parseInt(valorTotal.val()) - total).toFixed(2));
+            let total = $('#option-' + e.target.id).attr('name');
+            valorTotal.val(parseFloat(parseFloat(valorTotal.val()).toFixed(2) - total).toFixed(2));
             $('#' + e.target.id).remove();
             $('.' + e.target.id).remove();
         }, false);
@@ -255,15 +255,15 @@ $(document).ready(function () {
                 "</td>" +
                 "</tr>"
             );
-            let total = parseFloat($('#option-linha-' + idorcamento).attr('name'));
+            let total = $('#option-linha-' + idorcamento).attr('name');
             let valorTotal = $('#total');
             let inputTotal = isNaN(parseFloat(valorTotal.val())) ? 0 : parseFloat(valorTotal.val());
-            valorTotal.val(parseFloat(inputTotal + total).toFixed(2));
+            valorTotal.val(parseFloat(inputTotal + parseFloat(total)).toFixed(2));
             let button = document.getElementsByClassName("deletar-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {
-                        valorTotal.val(parseFloat(valorTotal.val()).toFixed(2) - total);
+                        valorTotal.val(parseFloat(parseFloat(valorTotal.val()).toFixed(2) - parseFloat(total).toFixed(2)).toFixed(2));
                         $('#' + criaid).remove();
                         $('.' + criaid).remove();
                     }
