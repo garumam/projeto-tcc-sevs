@@ -43,8 +43,8 @@
                             <th scope="row">{{$order->id}}</th>
                             <td>{{$order->nome}}</td>
                             <td>{{ucfirst($order->situacao)}}</td>
-                            <td>{{$order->data_inicial}}</td>
-                            <td>{{$order->data_final}}</td>
+                            <td>{{date_format(date_create($order->data_inicial), 'd/m/Y')}}</td>
+                            <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
                             <td>R${{$order->total}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
