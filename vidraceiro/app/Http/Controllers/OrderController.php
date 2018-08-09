@@ -45,7 +45,12 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('budgets')->find($id);
-        dd($order);
+        if ($order) {
+            $budgets = $order->budgets()->get();
+            return view('dashboard.create.order', compact('order', 'budgets'))->with('title', 'Atualizar');
+
+        }
+        return redirect('orders')->with('error', 'Ordem não encontrada');
     }
 
 
