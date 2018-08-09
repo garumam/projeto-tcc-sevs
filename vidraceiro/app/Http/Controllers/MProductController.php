@@ -6,7 +6,7 @@ use App\MProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class ProductController extends Controller
+class MProductController extends Controller
 {
     public function __construct()
     {

@@ -34,13 +34,13 @@ Route::prefix('users')->group(function () {
 
 //rotas de produto
 Route::prefix('products')->group(function () {
-    Route::get('/', 'ProductController@index')->name('products.index');
-    Route::get('/create', 'ProductController@create')->name('products.create');
-    Route::post('/', 'ProductController@store')->name('products.store');
-    Route::get('/{user}', 'ProductController@show')->name('products.show');
-    Route::get('/{id}/edit', 'ProductController@edit')->name('products.edit');
-    Route::patch('/{id}', 'ProductController@update')->name('products.update');
-    Route::delete('/{id}', 'ProductController@destroy')->name('products.destroy');
+    Route::get('/', 'MProductController@index')->name('products.index');
+    Route::get('/create', 'MProductController@create')->name('products.create');
+    Route::post('/', 'MProductController@store')->name('products.store');
+    Route::get('/{user}', 'MProductController@show')->name('products.show');
+    Route::get('/{id}/edit', 'MProductController@edit')->name('products.edit');
+    Route::patch('/{id}', 'MProductController@update')->name('products.update');
+    Route::delete('/{id}', 'MProductController@destroy')->name('products.destroy');
 });
 
 //rotas de categoria
