@@ -34,19 +34,21 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                        <input type="text" class="form-control" id="nome" name="nome"
+                               value="{{$order->nome or old('nome')}}" placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="data_inicial">Data inicial</label>
                         <input type="date" class="form-control" id="data_inicial" name="data_inicial"
-                               placeholder="10/10/2010" required>
+                               value="{{$order->data_inicial or old('data_inicial')}}" placeholder="10/10/2010"
+                               required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="data_final">Data de entrega</label>
                         <input type="date" class="form-control" id="data_final" name="data_final"
-                               placeholder="20/20/2020" required>
+                               value="{{$order->data_final or old('data_final')}}" placeholder="20/20/2020" required>
                     </div>
 
 
@@ -54,15 +56,22 @@
                         <label for="select-situacao">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
                             <option value="" selected>Selecione...</option>
-                            <option value="andamento">Em andamento</option>
-                            <option value="concluida">Concluída</option>
-                            <option value="cancelada">Cancelada</option>
+                            <option value="andamento" @if(!empty($order)) {{ $order->situacao == 'andamento' ? 'selected' : '' }} @endif>
+                                Em andamento
+                            </option>
+                            <option value="concluida" @if(!empty($order)) {{ $order->situacao == 'concluida' ? 'selected' : '' }} @endif>
+                                Concluída
+                            </option>
+                            <option value="cancelada" @if(!empty($order)) {{ $order->situacao == 'cancelada' ? 'selected' : '' }} @endif>
+                                Cancelada
+                            </option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="total">Total</label>
-                        <input type="number" class="form-control" id="total" name="total" placeholder="R$" required
+                        <input type="number" class="form-control" id="total" name="total"
+                               value="{{$order->total or old('total')}}" placeholder="R$" required
                                readonly>
                     </div>
 
