@@ -35,7 +35,7 @@ class MProduct extends Model
     }
     public function components(){
         return $this->belongsToMany(
-            Glass::class,
+            Component::class,
             'm_product_component',
             'm_produto_id',
             'componente_id'

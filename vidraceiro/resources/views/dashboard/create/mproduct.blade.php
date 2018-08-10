@@ -229,11 +229,11 @@
 
                                         <!--INICIO BODY DO VIDRO-->
                                         <tbody id="tabela-vidro">
-                                        @foreach($glasses as $glass)
+                                        @foreach($glassesProduct as $glassP)
                                             <tr>
-                                                <th scope="row">{{$glass->id}}</th>
-                                                <td>{{$glass->nome}}</td>
-                                                <td>R${{$glass->preco}}</td>
+                                                <th scope="row">{{$glassP->id}}</th>
+                                                <td>{{$glassP->nome}}</td>
+                                                <td>R${{$glassP->preco}}</td>
                                                 <td>
                                                     <a class="btn-link">
                                                         <button class="btn btn-danger mb-1">Delete</button>
@@ -248,13 +248,13 @@
 
                                         <!--INICIO BODY DO ALUMINIO-->
                                         <tbody id="tabela-aluminio" style="display: none;">
-                                        @foreach($aluminums as $aluminum)
+                                        @foreach($aluminumsProduct as $aluminumP)
                                             <tr>
-                                                <th scope="row">{{$aluminum->id}}</th>
-                                                <td>{{$aluminum->perfil}}</td>
-                                                <td>{{$aluminum->medida}}</td>
-                                                <td>{{$aluminum->peso}}</td>
-                                                <td>{{$aluminum->preco}}</td>
+                                                <th scope="row">{{$aluminumP->id}}</th>
+                                                <td>{{$aluminumP->perfil}}</td>
+                                                <td>{{$aluminumP->medida}}</td>
+                                                <td>{{$aluminumP->peso}}</td>
+                                                <td>{{$aluminumP->preco}}</td>
                                                 <td>
                                                     <a class="btn-link">
                                                         <button class="btn btn-danger mb-1">Delete</button>
@@ -268,12 +268,12 @@
 
                                         <!--INICIO BODY DO COMPONENTE-->
                                         <tbody id="tabela-componente" style="display: none;">
-                                        @foreach($components as $component)
+                                        @foreach($componentsProduct as $componentP)
                                             <tr>
-                                                <th scope="row">{{$component->id}}</th>
-                                                <td>{{$component->nome}}</td>
-                                                <td>{{$component->preco}}</td>
-                                                <td>{{$component->qtd}}</td>
+                                                <th scope="row">{{$componentP->id}}</th>
+                                                <td>{{$componentP->nome}}</td>
+                                                <td>{{$componentP->preco}}</td>
+                                                <td>{{$componentP->qtd}}</td>
                                                 <td>
                                                     <a class="btn-link">
                                                         <button class="btn btn-danger mb-1">Delete</button>
