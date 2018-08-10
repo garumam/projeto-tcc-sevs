@@ -39,7 +39,7 @@ Route::prefix('products')->group(function () {
     Route::post('/{tab}', 'MProductController@store')->name('mproducts.store');
     Route::get('/{user}', 'MProductController@show')->name('mproducts.show');
     Route::get('/{id}/edit', 'MProductController@edit')->name('mproducts.edit');
-    Route::patch('/{id}', 'MProductController@update')->name('mproducts.update');
+    Route::patch('/{tab}/{id}', 'MProductController@update')->name('mproducts.update');
     Route::delete('/{id}', 'MProductController@destroy')->name('mproducts.destroy');
 });
 
@@ -69,10 +69,10 @@ Route::prefix('materials')->group(function () {
 Route::prefix('budgets')->group(function () {
     Route::get('/', 'BudgetController@index')->name('budgets.index');
     Route::get('/create', 'BudgetController@create')->name('budgets.create');
-    Route::post('/', 'BudgetController@store')->name('budgets.store');
+    Route::post('/{tab}', 'BudgetController@store')->name('budgets.store');
     Route::get('/{user}', 'BudgetController@show')->name('budgets.show');
     Route::get('/{id}/edit', 'BudgetController@edit')->name('budgets.edit');
-    Route::patch('/{id}', 'BudgetController@update')->name('budgets.update');
+    Route::patch('/{tab}/{id}', 'BudgetController@update')->name('budgets.update');
     Route::delete('/{id}', 'BudgetController@destroy')->name('budgets.destroy');
 });
 

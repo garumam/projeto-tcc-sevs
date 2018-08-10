@@ -40,7 +40,7 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id]) : route('mproducts.store',['tab'=>'1']) }}">
+                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id, 'tab' => '1']) : route('mproducts.store',['tab'=>'1']) }}">
                         @if(!empty($mproductedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -95,7 +95,7 @@
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id]) : route('mproducts.store',['tab'=>'2']) }}">
+                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id, 'tab' => '2']) : route('mproducts.store',['tab'=>'2']) }}">
                         @if(!empty($mproductedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
