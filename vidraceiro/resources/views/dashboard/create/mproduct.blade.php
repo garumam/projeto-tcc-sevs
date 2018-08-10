@@ -173,8 +173,8 @@
 
                         <div class="form-row">
 
-                            <div class="form-group col-12">
-                                <div class="topo">
+                            <div class="form-group col-12 p-0">
+                                <div class="topo pl-2">
                                     <h4 class="titulo">Vidros</h4>
                                 </div>
 
@@ -196,7 +196,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
+                                        <tr id="topo-vidro">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço m²</th>
@@ -205,7 +205,7 @@
                                         <!--FIM HEAD DO VIDRO-->
 
                                         <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
+                                        <tr id="topo-aluminio" style="display: none;">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Perfil</th>
                                             <th class="noborder" scope="col">Medida</th>
@@ -216,7 +216,7 @@
                                         <!--FIM HEAD DO ALUMINIO-->
 
                                         <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
+                                        <tr id="topo-componente" style="display: none;">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço</th>
@@ -228,7 +228,7 @@
                                         </thead>
                                         <tbody>
                                         <!--INICIO BODY DO VIDRO-->
-                                        <tr class="tabela-vidro">
+                                        <tr id="tabela-vidro">
                                             <th scope="row">1</th>
                                             <td>Vidro temperado 08mm</td>
                                             <td>100.0</td>
@@ -242,7 +242,7 @@
                                         <!--FIM BODY DO VIDRO-->
 
                                         <!--INICIO BODY DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
+                                        <tr id="tabela-aluminio" style="display: none;">
                                             <th scope="row">1</th>
                                             <td>xt-201</td>
                                             <td>6000.0m</td>
@@ -258,7 +258,7 @@
                                         <!--FIM BODY DO ALUMINIO-->
 
                                         <!--INICIO BODY DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
+                                        <tr id="tabela-componente" style="display: none;">
                                             <th scope="row">1</th>
                                             <td>Roldana</td>
                                             <td>1.0</td>

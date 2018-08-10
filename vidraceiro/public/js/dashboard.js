@@ -289,21 +289,42 @@ $(document).ready(function () {
         switch (selecionado) {
             case '0':
                 label.text('Vidros');
+                $('.titulo').text('Vidros');
                 $('#select-vidro').show();
                 $('#select-componente').hide();
                 $('#select-aluminio').hide();
+                $('#topo-vidro').show();
+                $('#topo-aluminio').hide();
+                $('#topo-componente').hide();
+                $('#tabela-vidro').show();
+                $('#tabela-aluminio').hide();
+                $('#tabela-componente').hide();
                 break;
             case '1':
                 label.text('Aluminios');
+                $('.titulo').text('Aluminios');
                 $('#select-vidro').hide();
                 $('#select-componente').hide();
                 $('#select-aluminio').show();
+                $('#topo-vidro').hide();
+                $('#topo-aluminio').show();
+                $('#topo-componente').hide();
+                $('#tabela-vidro').hide();
+                $('#tabela-aluminio').show();
+                $('#tabela-componente').hide();
                 break;
             case '2':
                 label.text('Componentes');
+                $('.titulo').text('Componentes');
                 $('#select-vidro').hide();
                 $('#select-componente').show();
                 $('#select-aluminio').hide();
+                $('#topo-vidro').hide();
+                $('#topo-aluminio').hide();
+                $('#topo-componente').show();
+                $('#tabela-vidro').hide();
+                $('#tabela-aluminio').hide();
+                $('#tabela-componente').show();
                 break;
         }
     });
