@@ -40,8 +40,8 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store',['tab'=>'1']) }}">
-                        @if(!empty($mproduct))
+                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id]) : route('mproducts.store',['tab'=>'1']) }}">
+                        @if(!empty($mproductedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -50,13 +50,13 @@
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
-                                       value="{{$mproduct->nome or old('nome')}}" required>
+                                       value="{{$mproductedit->nome or old('nome')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="descricao">Descrição</label>
                                 <input type="text" class="form-control" id="descricao" name="descricao"
-                                       value="{{$mproduct->descricao or old('descricao')}}" placeholder="Descrição"
+                                       value="{{$mproductedit->descricao or old('descricao')}}" placeholder="Descrição"
                                        required>
                             </div>
 
@@ -95,8 +95,8 @@
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store',['tab'=>'2']) }}">
-                        @if(!empty($mproduct))
+                          action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id]) : route('mproducts.store',['tab'=>'2']) }}">
+                        @if(!empty($mproductedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -121,13 +121,15 @@
                             <div class="form-group col-md-4">
                                 <label for="id">Id</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproduct) ? $mproduct->id : session('mproductcriado')? Session::get('mproductcriado')->id :''}}" readonly>
+                                       value="{{!empty($mproductedit) ? $mproductedit->id : session('mproductcriado')? Session::get('mproductcriado')->id :''}}"
+                                       readonly>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Produto</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproduct) ? $mproduct->nome : session('mproductcriado')? Session::get('mproductcriado')->nome :''}}" readonly>
+                                       value="{{!empty($mproductedit) ? $mproductedit->nome : session('mproductcriado')? Session::get('mproductcriado')->nome :''}}"
+                                       readonly>
                             </div>
 
                         </div>
@@ -151,8 +153,8 @@
                                 <label for="select-vidro" id="label_categoria">Vidros</label>
                                 <select id="select-vidro" name="id_vidro" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
-                                    @foreach($glasses as $glasse)
-                                        <option value="{{$glasse->id}}">{{$glasse->nome}}</option>
+                                    @foreach($glasses as $glass)
+                                        <option value="{{$glass->id}}">{{$glass->nome}}</option>
                                     @endforeach
                                 </select>
                                 <select id="select-aluminio" name="id_aluminio" class="custom-select"
@@ -222,7 +224,7 @@
 
                                         <!--INICIO BODY DO VIDRO-->
                                         <tbody id="tabela-vidro">
-                                        @if(!empty($mproduct))
+                                        @if(!empty($mproductedit))
                                             @foreach($glassesProduct as $glassP)
                                                 <tr>
                                                     <th scope="row">{{$glassP->id}}</th>
@@ -243,7 +245,7 @@
 
                                         <!--INICIO BODY DO ALUMINIO-->
                                         <tbody id="tabela-aluminio" style="display: none;">
-                                        @if(!empty($mproduct))
+                                        @if(!empty($mproductedit))
                                             @foreach($aluminumsProduct as $aluminumP)
                                                 <tr>
                                                     <th scope="row">{{$aluminumP->id}}</th>
@@ -265,7 +267,7 @@
 
                                         <!--INICIO BODY DO COMPONENTE-->
                                         <tbody id="tabela-componente" style="display: none;">
-                                        @if(!empty($mproduct))
+                                        @if(!empty($mproductedit))
                                             @foreach($componentsProduct as $componentP)
                                                 <tr>
                                                     <th scope="row">{{$componentP->id}}</th>

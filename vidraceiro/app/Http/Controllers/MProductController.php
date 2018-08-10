@@ -69,10 +69,9 @@ class MProductController extends Controller
 
                 $mproduto = new MProduct;
                 $mproductcriado = $mproduto->create($request->all());
-                if ($mproduto)
-                    return redirect()->back()->with('success', 'Modelo de produto criado com sucesso')
+                if ($mproductcriado)
+                    return redirect()->back()->with('success', 'Produto criado com sucesso')
                                              ->with(compact('mproductcriado'));
-
                 break;
             case '2':
 
