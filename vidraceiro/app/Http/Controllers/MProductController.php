@@ -39,7 +39,7 @@ class MProductController extends Controller
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $titulotabs = ['Produto', 'Material'];
-        $mproduct = MProduct::find(3);
+        $mproduct = MProduct::with('aluminums', 'glasses', 'components')->find(3);
         $aluminumsProduct = $mproduct->aluminums()->get();
         $glassesProduct = $mproduct->glasses()->get();
         $componentsProduct = $mproduct->components()->get();
