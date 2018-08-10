@@ -226,52 +226,65 @@
                                         <!--FIM HEAD DO COMPONENTE-->
 
                                         </thead>
-                                        <tbody>
-                                        <!--INICIO BODY DO VIDRO-->
-                                        <tr id="tabela-vidro">
-                                            <th scope="row">1</th>
-                                            <td>Vidro temperado 08mm</td>
-                                            <td>100.0</td>
-                                            <td>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
 
-                                            </td>
-                                        </tr>
+                                        <!--INICIO BODY DO VIDRO-->
+                                        <tbody id="tabela-vidro">
+                                        @foreach($glasses as $glass)
+                                            <tr>
+                                                <th scope="row">{{$glass->id}}</th>
+                                                <td>{{$glass->nome}}</td>
+                                                <td>R${{$glass->preco}}</td>
+                                                <td>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+
                                         <!--FIM BODY DO VIDRO-->
 
                                         <!--INICIO BODY DO ALUMINIO-->
-                                        <tr id="tabela-aluminio" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>xt-201</td>
-                                            <td>6000.0m</td>
-                                            <td>1.6kg</td>
-                                            <td>22.0</td>
-                                            <td>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        <tbody id="tabela-aluminio" style="display: none;">
+                                        @foreach($aluminums as $aluminum)
+                                            <tr>
+                                                <th scope="row">{{$aluminum->id}}</th>
+                                                <td>{{$aluminum->perfil}}</td>
+                                                <td>{{$aluminum->medida}}</td>
+                                                <td>{{$aluminum->peso}}</td>
+                                                <td>{{$aluminum->preco}}</td>
+                                                <td>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
 
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
                                         <!--FIM BODY DO ALUMINIO-->
 
                                         <!--INICIO BODY DO COMPONENTE-->
-                                        <tr id="tabela-componente" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>Roldana</td>
-                                            <td>1.0</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
+                                        <tbody id="tabela-componente" style="display: none;">
+                                        @foreach($components as $component)
+                                            <tr>
+                                                <th scope="row">{{$component->id}}</th>
+                                                <td>{{$component->nome}}</td>
+                                                <td>{{$component->preco}}</td>
+                                                <td>{{$component->qtd}}</td>
+                                                <td>
+                                                    <a class="btn-link">
+                                                        <button class="btn btn-danger mb-1">Delete</button>
+                                                    </a>
 
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO COMPONENTE-->
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
+                                        <!--FIM BODY DO COMPONENTE-->
+
                                     </table>
 
 
