@@ -55,7 +55,7 @@ $(document).ready(function () {
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if(valueSelected != '6')
+                if (valueSelected != '6')
                     break;
             case '2':
                 boxpadrao.css({
@@ -63,7 +63,7 @@ $(document).ready(function () {
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if(valueSelected != '6')
+                if (valueSelected != '6')
                     break;
             case '3':
                 ferragem1000.css({
@@ -72,7 +72,7 @@ $(document).ready(function () {
                     'justify-content': 'space-between',
                 });
 
-                if(valueSelected != '6')
+                if (valueSelected != '6')
                     break;
             case '4':
                 ferragem3000.css({
@@ -80,7 +80,7 @@ $(document).ready(function () {
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if(valueSelected != '6')
+                if (valueSelected != '6')
                     break;
             case '5':
                 kitsacada.css({
@@ -289,12 +289,21 @@ $(document).ready(function () {
         switch (selecionado) {
             case '0':
                 label.text('Vidros');
+                $('#select-vidro').show();
+                $('#select-componente').hide();
+                $('#select-aluminio').hide();
                 break;
             case '1':
                 label.text('Aluminios');
+                $('#select-vidro').hide();
+                $('#select-componente').hide();
+                $('#select-aluminio').show();
                 break;
             case '2':
                 label.text('Componentes');
+                $('#select-vidro').hide();
+                $('#select-componente').show();
+                $('#select-aluminio').hide();
                 break;
         }
     });

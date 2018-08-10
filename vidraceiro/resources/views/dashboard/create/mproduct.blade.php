@@ -141,21 +141,21 @@
                         <div class="form-row mt-3 align-items-end">
 
                             <div class="form-group col-md-4">
-                                <label for="select-categoria" id="label_categoria">Vidros</label>
-                                <select id="select-categoria" name="id_vidro" class="custom-select" required>
+                                <label for="select-vidro" id="label_categoria">Vidros</label>
+                                <select id="select-vidro" name="id_vidro" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
                                     @foreach($glasses as $glasse)
                                         <option value="{{$glasse->id}}">{{$glasse->nome}}</option>
                                     @endforeach
                                 </select>
-                                <select id="select-categoria" name="id_aluminio" class="custom-select"
+                                <select id="select-aluminio" name="id_aluminio" class="custom-select"
                                         style="display: none;" required>
                                     <option value="" selected>Selecione um aluminio</option>
                                     @foreach($aluminums as $aluminum)
                                         <option value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
                                     @endforeach
                                 </select>
-                                <select id="select-categoria" name="id_componente" class="custom-select"
+                                <select id="select-componente" name="id_componente" class="custom-select"
                                         style="display: none;" required>
                                     <option value="" selected>Selecione um componente</option>
                                     @foreach($components as $component)
