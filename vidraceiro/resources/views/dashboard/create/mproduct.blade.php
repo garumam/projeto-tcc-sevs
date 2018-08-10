@@ -19,13 +19,13 @@
 
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link {{ empty($mproduct) ? 'active' : 'disabled' }} noborder-left"
+                            <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'active' : 'disabled' }} noborder-left"
                                id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link {{ empty($mproduct) ? 'disabled' : 'active' }}"
+                            <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'active' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
@@ -43,7 +43,7 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ empty($mproduct) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}"
+                <div class="tab-pane fade {{ empty(session('mproductcriado')) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}"
                      role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
@@ -99,7 +99,7 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade {{ !empty($mproduct) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}"
+                <div class="tab-pane fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}"
                      role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
@@ -111,16 +111,32 @@
                         @csrf
                         <div class="form-row">
 
+                            <div class="col-12">
+                                @if(session('tab2'))
+                                    <div class="alerta">
+                                        <div class="alert alert-success">
+                                            {{ session('tab2') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4">
                                 <label for="id">Id</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproduct) ? $mproduct->id : ''}}" readonly>
+                                       value="{{!empty($mproduct) ? $mproduct->id : session('mproductcriado')? Session::get('mproductcriado')->id :''}}" readonly>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Produto</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproduct) ? $mproduct->nome :''}}" readonly>
+                                       value="{{!empty($mproduct) ? $mproduct->nome : session('mproductcriado')? Session::get('mproductcriado')->nome :''}}" readonly>
                             </div>
 
                         </div>
@@ -229,59 +245,65 @@
 
                                         <!--INICIO BODY DO VIDRO-->
                                         <tbody id="tabela-vidro">
-                                        @foreach($glassesProduct as $glassP)
-                                            <tr>
-                                                <th scope="row">{{$glassP->id}}</th>
-                                                <td>{{$glassP->nome}}</td>
-                                                <td>R${{$glassP->preco}}</td>
-                                                <td>
-                                                    <a class="btn-link">
-                                                        <button class="btn btn-danger mb-1">Delete</button>
-                                                    </a>
+                                        @if(!empty($mproduct))
+                                            @foreach($glassesProduct as $glassP)
+                                                <tr>
+                                                    <th scope="row">{{$glassP->id}}</th>
+                                                    <td>{{$glassP->nome}}</td>
+                                                    <td>R${{$glassP->preco}}</td>
+                                                    <td>
+                                                        <a class="btn-link">
+                                                            <button class="btn btn-danger mb-1">Delete</button>
+                                                        </a>
 
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
 
                                         <!--FIM BODY DO VIDRO-->
 
                                         <!--INICIO BODY DO ALUMINIO-->
                                         <tbody id="tabela-aluminio" style="display: none;">
-                                        @foreach($aluminumsProduct as $aluminumP)
-                                            <tr>
-                                                <th scope="row">{{$aluminumP->id}}</th>
-                                                <td>{{$aluminumP->perfil}}</td>
-                                                <td>{{$aluminumP->medida}}</td>
-                                                <td>{{$aluminumP->peso}}</td>
-                                                <td>{{$aluminumP->preco}}</td>
-                                                <td>
-                                                    <a class="btn-link">
-                                                        <button class="btn btn-danger mb-1">Delete</button>
-                                                    </a>
+                                        @if(!empty($mproduct))
+                                            @foreach($aluminumsProduct as $aluminumP)
+                                                <tr>
+                                                    <th scope="row">{{$aluminumP->id}}</th>
+                                                    <td>{{$aluminumP->perfil}}</td>
+                                                    <td>{{$aluminumP->medida}}</td>
+                                                    <td>{{$aluminumP->peso}}</td>
+                                                    <td>{{$aluminumP->preco}}</td>
+                                                    <td>
+                                                        <a class="btn-link">
+                                                            <button class="btn btn-danger mb-1">Delete</button>
+                                                        </a>
 
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                         <!--FIM BODY DO ALUMINIO-->
 
                                         <!--INICIO BODY DO COMPONENTE-->
                                         <tbody id="tabela-componente" style="display: none;">
-                                        @foreach($componentsProduct as $componentP)
-                                            <tr>
-                                                <th scope="row">{{$componentP->id}}</th>
-                                                <td>{{$componentP->nome}}</td>
-                                                <td>{{$componentP->preco}}</td>
-                                                <td>{{$componentP->qtd}}</td>
-                                                <td>
-                                                    <a class="btn-link">
-                                                        <button class="btn btn-danger mb-1">Delete</button>
-                                                    </a>
+                                        @if(!empty($mproduct))
+                                            @foreach($componentsProduct as $componentP)
+                                                <tr>
+                                                    <th scope="row">{{$componentP->id}}</th>
+                                                    <td>{{$componentP->nome}}</td>
+                                                    <td>{{$componentP->preco}}</td>
+                                                    <td>{{$componentP->qtd}}</td>
+                                                    <td>
+                                                        <a class="btn-link">
+                                                            <button class="btn btn-danger mb-1">Delete</button>
+                                                        </a>
 
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                         <!--FIM BODY DO COMPONENTE-->
 
@@ -321,64 +343,67 @@
 
                     <div class="container-fluid">
                         <div id="gridImagens" class="row">
-                            <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma
-                                categoria</p>
-                            <div id="boxdiversos" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-1">Box diversos</h4>
-                                @for($i = 0; $i < count($boxdiversos); $i++ )
-                                    <div class="col-">
-                                        <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
-                                             class="img-fluid img-thumbnail"
-                                             alt="Responsive image">
-                                    </div>
-                                @endfor
-                            </div>
 
-                            <div id="boxpadrao" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-1">Box padrão</h4>
-                                @for($i = 0; $i < count($boxpadrao); $i++ )
-                                    <div class="col-">
-                                        <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
-                                             class="img-fluid img-thumbnail"
-                                             alt="Responsive image">
-                                    </div>
-                                @endfor
-                            </div>
+                            @if(!session('mproductcriado'))
 
-                            <div id="ferragem1000" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 1000</h4>
-                                @for($i = 0; $i < count($ferragem1000); $i++ )
-                                    <div class="col-">
-                                        <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
-                                             class="img-fluid img-thumbnail"
-                                             alt="Responsive image">
-                                    </div>
-                                @endfor
-                            </div>
+                                <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma
+                                    categoria</p>
+                                <div id="boxdiversos" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Box diversos</h4>
+                                    @for($i = 0; $i < count($boxdiversos); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
+                                                 class="img-fluid img-thumbnail"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
 
-                            <div id="ferragem3000" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 3000</h4>
-                                @for($i = 0; $i < count($ferragem3000); $i++ )
-                                    <div class="col-">
-                                        <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
-                                             class="img-fluid img-thumbnail"
-                                             alt="Responsive image">
-                                    </div>
-                                @endfor
-                            </div>
+                                <div id="boxpadrao" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Box padrão</h4>
+                                    @for($i = 0; $i < count($boxpadrao); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
+                                                 class="img-fluid img-thumbnail"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
 
-                            <div id="kitsacada" style="display: none;">
-                                <h4 class="text-black-50 col-12 mt-2 pl-1">Kit sacada</h4>
-                                @for($i = 0; $i < count($kitsacada); $i++ )
-                                    <div class="col-">
-                                        <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"
-                                             class="img-fluid img-thumbnail"
-                                             alt="Responsive image">
-                                    </div>
-                                @endfor
-                            </div>
+                                <div id="ferragem1000" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 1000</h4>
+                                    @for($i = 0; $i < count($ferragem1000); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
+                                                 class="img-fluid img-thumbnail"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
 
+                                <div id="ferragem3000" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 3000</h4>
+                                    @for($i = 0; $i < count($ferragem3000); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
+                                                 class="img-fluid img-thumbnail"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
 
+                                <div id="kitsacada" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Kit sacada</h4>
+                                    @for($i = 0; $i < count($kitsacada); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"
+                                                 class="img-fluid img-thumbnail"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
+
+                            @endif
                             {{--<div class="col-">--}}
                             {{--<img src="{{ asset('img/boxdiversos/bxa2.png')}}" class="img-fluid img-thumbnail"--}}
                             {{--alt="Responsive image">--}}

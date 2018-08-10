@@ -39,13 +39,15 @@ class MProductController extends Controller
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $titulotabs = ['Produto', 'Material'];
-        $mproduct = MProduct::with('aluminums', 'glasses', 'components')->find(3);
+
+        /*$mproduct = MProduct::with('aluminums', 'glasses', 'components')->find(3);
         $aluminumsProduct = $mproduct->aluminums()->get();
         $glassesProduct = $mproduct->glasses()->get();
-        $componentsProduct = $mproduct->components()->get();
+        $componentsProduct = $mproduct->components()->get();*/
+
 //        dd($componentsProduct);
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.mproduct', compact('titulotabs', 'mproduct', 'categories', 'aluminums', 'glasses', 'components', 'aluminumsProduct', 'glassesProduct', 'componentsProduct', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs','categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 
@@ -65,9 +67,10 @@ class MProductController extends Controller
             case 'produto':
 
                 $mproduto = new MProduct;
-                $mproduto->create($request->except('tabatual'));
+                $mproductcriado = $mproduto->create($request->except('tabatual'));
                 if ($mproduto)
-                    return redirect()->back()->with('success', 'Modelo de produto criado com sucesso');
+                    return redirect()->back()->with('tab2', 'Modelo de produto criado com sucesso')
+                                             ->with(compact('mproductcriado'));
 
                 break;
             case 'material':
