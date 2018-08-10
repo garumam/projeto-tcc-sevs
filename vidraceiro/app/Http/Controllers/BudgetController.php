@@ -3,12 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Aluminum;
+use App\Product;
+use App\MProduct;
+use App\Component;
+use App\Glass;
+use App\Category;
 
 class BudgetController extends Controller
 {
+    protected $states;
     public function __construct()
     {
         $this->middleware('auth');
+        $this->states = $states = array(
+            ' ' => 'Selecione...',
+            'AC' => 'Acre',
+            'AL' => 'Alagoas',
+            'AP' => 'Amapá',
+            'AM' => 'Amazonas',
+            'BA' => 'Bahia',
+            'CE' => 'Ceará',
+            'DF' => 'Distrito Federal',
+            'ES' => 'Espírito Santo',
+            'GO' => 'Goiás',
+            'MA' => 'Maranhão',
+            'MT' => 'Mato Grosso',
+            'MS' => 'Mato Grosso do Sul',
+            'MG' => 'Minas Gerais',
+            'PA' => 'Pará',
+            'PB' => 'Paraíba',
+            'PR' => 'Paraná',
+            'PE' => 'Pernambuco',
+            'PI' => 'Piauí',
+            'RJ' => 'Rio de Janeiro',
+            'RN' => 'Rio Grande do Norte',
+            'RS' => 'Rio Grande do Sul',
+            'RO' => 'Rondônia',
+            'RR' => 'Roraima',
+            'SC' => 'Santa Catarina',
+            'SP' => 'São Paulo',
+            'SE' => 'Sergipe',
+            'TO' => 'Tocantins'
+        );
     }
 
     public function index()
@@ -19,13 +56,21 @@ class BudgetController extends Controller
 
     public function create()
     {
+        $states = $this->states;
+        $aluminums = Aluminum::where('is_modelo', '1')->get();
+        $glasses = Glass::where('is_modelo', '1')->get();
+        $components = Component::where('is_modelo', '1')->get();
+        $categories = Category::where('tipo', 'produto')->get();
+        $mproducts = MProduct::all();
         $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
-        return view('dashboard.create.budget',compact('titulotabs'))->with('title', 'Novo Orçamento');
+        //dd($mproduct);
+        return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts'))->with('title', 'Novo Orçamento');
     }
 
     public function store()
     {
-
+        $budgetcriado = [1,2];
+        return redirect()->back()->with(compact('budgetcriado'));
     }
 
     public function show()

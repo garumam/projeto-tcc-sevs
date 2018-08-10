@@ -329,6 +329,20 @@ $(document).ready(function () {
         }
     });
 
+    $('#select-tipo-produto').change(function (e) {
+        let categoryselected = $('#select-tipo-produto option:selected').val();
+
+        $('.mprodutos-options').each(function(){
+            if(categoryselected == $(this).attr('id')){
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        })
+
+    });
+
+
     function mensagemAlerta(mensagem) {
         $('#alertaMensagem').text(mensagem);
         $('#bt-alert-modal').click();

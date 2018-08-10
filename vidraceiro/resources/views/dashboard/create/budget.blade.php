@@ -9,14 +9,18 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'active' : 'disabled' }} noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
-                        @else
-                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
-                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                        @elseif($i == 1)
+                                <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'disabled' : 'active' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                                   href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                                   aria-selected="false">{{$titulotabs[$i]}}</a>
+                            @else
+                                <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'disabled' : '' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                                   href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                                   aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
 
@@ -51,11 +55,11 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                <div class="tab-pane fade {{ empty(session('budgetcriado')) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '1']) :  route('budgets.store',['tag' => '1'])}}">
                         @if(!empty($budget))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -63,76 +67,76 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
-                                <label>Nome</label>
+                                <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
-                                       required>
+                                       value="{{$budget->nome or old('nome')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Data</label>
+                                <label for="data">Data</label>
                                 <input type="date" class="form-control" id="data" name="data" placeholder="00/00/0000"
-                                       required>
+                                       value="{{$budget->data or old('data')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Telefone</label>
+                                <label for="telefone">Telefone</label>
                                 <input type="tel" class="form-control" id="telefone" name="telefone"
                                        placeholder="(00)0000-0000"
-                                       required>
+                                       value="{{$budget->telefone or old('telefone')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Rua</label>
+                                <label for="rua">Rua</label>
                                 <input type="text" class="form-control" id="rua" name="rua"
                                        placeholder="av. de algum lugar"
-                                       required>
+                                       value="{{$budget->rua or old('rua')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Cep</label>
+                                <label for="cep">Cep</label>
                                 <input type="number" class="form-control" id="cep" name="cep" placeholder="00000-000"
-                                       required>
+                                       value="{{$budget->cep or old('cep')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>N°</label>
-                                <input type="number" class="form-control" id="numero-rua" name="numero-rua"
+                                <label for="numero_endereco">N°</label>
+                                <input type="number" class="form-control" id="numero_endereco" name="numero_endereco"
                                        placeholder="100"
-                                       required>
+                                       value="{{$budget->numero_endereco or old('numero_endereco')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Bairro</label>
+                                <label for="bairro">Bairro</label>
                                 <input type="text" class="form-control" id="bairro" name="bairro"
-                                       placeholder="bairro" required>
+                                       placeholder="bairro" value="{{$budget->bairro or old('bairro')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="select-UF">UF</label>
-                                <select id="select-UF" name="select" class="custom-select" required>
-                                    <option value="" selected>Selecione uma UF</option>
-                                    <option value="">RJ</option>
-                                    <option value="">MG</option>
-                                    <option value="">SP</option>
+                                <select id="select-UF" name="uf" class="custom-select">
+                                    @foreach ($states as $uf => $estado)
+                                        <option value="{{$uf}}"
+                                        @if(!empty($budget)){{ $budget->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Cidade</label>
+                                <label for="cidade">Cidade</label>
                                 <input type="text" class="form-control" id="cidade" name="cidade"
-                                       placeholder="cidade" required>
+                                       placeholder="cidade" value="{{$budget->cidade or old('cidade')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Complemento</label>
+                                <label for="complemento">Complemento</label>
                                 <input type="text" class="form-control" id="complemento" name="complemento"
-                                       placeholder="complemento">
+                                       placeholder="complemento" value="{{$budget->complemento or old('complemento')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Margem de lucro</label>
-                                <input type="number" class="form-control" id="margem-lucro" name="margem-lucro"
-                                       placeholder="100" required>
+                                <label for="margem_lucro">Margem de lucro</label>
+                                <input type="number" class="form-control" id="margem_lucro" name="margem_lucro"
+                                       placeholder="100" value="{{$budget->margem_lucro or old('margem_lucro')}}">
                             </div>
 
 
@@ -145,11 +149,11 @@
                 </div>
 
                 <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
-                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                <div class="tab-pane fade {{ !empty(session('budgetcriado')) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '2']) :  route('budgets.store',['tag' => '2'])}}">
                         @if(!empty($budget))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -229,7 +233,7 @@
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
                         @if(!empty($budget))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -237,12 +241,12 @@
                         <div class="form-row">
 
                             <div class="form-group col-md">
-                                <label for="select-tipo">Selecione um tipo</label>
-                                <select id="select-tipo" name="select" class="custom-select" required>
-                                    <option value="" selected>Selecione um tipo</option>
-                                    <option value="">box diversos</option>
-                                    <option value="">box padrão</option>
-                                    <option value="">ferragem 1000</option>
+                                <label for="select-tipo-produto">Selecione um tipo</label>
+                                <select id="select-tipo-produto" name="select-ignore" class="custom-select" required>
+                                    <option value="" selected>Selecione uma categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->nome}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -253,17 +257,17 @@
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                                 <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto"
-                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select" required>
+                                <select id="select-produto" name="m_produto_id" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
-                                    <option value="">bx-a1</option>
-                                    <option value="">bx-c1</option>
-                                    <option value="">r2-d2</option>
+                                    @foreach($mproducts as $mproduct)
+                                        <option id="{{$mproduct->categoria_produto_id}}"
+                                                class="mprodutos-options" value="{{$mproduct->id}}"
+                                                style="display: none;">{{$mproduct->nome}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -321,7 +325,7 @@
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '4']) :  route('budgets.store',['tag' => '4'])}}">
                         @if(!empty($budget))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -347,43 +351,52 @@
                         </div>
 
 
-                        <!-- INICIO RADIO BUTTON DE MATERIAIS -->
+                        <!-- INICIO SELECT DE MATERIAIS -->
                         <div class="form-row">
                             <div class="form-group col-md-8">
-                                <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                    <label class="btn btn-primary active w-33">
-                                        <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                                        Vidro
-                                    </label>
-                                    <label class="btn btn-primary w-33">
-                                        <input type="radio" name="options" id="option2" autocomplete="off"> Alumínio
-                                    </label>
-                                    <label class="btn btn-primary w-33">
-                                        <input type="radio" name="options" id="option3" autocomplete="off"> Componente
-                                    </label>
-                                </div>
+                                <label for="select-material">Materiais</label>
+                                <select id="select-material" class="custom-select">
+                                    <option value="0">Vidros</option>
+                                    <option value="1">Aluminios</option>
+                                    <option value="2">Componentes</option>
+                                </select>
                             </div>
                         </div>
-                        <!-- FIM RADIO BUTTON DE MATERIAIS -->
+                        <!-- FIM SELECT DE MATERIAIS -->
 
                         <!-- INICIO SELECT DO MATERIAL -->
                         <div class="form-row mt-3 align-items-end">
 
                             <div class="form-group col-md-4">
-                                <label for="select-categoria">Vidros</label>
-                                <select id="select-categoria" class="custom-select" required>
+                                <label for="select-vidro" id="label_categoria">Vidros</label>
+                                <select id="select-vidro" name="id_vidro" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
-                                    <option value="">Vidro temperado</option>
-                                    <option value="">Vidro azul</option>
-                                    <option value="">Vidro blindado</option>
+                                    @foreach($glasses as $glass)
+                                        <option value="{{$glass->id}}">{{$glass->nome}}</option>
+                                    @endforeach
+                                </select>
+                                <select id="select-aluminio" name="id_aluminio" class="custom-select"
+                                        style="display: none;" required>
+                                    <option value="" selected>Selecione um aluminio</option>
+                                    @foreach($aluminums as $aluminum)
+                                        <option value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
+                                    @endforeach
+                                </select>
+                                <select id="select-componente" name="id_componente" class="custom-select"
+                                        style="display: none;" required>
+                                    <option value="" selected>Selecione um componente</option>
+                                    @foreach($components as $component)
+                                        <option value="{{$component->id}}">{{$component->nome}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('budgets.create') }}">
+                                <a class="btn-link mb-3" href="{{ route('mproducts.create') }}">
                                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
                                     </button>
                                 </a>
                             </div>
+
                         </div>
                         <!-- FIM SELECT DO MATERIAL -->
 
@@ -413,7 +426,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
+                                        <tr id="topo-vidro">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço m²</th>
@@ -422,7 +435,7 @@
                                         <!--FIM HEAD DO VIDRO-->
 
                                         <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
+                                        <tr id="topo-aluminio" style="display: none;">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Perfil</th>
                                             <th class="noborder" scope="col">Medida</th>
@@ -433,7 +446,7 @@
                                         <!--FIM HEAD DO ALUMINIO-->
 
                                         <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
+                                        <tr id="topo-componente" style="display: none;">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
                                             <th class="noborder" scope="col">Preço</th>
@@ -443,64 +456,70 @@
                                         <!--FIM HEAD DO COMPONENTE-->
 
                                         </thead>
-                                        <tbody>
+
                                         <!--INICIO BODY DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th scope="row">1</th>
-                                            <td>Vidro temperado 08mm</td>
-                                            <td>100.0</td>
-                                            <td>
+                                        <tbody id="tabela-vidro">
+                                            @if(!empty($budget))
+                                                @foreach($glassesProduct as $glassP)
+                                                    <tr>
+                                                        <th scope="row">{{$glassP->id}}</th>
+                                                        <td>{{$glassP->nome}}</td>
+                                                        <td>R${{$glassP->preco}}</td>
+                                                        <td>
+                                                            <a class="btn-link">
+                                                                <button class="btn btn-danger mb-1">Delete</button>
+                                                            </a>
 
-                                                <a class="btn-link" href="#">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
                                         <!--FIM BODY DO VIDRO-->
 
                                         <!--INICIO BODY DO ALUMINIO-->
-                                        <tr class="tabela-aluminio" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>xt-201</td>
-                                            <td>6000.0m</td>
-                                            <td>1.6kg</td>
-                                            <td>22.0</td>
-                                            <td>
+                                        <tbody id="tabela-aluminio" style="display: none;">
+                                            @if(!empty($budget))
+                                                @foreach($aluminumsProduct as $aluminumP)
+                                                    <tr>
+                                                        <th scope="row">{{$aluminumP->id}}</th>
+                                                        <td>{{$aluminumP->perfil}}</td>
+                                                        <td>{{$aluminumP->medida}}</td>
+                                                        <td>{{$aluminumP->peso}}</td>
+                                                        <td>{{$aluminumP->preco}}</td>
+                                                        <td>
+                                                            <a class="btn-link">
+                                                                <button class="btn btn-danger mb-1">Delete</button>
+                                                            </a>
 
-                                                <a class="btn-link" href="#">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
                                         <!--FIM BODY DO ALUMINIO-->
 
                                         <!--INICIO BODY DO COMPONENTE-->
-                                        <tr class="tabela-componente" style="display: none;">
-                                            <th scope="row">1</th>
-                                            <td>Roldana</td>
-                                            <td>1.0</td>
-                                            <td>1</td>
-                                            <td>
+                                        <tbody id="tabela-componente" style="display: none;">
+                                            @if(!empty($budget))
+                                                @foreach($componentsProduct as $componentP)
+                                                    <tr>
+                                                        <th scope="row">{{$componentP->id}}</th>
+                                                        <td>{{$componentP->nome}}</td>
+                                                        <td>{{$componentP->preco}}</td>
+                                                        <td>{{$componentP->qtd}}</td>
+                                                        <td>
+                                                            <a class="btn-link">
+                                                                <button class="btn btn-danger mb-1">Delete</button>
+                                                            </a>
 
-                                                <a class="btn-link" href="#">
-                                                    <button class="btn btn-warning mb-1">Edit</button>
-                                                </a>
-                                                <a class="btn-link">
-                                                    <button class="btn btn-danger mb-1">Delete</button>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        <!--FIM BODY DO COMPONENTE-->
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
+                                        <!--FIM BODY DO COMPONENTE-->
+
                                     </table>
 
 
@@ -520,7 +539,7 @@
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id]) :  route('budgets.store')}}">
+                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '5']) :  route('budgets.store',['tag' => '5'])}}">
                         @if(!empty($budget))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
