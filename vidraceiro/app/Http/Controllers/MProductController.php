@@ -40,14 +40,10 @@ class MProductController extends Controller
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $titulotabs = ['Produto', 'Material'];
 
-        /*$mproduct = MProduct::with('aluminums', 'glasses', 'components')->find(3);
-        $aluminumsProduct = $mproduct->aluminums()->get();
-        $glassesProduct = $mproduct->glasses()->get();
-        $componentsProduct = $mproduct->components()->get();*/
 
 //        dd($componentsProduct);
 //        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
-        return view('dashboard.create.mproduct', compact('titulotabs','categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
+        return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
 
@@ -71,10 +67,9 @@ class MProductController extends Controller
                 $mproductcriado = $mproduto->create($request->all());
                 if ($mproductcriado)
                     return redirect()->back()->with('success', 'Produto criado com sucesso')
-                                             ->with(compact('mproductcriado'));
+                        ->with(compact('mproductcriado'));
                 break;
             case '2':
-
 
 
                 break;
@@ -87,9 +82,28 @@ class MProductController extends Controller
 
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $aluminums = Aluminum::where('is_modelo', '1')->get();
+        $glasses = Glass::where('is_modelo', '1')->get();
+        $components = Component::where('is_modelo', '1')->get();
+        $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
+        $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
+        $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
+        $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
+        $kitsacada = $this->retornaNomes('/img/kitsacada/');
+        $categories = Category::where('tipo', 'produto')->get();
+        $mproductedit = MProduct::with('aluminums', 'glasses', 'components')->find($id);
 
+        $titulotabs = ['Produto', 'Material'];
+        if ($mproductedit) {
+            $categoryEdit = $mproductedit->category()->get();
+            $aluminumsProduct = $mproductedit->aluminums()->get();
+            $glassesProduct = $mproductedit->glasses()->get();
+            $componentsProduct = $mproductedit->components()->get();
+            return view('dashboard.create.mproduct', compact('aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada', 'categories', 'mproductedit', 'categoryEdit', 'aluminumsProduct', 'glassesProduct', 'componentsProduct', 'titulotabs'))->with('title', 'Atualizar produto');
+        }
+        return redirect('products')->with('error', 'Erro ao buscar produto');
     }
 
 
