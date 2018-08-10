@@ -61,19 +61,21 @@ class MProductController extends Controller
         return $filename;
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $tab)
     {
-        switch ($request->tabatual) {
-            case 'produto':
+
+        switch ($tab) {
+            case '1':
 
                 $mproduto = new MProduct;
-                $mproductcriado = $mproduto->create($request->except('tabatual'));
+                $mproductcriado = $mproduto->create($request->all());
                 if ($mproduto)
-                    return redirect()->back()->with('tab2', 'Modelo de produto criado com sucesso')
+                    return redirect()->back()->with('success', 'Modelo de produto criado com sucesso')
                                              ->with(compact('mproductcriado'));
 
                 break;
-            case 'material':
+            case '2':
+
 
 
                 break;

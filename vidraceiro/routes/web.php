@@ -36,7 +36,7 @@ Route::prefix('users')->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/', 'MProductController@index')->name('mproducts.index');
     Route::get('/create', 'MProductController@create')->name('mproducts.create');
-    Route::post('/', 'MProductController@store')->name('mproducts.store');
+    Route::post('/{tab}', 'MProductController@store')->name('mproducts.store');
     Route::get('/{user}', 'MProductController@show')->name('mproducts.show');
     Route::get('/{id}/edit', 'MProductController@edit')->name('mproducts.edit');
     Route::patch('/{id}', 'MProductController@update')->name('mproducts.update');

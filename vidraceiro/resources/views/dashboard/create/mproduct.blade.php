@@ -7,15 +7,7 @@
             <!-- Inicio tab de Produto-->
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    {{--@if(session('success'))--}}
-                    {{--<script>--}}
-                    {{--$(document).ready(function () {--}}
 
-                    {{--$('#nav-Material-tab').click();--}}
-
-                    {{--});--}}
-                    {{--</script>--}}
-                    {{--@endif--}}
 
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
@@ -48,7 +40,7 @@
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store') }}">
+                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store',['tab'=>'1']) }}">
                         @if(!empty($mproduct))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -92,7 +84,6 @@
 
                             </div>
 
-                            <input type="hidden" name="tabatual" value="produto">
                         </div>
                         <button id="bt-produto-product-invisible" class="d-none" type="submit"></button>
 
@@ -104,7 +95,7 @@
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store') }}">
+                          action="{{ !empty($mproduct) ? route('mproducts.update',['id'=> $mproduct->id]) : route('mproducts.store',['tab'=>'2']) }}">
                         @if(!empty($mproduct))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -112,10 +103,10 @@
                         <div class="form-row">
 
                             <div class="col-12">
-                                @if(session('tab2'))
-                                    <div class="alerta">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
                                         <div class="alert alert-success">
-                                            {{ session('tab2') }}
+                                            {{ session('success') }}
                                         </div>
                                     </div>
                                 @elseif(session('error'))
@@ -193,20 +184,6 @@
                                 <div class="topo pl-2">
                                     <h4 class="titulo">Vidros</h4>
                                 </div>
-
-                                @if(session('success'))
-                                    <div class="alerta">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
-                                    </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
 
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -312,7 +289,7 @@
 
                                 </div>
                             </div>
-                            <input type="hidden" name="tabatual" value="material">
+
                         </div>
                         <button id="bt-material-product-invisible" class="d-none" type="submit"></button>
 
