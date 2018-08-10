@@ -284,12 +284,17 @@ $(document).ready(function () {
 
     $('#select-material').change(function (e) {
         let selecionado = $('#select-material option:selected').val();
+        let label = $('#label_categoria');
+
         switch (selecionado) {
-            case 0:
+            case '0':
+                label.text('Vidros');
                 break;
-            case 1:
+            case '1':
+                label.text('Aluminios');
                 break;
-            case 2:
+            case '2':
+                label.text('Componentes');
                 break;
         }
     });

@@ -141,7 +141,7 @@
                         <div class="form-row mt-3 align-items-end">
 
                             <div class="form-group col-md-4">
-                                <label for="select-categoria">Vidros</label>
+                                <label for="select-categoria" id="label_categoria">Vidros</label>
                                 <select id="select-categoria" name="id_vidro" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
                                     @foreach($glasses as $glasse)
