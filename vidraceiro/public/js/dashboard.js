@@ -282,6 +282,17 @@ $(document).ready(function () {
 
     });
 
+    $('#select-material').change(function (e) {
+        let selecionado = $('#select-material option:selected').val();
+        switch (selecionado) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+    });
 
     function mensagemAlerta(mensagem) {
         $('#alertaMensagem').text(mensagem);

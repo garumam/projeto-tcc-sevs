@@ -113,12 +113,14 @@
 
                             <div class="form-group col-md-4">
                                 <label for="id">Id</label>
-                                <input class="form-control" type="text" placeholder="1" readonly>
+                                <input class="form-control" type="text"
+                                       value="{{!empty($mproduct) ? $mproduct->id : ''}}" readonly>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Produto</label>
-                                <input class="form-control" type="text" placeholder="bx-01" readonly>
+                                <input class="form-control" type="text"
+                                       value="{{!empty($mproduct) ? $mproduct->nome :''}}" readonly>
                             </div>
 
                         </div>
@@ -145,9 +147,20 @@
                                     @foreach($glasses as $glasse)
                                         <option value="{{$glasse->id}}">{{$glasse->nome}}</option>
                                     @endforeach
-                                    {{--<option value="">Vidro temperado</option>--}}
-                                    {{--<option value="">Vidro azul</option>--}}
-                                    {{--<option value="">Vidro blindado</option>--}}
+                                </select>
+                                <select id="select-categoria" name="id_aluminio" class="custom-select"
+                                        style="display: none;" required>
+                                    <option value="" selected>Selecione um aluminio</option>
+                                    @foreach($aluminums as $aluminum)
+                                        <option value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
+                                    @endforeach
+                                </select>
+                                <select id="select-categoria" name="id_componente" class="custom-select"
+                                        style="display: none;" required>
+                                    <option value="" selected>Selecione um componente</option>
+                                    @foreach($components as $component)
+                                        <option value="{{$component->id}}">{{$component->nome}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
