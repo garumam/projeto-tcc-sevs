@@ -336,6 +336,7 @@ $(document).ready(function () {
             if(categoryselected == $(this).attr('id')){
                 $(this).show();
             }else{
+                $('#option-vazia').prop('selected', true);
                 $(this).hide();
             }
         })

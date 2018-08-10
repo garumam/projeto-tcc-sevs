@@ -262,7 +262,7 @@
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
                                 <select id="select-produto" name="m_produto_id" class="custom-select" required>
-                                    <option value="" selected>Selecione um produto</option>
+                                    <option id="option-vazia" value="" selected>Selecione um produto</option>
                                     @foreach($mproducts as $mproduct)
                                         <option id="{{$mproduct->categoria_produto_id}}"
                                                 class="mprodutos-options" value="{{$mproduct->id}}"
