@@ -26,7 +26,7 @@
                     <div class="topo-tab">
 
                         <button id="bt-product-visible" class="btn btn-primary btn-custom"
-                                type="submit">{{empty($mproduct) ? 'Adicionar': 'Atualizar'}}</button>
+                                type="submit">{{empty($mproductedit) ? 'Adicionar': 'Atualizar'}}</button>
 
                     </div>
                 </div>
