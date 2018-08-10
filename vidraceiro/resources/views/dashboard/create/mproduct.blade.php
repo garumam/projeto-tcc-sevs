@@ -35,7 +35,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ empty(session('mproductcriado')) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}"
+                <div class="tab-pane fade {{ empty(session('mproductcriado')) ? 'show active' : '' }} "
+                     id="nav-{{$titulotabs[0]}}"
                      role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
@@ -66,7 +67,7 @@
                                         required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->nome}}</option>
+                                        <option value="{{$category->id}}" @if(!empty($categoryEdit)){{ $category->id == $categoryEdit[0]->id ? 'selected' :''}} @endif>{{$category->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -90,7 +91,8 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}"
+                <div class="tab-pane fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}"
+                     id="nav-{{$titulotabs[1]}}"
                      role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
@@ -121,14 +123,14 @@
                             <div class="form-group col-md-4">
                                 <label for="id">Id</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproductedit) ? $mproductedit->id : session('mproductcriado')? Session::get('mproductcriado')->id :''}}"
+                                       value="{{!empty($mproductedit) ? $mproductedit->id : ''}} {{ Session::has('mproductcriado') ? Session::get('mproductcriado')->id : ''}}"
                                        readonly>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Produto</label>
                                 <input class="form-control" type="text"
-                                       value="{{!empty($mproductedit) ? $mproductedit->nome : session('mproductcriado')? Session::get('mproductcriado')->nome :''}}"
+                                       value="{{!empty($mproductedit) ? $mproductedit->nome :'' }} {{ Session::has('mproductcriado') ? Session::get('mproductcriado')->nome : ''}}"
                                        readonly>
                             </div>
 
