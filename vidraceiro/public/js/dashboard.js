@@ -406,6 +406,19 @@ $(document).ready(function () {
 
     });
 
+    $('#select-produto-material').change(function (e) {
+        let produtoselecionado = $('#select-produto-material option:selected');
+        let imagem;
+
+        if(produtoselecionado.val() != ""){
+            imagem = produtoselecionado.data('image');
+        }else{
+            imagem = '/img/semimagem.png';
+        }
+
+        $('#image-produto-material').attr('src', imagem);
+
+    });
 
     function trocarImagem(imgcontainer, imgpath) {
         imgcontainer.attr("src", imgpath);

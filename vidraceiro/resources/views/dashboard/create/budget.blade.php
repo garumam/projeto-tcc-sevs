@@ -404,9 +404,16 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" class="custom-select" required>
+                                <select id="select-produto-material" name="produtoid" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
+                                    @if(!empty(session('products')))
+                                        @foreach(Session::get('products') as $product)
 
+                                            <option data-image="{{$product->mproduct->imagem}}"
+                                                    value="{{$product->id}}">{{$product->mproduct->nome}}</option>
+
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
