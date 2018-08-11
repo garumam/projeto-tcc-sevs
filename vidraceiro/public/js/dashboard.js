@@ -336,7 +336,7 @@ $(document).ready(function () {
 
         $('.mprodutos-options').each(function(){
 
-            if (categoryselected == $(this).data('categoria')) {
+            if (categoryselected === $(this).data('categoria')) {
                 $(this).show();
             }else{
                 $('#option-vazia').prop('selected', true);
@@ -351,7 +351,7 @@ $(document).ready(function () {
     $('#select-mproduto').change(function (e) {
         let pathimg;
         let descricao;
-        if ($('#select-mproduto').val() != "") {
+        if ($('#select-mproduto').val() !== "") {
             pathimg = $('#select-mproduto option:selected').data('image');
             descricao = $('#select-mproduto option:selected').data('descricao');
         } else {
