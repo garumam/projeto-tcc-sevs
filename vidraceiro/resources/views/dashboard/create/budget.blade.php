@@ -160,7 +160,7 @@
                         @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
-                                <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
+                                <img id="image-produto-editar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                             </div>
 
@@ -330,7 +330,7 @@
                         @csrf
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
-                                <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
+                                <img id="image-produto-material" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                             </div>
 
@@ -338,9 +338,7 @@
                                 <label for="select-produto">Selecione o produto</label>
                                 <select id="select-produto" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
-                                    <option value="">bx-a1</option>
-                                    <option value="">bx-c1</option>
-                                    <option value="">r2-d2</option>
+
                                 </select>
                             </div>
                         </div>
