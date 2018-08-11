@@ -99,9 +99,9 @@
                             <td>{{$glassP->nome}}</td>
                             <td>R${{$glassP->preco}}</td>
                             <td>
-                                <a class="btn-link">
-                                    <button class="btn btn-danger mb-1">Delete</button>
-                                </a>
+                                <button id="linha-vidro-{{$glassP->id}}"
+                                        class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                </button>
 
                             </td>
                         </tr>
@@ -122,9 +122,9 @@
                             <td>{{$aluminumP->peso}}</td>
                             <td>{{$aluminumP->preco}}</td>
                             <td>
-                                <a class="btn-link">
-                                    <button class="btn btn-danger mb-1">Delete</button>
-                                </a>
+                                <button id="linha-aluminio-{{$aluminumP->id}}"
+                                        class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                </button>
 
                             </td>
                         </tr>
@@ -143,9 +143,9 @@
                             <td>{{$componentP->preco}}</td>
                             <td>{{$componentP->qtd}}</td>
                             <td>
-                                <a class="btn-link">
-                                    <button class="btn btn-danger mb-1">Delete</button>
-                                </a>
+                                <button id="linha-componente-{{$componentP->id}}"
+                                        class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                </button>
 
                             </td>
                         </tr>

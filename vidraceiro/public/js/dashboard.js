@@ -226,8 +226,8 @@ $(document).ready(function () {
         $('#bt-budget-visible').text($texto);
     }
 
-    //codigo para atualzar tabela ordem de serviço
-    let button = document.getElementsByClassName("deletar-tabela");
+    //codigo para remove orçamento da tabela ordem de serviço
+    let button = document.getElementsByClassName("deletar-orcamento-tabela");
     for (let i = 0; i < button.length; i++) {
         button[i].addEventListener('click', function (e) {
             let valorTotal = $('#total');
@@ -262,7 +262,7 @@ $(document).ready(function () {
                         '<td>' + nomeselect + '</td>' +
                         '<td>' + 'R$'+precovidro + '</td>' +
                         '<td>' +
-                        "<button id=" + criaId + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                        "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                         "</td>" +
                         "</tr>"
                     );
@@ -302,7 +302,7 @@ $(document).ready(function () {
                 '<td>' + nomeorcamento + '</td>' +
                 '<td>' + totalorcamento + '</td>' +
                 '<td>' +
-                "<button id=" + criaid + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                "<button id=" + criaid + " class='deletar-orcamento-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                 "</td>" +
                 "</tr>"
             );
@@ -310,7 +310,7 @@ $(document).ready(function () {
             let valorTotal = $('#total');
             let inputTotal = isNaN(parseFloat(valorTotal.val())) ? 0 : parseFloat(valorTotal.val());
             valorTotal.val(parseFloat(inputTotal + parseFloat(total)).toFixed(2));
-            let button = document.getElementsByClassName("deletar-tabela");
+            let button = document.getElementsByClassName("deletar-orcamento-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
                     if (e.target.id === criaid) {

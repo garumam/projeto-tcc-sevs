@@ -122,7 +122,7 @@
                             <table class="table table-hover">
                                 <thead>
 
-                                <tr class="tabela-vidro">
+                                <tr>
                                     <th class="noborder" scope="col">Id</th>
                                     <th class="noborder" scope="col">Nome</th>
                                     <th class="noborder" scope="col">Total</th>
@@ -139,7 +139,7 @@
                                             <td>{{$budgetOrder->total}}</td>
                                             <td>
                                                 <button id="linha-{{$budgetOrder->id}}"
-                                                        class="deletar-tabela btn btn-danger mb-1" type="button">Delete
+                                                        class="deletar-orcamento-tabela btn btn-danger mb-1" type="button">Delete
                                                 </button>
                                             </td>
                                         </tr>
