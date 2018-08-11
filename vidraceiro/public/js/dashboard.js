@@ -28,8 +28,7 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        let base_url = window.location.protocol + "//" + window.location.host;
-        base_url = base_url + "/img/semimagem.png";
+        let base_url = "/img/semimagem.png";
         $('#url-image').val(base_url);
         $('#image-selecionar').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
@@ -238,6 +237,20 @@ $(document).ready(function () {
         }, false);
     }
 
+    $('#bt-add-material-mproduct').click(function () {
+        let selectvidro = $('#select-vidro');
+        let selectaluminio = $('#select-aluminio');
+        let selectcomponente = $('#select-componente');
+        if (selectvidro.is(":visible")){
+            alert("vidro visivel");
+        }
+        if (selectaluminio.is(":visible")){
+            alert("aluminio visivel");
+        }
+        if (selectcomponente.is(":visible")){
+            alert("componente visivel");
+        }
+    });
 
     $('#bt-add-orcamento-order').click(function () {
         let idorcamento = $('#select-orcamentos').val();
@@ -334,11 +347,11 @@ $(document).ready(function () {
     $('#select-tipo-produto').change(function (e) {
         let categoryselected = $('#select-tipo-produto option:selected').val();
 
-        $('.mprodutos-options').each(function(){
+        $('.mprodutos-options').each(function () {
 
             if (categoryselected == $(this).data('categoria')) {
                 $(this).show();
-            }else{
+            } else {
                 $('#option-vazia').prop('selected', true);
                 trocarImagem($('#image-mproduto'), 'img/semimagem.png');
                 $('#descricao-mprod').val('');
