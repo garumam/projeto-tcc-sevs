@@ -242,13 +242,22 @@ $(document).ready(function () {
         let selectvidro = $('#select-vidro');
         let selectaluminio = $('#select-aluminio');
         let selectcomponente = $('#select-componente');
-        if (selectvidro.is(":visible")){
-            alert("vidro visivel");
+        let idselect,nomeselect;
+        if (selectvidro.is(":visible")) {
+            if (selectvidro.val().length !== 0){
+                idselect = selectvidro.val();
+                nomeselect = selectvidro.find('option:selected').text();
+                let precovidro = selectvidro.find('option:selected').data('preco');
+                alert(precovidro);
+            }else{
+                alert("em branco");
+            }
+
         }
-        if (selectaluminio.is(":visible")){
+        if (selectaluminio.is(":visible")) {
             alert("aluminio visivel");
         }
-        if (selectcomponente.is(":visible")){
+        if (selectcomponente.is(":visible")) {
             alert("componente visivel");
         }
     });
@@ -381,7 +390,7 @@ $(document).ready(function () {
         let produtoselecionado = $('#select-produto-edit option:selected');
         let altura, largura, imagem, descricao, qtd, localizacao, maoObra;
 
-        if(produtoselecionado.val() != ""){
+        if (produtoselecionado.val() != "") {
 
             imagem = produtoselecionado.data('image');
             descricao = produtoselecionado.data('descricao');
@@ -391,7 +400,7 @@ $(document).ready(function () {
             localizacao = produtoselecionado.data('localizacao');
             maoObra = produtoselecionado.data('valor_mao_obra');
 
-        }else{
+        } else {
             imagem = '/img/semimagem.png';
             descricao = altura = largura = qtd = localizacao = maoObra = '';
         }
@@ -410,9 +419,9 @@ $(document).ready(function () {
         let produtoselecionado = $('#select-produto-material option:selected');
         let imagem;
 
-        if(produtoselecionado.val() != ""){
+        if (produtoselecionado.val() != "") {
             imagem = produtoselecionado.data('image');
-        }else{
+        } else {
             imagem = '/img/semimagem.png';
         }
 

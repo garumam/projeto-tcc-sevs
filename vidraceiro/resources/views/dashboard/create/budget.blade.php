@@ -9,18 +9,21 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left"
+                               id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @elseif($i == 1)
-                                <a class="nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
-                                   href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
-                                   aria-selected="false">{{$titulotabs[$i]}}</a>
-                            @else
-                                <a class="nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
-                                   href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
-                                   aria-selected="false">{{$titulotabs[$i]}}</a>
+                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}"
+                               id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                        @else
+                            <a class="nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}"
+                               id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                               href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
+                               aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
 
@@ -55,7 +58,8 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                <div class="tab-pane fade {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'show active' : '' }} "
+                     id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
@@ -146,7 +150,8 @@
                             <div class="form-group col-md-4">
                                 <label for="complemento">Complemento</label>
                                 <input type="text" class="form-control" id="complemento" name="complemento"
-                                       placeholder="complemento" value="{{$budgetedit->complemento or old('complemento')}}">
+                                       placeholder="complemento"
+                                       value="{{$budgetedit->complemento or old('complemento')}}">
                             </div>
 
                             <div class="form-group col-md-4">
@@ -165,7 +170,8 @@
                 </div>
 
                 <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
-                <div class="tab-pane fade {{ !empty(session('budgetcriado')) ? 'show active' : '' }}" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                <div class="tab-pane fade {{ !empty(session('budgetcriado')) ? 'show active' : '' }}"
+                     id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
@@ -212,7 +218,7 @@
                                                     data-localizacao="{{$product->localizacao}}"
                                                     data-valor_mao_obra="{{$product->valor_mao_obra}}"
                                                     value="{{$product->id}}"
-                                                    >{{$product->mproduct->nome}}</option>
+                                            >{{$product->mproduct->nome}}</option>
 
                                         @endforeach
                                     @endif
@@ -243,7 +249,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="altura-edit">Altura</label>
-                                <input type="number" step="0.001" class="form-control" id="altura-edit" name="altura" placeholder="0,000"
+                                <input type="number" step="0.001" class="form-control" id="altura-edit" name="altura"
+                                       placeholder="0,000"
                                        value="{{old('altura')}}" required>
                             </div>
 
@@ -268,11 +275,11 @@
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra-edit">Valor da mão de obra</label>
                                 <input type="number" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
-                                       placeholder="" valor value="{{old('valor_mao_obra')}}">
+                                       placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
-                            <input type="hidden" name="budgetid"
-                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                                <input type="hidden" name="budgetid"
+                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                             @endif
                         </div>
 
@@ -351,7 +358,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="altura">Altura</label>
-                                <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="0,000"
+                                <input type="number" step="0.001" class="form-control" id="altura" name="altura"
+                                       placeholder="0,000"
                                        value="{{old('altura')}}" required>
                             </div>
 
@@ -376,11 +384,11 @@
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra">Valor da mão de obra</label>
                                 <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
-                                       placeholder="" valor value="{{old('valor_mao_obra')}}">
+                                       placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
-                            <input type="hidden" name="budgetid"
-                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                                <input type="hidden" name="budgetid"
+                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                             @endif
                         </div>
 
@@ -447,169 +455,33 @@
                         </div>
 
 
-                        <!-- INICIO SELECT DE MATERIAIS -->
+                    @include('layouts.listarmaterial')
+                    <!-- Ids -->
                         <div class="form-row">
-                            <div class="form-group col-md-8">
-                                <label for="select-material">Materiais</label>
-                                <select id="select-material" class="custom-select">
-                                    <option value="0">Vidros</option>
-                                    <option value="1">Aluminios</option>
-                                    <option value="2">Componentes</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- FIM SELECT DE MATERIAIS -->
-
-                        <!-- INICIO SELECT DO MATERIAL -->
-                        <div class="form-row mt-3 align-items-end">
-
-                            <div class="form-group col-md-4">
-                                <label for="select-vidro" id="label_categoria">Vidros</label>
-                                <select id="select-vidro" name="id_vidro" class="custom-select" required>
-                                    <option value="" selected>Selecione um vidro</option>
-                                    @foreach($glasses as $glass)
-                                        <option value="{{$glass->id}}">{{$glass->nome}}</option>
-                                    @endforeach
-                                </select>
-                                <select id="select-aluminio" name="id_aluminio" class="custom-select"
-                                        style="display: none;" required>
-                                    <option value="" selected>Selecione um aluminio</option>
-                                    @foreach($aluminums as $aluminum)
-                                        <option value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
-                                    @endforeach
-                                </select>
-                                <select id="select-componente" name="id_componente" class="custom-select"
-                                        style="display: none;" required>
-                                    <option value="" selected>Selecione um componente</option>
-                                    @foreach($components as $component)
-                                        <option value="{{$component->id}}">{{$component->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <a class="btn-link mb-3" href="{{ route('mproducts.create') }}">
-                                    <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar
-                                    </button>
-                                </a>
-                            </div>
-
-                        </div>
-                        <!-- FIM SELECT DO MATERIAL -->
-
-                        <!-- INICIO DA TABELA DE MATERIAL DO MATERIAL -->
-                        <div class="form-row">
-
                             <div class="form-group col-12">
-                                <div class="topo pl-0">
-                                    <h4 class="titulo">Vidros</h4>
-                                </div>
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <!--INICIO HEAD DO VIDRO-->
-                                        <tr id="topo-vidro">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço m²</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO VIDRO-->
-
-                                        <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr id="topo-aluminio" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Perfil</th>
-                                            <th class="noborder" scope="col">Medida</th>
-                                            <th class="noborder" scope="col">Peso</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO ALUMINIO-->
-
-                                        <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr id="topo-componente" style="display: none;">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Qtd</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO COMPONENTE-->
-
-                                        </thead>
-
-                                        <!--INICIO BODY DO VIDRO-->
-                                        <tbody id="tabela-vidro">
-                                            @if(!empty($budget))
-                                                @foreach($glassesProduct as $glassP)
-                                                    <tr>
-                                                        <th scope="row">{{$glassP->id}}</th>
-                                                        <td>{{$glassP->nome}}</td>
-                                                        <td>R${{$glassP->preco}}</td>
-                                                        <td>
-                                                            <a class="btn-link">
-                                                                <button class="btn btn-danger mb-1">Delete</button>
-                                                            </a>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                        <!--FIM BODY DO VIDRO-->
-
-                                        <!--INICIO BODY DO ALUMINIO-->
-                                        <tbody id="tabela-aluminio" style="display: none;">
-                                            @if(!empty($budget))
-                                                @foreach($aluminumsProduct as $aluminumP)
-                                                    <tr>
-                                                        <th scope="row">{{$aluminumP->id}}</th>
-                                                        <td>{{$aluminumP->perfil}}</td>
-                                                        <td>{{$aluminumP->medida}}</td>
-                                                        <td>{{$aluminumP->peso}}</td>
-                                                        <td>{{$aluminumP->preco}}</td>
-                                                        <td>
-                                                            <a class="btn-link">
-                                                                <button class="btn btn-danger mb-1">Delete</button>
-                                                            </a>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                        <!--FIM BODY DO ALUMINIO-->
-
-                                        <!--INICIO BODY DO COMPONENTE-->
-                                        <tbody id="tabela-componente" style="display: none;">
-                                            @if(!empty($budget))
-                                                @foreach($componentsProduct as $componentP)
-                                                    <tr>
-                                                        <th scope="row">{{$componentP->id}}</th>
-                                                        <td>{{$componentP->nome}}</td>
-                                                        <td>{{$componentP->preco}}</td>
-                                                        <td>{{$componentP->qtd}}</td>
-                                                        <td>
-                                                            <a class="btn-link">
-                                                                <button class="btn btn-danger mb-1">Delete</button>
-                                                            </a>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                        <!--FIM BODY DO COMPONENTE-->
-
-                                    </table>
-
-
+                                <div id="ids">
+                                    @if(!empty($mproductedit))
+                                        @foreach($aluminumsProduct as $aluminumP)
+                                            <input type="number" class="id-material linha-aluminio-{{$aluminumP->id}}"
+                                                   name="aluminio_id[]"
+                                                   value="{{$aluminumP->id}}" style="display: block;"/>
+                                        @endforeach
+                                        @foreach($glassesProduct as $glassP)
+                                            <input type="number" class="id-material linha-vidro-{{$glassP->id}}"
+                                                   name="vidro_id[]"
+                                                   value="{{$glassP->id}}" style="display: block;"/>
+                                        @endforeach
+                                        @foreach($componentsProduct as $componentP)
+                                            <input type="number"
+                                                   class="id-material linha-componente-{{$componentP->id}}"
+                                                   name="componente_id[]"
+                                                   value="{{$componentP->id}}" style="display: block;"/>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
-
                         </div>
-                        <!-- FIM DA TABELA DE MATERIAL DO MATERIAL -->
+                        <!-- FIM ids -->
 
                         <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>
 
