@@ -238,6 +238,15 @@ $(document).ready(function () {
         }, false);
     }
 
+    //codigo para remove material da tabela
+    let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
+    for (let i = 0; i < buttonMaterial.length; i++) {
+        buttonMaterial[i].addEventListener('click', function (e) {
+            $('#' + e.target.id).remove();
+            $('.' + e.target.id).remove();
+        }, false);
+    }
+
     $('#bt-add-material-mproduct').click(function () {
         let selectvidro = $('#select-vidro');
         let selectaluminio = $('#select-aluminio');
@@ -260,13 +269,23 @@ $(document).ready(function () {
                         '<tr id="' + criaId + '">' +
                         '<th scope="row">' + idselect + '</th>' +
                         '<td>' + nomeselect + '</td>' +
-                        '<td>' + 'R$'+precovidro + '</td>' +
+                        '<td>' + 'R$' + precovidro + '</td>' +
                         '<td>' +
                         "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                         "</td>" +
                         "</tr>"
                     );
-                }else {
+
+                    let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
+                    for (let i = 0; i < buttonMaterial.length; i++) {
+                        buttonMaterial[i].addEventListener('click', function (e) {
+                            if (e.target.id === criaId) {
+                                $('#' + e.target.id).remove();
+                                $('.' + e.target.id).remove();
+                            }
+                        }, false);
+                    }
+                } else {
                     mensagemAlerta('Material ja foi adicionado!');
                 }
             } else {
@@ -289,20 +308,20 @@ $(document).ready(function () {
         let idorcamentoinput = $('.id_orcamento').attr('value');
         let table = $('tbody');
         let pegaIdLinha = $('#linha-' + idorcamento).attr('id');
-        let criaid = 'linha-' + idorcamento;
+        let criaId = 'linha-' + idorcamento;
         if (idorcamento.length === 0) {
             mensagemAlerta('Selecione um orçamento para adicionar!');
-        } else if (idorcamentoinput !== idorcamento && pegaIdLinha !== criaid) {
+        } else if (idorcamentoinput !== idorcamento && pegaIdLinha !== criaId) {
             $('#ids').append(
-                '<input type="number" class="id_orcamento ' + criaid + '" name="id_orcamento[]" value="' + idorcamento + '" style="display: none;" />' +
+                '<input type="number" class="id_orcamento ' + criaId + '" name="id_orcamento[]" value="' + idorcamento + '" style="display: none;" />' +
                 '');
             table.append(
-                '<tr id="' + criaid + '">' +
+                '<tr id="' + criaId + '">' +
                 '<th scope="row">' + idorcamento + '</th>' +
                 '<td>' + nomeorcamento + '</td>' +
                 '<td>' + totalorcamento + '</td>' +
                 '<td>' +
-                "<button id=" + criaid + " class='deletar-orcamento-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                "<button id=" + criaId + " class='deletar-orcamento-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                 "</td>" +
                 "</tr>"
             );
@@ -313,10 +332,10 @@ $(document).ready(function () {
             let button = document.getElementsByClassName("deletar-orcamento-tabela");
             for (let i = 0; i < button.length; i++) {
                 button[i].addEventListener('click', function (e) {
-                    if (e.target.id === criaid) {
+                    if (e.target.id === criaId) {
                         valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
-                        $('#' + criaid).remove();
-                        $('.' + criaid).remove();
+                        $('#' + criaId).remove();
+                        $('.' + criaId).remove();
                     }
                 }, false);
             }
