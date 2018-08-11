@@ -256,6 +256,8 @@
                                        placeholder="" valor value="{{old('valor_mao_obra')}}">
                             </div>
 
+                            <input type="hidden" name="budgetid"
+                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                         </div>
 
                         <button id="bt-edit-budget-invisible" class="d-none" type="submit"></button>

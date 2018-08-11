@@ -81,8 +81,16 @@ class BudgetController extends Controller
                         ->with(compact('budgetcriado'));
                 break;
             case '2': //tab editar
+                $budgetcriado = Budget::find($request->budgetid);
+                $product = Product::find($request->produtoid);
+                $product->update($request->except(['produtoid','budgetid']));
 
-
+                if($product && $budgetcriado){
+                    $products = $budgetcriado->products;
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')
+                        ->with(compact('budgetcriado'))
+                        ->with(compact('products'));
+                }
 
                 break;
             case '3': //tab adicionar
