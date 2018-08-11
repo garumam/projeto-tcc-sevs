@@ -378,8 +378,6 @@ $(document).ready(function () {
 
 
     function trocarImagem(imgcontainer, imgpath) {
-        //let base_url = window.location.protocol + "//" + window.location.host;
-        //base_url = base_url + "/" + imgpath;
         imgcontainer.attr("src", imgpath);
     }
 
