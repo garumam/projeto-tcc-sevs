@@ -28,6 +28,7 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
+        $('#select-categoria').trigger('change');
         let base_url = window.location.protocol + "//" + window.location.host;
         base_url = base_url + "/img/semimagem.png";
         $('#url-image').val(base_url);
