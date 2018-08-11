@@ -66,6 +66,22 @@
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                         <div class="form-row">
 
+                            <div class="col-12">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"

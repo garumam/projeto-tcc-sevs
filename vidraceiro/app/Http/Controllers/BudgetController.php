@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Budget;
 use App\Aluminum;
 use App\Product;
@@ -67,10 +68,35 @@ class BudgetController extends Controller
         return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts'))->with('title', 'Novo Orçamento');
     }
 
-    public function store()
+    public function store(Request $request, $tab)
     {
-        $budgetcriado = [1,2];
-        return redirect()->back()->with(compact('budgetcriado'));
+        switch ($tab) {
+            case '1': //tab orçamento
+
+                $budgetcriado = new Budget;
+                $budgetcriado = $budgetcriado->create($request->all());
+                if ($budgetcriado)
+                    return redirect()->back()->with('success', 'Orçamento criado com sucesso')
+                        ->with(compact('budgetcriado'));
+                break;
+            case '2': //tab editar
+
+
+                break;
+            case '3': //tab adicionar
+
+
+                break;
+            case '4': //tab material
+
+
+                break;
+            case '5': //tab total
+
+
+                break;
+            default:
+        }
     }
 
     public function show()
