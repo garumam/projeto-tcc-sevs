@@ -28,7 +28,6 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        $('#select-categoria').trigger('change');
         let base_url = window.location.protocol + "//" + window.location.host;
         base_url = base_url + "/img/semimagem.png";
         $('#url-image').val(base_url);
@@ -96,6 +95,8 @@ $(document).ready(function () {
                 break;
         }
     });
+    $('#select-categoria').trigger('change');
+
     $('#bt-material').attr("href", '/materials/glass/create');
 
     $('#bt-user-visible').click(function () {
