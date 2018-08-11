@@ -199,55 +199,61 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" class="custom-select" required>
+                                <select id="select-produto-edit" name="produtoid" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
-                                    <option value="">bx-a1</option>
-                                    <option value="">bx-c1</option>
-                                    <option value="">r2-d2</option>
+                                    @if(!empty(session('products')))
+                                        @foreach(Session::get('products') as $product)
+
+                                            <option data-descricao="{{$product->mproduct->descricao}}"
+                                                    data-image="{{$product->mproduct->imagem}}"
+                                                    data-altura="{{$product->altura}}"
+                                                    data-largura="{{$product->largura}}"
+                                                    data-qtd="{{$product->qtd}}"
+                                                    data-localizacao="{{$product->localizacao}}"
+                                                    data-valor_mao_obra="{{$product->valor_mao_obra}}"
+                                                    value="{{$product->id}}"
+                                                    >{{$product->mproduct->nome}}</option>
+
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label>Descrição</label>
-                                <input type="text" class="form-control" id="descricao" name="descricao"
-                                       placeholder="Descrição"
-                                       required>
+                                <label for="descricao-edit">Descrição</label>
+                                <input type="text" class="form-control" id="descricao-edit" placeholder="Descrição">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Altura</label>
-                                <input type="number" class="form-control" id="altura" name="altura" placeholder="2,200"
-                                       required>
+                                <label for="altura-edit">Altura</label>
+                                <input type="number" step="0.001" class="form-control" id="altura-edit" name="altura" placeholder="0,000"
+                                       value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Largura</label>
-                                <input type="number" class="form-control" id="largura" name="largura"
-                                       placeholder="1,200"
-                                       required>
+                                <label for="largura-edit">Largura</label>
+                                <input type="number" step="0.001" class="form-control" id="largura-edit" name="largura"
+                                       placeholder="0,000" value="{{old('largura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade" name="quantidade"
-                                       placeholder="quantidade"
-                                       required>
+                                <label for="qtd-edit">Quantidade</label>
+                                <input type="number" class="form-control" id="qtd-edit" name="qtd"
+                                       placeholder="quantidade" value="{{old('qtd')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Localização</label>
-                                <input type="text" class="form-control" id="localizacao" name="localizacao"
-                                       placeholder="Localização"
-                                       required>
+                                <label for="localizacao-edit">Localização</label>
+                                <input type="text" class="form-control" id="localizacao-edit" name="localizacao"
+                                       placeholder="Localização" value="{{old('localizacao')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra"
-                                       placeholder=""
-                                       required>
+                                <label for="valor_mao_obra-edit">Valor da mão de obra</label>
+                                <input type="number" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
+                                       placeholder="" valor value="{{old('valor_mao_obra')}}">
                             </div>
 
                         </div>
@@ -322,43 +328,41 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="descricao-mprod">Descrição</label>
-                                <input type="text" class="form-control" id="descricao-mprod" name="descricao"
-                                       placeholder="Descrição">
+                                <input type="text" class="form-control" id="descricao-mprod" placeholder="Descrição">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Altura</label>
-                                <input type="number" class="form-control" id="altura" name="altura" placeholder="2,200"
-                                       required>
+                                <label for="altura">Altura</label>
+                                <input type="number" step="0.001" class="form-control" id="altura" name="altura" placeholder="0,000"
+                                       value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Largura</label>
-                                <input type="number" class="form-control" id="largura" name="largura"
-                                       placeholder="1,200"
-                                       required>
+                                <label for="largura">Largura</label>
+                                <input type="number" step="0.001" class="form-control" id="largura" name="largura"
+                                       placeholder="0,000" value="{{old('largura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade" name="quantidade"
-                                       placeholder="quantidade"
-                                       required>
+                                <label for="qtd">Quantidade</label>
+                                <input type="number" class="form-control" id="qtd" name="qtd"
+                                       placeholder="quantidade" value="{{old('qtd')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Localização</label>
+                                <label for="localizacao">Localização</label>
                                 <input type="text" class="form-control" id="localizacao" name="localizacao"
-                                       placeholder="Localização">
+                                       placeholder="Localização" value="{{old('localizacao')}}">
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label>Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra"
-                                       placeholder="">
+                                <label for="valor_mao_obra">Valor da mão de obra</label>
+                                <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
+                                       placeholder="" valor value="{{old('valor_mao_obra')}}">
                             </div>
 
-                            <input type="hidden">
+                            <input type="hidden" name="budgetid"
+                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                         </div>
 
                         <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>

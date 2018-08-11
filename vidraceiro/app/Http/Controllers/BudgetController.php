@@ -87,7 +87,21 @@ class BudgetController extends Controller
                 break;
             case '3': //tab adicionar
 
+                $product = new Product();
+                $product = $product->create($request->except('budgetid'));
+                if ($product){
+                    $budgetcriado = Budget::find($request->budgetid);
+                    $budgetcriado->products()->attach($product->id);
+                    if ($budgetcriado){
 
+                        $products = $budgetcriado->products;
+
+                        return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
+                            ->with(compact('budgetcriado'))
+                            ->with(compact('products'));
+                    }
+
+                }
 
                 break;
             case '4': //tab material

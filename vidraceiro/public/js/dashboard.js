@@ -377,6 +377,36 @@ $(document).ready(function () {
     });
 
 
+    $('#select-produto-edit').change(function (e) {
+        let produtoselecionado = $('#select-produto-edit option:selected');
+        let altura, largura, imagem, descricao, qtd, localizacao, maoObra;
+
+        if(produtoselecionado.val() != ""){
+
+            imagem = produtoselecionado.data('image');
+            descricao = produtoselecionado.data('descricao');
+            altura = produtoselecionado.data('altura');
+            largura = produtoselecionado.data('largura');
+            qtd = produtoselecionado.data('qtd');
+            localizacao = produtoselecionado.data('localizacao');
+            maoObra = produtoselecionado.data('valor_mao_obra');
+
+        }else{
+            imagem = '/img/semimagem.png';
+            descricao = altura = largura = qtd = localizacao = maoObra = '';
+        }
+
+        $('#image-produto-editar').attr('src', imagem);
+        $('#descricao-edit').val(descricao);
+        $('#altura-edit').val(altura);
+        $('#largura-edit').val(largura);
+        $('#qtd-edit').val(qtd);
+        $('#localizacao-edit').val(localizacao);
+        $('#valor_mao_obra-edit').val(maoObra);
+
+    });
+
+
     function trocarImagem(imgcontainer, imgpath) {
         imgcontainer.attr("src", imgpath);
     }
