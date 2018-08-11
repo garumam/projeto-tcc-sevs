@@ -19,8 +19,10 @@ $(document).ready(function () {
     // });
 
     $('#gridImagens div img').click(function () {
+        let imagem = $(this).attr('src');
         let value = $('#url-image');
-        value.val($(this).attr('src'));
+        let imgpath = imagem.substring(imagem.lastIndexOf('img/'),imagem.length);
+        value.val(imgpath);
         $('#image-selecionar').attr("src", value.val());
         $('img').removeClass('thumbnail');
         $(this).addClass('thumbnail');

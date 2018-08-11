@@ -175,6 +175,23 @@
                         @endif
                         @csrf
                         <div class="form-row align-items-center">
+
+                            <div class="col-12">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-">
                                 <img id="image-produto-editar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
@@ -253,6 +270,22 @@
                         @csrf
                         <div class="form-row">
 
+                            <div class="col-12">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md">
                                 <label for="select-tipo-produto">Selecione um tipo</label>
                                 <select id="select-tipo-produto" class="custom-select" required>
@@ -290,8 +323,7 @@
                             <div class="form-group col-md-4">
                                 <label for="descricao-mprod">Descrição</label>
                                 <input type="text" class="form-control" id="descricao-mprod" name="descricao"
-                                       placeholder="Descrição"
-                                       required>
+                                       placeholder="Descrição">
                             </div>
 
                             <div class="form-group col-md-4">
@@ -317,17 +349,16 @@
                             <div class="form-group col-md-4">
                                 <label>Localização</label>
                                 <input type="text" class="form-control" id="localizacao" name="localizacao"
-                                       placeholder="Localização"
-                                       required>
+                                       placeholder="Localização">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Valor da mão de obra</label>
                                 <input type="number" class="form-control" id="mao-de-obra" name="mao-de-obra"
-                                       placeholder=""
-                                       required>
+                                       placeholder="">
                             </div>
 
+                            <input type="hidden">
                         </div>
 
                         <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
@@ -345,6 +376,23 @@
                         @endif
                         @csrf
                         <div class="form-row align-items-center">
+
+                            <div class="col-12">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-">
                                 <img id="image-produto-material" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
@@ -416,20 +464,6 @@
                                 <div class="topo pl-0">
                                     <h4 class="titulo">Vidros</h4>
                                 </div>
-
-                                @if(session('success'))
-                                    <div class="alerta">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
-                                    </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
 
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -554,6 +588,7 @@
                         @endif
                         @csrf
                         <div class="form-row">
+
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
                                     <h4 class="card-title cor-texto">Total</h4>

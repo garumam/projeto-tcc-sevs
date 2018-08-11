@@ -75,6 +75,7 @@ class BudgetController extends Controller
 
                 $budgetcriado = new Budget;
                 $budgetcriado = $budgetcriado->create($request->all());
+
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));
@@ -82,8 +83,10 @@ class BudgetController extends Controller
             case '2': //tab editar
 
 
+
                 break;
             case '3': //tab adicionar
+
 
 
                 break;
