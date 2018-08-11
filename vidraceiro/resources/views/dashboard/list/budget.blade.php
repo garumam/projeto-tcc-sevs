@@ -40,7 +40,7 @@
                         <tr>
                             <th scope="row">{{ $budget->id }}</th>
                             <td>{{$budget->nome}}</td>
-                            <td>{{$budget->data}}</td>
+                            <td>{{date_format(date_create($budget->data), 'd/m/Y')}}</td>
                             <td>R${{$budget->total}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('budgets.edit',['id'=> $budget->id]) }}">

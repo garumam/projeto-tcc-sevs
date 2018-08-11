@@ -149,9 +149,49 @@ class BudgetController extends Controller
     }
 
 
-    public function update()
+    public function update(Request $request,$tab,$id)
     {
+        switch ($tab) {
+            case '1': //tab orçamento
 
+                $budgetcriado = Budget::find($id);
+                $budgetcriado = $budgetcriado->update($request->all());
+
+                if ($budgetcriado)
+                    return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
+                break;
+            case '2': //tab editar
+
+                $product = Product::find($request->produtoid);
+                $product->update($request->except(['produtoid']));
+
+                if($product)
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso');
+
+                break;
+            case '3': //tab adicionar
+
+                $product = new Product();
+                $product = $product->create($request->all());
+                if ($product){
+                    $budgetcriado = Budget::find($id);
+                    $budgetcriado->products()->attach($product->id);
+                    if ($budgetcriado)
+                        return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
+
+                }
+
+                break;
+            case '4': //tab material
+
+
+                break;
+            case '5': //tab total
+
+
+                break;
+            default:
+        }
     }
 
     public function destroy($id)
