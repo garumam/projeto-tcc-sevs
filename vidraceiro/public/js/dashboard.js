@@ -21,8 +21,7 @@ $(document).ready(function () {
     $('#gridImagens div img').click(function () {
         let imagem = $(this).attr('src');
         let value = $('#url-image');
-        let imgpath = imagem.substring(imagem.lastIndexOf('img/'),imagem.length);
-        value.val(imgpath);
+        value.val(imagem);
         $('#image-selecionar').attr("src", imagem);
         $('img').removeClass('thumbnail');
         $(this).addClass('thumbnail');
@@ -30,9 +29,9 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        let base_url = "img/semimagem.png";
+        let base_url = "/img/semimagem.png";
         $('#url-image').val(base_url);
-        $('#image-selecionar').attr("src", '/'+base_url);
+        $('#image-selecionar').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');
@@ -355,7 +354,7 @@ $(document).ready(function () {
                 $(this).show();
             } else {
                 $('#option-vazia').prop('selected', true);
-                trocarImagem($('#image-mproduto'), 'img/semimagem.png');
+                trocarImagem($('#image-mproduto'), '/img/semimagem.png');
                 $('#descricao-mprod').val('');
                 $(this).hide();
             }
@@ -370,7 +369,7 @@ $(document).ready(function () {
             pathimg = $('#select-mproduto option:selected').data('image');
             descricao = $('#select-mproduto option:selected').data('descricao');
         } else {
-            pathimg = 'img/semimagem.png';
+            pathimg = '/img/semimagem.png';
             descricao = '';
         }
         trocarImagem($('#image-mproduto'), pathimg);
@@ -379,9 +378,9 @@ $(document).ready(function () {
 
 
     function trocarImagem(imgcontainer, imgpath) {
-        let base_url = window.location.protocol + "//" + window.location.host;
-        base_url = base_url + "/" + imgpath;
-        imgcontainer.attr("src", base_url);
+        //let base_url = window.location.protocol + "//" + window.location.host;
+        //base_url = base_url + "/" + imgpath;
+        imgcontainer.attr("src", imgpath);
     }
 
 

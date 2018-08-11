@@ -93,7 +93,7 @@ class CarregaItensTeste extends Seeder
         MProduct::create([
             'categoria_produto_id'=> '1',
             'descricao'=> 'mproduto1',
-            'imagem' => 'img/boxdiversos/bxc1.png',
+            'imagem' => '/img/boxdiversos/bxc1.png',
             'nome'=> 'modelo produto1',
         ]);
 

@@ -75,7 +75,7 @@
                             <div class="form-group col-md-4">
                                 <label>Imagem</label>
                                 <div class="imagem-modal">
-                                    <img id="image-selecionar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                    <img id="image-selecionar" src="{{ '/img/semimagem.png' }}" class="img-fluid"
                                          alt="Responsive image">
                                     <a href="#" class="btn btn-md btn-primary btn-custom w-50" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>
@@ -356,7 +356,7 @@
                                     <h4 class="text-black-50 col-12 mt-2 pl-1">Box diversos</h4>
                                     @for($i = 0; $i < count($boxdiversos); $i++ )
                                         <div class="col-">
-                                            <img id="{{$i}}" src="{{ asset('img/boxdiversos/'.$boxdiversos[$i])}}"
+                                            <img id="{{$i}}" src="{{ '/img/boxdiversos/'.$boxdiversos[$i]}}"
                                                  class="img-fluid img-thumbnail"
                                                  alt="Responsive image">
                                         </div>
@@ -367,7 +367,7 @@
                                     <h4 class="text-black-50 col-12 mt-2 pl-1">Box padrão</h4>
                                     @for($i = 0; $i < count($boxpadrao); $i++ )
                                         <div class="col-">
-                                            <img id="{{$i}}" src="{{ asset('img/boxpadrao/'.$boxpadrao[$i])}}"
+                                            <img id="{{$i}}" src="{{ '/img/boxpadrao/'.$boxpadrao[$i]}}"
                                                  class="img-fluid img-thumbnail"
                                                  alt="Responsive image">
                                         </div>
@@ -378,7 +378,7 @@
                                     <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 1000</h4>
                                     @for($i = 0; $i < count($ferragem1000); $i++ )
                                         <div class="col-">
-                                            <img id="{{$i}}" src="{{ asset('img/ferragem1000/'.$ferragem1000[$i])}}"
+                                            <img id="{{$i}}" src="{{ '/img/ferragem1000/'.$ferragem1000[$i]}}"
                                                  class="img-fluid img-thumbnail"
                                                  alt="Responsive image">
                                         </div>
@@ -389,7 +389,7 @@
                                     <h4 class="text-black-50 col-12 mt-2 pl-1">Ferragem 3000</h4>
                                     @for($i = 0; $i < count($ferragem3000); $i++ )
                                         <div class="col-">
-                                            <img id="{{$i}}" src="{{ asset('img/ferragem3000/'.$ferragem3000[$i])}}"
+                                            <img id="{{$i}}" src="{{ '/img/ferragem3000/'.$ferragem3000[$i]}}"
                                                  class="img-fluid img-thumbnail"
                                                  alt="Responsive image">
                                         </div>
@@ -400,7 +400,7 @@
                                     <h4 class="text-black-50 col-12 mt-2 pl-1">Kit sacada</h4>
                                     @for($i = 0; $i < count($kitsacada); $i++ )
                                         <div class="col-">
-                                            <img id="{{$i}}" src="{{ asset('img/kitsacada/'.$kitsacada[$i])}}"
+                                            <img id="{{$i}}" src="{{ '/img/kitsacada/'.$kitsacada[$i]}}"
                                                  class="img-fluid img-thumbnail"
                                                  alt="Responsive image">
                                         </div>

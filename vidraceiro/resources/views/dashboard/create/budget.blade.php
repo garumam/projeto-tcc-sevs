@@ -193,7 +193,7 @@
                             </div>
 
                             <div class="form-group col-">
-                                <img id="image-produto-editar" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                <img id="image-produto-editar" src="{{ '/img/semimagem.png' }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                             </div>
 
@@ -300,7 +300,7 @@
 
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
-                                <img id="image-mproduto" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                <img id="image-mproduto" src="{{ '/img/semimagem.png' }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                             </div>
 
@@ -394,7 +394,7 @@
                             </div>
 
                             <div class="form-group col-">
-                                <img id="image-produto-material" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
+                                <img id="image-produto-material" src="{{ '/img/semimagem.png' }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
                             </div>
 
