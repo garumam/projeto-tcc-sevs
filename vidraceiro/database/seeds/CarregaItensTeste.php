@@ -100,28 +100,28 @@ class CarregaItensTeste extends Seeder
         Product::create([
             'altura'=> 4.321,
             'largura'=> 1.234,
-            'localizacao'=> '',
+            'localizacao'=> 'Quarto',
             'm_produto_id'=> 1,
             'qtd'=> 1,
-            'valor_mao_obra'=> 0.0
+            'valor_mao_obra'=> 100
         ]);
 
         Product::create([
             'altura'=> 0.544,
             'largura'=> 0.866,
-            'localizacao'=> '',
+            'localizacao'=> 'Banheiro',
             'm_produto_id'=> 3,
             'qtd'=> 2,
-            'valor_mao_obra'=> 0.0
+            'valor_mao_obra'=> 200
         ]);
 
         Product::create([
             'altura'=> 0.123,
             'largura'=> 0.321,
-            'localizacao'=> '',
+            'localizacao'=> 'Sala',
             'm_produto_id'=> 2,
             'qtd'=> 3,
-            'valor_mao_obra'=> 0.0
+            'valor_mao_obra'=> 50
         ]);
 
         $mproduct = MProduct::find(3);
@@ -139,31 +139,31 @@ class CarregaItensTeste extends Seeder
 
 
         Budget::create([
-            'bairro'=> '',
-            'cep'=> 0,
-            'cidade'=> '',
-            'complemento'=> '',
+            'bairro'=> 'Centro',
+            'cep'=> 28907170,
+            'cidade'=> 'Cabo frio',
+            'complemento'=> 'Logo ali',
             'data'=> '2018-08-07',
             'margem_lucro'=> 100.0,
             'nome'=> 'orcamento1',
-            'numero_endereco'=> 0,
-            'rua'=> '',
-            'telefone'=> '0',
+            'numero_endereco'=> 250,
+            'rua'=> 'Fim do mundo',
+            'telefone'=> '2212344321',
             'total'=> 200.6056,
             'uf' => 'RJ'
         ]);
 
         Budget::create([
-            'bairro'=> '',
-            'cep'=> 0,
-            'cidade'=> '',
-            'complemento'=> '',
+            'bairro'=> 'Vila velha',
+            'cep'=> 10459289,
+            'cidade'=> 'Terezina',
+            'complemento'=> 'Depois de la',
             'data'=> '2018-08-08',
-            'margem_lucro'=> 100.0,
+            'margem_lucro'=> 200.0,
             'nome'=> 'orçamento2',
-            'numero_endereco'=> 0,
-            'rua'=> '',
-            'telefone'=> '0',
+            'numero_endereco'=> 125,
+            'rua'=> 'Goiaba',
+            'telefone'=> '4565432456',
             'total'=> 33.16572,
             'uf' => 'RJ'
         ]);
