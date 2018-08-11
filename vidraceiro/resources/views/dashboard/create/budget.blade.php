@@ -162,14 +162,11 @@
                             <div class="form-group col-">
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
-                                <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto"
-                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select" required>
+                                <select id="select-produto" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
                                     <option value="">bx-a1</option>
                                     <option value="">bx-c1</option>
@@ -242,7 +239,7 @@
 
                             <div class="form-group col-md">
                                 <label for="select-tipo-produto">Selecione um tipo</label>
-                                <select id="select-tipo-produto" name="select-ignore" class="custom-select" required>
+                                <select id="select-tipo-produto" class="custom-select" required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->nome}}</option>
@@ -254,17 +251,17 @@
 
                         <div class="form-row align-items-center">
                             <div class="form-group col-">
-                                <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
+                                <img id="image-mproduto" src="{{ asset('img/semimagem.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
-                                <label for="url-image-produto"></label>
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="m_produto_id" class="custom-select" required>
+                                <label for="select-mproduto">Selecione o produto</label>
+                                <select id="select-mproduto" name="m_produto_id" class="custom-select" required>
                                     <option id="option-vazia" value="" selected>Selecione um produto</option>
                                     @foreach($mproducts as $mproduct)
-                                        <option id="{{$mproduct->categoria_produto_id}}"
+                                        <option data-image="{{$mproduct->imagem}}"
+                                                data-categoria="{{$mproduct->categoria_produto_id}}"
                                                 class="mprodutos-options" value="{{$mproduct->id}}"
                                                 style="display: none;">{{$mproduct->nome}}</option>
                                     @endforeach
@@ -334,14 +331,11 @@
                             <div class="form-group col-">
                                 <img id="image-produto" src="{{ asset('img/boxdiversos/bxa1.png') }}" class="img-fluid"
                                      alt="Responsive image" style="height: 110px!important;">
-                                <label for="url-image-produto"></label>
-                                <input type="text" id="url-image-produto" name="url-image-produto"
-                                       style="display: none;">
                             </div>
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto" name="select" class="custom-select" required>
+                                <select id="select-produto" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
                                     <option value="">bx-a1</option>
                                     <option value="">bx-c1</option>

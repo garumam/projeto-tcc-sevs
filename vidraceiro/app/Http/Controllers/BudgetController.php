@@ -63,7 +63,7 @@ class BudgetController extends Controller
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
         $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
-        //dd($mproduct);
+        //dd($mproducts);
         return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts'))->with('title', 'Novo Orçamento');
     }
 

@@ -87,14 +87,14 @@ class CarregaItens extends Seeder
         MProduct::create([
             'nome' => 'BX-A1',
             'descricao' => 'Box de abrir com dobradiça automática, em vidro temperado 08mm',
-            'imagem' => asset('img/boxdiversos/bxa1.png'),
+            'imagem' => 'img/boxdiversos/bxa1.png',
             'categoria_produto_id' => 1
         ]);
 
         MProduct::create([
             'nome' => 'BX-C1',
             'descricao' => 'Box de canto com duas portas de correr e dois fixos, em vidro temperado 08mm',
-            'imagem' => asset('img/boxdiversos/bxc1.png'),
+            'imagem' => 'img/boxdiversos/bxc1.png',
             'categoria_produto_id' => 1
         ]);
 
