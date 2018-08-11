@@ -63,8 +63,8 @@ class MProductController extends Controller
         switch ($tab) {
             case '1':
 
-                $mproduto = new MProduct;
-                $mproductcriado = $mproduto->create($request->all());
+                $mproductcriado = new MProduct;
+                $mproductcriado = $mproductcriado->create($request->all());
                 if ($mproductcriado)
                     return redirect()->back()->with('success', 'Produto criado com sucesso')
                         ->with(compact('mproductcriado'));
@@ -107,9 +107,23 @@ class MProductController extends Controller
     }
 
 
-    public function update()
+    public function update(Request $request, $id, $tab)
     {
+//        var_dump($request->all());
+        switch ($tab) {
+            case '1':
+                $mproductcriado = MProduct::find($id);
+                $mproductcriado->update($request->all());
+                if ($mproductcriado) {
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')
+                        ->with(compact('mproductcriado'));
+                }
+                break;
+            case '2':
 
+                break;
+            default:
+        }
     }
 
     public function destroy($id)

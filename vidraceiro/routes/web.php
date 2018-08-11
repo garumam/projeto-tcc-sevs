@@ -39,7 +39,7 @@ Route::prefix('products')->group(function () {
     Route::post('/{tab}', 'MProductController@store')->name('mproducts.store');
     Route::get('/{user}', 'MProductController@show')->name('mproducts.show');
     Route::get('/{id}/edit', 'MProductController@edit')->name('mproducts.edit');
-    Route::patch('/{tab}/{id}', 'MProductController@update')->name('mproducts.update');
+    Route::patch('/{id}/{tab}', 'MProductController@update')->name('mproducts.update');
     Route::delete('/{id}', 'MProductController@destroy')->name('mproducts.destroy');
 });
 
