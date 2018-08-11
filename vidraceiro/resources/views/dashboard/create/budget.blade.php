@@ -9,16 +9,16 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'active' : 'disabled' }} noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @elseif($i == 1)
-                                <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'disabled' : 'active' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                                <a class="nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                    href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                    aria-selected="false">{{$titulotabs[$i]}}</a>
                             @else
-                                <a class="nav-item nav-link {{ empty(session('budgetcriado')) ? 'disabled' : '' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
+                                <a class="nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}" id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                    href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                    aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
@@ -55,12 +55,12 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ empty(session('budgetcriado')) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                <div class="tab-pane fade {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'show active' : '' }} " id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '1']) :  route('budgets.store',['tag' => '1'])}}">
-                        @if(!empty($budget))
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '1']) :  route('budgets.store',['tag' => '1'])}}">
+                        @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
@@ -85,46 +85,46 @@
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
-                                       value="{{$budget->nome or old('nome')}}" required>
+                                       value="{{$budgetedit->nome or old('nome')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="data">Data</label>
                                 <input type="date" class="form-control" id="data" name="data" placeholder="00/00/0000"
-                                       value="{{$budget->data or old('data')}}">
+                                       value="{{$budgetedit->data or old('data')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="telefone">Telefone</label>
                                 <input type="tel" class="form-control" id="telefone" name="telefone"
                                        placeholder="(00)0000-0000"
-                                       value="{{$budget->telefone or old('telefone')}}">
+                                       value="{{$budgetedit->telefone or old('telefone')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="rua">Rua</label>
                                 <input type="text" class="form-control" id="rua" name="rua"
                                        placeholder="av. de algum lugar"
-                                       value="{{$budget->rua or old('rua')}}">
+                                       value="{{$budgetedit->rua or old('rua')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="cep">Cep</label>
                                 <input type="number" class="form-control" id="cep" name="cep" placeholder="00000-000"
-                                       value="{{$budget->cep or old('cep')}}" required>
+                                       value="{{$budgetedit->cep or old('cep')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="numero_endereco">N°</label>
                                 <input type="number" class="form-control" id="numero_endereco" name="numero_endereco"
                                        placeholder="100"
-                                       value="{{$budget->numero_endereco or old('numero_endereco')}}" required>
+                                       value="{{$budgetedit->numero_endereco or old('numero_endereco')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="bairro">Bairro</label>
                                 <input type="text" class="form-control" id="bairro" name="bairro"
-                                       placeholder="bairro" value="{{$budget->bairro or old('bairro')}}">
+                                       placeholder="bairro" value="{{$budgetedit->bairro or old('bairro')}}">
                             </div>
 
                             <div class="form-group col-md-4">
@@ -132,7 +132,7 @@
                                 <select id="select-UF" name="uf" class="custom-select">
                                     @foreach ($states as $uf => $estado)
                                         <option value="{{$uf}}"
-                                        @if(!empty($budget)){{ $budget->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                                        @if(!empty($budgetedit)){{ $budgetedit->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -140,19 +140,19 @@
                             <div class="form-group col-md-4">
                                 <label for="cidade">Cidade</label>
                                 <input type="text" class="form-control" id="cidade" name="cidade"
-                                       placeholder="cidade" value="{{$budget->cidade or old('cidade')}}">
+                                       placeholder="cidade" value="{{$budgetedit->cidade or old('cidade')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="complemento">Complemento</label>
                                 <input type="text" class="form-control" id="complemento" name="complemento"
-                                       placeholder="complemento" value="{{$budget->complemento or old('complemento')}}">
+                                       placeholder="complemento" value="{{$budgetedit->complemento or old('complemento')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="margem_lucro">Margem de lucro</label>
                                 <input type="number" class="form-control" id="margem_lucro" name="margem_lucro"
-                                       placeholder="100" value="{{$budget->margem_lucro or old('margem_lucro')}}">
+                                       placeholder="100" value="{{$budgetedit->margem_lucro or old('margem_lucro')}}">
                             </div>
 
 
@@ -169,8 +169,8 @@
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '2']) :  route('budgets.store',['tag' => '2'])}}">
-                        @if(!empty($budget))
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '2']) :  route('budgets.store',['tag' => '2'])}}">
+                        @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -216,6 +216,21 @@
 
                                         @endforeach
                                     @endif
+                                    @if(!empty($products))
+                                        @foreach($products as $product)
+
+                                            <option data-descricao="{{$product->mproduct->descricao}}"
+                                                    data-image="{{$product->mproduct->imagem}}"
+                                                    data-altura="{{$product->altura}}"
+                                                    data-largura="{{$product->largura}}"
+                                                    data-qtd="{{$product->qtd}}"
+                                                    data-localizacao="{{$product->localizacao}}"
+                                                    data-valor_mao_obra="{{$product->valor_mao_obra}}"
+                                                    value="{{$product->id}}"
+                                            >{{$product->mproduct->nome}}</option>
+
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -255,9 +270,10 @@
                                 <input type="number" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
                                        placeholder="" valor value="{{old('valor_mao_obra')}}">
                             </div>
-
+                            @if(empty($budgetedit))
                             <input type="hidden" name="budgetid"
                                    value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                            @endif
                         </div>
 
                         <button id="bt-edit-budget-invisible" class="d-none" type="submit"></button>
@@ -271,8 +287,8 @@
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
-                        @if(!empty($budget))
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
+                        @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -362,9 +378,10 @@
                                 <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
                                        placeholder="" valor value="{{old('valor_mao_obra')}}">
                             </div>
-
+                            @if(empty($budgetedit))
                             <input type="hidden" name="budgetid"
                                    value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                            @endif
                         </div>
 
                         <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
@@ -376,8 +393,8 @@
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '4']) :  route('budgets.store',['tag' => '4'])}}">
-                        @if(!empty($budget))
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '4']) :  route('budgets.store',['tag' => '4'])}}">
+                        @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -410,6 +427,15 @@
                                     <option value="" selected>Selecione um produto</option>
                                     @if(!empty(session('products')))
                                         @foreach(Session::get('products') as $product)
+
+                                            <option data-image="{{$product->mproduct->imagem}}"
+                                                    value="{{$product->id}}">{{$product->mproduct->nome}}</option>
+
+                                        @endforeach
+                                    @endif
+
+                                    @if(!empty($products))
+                                        @foreach($products as $product)
 
                                             <option data-image="{{$product->mproduct->imagem}}"
                                                     value="{{$product->id}}">{{$product->mproduct->nome}}</option>
@@ -606,12 +632,21 @@
                                 <div class="topo px-0 py-0 h-auto">
                                     <h4 class="card-title cor-texto">Total</h4>
                                 </div>
-                                <label class="card-text">Produto BX-01</label>
-                                <label class="card-text">Produto BX-01</label>
-                                <label class="card-text">Produto BX-01</label>
-                                <label class="card-text">Produto BX-01</label>
-                                <label class="card-text">Produto BX-01</label>
-                                <label class="card-text">Produto BX-01</label>
+
+                                @if(!empty(session('products')))
+                                    @foreach(Session::get('products') as $product)
+
+                                        <label class="card-text">{{$product->mproduct->nome}}</label>
+
+                                    @endforeach
+                                @endif
+                                @if(!empty($products))
+                                    @foreach($products as $product)
+
+                                        <label class="card-text">{{$product->mproduct->nome}}</label>
+
+                                    @endforeach
+                                @endif
 
                             </div>
 

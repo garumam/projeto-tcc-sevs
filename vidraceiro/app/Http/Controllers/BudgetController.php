@@ -129,8 +129,22 @@ class BudgetController extends Controller
 
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $states = $this->states;
+        $aluminums = Aluminum::where('is_modelo', '1')->get();
+        $glasses = Glass::where('is_modelo', '1')->get();
+        $components = Component::where('is_modelo', '1')->get();
+        $categories = Category::where('tipo', 'produto')->get();
+        $mproducts = MProduct::all();
+        $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
+
+        $budgetedit = Budget::with('products')->find($id);
+        if($budgetedit){
+            $products = $budgetedit->products()->with('mproduct')->get();
+            return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts','products','budgetedit'))->with('title', 'Atualizar Orçamento');
+        }
+        return redirect('products')->with('error', 'Erro ao buscar produto');
 
     }
 

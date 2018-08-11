@@ -358,7 +358,7 @@ $(document).ready(function () {
                 $('#descricao-mprod').val('');
                 $(this).hide();
             }
-        })
+        });
 
     });
 
