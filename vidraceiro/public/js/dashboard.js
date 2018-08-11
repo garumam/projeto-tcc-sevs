@@ -339,6 +339,7 @@ $(document).ready(function () {
             }else{
                 $('#option-vazia').prop('selected', true);
                 trocarImagem($('#image-mproduto'), 'img/semimagem.png');
+                $('#descricao-mprod').val('');
                 $(this).hide();
             }
         })
@@ -346,8 +347,17 @@ $(document).ready(function () {
     });
 
     $('#select-mproduto').change(function (e) {
-
-        trocarImagem($('#image-mproduto'), $('#select-mproduto option:selected').data('image'));
+        let pathimg;
+        let descricao;
+        if($('#select-mproduto').val() != ""){
+            pathimg = $('#select-mproduto option:selected').data('image');
+            descricao = $('#select-mproduto option:selected').data('descricao');
+        }else{
+            pathimg = 'img/semimagem.png';
+            descricao = '';
+        }
+        trocarImagem($('#image-mproduto'), pathimg);
+        $('#descricao-mprod').val(descricao);
     });
 
 

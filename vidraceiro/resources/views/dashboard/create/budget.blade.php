@@ -260,7 +260,8 @@
                                 <select id="select-mproduto" name="m_produto_id" class="custom-select" required>
                                     <option id="option-vazia" value="" selected>Selecione um produto</option>
                                     @foreach($mproducts as $mproduct)
-                                        <option data-image="{{$mproduct->imagem}}"
+                                        <option data-descricao="{{$mproduct->descricao}}"
+                                                data-image="{{$mproduct->imagem}}"
                                                 data-categoria="{{$mproduct->categoria_produto_id}}"
                                                 class="mprodutos-options" value="{{$mproduct->id}}"
                                                 style="display: none;">{{$mproduct->nome}}</option>
@@ -271,8 +272,8 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label>Descrição</label>
-                                <input type="text" class="form-control" id="descricao" name="descricao"
+                                <label for="descricao-mprod">Descrição</label>
+                                <input type="text" class="form-control" id="descricao-mprod" name="descricao"
                                        placeholder="Descrição"
                                        required>
                             </div>
