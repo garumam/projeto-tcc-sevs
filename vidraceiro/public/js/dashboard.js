@@ -242,15 +242,35 @@ $(document).ready(function () {
         let selectvidro = $('#select-vidro');
         let selectaluminio = $('#select-aluminio');
         let selectcomponente = $('#select-componente');
-        let idselect,nomeselect;
+        let idselect, nomeselect, tbody, pegaIdLinha, criaId;
+        let idinput = $('.id-material').attr('value');
         if (selectvidro.is(":visible")) {
-            if (selectvidro.val().length !== 0){
+            if (selectvidro.val().length !== 0) {
                 idselect = selectvidro.val();
                 nomeselect = selectvidro.find('option:selected').text();
                 let precovidro = selectvidro.find('option:selected').data('preco');
-                alert(precovidro);
-            }else{
-                alert("em branco");
+                tbody = $('#tabela-vidro');
+                pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
+                criaId = 'linha-vidro-' + idselect;
+                if (idinput !== idselect && pegaIdLinha !== criaId) {
+                    $('#ids').append(
+                        '<input type="number" class="id-material ' + criaId + '" name="id_vidro[]" value="' + idselect + '" style="display: block;" />' +
+                        '');
+                    tbody.append(
+                        '<tr id="' + criaId + '">' +
+                        '<th scope="row">' + idselect + '</th>' +
+                        '<td>' + nomeselect + '</td>' +
+                        '<td>' + 'R$'+precovidro + '</td>' +
+                        '<td>' +
+                        "<button id=" + criaId + " class='deletar-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                        "</td>" +
+                        "</tr>"
+                    );
+                }else {
+                    mensagemAlerta('Material ja foi adicionado!');
+                }
+            } else {
+                mensagemAlerta('Selecione um material para adicionar!');
             }
 
         }

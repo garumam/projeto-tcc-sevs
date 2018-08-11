@@ -150,9 +150,9 @@
                     @yield('content')
                 </section>
 
-                <footer class="shadow-top">
-                    <p>© 2018 Vidraceiro.</p>
-                </footer>
+                {{--<footer class="shadow-top">--}}
+                    {{--<p>© 2018 Vidraceiro.</p>--}}
+                {{--</footer>--}}
             </div>
 
 

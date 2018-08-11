@@ -136,33 +136,6 @@
 
                         </div>
                             @include('layouts.listarmaterial')
-                            <div class="form-row">
-                                <div class="form-group col-12">
-                                    <div id="ids">
-                                        @if(!empty($mproductedit))
-                                            @foreach($aluminumsProduct as $aluminumP)
-                                                <input type="number" class="id-material linha-aluminio-{{$aluminumP->id}}"
-                                                       name="aluminio_id[]"
-                                                       value="{{$aluminumP->id}}" style="display: block;"/>
-                                            @endforeach
-                                            @foreach($glassesProduct as $glassP)
-                                                <input type="number" class="id-material linha-vidro-{{$glassP->id}}"
-                                                       name="vidro_id[]"
-                                                       value="{{$glassP->id}}" style="display: block;"/>
-                                            @endforeach
-                                            @foreach($componentsProduct as $componentP)
-                                                <input type="number"
-                                                       class="id-material linha-componente-{{$componentP->id}}"
-                                                       name="componente_id[]"
-                                                       value="{{$componentP->id}}" style="display: block;"/>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-
-
                         <button id="bt-material-product-invisible" class="d-none" type="submit"></button>
 
                     </form>
