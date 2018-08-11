@@ -23,16 +23,15 @@ $(document).ready(function () {
         let value = $('#url-image');
         let imgpath = imagem.substring(imagem.lastIndexOf('img/'),imagem.length);
         value.val(imgpath);
-        $('#image-selecionar').attr("src", $(this).attr('src'));
+        $('#image-selecionar').attr("src", imagem);
         $('img').removeClass('thumbnail');
         $(this).addClass('thumbnail');
     });
 
 
     $('#select-categoria').change(function () {
-        let base_url = "/img/semimagem.png";
+        let base_url = "img/semimagem.png";
         $('#url-image').val(base_url);
-        $('#image-selecionar').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');
