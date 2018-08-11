@@ -23,7 +23,7 @@ $(document).ready(function () {
         let value = $('#url-image');
         let imgpath = imagem.substring(imagem.lastIndexOf('img/'),imagem.length);
         value.val(imgpath);
-        $('#image-selecionar').attr("src", value.val());
+        $('#image-selecionar').attr("src", $(this).attr('src'));
         $('img').removeClass('thumbnail');
         $(this).addClass('thumbnail');
     });

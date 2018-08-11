@@ -80,7 +80,7 @@
                                     <a href="#" class="btn btn-md btn-primary btn-custom w-50" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>
                                     <label for="url-image"></label>
-                                    <input type="text" id="url-image" name="imagem" style="display: block;">
+                                    <input type="text" id="url-image" name="imagem" style="display: none;">
                                 </div>
 
                             </div>
