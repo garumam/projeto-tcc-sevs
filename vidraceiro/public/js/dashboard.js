@@ -333,7 +333,7 @@ $(document).ready(function () {
         let categoryselected = $('#select-tipo-produto option:selected').val();
 
         $('.mprodutos-options').each(function(){
-            if(categoryselected == $(this).attr('id')){
+            if (categoryselected === $(this).attr('id')) {
                 $(this).show();
             }else{
                 $('#option-vazia').prop('selected', true);

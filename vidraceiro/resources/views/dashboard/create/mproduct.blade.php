@@ -122,14 +122,14 @@
 
                             <div class="form-group col-md-4">
                                 <label for="id">Id</label>
-                                <input class="form-control" type="text"
+                                <input id="id" name="m_produto_id" class="form-control" type="text"
                                        value="{{!empty($mproductedit) ? $mproductedit->id : ''}} {{ Session::has('mproductcriado') ? Session::get('mproductcriado')->id : ''}}"
                                        readonly>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="nome">Produto</label>
-                                <input class="form-control" type="text"
+                                <input id="nome" class="form-control" type="text"
                                        value="{{!empty($mproductedit) ? $mproductedit->nome :'' }} {{ Session::has('mproductcriado') ? Session::get('mproductcriado')->nome : ''}}"
                                        readonly>
                             </div>
@@ -138,14 +138,12 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-8">
-
                                 <label for="select-material">Materiais</label>
                                 <select id="select-material" class="custom-select">
                                     <option value="0">Vidros</option>
                                     <option value="1">Aluminios</option>
                                     <option value="2">Componentes</option>
                                 </select>
-
                             </div>
                         </div>
 
@@ -153,20 +151,20 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-vidro" id="label_categoria">Vidros</label>
-                                <select id="select-vidro" name="id_vidro" class="custom-select" required>
+                                <select id="select-vidro" name="vidro_id" class="custom-select" required>
                                     <option value="" selected>Selecione um vidro</option>
                                     @foreach($glasses as $glass)
                                         <option value="{{$glass->id}}">{{$glass->nome}}</option>
                                     @endforeach
                                 </select>
-                                <select id="select-aluminio" name="id_aluminio" class="custom-select"
+                                <select id="select-aluminio" name="aluminio_id" class="custom-select"
                                         style="display: none;" required>
                                     <option value="" selected>Selecione um aluminio</option>
                                     @foreach($aluminums as $aluminum)
                                         <option value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
                                     @endforeach
                                 </select>
-                                <select id="select-componente" name="id_componente" class="custom-select"
+                                <select id="select-componente" name="componente_id" class="custom-select"
                                         style="display: none;" required>
                                     <option value="" selected>Selecione um componente</option>
                                     @foreach($components as $component)
