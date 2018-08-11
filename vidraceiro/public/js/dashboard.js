@@ -226,37 +226,51 @@ $(document).ready(function () {
         $('#bt-budget-visible').text($texto);
     }
 
-    //codigo para remove orçamento da tabela ordem de serviço
-    let button = document.getElementsByClassName("deletar-orcamento-tabela");
-    for (let i = 0; i < button.length; i++) {
-        button[i].addEventListener('click', function (e) {
-            let valorTotal = $('#total');
-            let total = $('#option-' + e.target.id).attr('name');
-            valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
-            $('#' + e.target.id).remove();
-            $('.' + e.target.id).remove();
-        }, false);
-    }
+    // //codigo para remove orçamento da tabela ordem de serviço
+    // let button = document.getElementsByClassName("deletar-orcamento-tabela");
+    // for (let i = 0; i < button.length; i++) {
+    //     button[i].addEventListener('click', function (e) {
+    //         let valorTotal = $('#total');
+    //         let total = $('#option-' + e.target.id).attr('name');
+    //         valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
+    //         $('#' + e.target.id).remove();
+    //         $('.' + e.target.id).remove();
+    //     }, false);
+    // }
 
     //codigo para remove material da tabela
-    let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
-    for (let i = 0; i < buttonMaterial.length; i++) {
-        buttonMaterial[i].addEventListener('click', function (e) {
-            $('#' + e.target.id).remove();
-            $('.' + e.target.id).remove();
-        }, false);
-    }
+    // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
+    // for (let i = 0; i < buttonMaterial.length; i++) {
+    //     buttonMaterial[i].addEventListener('click', function (e) {
+    //         $('#' + e.target.id).remove();
+    //         $('.' + e.target.id).remove();
+    //     }, false);
+    // }
+
+    $('tbody').on('click','.deletar-material-tabela',function (e) {
+        $('#' + e.target.id).remove();
+        $('.' + e.target.id).remove();
+    });
+
+    $('tbody').on('click','.deletar-orcamento-tabela',function (e) {
+        let valorTotal = $('#total');
+        let total = $('#option-' + e.target.id).attr('name');
+        valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
+        $('#' + e.target.id).remove();
+        $('.' + e.target.id).remove();
+    });
 
     $('#bt-add-material-mproduct').click(function () {
         let selectvidro = $('#select-vidro');
         let selectaluminio = $('#select-aluminio');
         let selectcomponente = $('#select-componente');
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
-        let idinput = $('.id-material').attr('value');
+        let idinput;
         if (selectvidro.is(":visible")) {
             if (selectvidro.val().length !== 0) {
                 idselect = selectvidro.val();
                 nomeselect = selectvidro.find('option:selected').text();
+                let idinput = $('.id-material-vidro').attr('value');
                 let precovidro = selectvidro.find('option:selected').data('preco');
                 tbody = $('#tabela-vidro');
                 pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
@@ -276,15 +290,15 @@ $(document).ready(function () {
                         "</tr>"
                     );
 
-                    let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
-                    for (let i = 0; i < buttonMaterial.length; i++) {
-                        buttonMaterial[i].addEventListener('click', function (e) {
-                            if (e.target.id === criaId) {
-                                $('#' + e.target.id).remove();
-                                $('.' + e.target.id).remove();
-                            }
-                        }, false);
-                    }
+                    // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
+                    // for (let i = 0; i < buttonMaterial.length; i++) {
+                    //     buttonMaterial[i].addEventListener('click', function (e) {
+                    //         if (e.target.id === criaId) {
+                    //             $('#' + e.target.id).remove();
+                    //             $('.' + e.target.id).remove();
+                    //         }
+                    //     }, false);
+                    // }
                 } else {
                     mensagemAlerta('Material ja foi adicionado!');
                 }
@@ -329,16 +343,16 @@ $(document).ready(function () {
             let valorTotal = $('#total');
             let inputTotal = isNaN(parseFloat(valorTotal.val())) ? 0 : parseFloat(valorTotal.val());
             valorTotal.val(parseFloat(inputTotal + parseFloat(total)).toFixed(2));
-            let button = document.getElementsByClassName("deletar-orcamento-tabela");
-            for (let i = 0; i < button.length; i++) {
-                button[i].addEventListener('click', function (e) {
-                    if (e.target.id === criaId) {
-                        valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
-                        $('#' + criaId).remove();
-                        $('.' + criaId).remove();
-                    }
-                }, false);
-            }
+            // let button = document.getElementsByClassName("deletar-orcamento-tabela");
+            // for (let i = 0; i < button.length; i++) {
+            //     button[i].addEventListener('click', function (e) {
+            //         if (e.target.id === criaId) {
+            //             valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
+            //             $('#' + criaId).remove();
+            //             $('.' + criaId).remove();
+            //         }
+            //     }, false);
+            // }
 
         } else {
             mensagemAlerta('Orçamento ja foi adicionado!');
