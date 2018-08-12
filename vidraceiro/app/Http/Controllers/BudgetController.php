@@ -179,7 +179,7 @@ class BudgetController extends Controller
 
         $budgetedit = Budget::with('products')->find($id);
         if($budgetedit){
-            $products = $budgetedit->products()->with('mproduct')->get();
+            $products = $budgetedit->products()->with('mproduct','glasses','aluminums','components')->get();
             return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts','products','budgetedit'))->with('title', 'Atualizar Orçamento');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');

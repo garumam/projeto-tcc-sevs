@@ -107,8 +107,27 @@
                         </tr>
                     @endforeach
                 @endif
-                @if(!empty($products) || !empty(session('products')))
-                    @foreach(Session::get('products') or $products as $product)
+                @if(!empty($products))
+                    @foreach($products as $product)
+                        @foreach($product->glasses as $glassP)
+                            <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
+                                <th scope="row">{{$glassP->id}}</th>
+                                <td>{{$glassP->nome}}</td>
+                                <td>R${{$glassP->preco}}</td>
+                                <td>
+                                    <button id="linha-vidro-{{$glassP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                @endif
+
+                @if(!empty(session('products')))
+                    @foreach(Session::get('products') as $product)
                         @foreach($product->glasses as $glassP)
                             <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
@@ -240,9 +259,9 @@
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
             @endif
-            @if(!empty($products) || !empty(session('products')))
+            @if(!empty($products))
 
-                @foreach(  Session::get('products') or $products   as $product)
+                @foreach( $products   as $product)
                     @foreach($product->aluminums as $aluminumP)
                         <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
                                name="id_aluminio_{{$product->id}}[]"
@@ -261,6 +280,27 @@
                 @endforeach
 
             @endif
+                @if(!empty(session('products')))
+
+                    @foreach( Session::get('products')  as $product)
+                        @foreach($product->aluminums as $aluminumP)
+                            <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
+                                   name="id_aluminio_{{$product->id}}[]"
+                                   value="{{$aluminumP->id}}" style="display: none;"/>
+                        @endforeach
+                        @foreach($product->glasses as $glassP)
+                            <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
+                                   name="id_vidro_{{$product->id}}[]"
+                                   value="{{$glassP->id}}" style="display: none;"/>
+                        @endforeach
+                        @foreach($product->components as $componentP)
+                            <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
+                                   name="id_componente_{{$product->id}}[]"
+                                   value="{{$componentP->id}}" style="display: none;"/>
+                        @endforeach
+                    @endforeach
+
+                @endif
         </div>
     </div>
 </div>
