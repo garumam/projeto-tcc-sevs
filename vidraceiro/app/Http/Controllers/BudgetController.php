@@ -97,6 +97,12 @@ class BudgetController extends Controller
 
                 $product = new Product();
                 $product = $product->create($request->except('budgetid'));
+                $mproduct = MProduct::with('glasses','aluminums','components')->find($product->m_produto_id);
+
+                foreach ($mproduct->glasses()->get() as $vidro){
+                    $product->glasses()->attach($vidro->id);
+                }
+
                 if ($product){
                     $budgetcriado = Budget::find($request->budgetid);
                     $budgetcriado->products()->attach($product->id);
@@ -141,7 +147,7 @@ class BudgetController extends Controller
                 }
 
                 if ($budgetcriado){
-                    return redirect()->back()->with('success', 'Material adicionado ao produto com sucesso')
+                    return redirect()->back()->with('success', 'Material dos produtos atualizado com sucesso')
                             ->with(compact('budgetcriado'))
                             ->with(compact('products'));
 
