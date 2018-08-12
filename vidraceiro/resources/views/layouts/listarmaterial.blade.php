@@ -226,17 +226,17 @@
             @if(!empty($mproductedit))
                 @foreach($aluminumsProduct as $aluminumP)
                     <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
-                           name="id_aluminio[]"
+                           name="id_aluminio_[]"
                            value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach($glassesProduct as $glassP)
                     <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
-                           name="id_vidro[]"
+                           name="id_vidro_[]"
                            value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach($componentsProduct as $componentP)
                     <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
-                           name="id_componente[]"
+                           name="id_componente_[]"
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
             @endif
@@ -244,17 +244,17 @@
                 @foreach($products as $product)
                     @foreach($product->aluminums as $aluminumP)
                         <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
-                               name="id_aluminio[]"
+                               name="id_aluminio_{{$product->id}}[]"
                                value="{{$aluminumP->id}}" style="display: none;"/>
                     @endforeach
                     @foreach($product->glasses as $glassP)
                         <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
-                               name="id_vidro[]"
+                               name="id_vidro_{{$product->id}}[]"
                                value="{{$glassP->id}}" style="display: none;"/>
                     @endforeach
                     @foreach($product->components as $componentP)
                         <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
-                               name="id_componente[]"
+                               name="id_componente_{{$product->id}}[]"
                                value="{{$componentP->id}}" style="display: none;"/>
                     @endforeach
                 @endforeach

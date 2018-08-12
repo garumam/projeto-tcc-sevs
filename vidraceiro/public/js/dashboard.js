@@ -267,6 +267,8 @@ $(document).ready(function () {
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
         let idinput;
         let produtoselecionado = $('#select-produto-material option:selected').val();
+        if(produtoselecionado == undefined)
+            produtoselecionado = '';
         if (selectvidro.is(":visible")) {
             if (selectvidro.val().length !== 0) {
                 idselect = selectvidro.val();
