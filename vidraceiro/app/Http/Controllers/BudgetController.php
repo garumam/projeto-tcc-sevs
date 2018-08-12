@@ -85,15 +85,45 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $product->glasses()->attach($vidro->id);
+                    $glass = Glass::create([
+                        'nome' => $vidro->nome,
+                        'descricao' => $vidro->descricao,
+                        'tipo' => $vidro->tipo,
+                        'espessura' => $vidro->espessura,
+                        'preco' => $vidro->preco,
+                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                        'is_modelo' => 0
+                    ]);
+
+                    $product->glasses()->attach($glass->id);
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminum) {
-                    $product->aluminums()->attach($aluminum->id);
+                    $aluminio = Aluminum::create([
+                        'perfil' => $aluminum->perfil,
+                        'descricao' => $aluminum->descricao,
+                        'medida' => $aluminum->medida,
+                        'qtd' => $aluminum->qtd,
+                        'peso' => $aluminum->peso,
+                        'preco' => $aluminum->preco,
+                        'tipo_medida' => $aluminum->tipo_medida,
+                        'is_modelo' => 0,
+                        'categoria_aluminio_id' => $aluminum->categoria_aluminio_id,
+
+                    ]);
+                    $product->aluminums()->attach($aluminio->id);
                 }
 
-                foreach ($mproduct->components()->get() as $components) {
-                    $product->components()->attach($components->id);
+                foreach ($mproduct->components()->get() as $component) {
+                    $componente = Component::create([
+                        'nome' => $component->nome,
+                        'qtd' => $component->qtd,
+                        'preco' => $component->preco,
+                        'is_modelo' => 0,
+                        'categoria_componente_id' => $component->categoria_componente_id,
+
+                    ]);
+                    $product->components()->attach($componente->id);
                 }
 
                 if ($product) {
@@ -159,7 +189,7 @@ class BudgetController extends Controller
                 break;
             default:
         }
-        return redirect()->back()->with('error',"Erro ao adicionar");
+        return redirect()->back()->with('error', "Erro ao adicionar");
     }
 
     public function show()
@@ -202,15 +232,45 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $product->glasses()->attach($vidro->id);
+                    $glass = Glass::create([
+                        'nome' => $vidro->nome,
+                        'descricao' => $vidro->descricao,
+                        'tipo' => $vidro->tipo,
+                        'espessura' => $vidro->espessura,
+                        'preco' => $vidro->preco,
+                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                        'is_modelo' => 0
+                    ]);
+
+                    $product->glasses()->attach($glass->id);
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminum) {
-                    $product->aluminums()->attach($aluminum->id);
+                    $aluminio = Aluminum::create([
+                        'perfil' => $aluminum->perfil,
+                        'descricao' => $aluminum->descricao,
+                        'medida' => $aluminum->medida,
+                        'qtd' => $aluminum->qtd,
+                        'peso' => $aluminum->peso,
+                        'preco' => $aluminum->preco,
+                        'tipo_medida' => $aluminum->tipo_medida,
+                        'is_modelo' => 0,
+                        'categoria_aluminio_id' => $aluminum->categoria_aluminio_id,
+
+                    ]);
+                    $product->aluminums()->attach($aluminio->id);
                 }
 
-                foreach ($mproduct->components()->get() as $components) {
-                    $product->components()->attach($components->id);
+                foreach ($mproduct->components()->get() as $component) {
+                    $componente = Component::create([
+                        'nome' => $component->nome,
+                        'qtd' => $component->qtd,
+                        'preco' => $component->preco,
+                        'is_modelo' => 0,
+                        'categoria_componente_id' => $component->categoria_componente_id,
+
+                    ]);
+                    $product->components()->attach($componente->id);
                 }
                 if ($product) {
                     $budgetcriado = Budget::find($id);
@@ -260,7 +320,7 @@ class BudgetController extends Controller
                 break;
             default:
         }
-        return redirect()->back()->with('error',"Erro ao atualizar");
+        return redirect()->back()->with('error', "Erro ao atualizar");
     }
 
     public function destroy($id)
