@@ -192,7 +192,7 @@
                 @if(!empty($products))
                     @foreach($products as $product)
                         @foreach($product->components as $componentP)
-                            <tr id="linha-componente-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
+                            <tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
                                 <th scope="row">{{$componentP->id}}</th>
                                 <td>{{$componentP->nome}}</td>
