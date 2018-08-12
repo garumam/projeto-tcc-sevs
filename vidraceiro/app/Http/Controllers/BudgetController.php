@@ -199,6 +199,19 @@ class BudgetController extends Controller
             case '2': //tab adicionar
                 $product = new Product();
                 $product = $product->create($request->all());
+                $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
+
+                foreach ($mproduct->glasses()->get() as $vidro) {
+                    $product->glasses()->attach($vidro->id);
+                }
+
+                foreach ($mproduct->aluminums()->get() as $aluminum) {
+                    $product->aluminums()->attach($aluminum->id);
+                }
+
+                foreach ($mproduct->components()->get() as $components) {
+                    $product->components()->attach($components->id);
+                }
                 if ($product) {
                     $budgetcriado = Budget::find($id);
                     $budgetcriado->products()->attach($product->id);
