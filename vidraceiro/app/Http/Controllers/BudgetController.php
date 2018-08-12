@@ -121,21 +121,21 @@ class BudgetController extends Controller
                     if($request->get($names) != null){
                         $product->glasses()->sync($request->get($names));
                     }else{
-                        $product->glasses()->delete();
+                        $product->glasses()->detach();
                     }
 
                     $names = 'id_aluminio_'.$product->id;
                     if($request->get($names) != null){
                         $product->aluminums()->sync($request->get($names));
                     }else{
-                        $product->aluminums()->delete();
+                        $product->aluminums()->detach();
                     }
 
                     $names = 'id_componente_'.$product->id;
                     if($request->get($names) != null){
                         $product->components()->sync($request->get($names));
                     }else{
-                        $product->components()->delete();
+                        $product->components()->detach();
                     }
 
                 }
