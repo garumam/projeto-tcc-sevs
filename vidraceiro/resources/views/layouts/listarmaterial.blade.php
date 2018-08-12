@@ -110,7 +110,8 @@
                 @if(!empty($products))
                     @foreach($products as $product)
                         @foreach($product->glasses as $glassP)
-                            <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}">
+                            <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
                                 <th scope="row">{{$glassP->id}}</th>
                                 <td>{{$glassP->nome}}</td>
                                 <td>R${{$glassP->preco}}</td>
@@ -150,7 +151,8 @@
                 @if(!empty($products))
                     @foreach($products as $product)
                         @foreach($product->aluminums as $aluminumP)
-                            <tr>
+                            <tr id="linha-aluminio-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
                                 <th scope="row">{{$aluminumP->id}}</th>
                                 <td>{{$aluminumP->perfil}}</td>
                                 <td>{{$aluminumP->medida}}</td>
@@ -190,7 +192,8 @@
                 @if(!empty($products))
                     @foreach($products as $product)
                         @foreach($product->components as $componentP)
-                            <tr>
+                            <tr id="linha-componente-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
                                 <th scope="row">{{$componentP->id}}</th>
                                 <td>{{$componentP->nome}}</td>
                                 <td>{{$componentP->preco}}</td>
@@ -236,6 +239,26 @@
                            name="id_componente[]"
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
+            @endif
+            @if(!empty($products))
+                @foreach($products as $product)
+                    @foreach($product->aluminums as $aluminumP)
+                        <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
+                               name="id_aluminio[]"
+                               value="{{$aluminumP->id}}" style="display: none;"/>
+                    @endforeach
+                    @foreach($product->glasses as $glassP)
+                        <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
+                               name="id_vidro[]"
+                               value="{{$glassP->id}}" style="display: none;"/>
+                    @endforeach
+                    @foreach($product->components as $componentP)
+                        <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
+                               name="id_componente[]"
+                               value="{{$componentP->id}}" style="display: none;"/>
+                    @endforeach
+                @endforeach
+
             @endif
         </div>
     </div>

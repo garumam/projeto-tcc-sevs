@@ -247,12 +247,12 @@ $(document).ready(function () {
     //     }, false);
     // }
 
-    $('tbody').on('click','.deletar-material-tabela',function (e) {
+    $('tbody').on('click', '.deletar-material-tabela', function (e) {
         $('#' + e.target.id).remove();
         $('.' + e.target.id).remove();
     });
 
-    $('tbody').on('click','.deletar-orcamento-tabela',function (e) {
+    $('tbody').on('click', '.deletar-orcamento-tabela', function (e) {
         let valorTotal = $('#total');
         let total = $('#option-' + e.target.id).attr('name');
         valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
@@ -545,6 +545,32 @@ $(document).ready(function () {
         }
 
         $('#image-produto-material').attr('src', imagem);
+
+        let tr = $('#tabela-vidro').find('tr');
+        tr.each(function () {
+            if ($(this).data('produtoid') == produtoselecionado.val()) {
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
+
+        let traluminio = $('#tabela-aluminio').find('tr');
+        traluminio.each(function () {
+            if ($(this).data('produtoid') == produtoselecionado.val()) {
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
+        let trcomponente = $('#tabela-componente').find('tr');
+        trcomponente.each(function () {
+            if ($(this).data('produtoid') == produtoselecionado.val()) {
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
 
     });
 
