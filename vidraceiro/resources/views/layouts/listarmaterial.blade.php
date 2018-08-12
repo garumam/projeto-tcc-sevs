@@ -133,7 +133,7 @@
                 <tbody id="tabela-aluminio" style="display: none;">
                 @if(!empty($mproductedit))
                     @foreach($aluminumsProduct as $aluminumP)
-                        <tr>
+                        <tr id="linha-aluminio-{{$aluminumP->id}}">
                             <th scope="row">{{$aluminumP->id}}</th>
                             <td>{{$aluminumP->perfil}}</td>
                             <td>{{$aluminumP->medida}}</td>
@@ -175,7 +175,7 @@
                 <tbody id="tabela-componente" style="display: none;">
                 @if(!empty($mproductedit))
                     @foreach($componentsProduct as $componentP)
-                        <tr>
+                        <tr id="linha-componente-{{$componentP->id}}">
                             <th scope="row">{{$componentP->id}}</th>
                             <td>{{$componentP->nome}}</td>
                             <td>{{$componentP->preco}}</td>
