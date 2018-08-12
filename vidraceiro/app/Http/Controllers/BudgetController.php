@@ -14,6 +14,7 @@ use App\Category;
 class BudgetController extends Controller
 {
     protected $states;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -63,96 +64,94 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
-        $titulotabs = ['Orçamento','Adicionar','Editar','Material','Total'];
+        $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
         //dd($mproducts);
-        return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts'))->with('title', 'Novo Orçamento');
+        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts'))->with('title', 'Novo Orçamento');
     }
 
     public function store(Request $request, $tab)
     {
         switch ($tab) {
             case '1': //tab orçamento
-
                 $budgetcriado = new Budget;
                 $budgetcriado = $budgetcriado->create($request->all());
-
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));
                 break;
             case '2': //tab adicionar
-
                 $product = new Product();
                 $product = $product->create($request->except('budgetid'));
-                $mproduct = MProduct::with('glasses','aluminums','components')->find($product->m_produto_id);
+                $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
-                foreach ($mproduct->glasses()->get() as $vidro){
+                foreach ($mproduct->glasses()->get() as $vidro) {
                     $product->glasses()->attach($vidro->id);
                 }
 
-                if ($product){
+                foreach ($mproduct->aluminums()->get() as $aluminum) {
+                    $product->aluminums()->attach($aluminum->id);
+                }
+
+                foreach ($mproduct->components()->get() as $components) {
+                    $product->components()->attach($components->id);
+                }
+
+                if ($product) {
                     $budgetcriado = Budget::find($request->budgetid);
                     $budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado){
-
+                    if ($budgetcriado) {
                         $products = $budgetcriado->products;
-
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
                             ->with(compact('budgetcriado'))
                             ->with(compact('products'));
                     }
-
                 }
 
                 break;
             case '3': //tab editar
                 $budgetcriado = Budget::find($request->budgetid);
                 $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid','budgetid']));
+                $product->update($request->except(['produtoid', 'budgetid']));
 
-                if($product && $budgetcriado){
+                if ($product && $budgetcriado) {
                     $products = $budgetcriado->products;
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
                 }
-
                 break;
             case '4': //tab material
                 $budgetcriado = Budget::with('products')->find($request->budgetid);
                 $products = $budgetcriado->products;
 
-                foreach ($products as $product){
-                    $names = 'id_vidro_'.$product->id;
-                    if($request->get($names) != null){
+                foreach ($products as $product) {
+                    $names = 'id_vidro_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->glasses()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->glasses()->detach();
                     }
 
-                    $names = 'id_aluminio_'.$product->id;
-                    if($request->get($names) != null){
+                    $names = 'id_aluminio_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->aluminums()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->aluminums()->detach();
                     }
 
-                    $names = 'id_componente_'.$product->id;
-                    if($request->get($names) != null){
+                    $names = 'id_componente_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->components()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->components()->detach();
                     }
-
                 }
 
-                if ($budgetcriado){
+                if ($budgetcriado) {
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
-                            ->with(compact('budgetcriado'))
-                            ->with(compact('products'));
-
+                        ->with(compact('budgetcriado'))
+                        ->with(compact('products'));
                 }
-
                 break;
             case '5': //tab total
 
@@ -160,6 +159,7 @@ class BudgetController extends Controller
                 break;
             default:
         }
+        return redirect()->back()->with('error',"Erro ao adicionar");
     }
 
     public function show()
@@ -175,84 +175,71 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
-        $titulotabs = ['Orçamento','Adicionar','Editar','Material','Total'];
+        $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
 
         $budgetedit = Budget::with('products')->find($id);
-        if($budgetedit){
-            $products = $budgetedit->products()->with('mproduct','glasses','aluminums','components')->get();
-            return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts','products','budgetedit'))->with('title', 'Atualizar Orçamento');
+        if ($budgetedit) {
+            $products = $budgetedit->products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
+            return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'products', 'budgetedit'))->with('title', 'Atualizar Orçamento');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');
 
     }
 
 
-    public function update(Request $request,$tab,$id)
+    public function update(Request $request, $tab, $id)
     {
         switch ($tab) {
             case '1': //tab orçamento
-
                 $budgetcriado = Budget::find($id);
                 $budgetcriado = $budgetcriado->update($request->all());
-
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
-
                 $product = new Product();
                 $product = $product->create($request->all());
-                if ($product){
+                if ($product) {
                     $budgetcriado = Budget::find($id);
                     $budgetcriado->products()->attach($product->id);
                     if ($budgetcriado)
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
-
                 }
-
                 break;
             case '3': //tab editar
-
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
-
-                if($product)
+                if ($product)
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso');
 
                 break;
             case '4': //tab material
-
                 $budgetcriado = Budget::with('products')->find($id);
                 $products = $budgetcriado->products;
-
-                foreach ($products as $product){
-                    $names = 'id_vidro_'.$product->id;
-                    if($request->get($names) != null){
+                foreach ($products as $product) {
+                    $names = 'id_vidro_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->glasses()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->glasses()->detach();
                     }
 
-                    $names = 'id_aluminio_'.$product->id;
-                    if($request->get($names) != null){
+                    $names = 'id_aluminio_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->aluminums()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->aluminums()->detach();
                     }
 
-                    $names = 'id_componente_'.$product->id;
-                    if($request->get($names) != null){
+                    $names = 'id_componente_' . $product->id;
+                    if ($request->get($names) != null) {
                         $product->components()->sync($request->get($names));
-                    }else{
+                    } else {
                         $product->components()->detach();
                     }
-
                 }
-
                 if ($products)
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
-
-
                 break;
             case '5': //tab total
 
@@ -260,6 +247,7 @@ class BudgetController extends Controller
                 break;
             default:
         }
+        return redirect()->back()->with('error',"Erro ao atualizar");
     }
 
     public function destroy($id)

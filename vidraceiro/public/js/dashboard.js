@@ -353,7 +353,7 @@ $(document).ready(function () {
                 idselect = selectcomponente.val();
                 nomeselect = selectcomponente.find('option:selected').text();
                 idinput = $('.id-material-componente').attr('value');
-                let qtd = selectcomponente.find('option:selected').data('medida');
+                let qtd = selectcomponente.find('option:selected').data('qtd');
                 let precocomponente = selectcomponente.find('option:selected').data('preco');
                 tbody = $('#tabela-componente');
                 pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
