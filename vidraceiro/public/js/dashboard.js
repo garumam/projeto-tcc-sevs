@@ -546,7 +546,37 @@ $(document).ready(function () {
 
         $('#image-produto-material').attr('src', imagem);
 
-        let tr = $('#tabela-vidro').find('tr');
+        linhaProdutoAtualiza($('#tabela-vidro').find('tr'),produtoselecionado);
+        linhaProdutoAtualiza($('#tabela-aluminio').find('tr'),produtoselecionado);
+        linhaProdutoAtualiza($('#tabela-componente').find('tr'),produtoselecionado);
+        // tr.each(function () {
+        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
+        //         $(this).show();
+        //     }else{
+        //         $(this).hide();
+        //     }
+        // });
+
+        // let traluminio = $('#tabela-aluminio').find('tr');
+        // traluminio.each(function () {
+        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
+        //         $(this).show();
+        //     }else{
+        //         $(this).hide();
+        //     }
+        // });
+        // let trcomponente = $('#tabela-componente').find('tr');
+        // trcomponente.each(function () {
+        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
+        //         $(this).show();
+        //     }else{
+        //         $(this).hide();
+        //     }
+        // });
+
+    });
+
+    function linhaProdutoAtualiza(tr,produtoselecionado) {
         tr.each(function () {
             if ($(this).data('produtoid') == produtoselecionado.val()) {
                 $(this).show();
@@ -554,25 +584,7 @@ $(document).ready(function () {
                 $(this).hide();
             }
         });
-
-        let traluminio = $('#tabela-aluminio').find('tr');
-        traluminio.each(function () {
-            if ($(this).data('produtoid') == produtoselecionado.val()) {
-                $(this).show();
-            }else{
-                $(this).hide();
-            }
-        });
-        let trcomponente = $('#tabela-componente').find('tr');
-        trcomponente.each(function () {
-            if ($(this).data('produtoid') == produtoselecionado.val()) {
-                $(this).show();
-            }else{
-                $(this).hide();
-            }
-        });
-
-    });
+    }
 
     function trocarImagem(imgcontainer, imgpath) {
         imgcontainer.attr("src", imgpath);
