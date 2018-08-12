@@ -266,6 +266,7 @@ $(document).ready(function () {
         let selectcomponente = $('#select-componente');
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
         let idinput;
+        let produtoselecionado = $('#select-produto-material option:selected').val();
         if (selectvidro.is(":visible")) {
             if (selectvidro.val().length !== 0) {
                 idselect = selectvidro.val();
@@ -277,7 +278,7 @@ $(document).ready(function () {
                 criaId = 'linha-vidro-' + idselect;
                 if (idinput !== idselect && pegaIdLinha !== criaId) {
                     $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_vidro[]" value="' + idselect + '" style="display: none;" />' +
+                        '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                         '');
                     tbody.append(
                         '<tr id="' + criaId + '">' +
@@ -321,7 +322,7 @@ $(document).ready(function () {
                 criaId = 'linha-aluminio-' + idselect;
                 if (idinput !== idselect && pegaIdLinha !== criaId) {
                     $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_aluminio[]" value="' + idselect + '" style="display: none;" />' +
+                        '<input type="number" class="id-material ' + criaId + '" name="id_aluminio_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                         '');
                     tbody.append(
                         '<tr id="' + criaId + '">' +
@@ -357,7 +358,7 @@ $(document).ready(function () {
                 criaId = 'linha-componente-' + idselect;
                 if (idinput !== idselect && pegaIdLinha !== criaId) {
                     $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_componente[]" value="' + idselect + '" style="display: none;" />' +
+                        '<input type="number" class="id-material ' + criaId + '" name="id_componente_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                         '');
                     tbody.append(
                         '<tr id="' + criaId + '">' +

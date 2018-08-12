@@ -113,7 +113,33 @@ class BudgetController extends Controller
 
                 break;
             case '4': //tab material
+                $budgetcriado = Budget::with('products')->find($request->budgetid);
+                $products = $budgetcriado->products;
 
+                foreach ($products as $product){
+                    $names = 'id_vidro_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->glasses()->sync($request->get($names) ,false);
+                    }
+
+                    $names = 'id_aluminio_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->aluminums()->sync($request->get($names),false);
+                    }
+
+                    $names = 'id_componente_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->components()->sync($request->get($names),false);
+                    }
+
+                }
+
+                if ($budgetcriado){
+                    return redirect()->back()->with('success', 'Material adicionado ao produto com sucesso')
+                            ->with(compact('budgetcriado'))
+                            ->with(compact('products'));
+
+                }
 
                 break;
             case '5': //tab total
@@ -183,6 +209,7 @@ class BudgetController extends Controller
 
                 break;
             case '4': //tab material
+
 
 
                 break;

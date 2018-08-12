@@ -431,7 +431,7 @@
 
                             <div class="form-group col-md">
                                 <label for="select-produto">Selecione o produto</label>
-                                <select id="select-produto-material" name="produtoid" class="custom-select" required>
+                                <select id="select-produto-material" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
                                     @if(!empty(session('products')))
                                         @foreach(Session::get('products') as $product)
@@ -457,7 +457,10 @@
 
                     @include('layouts.listarmaterial')
 
-
+                            @if(empty($budgetedit))
+                                <input type="hidden" name="budgetid"
+                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                            @endif
                         <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
