@@ -107,6 +107,23 @@
                         </tr>
                     @endforeach
                 @endif
+                @if(!empty($products))
+                    @foreach($products as $product)
+                        @foreach($product->glasses as $glassP)
+                            <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}">
+                                <th scope="row">{{$glassP->id}}</th>
+                                <td>{{$glassP->nome}}</td>
+                                <td>R${{$glassP->preco}}</td>
+                                <td>
+                                    <button id="linha-vidro-{{$glassP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                @endif
                 </tbody>
 
                 <!--FIM BODY DO VIDRO-->
@@ -130,6 +147,25 @@
                         </tr>
                     @endforeach
                 @endif
+                @if(!empty($products))
+                    @foreach($products as $product)
+                        @foreach($product->aluminums as $aluminumP)
+                            <tr>
+                                <th scope="row">{{$aluminumP->id}}</th>
+                                <td>{{$aluminumP->perfil}}</td>
+                                <td>{{$aluminumP->medida}}</td>
+                                <td>{{$aluminumP->peso}}</td>
+                                <td>{{$aluminumP->preco}}</td>
+                                <td>
+                                    <button id="linha-aluminio-{{$aluminumP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                @endif
                 </tbody>
                 <!--FIM BODY DO ALUMINIO-->
 
@@ -149,6 +185,24 @@
 
                             </td>
                         </tr>
+                    @endforeach
+                @endif
+                @if(!empty($products))
+                    @foreach($products as $product)
+                        @foreach($product->components as $componentP)
+                            <tr>
+                                <th scope="row">{{$componentP->id}}</th>
+                                <td>{{$componentP->nome}}</td>
+                                <td>{{$componentP->preco}}</td>
+                                <td>{{$componentP->qtd}}</td>
+                                <td>
+                                    <button id="linha-componente-{{$componentP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
                     @endforeach
                 @endif
                 </tbody>
