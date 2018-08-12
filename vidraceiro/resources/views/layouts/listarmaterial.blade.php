@@ -187,6 +187,26 @@
                         @endforeach
                     @endforeach
                 @endif
+                @if(!empty(session('products')))
+                    @foreach(Session::get('products') as $product)
+                        @foreach($product->aluminums as $aluminumP)
+                            <tr id="linha-aluminio-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
+                                <th scope="row">{{$aluminumP->id}}</th>
+                                <td>{{$aluminumP->perfil}}</td>
+                                <td>{{$aluminumP->medida}}</td>
+                                <td>{{$aluminumP->peso}}</td>
+                                <td>{{$aluminumP->preco}}</td>
+                                <td>
+                                    <button id="linha-aluminio-{{$aluminumP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                @endif
                 </tbody>
                 <!--FIM BODY DO ALUMINIO-->
 
@@ -210,6 +230,25 @@
                 @endif
                 @if(!empty($products))
                     @foreach($products as $product)
+                        @foreach($product->components as $componentP)
+                            <tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"
+                                style="display: none;">
+                                <th scope="row">{{$componentP->id}}</th>
+                                <td>{{$componentP->nome}}</td>
+                                <td>{{$componentP->preco}}</td>
+                                <td>{{$componentP->qtd}}</td>
+                                <td>
+                                    <button id="linha-componente-{{$componentP->id}}"
+                                            class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                @endif
+                @if(!empty(session('products')))
+                    @foreach(Session::get('products') as $product)
                         @foreach($product->components as $componentP)
                             <tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">

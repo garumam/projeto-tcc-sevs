@@ -169,13 +169,122 @@
 
                 </div>
 
-                <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
                 <div class="tab-pane fade {{ !empty(session('budgetcriado')) ? 'show active' : '' }}"
                      id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
                           action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '2']) :  route('budgets.store',['tag' => '2'])}}">
+                        @if(!empty($budgetedit))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
+                        @csrf
+                        <div class="form-row">
+
+                            <div class="col-12">
+                                @if(session('success'))
+                                    <div class="alerta p-0">
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    </div>
+                                @elseif(session('error'))
+                                    <div class="alerta">
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="select-tipo-produto">Selecione um tipo</label>
+                                <select id="select-tipo-produto" class="custom-select" required>
+                                    <option value="" selected>Selecione uma categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row align-items-center">
+                            <div class="form-group col-">
+                                <img id="image-mproduto" src="{{ '/img/semimagem.png' }}" class="img-fluid"
+                                     alt="Responsive image" style="height: 110px!important;">
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="select-mproduto">Selecione o produto</label>
+                                <select id="select-mproduto" name="m_produto_id" class="custom-select" required>
+                                    <option id="option-vazia" value="" selected>Selecione um produto</option>
+                                    @foreach($mproducts as $mproduct)
+                                        <option data-descricao="{{$mproduct->descricao}}"
+                                                data-image="{{$mproduct->imagem}}"
+                                                data-categoria="{{$mproduct->categoria_produto_id}}"
+                                                class="mprodutos-options" value="{{$mproduct->id}}"
+                                                style="display: none;">{{$mproduct->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="descricao-mprod">Descrição</label>
+                                <input type="text" class="form-control" id="descricao-mprod" placeholder="Descrição">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="altura">Altura</label>
+                                <input type="number" step="0.001" class="form-control" id="altura" name="altura"
+                                       placeholder="0,000"
+                                       value="{{old('altura')}}" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="largura">Largura</label>
+                                <input type="number" step="0.001" class="form-control" id="largura" name="largura"
+                                       placeholder="0,000" value="{{old('largura')}}" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="qtd">Quantidade</label>
+                                <input type="number" class="form-control" id="qtd" name="qtd"
+                                       placeholder="quantidade" value="{{old('qtd')}}" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="localizacao">Localização</label>
+                                <input type="text" class="form-control" id="localizacao" name="localizacao"
+                                       placeholder="Localização" value="{{old('localizacao')}}">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="valor_mao_obra">Valor da mão de obra</label>
+                                <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
+                                       placeholder="" value="{{old('valor_mao_obra')}}">
+                            </div>
+                            @if(empty($budgetedit))
+                                <input type="hidden" name="budgetid"
+                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                            @endif
+                        </div>
+
+                        <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
+
+                    </form>
+
+                </div>
+
+                <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
+                <div class="tab-pane fade"
+                     id="nav-{{$titulotabs[2]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[2]}}-tab">
+
+                    <form class="formulario" method="POST" role="form"
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
                         @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -290,113 +399,6 @@
                 </div>
                 <!-- FIM CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
 
-                <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[2]}}-tab">
-
-                    <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
-                        @if(!empty($budgetedit))
-                            <input type="hidden" name="_method" value="PATCH">
-                        @endif
-                        @csrf
-                        <div class="form-row">
-
-                            <div class="col-12">
-                                @if(session('success'))
-                                    <div class="alerta p-0">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
-                                    </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md">
-                                <label for="select-tipo-produto">Selecione um tipo</label>
-                                <select id="select-tipo-produto" class="custom-select" required>
-                                    <option value="" selected>Selecione uma categoria</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div class="form-row align-items-center">
-                            <div class="form-group col-">
-                                <img id="image-mproduto" src="{{ '/img/semimagem.png' }}" class="img-fluid"
-                                     alt="Responsive image" style="height: 110px!important;">
-                            </div>
-
-                            <div class="form-group col-md">
-                                <label for="select-mproduto">Selecione o produto</label>
-                                <select id="select-mproduto" name="m_produto_id" class="custom-select" required>
-                                    <option id="option-vazia" value="" selected>Selecione um produto</option>
-                                    @foreach($mproducts as $mproduct)
-                                        <option data-descricao="{{$mproduct->descricao}}"
-                                                data-image="{{$mproduct->imagem}}"
-                                                data-categoria="{{$mproduct->categoria_produto_id}}"
-                                                class="mprodutos-options" value="{{$mproduct->id}}"
-                                                style="display: none;">{{$mproduct->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="descricao-mprod">Descrição</label>
-                                <input type="text" class="form-control" id="descricao-mprod" placeholder="Descrição">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="altura">Altura</label>
-                                <input type="number" step="0.001" class="form-control" id="altura" name="altura"
-                                       placeholder="0,000"
-                                       value="{{old('altura')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="largura">Largura</label>
-                                <input type="number" step="0.001" class="form-control" id="largura" name="largura"
-                                       placeholder="0,000" value="{{old('largura')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="qtd">Quantidade</label>
-                                <input type="number" class="form-control" id="qtd" name="qtd"
-                                       placeholder="quantidade" value="{{old('qtd')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="localizacao">Localização</label>
-                                <input type="text" class="form-control" id="localizacao" name="localizacao"
-                                       placeholder="Localização" value="{{old('localizacao')}}">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="valor_mao_obra">Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
-                                       placeholder="" value="{{old('valor_mao_obra')}}">
-                            </div>
-                            @if(empty($budgetedit))
-                                <input type="hidden" name="budgetid"
-                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
-                            @endif
-                        </div>
-
-                        <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
-
-                    </form>
-
-                </div>
                 <div class="tab-pane fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 

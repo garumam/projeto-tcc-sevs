@@ -63,7 +63,7 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
-        $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
+        $titulotabs = ['Orçamento','Adicionar','Editar','Material','Total'];
         //dd($mproducts);
         return view('dashboard.create.budget',compact('titulotabs','states','glasses','aluminums','components','categories','mproducts'))->with('title', 'Novo Orçamento');
     }
@@ -80,20 +80,7 @@ class BudgetController extends Controller
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));
                 break;
-            case '2': //tab editar
-                $budgetcriado = Budget::find($request->budgetid);
-                $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid','budgetid']));
-
-                if($product && $budgetcriado){
-                    $products = $budgetcriado->products;
-                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')
-                        ->with(compact('budgetcriado'))
-                        ->with(compact('products'));
-                }
-
-                break;
-            case '3': //tab adicionar
+            case '2': //tab adicionar
 
                 $product = new Product();
                 $product = $product->create($request->except('budgetid'));
@@ -115,6 +102,19 @@ class BudgetController extends Controller
                             ->with(compact('products'));
                     }
 
+                }
+
+                break;
+            case '3': //tab editar
+                $budgetcriado = Budget::find($request->budgetid);
+                $product = Product::find($request->produtoid);
+                $product->update($request->except(['produtoid','budgetid']));
+
+                if($product && $budgetcriado){
+                    $products = $budgetcriado->products;
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')
+                        ->with(compact('budgetcriado'))
+                        ->with(compact('products'));
                 }
 
                 break;
@@ -147,7 +147,7 @@ class BudgetController extends Controller
                 }
 
                 if ($budgetcriado){
-                    return redirect()->back()->with('success', 'Material dos produtos atualizado com sucesso')
+                    return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
                             ->with(compact('budgetcriado'))
                             ->with(compact('products'));
 
@@ -175,7 +175,7 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
-        $titulotabs = ['Orçamento','Editar','Adicionar','Material','Total'];
+        $titulotabs = ['Orçamento','Adicionar','Editar','Material','Total'];
 
         $budgetedit = Budget::with('products')->find($id);
         if($budgetedit){
@@ -198,16 +198,7 @@ class BudgetController extends Controller
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
-            case '2': //tab editar
-
-                $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid']));
-
-                if($product)
-                    return redirect()->back()->with('success', 'Produto atualizado com sucesso');
-
-                break;
-            case '3': //tab adicionar
+            case '2': //tab adicionar
 
                 $product = new Product();
                 $product = $product->create($request->all());
@@ -220,8 +211,46 @@ class BudgetController extends Controller
                 }
 
                 break;
+            case '3': //tab editar
+
+                $product = Product::find($request->produtoid);
+                $product->update($request->except(['produtoid']));
+
+                if($product)
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso');
+
+                break;
             case '4': //tab material
 
+                $budgetcriado = Budget::with('products')->find($id);
+                $products = $budgetcriado->products;
+
+                foreach ($products as $product){
+                    $names = 'id_vidro_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->glasses()->sync($request->get($names));
+                    }else{
+                        $product->glasses()->detach();
+                    }
+
+                    $names = 'id_aluminio_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->aluminums()->sync($request->get($names));
+                    }else{
+                        $product->aluminums()->detach();
+                    }
+
+                    $names = 'id_componente_'.$product->id;
+                    if($request->get($names) != null){
+                        $product->components()->sync($request->get($names));
+                    }else{
+                        $product->components()->detach();
+                    }
+
+                }
+
+                if ($products)
+                    return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
 
 
                 break;
@@ -243,4 +272,6 @@ class BudgetController extends Controller
             return redirect()->back()->with('error', 'Erro ao deletar orçamento');
         }
     }
+
+
 }
