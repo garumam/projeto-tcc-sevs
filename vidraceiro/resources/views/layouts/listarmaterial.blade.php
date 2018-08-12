@@ -169,18 +169,18 @@
             @if(!empty($mproductedit))
                 @foreach($aluminumsProduct as $aluminumP)
                     <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
-                           name="aluminio_id[]"
-                           value="{{$aluminumP->id}}" style="display: block;"/>
+                           name="id_aluminio[]"
+                           value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach($glassesProduct as $glassP)
                     <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
-                           name="vidro_id[]"
-                           value="{{$glassP->id}}" style="display: block;"/>
+                           name="id_vidro[]"
+                           value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach($componentsProduct as $componentP)
                     <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
-                           name="componente_id[]"
-                           value="{{$componentP->id}}" style="display: block;"/>
+                           name="id_componente[]"
+                           value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
             @endif
         </div>
