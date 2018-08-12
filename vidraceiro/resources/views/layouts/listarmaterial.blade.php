@@ -14,14 +14,14 @@
 
     <div class="form-group col-md-4">
         <label for="select-vidro" id="label_categoria">Vidros</label>
-        <select id="select-vidro" name="vidro_id" class="custom-select" required>
+        <select id="select-vidro" name="vidro_id" class="custom-select">
             <option value="" selected>Selecione um vidro</option>
             @foreach($glasses as $glass)
                 <option data-preco="{{$glass->preco}}" value="{{$glass->id}}">{{$glass->nome}}</option>
             @endforeach
         </select>
         <select id="select-aluminio" name="aluminio_id" class="custom-select"
-                style="display: none;" required>
+                style="display: none;">
             <option value="" selected>Selecione um aluminio</option>
             @foreach($aluminums as $aluminum)
                 <option data-medida="{{$aluminum->medida}}"
@@ -31,7 +31,7 @@
             @endforeach
         </select>
         <select id="select-componente" name="componente_id" class="custom-select"
-                style="display: none;" required>
+                style="display: none;">
             <option value="" selected>Selecione um componente</option>
             @foreach($components as $component)
                 <option data-qtd="{{$component->qtd}}"
