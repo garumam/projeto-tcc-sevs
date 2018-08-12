@@ -155,26 +155,24 @@ class BudgetController extends Controller
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
-                    $names = 'id_vidro_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->glasses()->sync($request->get($names));
-                    } else {
+                    $vidro = 'id_vidro_' . $product->id;
+                    $aluminio = 'id_aluminio_' . $product->id;
+                    $componente = 'id_componente_' . $product->id;
+
+                    if ($request->has($vidro))
+                        $product->glasses()->sync($request->get($vidro));
+                    else
                         $product->glasses()->detach();
-                    }
 
-                    $names = 'id_aluminio_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->aluminums()->sync($request->get($names));
-                    } else {
+                    if ($request->has($aluminio))
+                        $product->aluminums()->sync($request->get($aluminio));
+                    else
                         $product->aluminums()->detach();
-                    }
 
-                    $names = 'id_componente_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->components()->sync($request->get($names));
-                    } else {
+                    if ($request->has($componente))
+                        $product->components()->sync($request->get($componente));
+                    else
                         $product->components()->detach();
-                    }
                 }
 
                 if ($budgetcriado) {
@@ -290,26 +288,24 @@ class BudgetController extends Controller
                 $budgetcriado = Budget::with('products')->find($id);
                 $products = $budgetcriado->products;
                 foreach ($products as $product) {
-                    $names = 'id_vidro_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->glasses()->sync($request->get($names));
-                    } else {
+                    $vidro = 'id_vidro_' . $product->id;
+                    $aluminio = 'id_aluminio_' . $product->id;
+                    $componente = 'id_componente_' . $product->id;
+
+                    if ($request->has($vidro))
+                        $product->glasses()->sync($request->get($vidro));
+                    else
                         $product->glasses()->detach();
-                    }
 
-                    $names = 'id_aluminio_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->aluminums()->sync($request->get($names));
-                    } else {
+                    if ($request->has($aluminio))
+                        $product->aluminums()->sync($request->get($aluminio));
+                    else
                         $product->aluminums()->detach();
-                    }
 
-                    $names = 'id_componente_' . $product->id;
-                    if ($request->get($names) != null) {
-                        $product->components()->sync($request->get($names));
-                    } else {
+                    if ($request->has($componente))
+                        $product->components()->sync($request->get($componente));
+                    else
                         $product->components()->detach();
-                    }
                 }
                 if ($products)
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
