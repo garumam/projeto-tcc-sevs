@@ -107,8 +107,8 @@
                         </tr>
                     @endforeach
                 @endif
-                @if(!empty($products))
-                    @foreach($products as $product)
+                @if(!empty($products) || !empty(session('products')))
+                    @foreach(Session::get('products') or $products as $product)
                         @foreach($product->glasses as $glassP)
                             <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
@@ -240,8 +240,9 @@
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
             @endif
-            @if(!empty($products))
-                @foreach($products as $product)
+            @if(!empty($products) || !empty(session('products')))
+
+                @foreach(  Session::get('products') or $products   as $product)
                     @foreach($product->aluminums as $aluminumP)
                         <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
                                name="id_aluminio_{{$product->id}}[]"
