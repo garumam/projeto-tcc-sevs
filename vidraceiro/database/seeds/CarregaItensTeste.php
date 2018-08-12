@@ -182,7 +182,7 @@ class CarregaItensTeste extends Seeder
             'data_inicial' => '2018-08-03',
             'nome'=> 'order1',
             'situacao' => 'aberta',
-            'total'=> 233.7713
+            'total'=> 233.78
         ]);
 
         Order::create([
@@ -190,7 +190,7 @@ class CarregaItensTeste extends Seeder
             'data_inicial' => '2018-04-05',
             'nome'=> 'order2',
             'situacao' => 'concluida',
-            'total'=> 200.6056
+            'total'=> 200.60
         ]);
 
         $order = Order::find(1);
