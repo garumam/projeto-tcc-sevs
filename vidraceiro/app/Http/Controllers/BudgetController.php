@@ -154,7 +154,7 @@ class BudgetController extends Controller
             case '4': //tab material
                 $budgetcriado = Budget::with('products')->find($request->budgetid);
                 $products = $budgetcriado->products;
-                $glassesAll = Glass::where('is_modelo', 1)->get();
+                //$glassesAll = Glass::where('is_modelo', 1)->get();
                 $aluminumsAll = Aluminum::where('is_modelo', 1)->get();
                 $componentsAll = Component::where('is_modelo', 1)->get();
 
@@ -162,37 +162,48 @@ class BudgetController extends Controller
                     $glass = 'id_vidro_' . $product->id;
                     $aluminum = 'id_aluminio_' . $product->id;
                     $component = 'id_componente_' . $product->id;
+                    $vidrosAntigos = $product->glasses()->where('is_modelo',0);
 
                     if ($request->has($glass)) {
+                        $glassesAll = Glass::wherein('id', $request->only($glass)[$glass] )->get();
+
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($request->get($glass) as $glassRequest) {
-                            foreach ($product->glasses()->get() as $glassProduct) {
-                                if ($glassProduct->id == $glassRequest) {
-                                    $idsExists[] = $glassRequest;
-                                }
-                            }
-                            $idsExists = array_unique($idsExists);
-                            foreach ($glassesAll as $vidro) {
-                                if ($vidro->id == $glassRequest) {
-                                    $glassCreate = Glass::create([
-                                        'nome' => $vidro->nome,
-                                        'descricao' => $vidro->descricao,
-                                        'tipo' => $vidro->tipo,
-                                        'espessura' => $vidro->espessura,
-                                        'preco' => $vidro->preco,
-                                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                        'is_modelo' => 0
-                                    ]);
-                                    $idsNew[] = $glassCreate->id;
-                                    break;
-                                }
+                        foreach ($glassesAll as $vidro){
+
+                            if($vidro->is_modelo == 1){
+                                $glassCreate = Glass::create([
+                                    'nome' => $vidro->nome,
+                                    'descricao' => $vidro->descricao,
+                                    'tipo' => $vidro->tipo,
+                                    'espessura' => $vidro->espessura,
+                                    'preco' => $vidro->preco,
+                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                    'is_modelo' => 0
+                                ]);
+                                $idsNew[] = $glassCreate->id;
+                            }else{
+                                $idsExists[] = $vidro->id;
                             }
                         }
+
+                        $vidrodeletar = $vidrosAntigos->whereNotIn('vidro_id',$idsExists)->get();
+
+                        foreach ($vidrodeletar as $vdelete){
+                            $vdelete->delete();
+                        }
+
                         $product->glasses()->sync(array_merge($idsNew, $idsExists));
+
                     } else {
+
+                        foreach ($vidrosAntigos->get() as $vdelete){
+                            $vdelete->delete();
+                        }
                         $product->glasses()->detach();
                     }
+
+
 
                     if ($request->has($aluminum)) {
                         $idsNew = array();
