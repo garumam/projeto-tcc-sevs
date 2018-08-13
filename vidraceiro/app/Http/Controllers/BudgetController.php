@@ -154,9 +154,9 @@ class BudgetController extends Controller
             case '4': //tab material
                 $budgetcriado = Budget::with('products')->find($request->budgetid);
                 $products = $budgetcriado->products;
-                $glassesAll = Glass::all();
-                $aluminumsAll = Aluminum::all();
-                $componentsAll = Component::all();
+                $glassesAll = Glass::where('is_modelo', 1)->get();
+                $aluminumsAll = Aluminum::where('is_modelo', 1)->get();
+                $componentsAll = Component::where('is_modelo', 1)->get();
 
                 foreach ($products as $product) {
                     $glass = 'id_vidro_' . $product->id;
@@ -165,8 +165,15 @@ class BudgetController extends Controller
 
                     if ($request->has($glass)) {
                         $ids = array();
+                        $ids2 = array();
                         foreach ($request->get($glass) as $glassRequest) {
                             foreach ($glassesAll as $vidro) {
+                                foreach ($product->glasses()->get() as $glassProduct) {
+                                    if ($glassProduct->id == $glassRequest) {
+                                        $ids2[] = $glassRequest;
+                                    }
+                                }
+                                $ids2 = array_unique($ids2);
                                 if ($vidro->id == $glassRequest) {
                                     $glassCreate = Glass::create([
                                         'nome' => $vidro->nome,
@@ -181,7 +188,10 @@ class BudgetController extends Controller
                                 }
                             }
                         }
-                        $product->glasses()->sync($ids);
+//                        dd($request->get($glass));
+//                        dd($ids2);
+//                        dd( array_merge($ids,$ids2));
+                        $product->glasses()->sync(array_merge($ids, $ids2));
                     } else {
                         $product->glasses()->detach();
                     }
@@ -347,9 +357,9 @@ class BudgetController extends Controller
             case '4': //tab material
                 $budgetcriado = Budget::with('products')->find($id);
                 $products = $budgetcriado->products;
-                $glassesAll = Glass::all();
-                $aluminumsAll = Aluminum::all();
-                $componentsAll = Component::all();
+                $glassesAll = Glass::where('is_modelo', 1)->get();
+                $aluminumsAll = Aluminum::where('is_modelo', 1)->get();
+                $componentsAll = Component::where('is_modelo', 1)->get();
                 foreach ($products as $product) {
                     $glass = 'id_vidro_' . $product->id;
                     $aluminum = 'id_aluminio_' . $product->id;
