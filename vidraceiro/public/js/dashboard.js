@@ -267,121 +267,130 @@ $(document).ready(function () {
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
         let idinput;
         let produtoselecionado = $('#select-produto-material option:selected').val();
-        if(produtoselecionado == undefined)
-            produtoselecionado = '';
-        if (selectvidro.is(":visible")) {
-            if (selectvidro.val().length !== 0) {
-                idselect = selectvidro.val();
-                nomeselect = selectvidro.find('option:selected').text();
-                idinput = $('.id-material-vidro').attr('value');
-                let precovidro = selectvidro.find('option:selected').data('preco');
-                tbody = $('#tabela-vidro');
-                pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
-                criaId = 'linha-vidro-' + idselect;
-                if (idinput !== idselect && pegaIdLinha !== criaId) {
-                    $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
-                        '');
-                    tbody.append(
-                        '<tr id="' + criaId + '">' +
-                        '<th scope="row">' + idselect + '</th>' +
-                        '<td>' + nomeselect + '</td>' +
-                        '<td>' + 'R$' + precovidro + '</td>' +
-                        '<td>' +
-                        "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
-                        "</td>" +
-                        "</tr>"
-                    );
+        if(produtoselecionado == ''){
+            mensagemAlerta('Selecione um produto!');
+        }else{
 
-                    // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
-                    // for (let i = 0; i < buttonMaterial.length; i++) {
-                    //     buttonMaterial[i].addEventListener('click', function (e) {
-                    //         if (e.target.id === criaId) {
-                    //             $('#' + e.target.id).remove();
-                    //             $('.' + e.target.id).remove();
-                    //         }
-                    //     }, false);
-                    // }
+            if(produtoselecionado == undefined)
+                produtoselecionado = '';
+
+
+            if (selectvidro.is(":visible")) {
+                if (selectvidro.val().length !== 0) {
+                    idselect = selectvidro.val();
+                    nomeselect = selectvidro.find('option:selected').text();
+                    idinput = $('.id-material-vidro').attr('value');
+                    let precovidro = selectvidro.find('option:selected').data('preco');
+                    tbody = $('#tabela-vidro');
+                    pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
+                    criaId = 'linha-vidro-' + idselect;
+                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                        $('#ids').append(
+                            '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
+                            '');
+                        tbody.append(
+                            '<tr id="' + criaId + '">' +
+                            '<th scope="row">' + idselect + '</th>' +
+                            '<td>' + nomeselect + '</td>' +
+                            '<td>' + 'R$' + precovidro + '</td>' +
+                            '<td>' +
+                            "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                            "</td>" +
+                            "</tr>"
+                        );
+
+                        // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
+                        // for (let i = 0; i < buttonMaterial.length; i++) {
+                        //     buttonMaterial[i].addEventListener('click', function (e) {
+                        //         if (e.target.id === criaId) {
+                        //             $('#' + e.target.id).remove();
+                        //             $('.' + e.target.id).remove();
+                        //         }
+                        //     }, false);
+                        // }
+                    } else {
+                        mensagemAlerta('Material ja foi adicionado!');
+                    }
                 } else {
-                    mensagemAlerta('Material ja foi adicionado!');
+                    mensagemAlerta('Selecione um material para adicionar!');
                 }
-            } else {
-                mensagemAlerta('Selecione um material para adicionar!');
+
+            }
+            if (selectaluminio.is(":visible")) {
+
+                if (selectaluminio.val().length !== 0) {
+                    idselect = selectaluminio.val();
+                    nomeselect = selectaluminio.find('option:selected').text();
+                    idinput = $('.id-material-aluminio').attr('value');
+                    let medida = selectaluminio.find('option:selected').data('medida');
+                    let peso = selectaluminio.find('option:selected').data('peso');
+                    let precoaluminio = selectaluminio.find('option:selected').data('preco');
+                    tbody = $('#tabela-aluminio');
+                    pegaIdLinha = $('#linha-aluminio-' + idselect).attr('id');
+                    criaId = 'linha-aluminio-' + idselect;
+                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                        $('#ids').append(
+                            '<input type="number" class="id-material ' + criaId + '" name="id_aluminio_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
+                            '');
+                        tbody.append(
+                            '<tr id="' + criaId + '">' +
+                            '<th scope="row">' + idselect + '</th>' +
+                            '<td>' + nomeselect + '</td>' +
+                            '<td>' + medida + '</td>' +
+                            '<td>' + peso + '</td>' +
+                            '<td>' + 'R$' + precoaluminio + '</td>' +
+                            '<td>' +
+                            "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                            "</td>" +
+                            "</tr>"
+                        );
+
+                    } else {
+                        mensagemAlerta('Material ja foi adicionado!');
+                    }
+                } else {
+                    mensagemAlerta('Selecione um material para adicionar!');
+                }
+
+            }
+            if (selectcomponente.is(":visible")) {
+
+                if (selectcomponente.val().length !== 0) {
+                    idselect = selectcomponente.val();
+                    nomeselect = selectcomponente.find('option:selected').text();
+                    idinput = $('.id-material-componente').attr('value');
+                    let qtd = selectcomponente.find('option:selected').data('qtd');
+                    let precocomponente = selectcomponente.find('option:selected').data('preco');
+                    tbody = $('#tabela-componente');
+                    pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
+                    criaId = 'linha-componente-' + idselect;
+                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                        $('#ids').append(
+                            '<input type="number" class="id-material ' + criaId + '" name="id_componente_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
+                            '');
+                        tbody.append(
+                            '<tr id="' + criaId + '">' +
+                            '<th scope="row">' + idselect + '</th>' +
+                            '<td>' + nomeselect + '</td>' +
+                            '<td>' + 'R$' + precocomponente + '</td>' +
+                            '<td>' + qtd + '</td>' +
+                            '<td>' +
+                            "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                            "</td>" +
+                            "</tr>"
+                        );
+
+                    } else {
+                        mensagemAlerta('Material ja foi adicionado!');
+                    }
+                } else {
+                    mensagemAlerta('Selecione um material para adicionar!');
+                }
+
             }
 
         }
-        if (selectaluminio.is(":visible")) {
 
-            if (selectaluminio.val().length !== 0) {
-                idselect = selectaluminio.val();
-                nomeselect = selectaluminio.find('option:selected').text();
-                idinput = $('.id-material-aluminio').attr('value');
-                let medida = selectaluminio.find('option:selected').data('medida');
-                let peso = selectaluminio.find('option:selected').data('peso');
-                let precoaluminio = selectaluminio.find('option:selected').data('preco');
-                tbody = $('#tabela-aluminio');
-                pegaIdLinha = $('#linha-aluminio-' + idselect).attr('id');
-                criaId = 'linha-aluminio-' + idselect;
-                if (idinput !== idselect && pegaIdLinha !== criaId) {
-                    $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_aluminio_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
-                        '');
-                    tbody.append(
-                        '<tr id="' + criaId + '">' +
-                        '<th scope="row">' + idselect + '</th>' +
-                        '<td>' + nomeselect + '</td>' +
-                        '<td>' + medida + '</td>' +
-                        '<td>' + peso + '</td>' +
-                        '<td>' + 'R$' + precoaluminio + '</td>' +
-                        '<td>' +
-                        "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
-                        "</td>" +
-                        "</tr>"
-                    );
-
-                } else {
-                    mensagemAlerta('Material ja foi adicionado!');
-                }
-            } else {
-                mensagemAlerta('Selecione um material para adicionar!');
-            }
-
-        }
-        if (selectcomponente.is(":visible")) {
-
-            if (selectcomponente.val().length !== 0) {
-                idselect = selectcomponente.val();
-                nomeselect = selectcomponente.find('option:selected').text();
-                idinput = $('.id-material-componente').attr('value');
-                let qtd = selectcomponente.find('option:selected').data('qtd');
-                let precocomponente = selectcomponente.find('option:selected').data('preco');
-                tbody = $('#tabela-componente');
-                pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
-                criaId = 'linha-componente-' + idselect;
-                if (idinput !== idselect && pegaIdLinha !== criaId) {
-                    $('#ids').append(
-                        '<input type="number" class="id-material ' + criaId + '" name="id_componente_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
-                        '');
-                    tbody.append(
-                        '<tr id="' + criaId + '">' +
-                        '<th scope="row">' + idselect + '</th>' +
-                        '<td>' + nomeselect + '</td>' +
-                        '<td>' + 'R$' + precocomponente + '</td>' +
-                        '<td>' + qtd + '</td>' +
-                        '<td>' +
-                        "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
-                        "</td>" +
-                        "</tr>"
-                    );
-
-                } else {
-                    mensagemAlerta('Material ja foi adicionado!');
-                }
-            } else {
-                mensagemAlerta('Selecione um material para adicionar!');
-            }
-
-        }
     });
 
     $('#bt-add-orcamento-order').click(function () {
