@@ -69,11 +69,19 @@ class MProductController extends Controller
                         ->with(compact('mproductcriado'));
                 break;
             case '2':
-                dd($request->all());
-
+                $mproductcriado = MProduct::find($request->m_produto_id);
+                if ($mproductcriado){
+                    $mproductcriado->glasses()->sync($request->id_vidro_);
+                    $mproductcriado->aluminums()->sync($request->id_aluminio_);
+                    $mproductcriado->components()->sync($request->id_componente_);
+                    if ($mproductcriado)
+                        return redirect()->back()->with('success', 'Material adicionado ao produto com sucesso')
+                            ->with(compact('mproductcriado'));
+                }
                 break;
             default:
         }
+        return redirect()->back()->with('error', 'Erro ao salvar produto');
     }
 
     public function show()

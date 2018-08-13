@@ -92,8 +92,8 @@
 
                 <!--INICIO BODY DO VIDRO-->
                 <tbody id="tabela-vidro">
-                @if(!empty($mproductedit))
-                    @foreach($glassesProduct as $glassP)
+                @if(!empty(session('mproductcriado')) || !empty($mproductedit))
+                    @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $glassesProduct as $glassP)
                         <tr id="linha-vidro-{{$glassP->id}}">
                             <th scope="row">{{$glassP->id}}</th>
                             <td>{{$glassP->nome}}</td>
@@ -150,8 +150,8 @@
 
                 <!--INICIO BODY DO ALUMINIO-->
                 <tbody id="tabela-aluminio" style="display: none;">
-                @if(!empty($mproductedit))
-                    @foreach($aluminumsProduct as $aluminumP)
+                @if(!empty(session('mproductcriado')) || !empty($mproductedit))
+                    @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->aluminums : $aluminumsProduct as $aluminumP)
                         <tr id="linha-aluminio-{{$aluminumP->id}}">
                             <th scope="row">{{$aluminumP->id}}</th>
                             <td>{{$aluminumP->perfil}}</td>
@@ -212,8 +212,8 @@
 
                 <!--INICIO BODY DO COMPONENTE-->
                 <tbody id="tabela-componente" style="display: none;">
-                @if(!empty($mproductedit))
-                    @foreach($componentsProduct as $componentP)
+                @if(!empty(session('mproductcriado')) || !empty($mproductedit))
+                    @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $componentsProduct as $componentP)
                         <tr id="linha-componente-{{$componentP->id}}">
                             <th scope="row">{{$componentP->id}}</th>
                             <td>{{$componentP->nome}}</td>
