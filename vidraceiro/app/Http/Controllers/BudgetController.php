@@ -10,6 +10,7 @@ use App\MProduct;
 use App\Component;
 use App\Glass;
 use App\Category;
+use phpDocumentor\Reflection\Types\Array_;
 
 class BudgetController extends Controller
 {
@@ -85,7 +86,7 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $glass = Glass::create([
+                    $glassCreate = Glass::create([
                         'nome' => $vidro->nome,
                         'descricao' => $vidro->descricao,
                         'tipo' => $vidro->tipo,
@@ -95,35 +96,35 @@ class BudgetController extends Controller
                         'is_modelo' => 0
                     ]);
 
-                    $product->glasses()->attach($glass->id);
+                    $product->glasses()->attach($glassCreate->id);
                 }
 
-                foreach ($mproduct->aluminums()->get() as $aluminum) {
-                    $aluminio = Aluminum::create([
-                        'perfil' => $aluminum->perfil,
-                        'descricao' => $aluminum->descricao,
-                        'medida' => $aluminum->medida,
-                        'qtd' => $aluminum->qtd,
-                        'peso' => $aluminum->peso,
-                        'preco' => $aluminum->preco,
-                        'tipo_medida' => $aluminum->tipo_medida,
+                foreach ($mproduct->aluminums()->get() as $aluminio) {
+                    $aluminumCreate = Aluminum::create([
+                        'perfil' => $aluminio->perfil,
+                        'descricao' => $aluminio->descricao,
+                        'medida' => $aluminio->medida,
+                        'qtd' => $aluminio->qtd,
+                        'peso' => $aluminio->peso,
+                        'preco' => $aluminio->preco,
+                        'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
-                        'categoria_aluminio_id' => $aluminum->categoria_aluminio_id,
+                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
 
                     ]);
-                    $product->aluminums()->attach($aluminio->id);
+                    $product->aluminums()->attach($aluminumCreate->id);
                 }
 
-                foreach ($mproduct->components()->get() as $component) {
-                    $componente = Component::create([
-                        'nome' => $component->nome,
-                        'qtd' => $component->qtd,
-                        'preco' => $component->preco,
+                foreach ($mproduct->components()->get() as $componente) {
+                    $componentCreate = Component::create([
+                        'nome' => $componente->nome,
+                        'qtd' => $componente->qtd,
+                        'preco' => $componente->preco,
                         'is_modelo' => 0,
-                        'categoria_componente_id' => $component->categoria_componente_id,
+                        'categoria_componente_id' => $componente->categoria_componente_id,
 
                     ]);
-                    $product->components()->attach($componente->id);
+                    $product->components()->attach($componentCreate->id);
                 }
 
                 if ($product) {
@@ -155,22 +156,22 @@ class BudgetController extends Controller
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
-                    $vidro = 'id_vidro_' . $product->id;
-                    $aluminio = 'id_aluminio_' . $product->id;
-                    $componente = 'id_componente_' . $product->id;
+                    $glass = 'id_vidro_' . $product->id;
+                    $aluminum = 'id_aluminio_' . $product->id;
+                    $component = 'id_componente_' . $product->id;
 
-                    if ($request->has($vidro))
-                        $product->glasses()->sync($request->get($vidro));
+                    if ($request->has($glass))
+                        $product->glasses()->sync($request->get($glass));
                     else
                         $product->glasses()->detach();
 
-                    if ($request->has($aluminio))
-                        $product->aluminums()->sync($request->get($aluminio));
+                    if ($request->has($aluminum))
+                        $product->aluminums()->sync($request->get($aluminum));
                     else
                         $product->aluminums()->detach();
 
-                    if ($request->has($componente))
-                        $product->components()->sync($request->get($componente));
+                    if ($request->has($component))
+                        $product->components()->sync($request->get($component));
                     else
                         $product->components()->detach();
                 }
@@ -230,7 +231,7 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $glass = Glass::create([
+                    $glassCreate = Glass::create([
                         'nome' => $vidro->nome,
                         'descricao' => $vidro->descricao,
                         'tipo' => $vidro->tipo,
@@ -240,35 +241,35 @@ class BudgetController extends Controller
                         'is_modelo' => 0
                     ]);
 
-                    $product->glasses()->attach($glass->id);
+                    $product->glasses()->attach($glassCreate->id);
                 }
 
-                foreach ($mproduct->aluminums()->get() as $aluminum) {
-                    $aluminio = Aluminum::create([
-                        'perfil' => $aluminum->perfil,
-                        'descricao' => $aluminum->descricao,
-                        'medida' => $aluminum->medida,
-                        'qtd' => $aluminum->qtd,
-                        'peso' => $aluminum->peso,
-                        'preco' => $aluminum->preco,
-                        'tipo_medida' => $aluminum->tipo_medida,
+                foreach ($mproduct->aluminums()->get() as $aluminio) {
+                    $aluminumCreate = Aluminum::create([
+                        'perfil' => $aluminio->perfil,
+                        'descricao' => $aluminio->descricao,
+                        'medida' => $aluminio->medida,
+                        'qtd' => $aluminio->qtd,
+                        'peso' => $aluminio->peso,
+                        'preco' => $aluminio->preco,
+                        'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
-                        'categoria_aluminio_id' => $aluminum->categoria_aluminio_id,
+                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
 
                     ]);
-                    $product->aluminums()->attach($aluminio->id);
+                    $product->aluminums()->attach($aluminumCreate->id);
                 }
 
-                foreach ($mproduct->components()->get() as $component) {
-                    $componente = Component::create([
-                        'nome' => $component->nome,
-                        'qtd' => $component->qtd,
-                        'preco' => $component->preco,
+                foreach ($mproduct->components()->get() as $componente) {
+                    $componentCreate = Component::create([
+                        'nome' => $componente->nome,
+                        'qtd' => $componente->qtd,
+                        'preco' => $componente->preco,
                         'is_modelo' => 0,
-                        'categoria_componente_id' => $component->categoria_componente_id,
+                        'categoria_componente_id' => $componente->categoria_componente_id,
 
                     ]);
-                    $product->components()->attach($componente->id);
+                    $product->components()->attach($componentCreate->id);
                 }
                 if ($product) {
                     $budgetcriado = Budget::find($id);
@@ -287,25 +288,86 @@ class BudgetController extends Controller
             case '4': //tab material
                 $budgetcriado = Budget::with('products')->find($id);
                 $products = $budgetcriado->products;
+                $glassesAll = Glass::all();
+                $aluminumsAll = Aluminum::all();
+                $componentsAll = Component::all();
                 foreach ($products as $product) {
-                    $vidro = 'id_vidro_' . $product->id;
-                    $aluminio = 'id_aluminio_' . $product->id;
-                    $componente = 'id_componente_' . $product->id;
+                    $glass = 'id_vidro_' . $product->id;
+                    $aluminum = 'id_aluminio_' . $product->id;
+                    $component = 'id_componente_' . $product->id;
 
-                    if ($request->has($vidro))
-                        $product->glasses()->sync($request->get($vidro));
-                    else
+
+                    if ($request->has($glass)) {
+                        $ids = array();
+                        foreach ($request->get($glass) as $glassRequest) {
+                            foreach ($glassesAll as $vidro) {
+                                if ($vidro->id == $glassRequest) {
+                                    $glassCreate = Glass::create([
+                                        'nome' => $vidro->nome,
+                                        'descricao' => $vidro->descricao,
+                                        'tipo' => $vidro->tipo,
+                                        'espessura' => $vidro->espessura,
+                                        'preco' => $vidro->preco,
+                                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                        'is_modelo' => 0
+                                    ]);
+                                    $ids[] = $glassCreate->id;
+                                }
+                            }
+                        }
+                        $product->glasses()->sync($ids);
+                    } else {
                         $product->glasses()->detach();
+                    }
 
-                    if ($request->has($aluminio))
-                        $product->aluminums()->sync($request->get($aluminio));
-                    else
+                    if ($request->has($aluminum)) {
+                        $ids = array();
+                        foreach ($request->get($aluminum) as $aluminumRequest) {
+                            foreach ($aluminumsAll as $aluminio) {
+                                if ($aluminio->id == $aluminumRequest) {
+                                    $aluminumCreate = Aluminum::create([
+                                        'perfil' => $aluminio->perfil,
+                                        'descricao' => $aluminio->descricao,
+                                        'medida' => $aluminio->medida,
+                                        'qtd' => $aluminio->qtd,
+                                        'peso' => $aluminio->peso,
+                                        'preco' => $aluminio->preco,
+                                        'tipo_medida' => $aluminio->tipo_medida,
+                                        'is_modelo' => 0,
+                                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                                    ]);
+                                    $ids[] = $aluminumCreate->id;
+                                }
+                            }
+                        }
+                        $product->aluminums()->sync($ids);
+                    } else {
                         $product->aluminums()->detach();
+                    }
 
-                    if ($request->has($componente))
-                        $product->components()->sync($request->get($componente));
-                    else
+
+                    if ($request->has($component)) {
+                        $ids = array();
+                        foreach ($request->get($component) as $componentRequest) {
+                            foreach ($componentsAll as $componente) {
+                                if ($componente->id == $componentRequest) {
+                                    $componentCreate = Component::create([
+                                        'nome' => $componente->nome,
+                                        'qtd' => $componente->qtd,
+                                        'preco' => $componente->preco,
+                                        'is_modelo' => 0,
+                                        'categoria_componente_id' => $componente->categoria_componente_id,
+
+                                    ]);
+                                    $ids[] = $componentCreate->id;
+                                }
+                            }
+                        }
+                        $product->components()->sync($ids);
+                    } else {
                         $product->components()->detach();
+                    }
+
                 }
                 if ($products)
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
@@ -323,6 +385,9 @@ class BudgetController extends Controller
     {
         $budget = Budget::find($id);
         if ($budget) {
+            foreach ($budget->products as $product) {
+                $product->delete();
+            }
             $budget->delete();
             return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
         } else {
