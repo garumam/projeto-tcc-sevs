@@ -12,11 +12,6 @@ $(document).ready(function () {
             container.hide();
         }
     });
-    // $('.dropdown-menu li img').click(function () {
-    //     let value = $('#url-image');
-    //     value.val($(this).attr('src'));
-    //     $('#image-selecionar').attr("src", value.val());
-    // });
 
     $('#gridImagens div img').click(function () {
         let imagem = $(this).attr('src');
@@ -189,7 +184,6 @@ $(document).ready(function () {
         $('#bt-pdf-invisible').click();
     });
 
-
     $('#nav-Vidros-tab').click(function () {
         $('#bt-material').attr("href", '/materials/glass/create');
     });
@@ -199,7 +193,6 @@ $(document).ready(function () {
     $('#nav-Componentes-tab').click(function () {
         $('#bt-material').attr("href", '/materials/component/create');
     });
-
 
     $('#nav-Orçamento-tab').click(function () {
         changeTextBtBudget("Salvar");
@@ -221,31 +214,9 @@ $(document).ready(function () {
         changeTextBtBudget("Gerar PDF");
     });
 
-
     function changeTextBtBudget($texto) {
         $('#bt-budget-visible').text($texto);
     }
-
-    // //codigo para remove orçamento da tabela ordem de serviço
-    // let button = document.getElementsByClassName("deletar-orcamento-tabela");
-    // for (let i = 0; i < button.length; i++) {
-    //     button[i].addEventListener('click', function (e) {
-    //         let valorTotal = $('#total');
-    //         let total = $('#option-' + e.target.id).attr('name');
-    //         valorTotal.val(parseFloat(parseFloat(valorTotal.val()) - total).toFixed(2));
-    //         $('#' + e.target.id).remove();
-    //         $('.' + e.target.id).remove();
-    //     }, false);
-    // }
-
-    //codigo para remove material da tabela
-    // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
-    // for (let i = 0; i < buttonMaterial.length; i++) {
-    //     buttonMaterial[i].addEventListener('click', function (e) {
-    //         $('#' + e.target.id).remove();
-    //         $('.' + e.target.id).remove();
-    //     }, false);
-    // }
 
     $('tbody').on('click', '.deletar-material-tabela', function (e) {
         $('#' + e.target.id).remove();
@@ -267,14 +238,9 @@ $(document).ready(function () {
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
         let idinput;
         let produtoselecionado = $('#select-produto-material option:selected').val();
-        if(produtoselecionado == ''){
+        if (produtoselecionado === '') {
             mensagemAlerta('Selecione um produto!');
-        }else{
-
-            if(produtoselecionado == undefined)
-                produtoselecionado = '';
-
-
+        } else {
             if (selectvidro.is(":visible")) {
                 if (selectvidro.val().length !== 0) {
                     idselect = selectvidro.val();
@@ -298,16 +264,6 @@ $(document).ready(function () {
                             "</td>" +
                             "</tr>"
                         );
-
-                        // let buttonMaterial = document.getElementsByClassName("deletar-material-tabela");
-                        // for (let i = 0; i < buttonMaterial.length; i++) {
-                        //     buttonMaterial[i].addEventListener('click', function (e) {
-                        //         if (e.target.id === criaId) {
-                        //             $('#' + e.target.id).remove();
-                        //             $('.' + e.target.id).remove();
-                        //         }
-                        //     }, false);
-                        // }
                     } else {
                         mensagemAlerta('Material ja foi adicionado!');
                     }
@@ -386,11 +342,8 @@ $(document).ready(function () {
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
                 }
-
             }
-
         }
-
     });
 
     $('#bt-add-orcamento-order').click(function () {
@@ -558,41 +511,17 @@ $(document).ready(function () {
 
         $('#image-produto-material').attr('src', imagem);
 
-        linhaProdutoAtualiza($('#tabela-vidro').find('tr'),produtoselecionado);
-        linhaProdutoAtualiza($('#tabela-aluminio').find('tr'),produtoselecionado);
-        linhaProdutoAtualiza($('#tabela-componente').find('tr'),produtoselecionado);
-        // tr.each(function () {
-        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
-        //         $(this).show();
-        //     }else{
-        //         $(this).hide();
-        //     }
-        // });
-
-        // let traluminio = $('#tabela-aluminio').find('tr');
-        // traluminio.each(function () {
-        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
-        //         $(this).show();
-        //     }else{
-        //         $(this).hide();
-        //     }
-        // });
-        // let trcomponente = $('#tabela-componente').find('tr');
-        // trcomponente.each(function () {
-        //     if ($(this).data('produtoid') == produtoselecionado.val()) {
-        //         $(this).show();
-        //     }else{
-        //         $(this).hide();
-        //     }
-        // });
+        linhaProdutoAtualiza($('#tabela-vidro').find('tr'), produtoselecionado);
+        linhaProdutoAtualiza($('#tabela-aluminio').find('tr'), produtoselecionado);
+        linhaProdutoAtualiza($('#tabela-componente').find('tr'), produtoselecionado);
 
     });
 
-    function linhaProdutoAtualiza(tr,produtoselecionado) {
+    function linhaProdutoAtualiza(tr, produtoselecionado) {
         tr.each(function () {
             if ($(this).data('produtoid') == produtoselecionado.val()) {
                 $(this).show();
-            }else{
+            } else {
                 $(this).hide();
             }
         });
@@ -601,7 +530,6 @@ $(document).ready(function () {
     function trocarImagem(imgcontainer, imgpath) {
         imgcontainer.attr("src", imgpath);
     }
-
 
     function mensagemAlerta(mensagem) {
         $('#alertaMensagem').text(mensagem);

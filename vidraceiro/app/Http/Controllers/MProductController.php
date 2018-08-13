@@ -62,7 +62,6 @@ class MProductController extends Controller
 
         switch ($tab) {
             case '1':
-
                 $mproductcriado = new MProduct;
                 $mproductcriado = $mproductcriado->create($request->all());
                 if ($mproductcriado)
@@ -70,7 +69,7 @@ class MProductController extends Controller
                         ->with(compact('mproductcriado'));
                 break;
             case '2':
-
+                dd($request->all());
 
                 break;
             default:
