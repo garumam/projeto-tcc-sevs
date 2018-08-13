@@ -164,16 +164,16 @@ class BudgetController extends Controller
                     $component = 'id_componente_' . $product->id;
 
                     if ($request->has($glass)) {
-                        $ids = array();
-                        $ids2 = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($glass) as $glassRequest) {
-                            foreach ($glassesAll as $vidro) {
-                                foreach ($product->glasses()->get() as $glassProduct) {
-                                    if ($glassProduct->id == $glassRequest) {
-                                        $ids2[] = $glassRequest;
-                                    }
+                            foreach ($product->glasses()->get() as $glassProduct) {
+                                if ($glassProduct->id == $glassRequest) {
+                                    $idsExists[] = $glassRequest;
                                 }
-                                $ids2 = array_unique($ids2);
+                            }
+                            $idsExists = array_unique($idsExists);
+                            foreach ($glassesAll as $vidro) {
                                 if ($vidro->id == $glassRequest) {
                                     $glassCreate = Glass::create([
                                         'nome' => $vidro->nome,
@@ -184,21 +184,26 @@ class BudgetController extends Controller
                                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
                                         'is_modelo' => 0
                                     ]);
-                                    $ids[] = $glassCreate->id;
+                                    $idsNew[] = $glassCreate->id;
+                                    break;
                                 }
                             }
                         }
-//                        dd($request->get($glass));
-//                        dd($ids2);
-//                        dd( array_merge($ids,$ids2));
-                        $product->glasses()->sync(array_merge($ids, $ids2));
+                        $product->glasses()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->glasses()->detach();
                     }
 
                     if ($request->has($aluminum)) {
-                        $ids = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($aluminum) as $aluminumRequest) {
+                            foreach ($product->aluminums()->get() as $aluminumProduct) {
+                                if ($aluminumProduct->id == $aluminumRequest) {
+                                    $idsExists[] = $aluminumRequest;
+                                }
+                            }
+                            $idsExists = array_unique($idsExists);
                             foreach ($aluminumsAll as $aluminio) {
                                 if ($aluminio->id == $aluminumRequest) {
                                     $aluminumCreate = Aluminum::create([
@@ -212,19 +217,27 @@ class BudgetController extends Controller
                                         'is_modelo' => 0,
                                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
                                     ]);
-                                    $ids[] = $aluminumCreate->id;
+                                    $idsNew[] = $aluminumCreate->id;
+                                    break;
                                 }
                             }
                         }
-                        $product->aluminums()->sync($ids);
+                        $product->aluminums()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->aluminums()->detach();
                     }
 
 
                     if ($request->has($component)) {
-                        $ids = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($component) as $componentRequest) {
+                            foreach ($product->components()->get() as $componentProduct) {
+                                if ($componentProduct->id == $componentRequest) {
+                                    $idsExists[] = $componentRequest;
+                                }
+                            }
+                            $idsExists = array_unique($idsExists);
                             foreach ($componentsAll as $componente) {
                                 if ($componente->id == $componentRequest) {
                                     $componentCreate = Component::create([
@@ -235,11 +248,12 @@ class BudgetController extends Controller
                                         'categoria_componente_id' => $componente->categoria_componente_id,
 
                                     ]);
-                                    $ids[] = $componentCreate->id;
+                                    $idsNew[] = $componentCreate->id;
+                                    break;
                                 }
                             }
                         }
-                        $product->components()->sync($ids);
+                        $product->components()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->components()->detach();
                     }
@@ -365,10 +379,16 @@ class BudgetController extends Controller
                     $aluminum = 'id_aluminio_' . $product->id;
                     $component = 'id_componente_' . $product->id;
 
-
                     if ($request->has($glass)) {
-                        $ids = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($glass) as $glassRequest) {
+                            foreach ($product->glasses()->get() as $glassProduct) {
+                                if ($glassProduct->id == $glassRequest) {
+                                    $idsExists[] = $glassRequest;
+                                }
+                            }
+                            $idsExists = array_unique($idsExists);
                             foreach ($glassesAll as $vidro) {
                                 if ($vidro->id == $glassRequest) {
                                     $glassCreate = Glass::create([
@@ -380,18 +400,26 @@ class BudgetController extends Controller
                                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
                                         'is_modelo' => 0
                                     ]);
-                                    $ids[] = $glassCreate->id;
+                                    $idsNew[] = $glassCreate->id;
+                                    break;
                                 }
                             }
                         }
-                        $product->glasses()->sync($ids);
+                        $product->glasses()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->glasses()->detach();
                     }
 
                     if ($request->has($aluminum)) {
-                        $ids = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($aluminum) as $aluminumRequest) {
+                            foreach ($product->aluminums()->get() as $aluminumProduct) {
+                                if ($aluminumProduct->id == $aluminumRequest) {
+                                    $idsExists[] = $aluminumRequest;
+                                }
+                            }
+                            $idsExists = array_unique($idsExists);
                             foreach ($aluminumsAll as $aluminio) {
                                 if ($aluminio->id == $aluminumRequest) {
                                     $aluminumCreate = Aluminum::create([
@@ -405,19 +433,27 @@ class BudgetController extends Controller
                                         'is_modelo' => 0,
                                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
                                     ]);
-                                    $ids[] = $aluminumCreate->id;
+                                    $idsNew[] = $aluminumCreate->id;
+                                    break;
                                 }
                             }
                         }
-                        $product->aluminums()->sync($ids);
+                        $product->aluminums()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->aluminums()->detach();
                     }
 
 
                     if ($request->has($component)) {
-                        $ids = array();
+                        $idsNew = array();
+                        $idsExists = array();
                         foreach ($request->get($component) as $componentRequest) {
+                            foreach ($product->components()->get() as $componentProduct) {
+                                if ($componentProduct->id == $componentRequest) {
+                                    $idsExists[] = $componentRequest;
+                                }
+                            }
+                            $idsExists = array_unique($idsExists);
                             foreach ($componentsAll as $componente) {
                                 if ($componente->id == $componentRequest) {
                                     $componentCreate = Component::create([
@@ -428,15 +464,15 @@ class BudgetController extends Controller
                                         'categoria_componente_id' => $componente->categoria_componente_id,
 
                                     ]);
-                                    $ids[] = $componentCreate->id;
+                                    $idsNew[] = $componentCreate->id;
+                                    break;
                                 }
                             }
                         }
-                        $product->components()->sync($ids);
+                        $product->components()->sync(array_merge($idsNew, $idsExists));
                     } else {
                         $product->components()->detach();
                     }
-
                 }
                 if ($products)
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
