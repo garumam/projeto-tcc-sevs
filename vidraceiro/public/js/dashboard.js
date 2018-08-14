@@ -253,7 +253,7 @@ $(document).ready(function () {
                     let precovidro = selectvidro.find('option:selected').data('preco');
                     tbody = $('#tabela-vidro');
                     pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
-                    criaId = 'linha-vidro-' + idselect + '-' + contador++;
+                    criaId = 'linha-vidro-' + idselect;
                     if (idinput !== idselect && pegaIdLinha !== criaId) {
                         $('#ids').append(
                             '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
@@ -269,22 +269,22 @@ $(document).ready(function () {
                             "</tr>"
                         );
                     } else {
-                        // mensagemAlerta('Material ja foi adicionado!');
-                            contador = tbody.find('tr').length + 1;
-                            criaId = 'linha-vidro-' + idselect + '-' + contador++;
-                            $('#ids').append(
-                                '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
-                                '');
-                            tbody.append(
-                                '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
-                                '<th scope="row">' + idselect + '</th>' +
-                                '<td>' + nomeselect + '</td>' +
-                                '<td>' + 'R$' + precovidro + '</td>' +
-                                '<td>' +
-                                "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
-                                "</td>" +
-                                "</tr>"
-                            );
+                        mensagemAlerta('Material ja foi adicionado!');
+                        //     contador = tbody.find('tr').length + 1;
+                        //     criaId = 'linha-vidro-' + idselect + '-' + contador++;
+                        //     $('#ids').append(
+                        //         '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
+                        //         '');
+                        //     tbody.append(
+                        //         '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
+                        //         '<th scope="row">' + idselect + '</th>' +
+                        //         '<td>' + nomeselect + '</td>' +
+                        //         '<td>' + 'R$' + precovidro + '</td>' +
+                        //         '<td>' +
+                        //         "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
+                        //         "</td>" +
+                        //         "</tr>"
+                        //     );
                     }
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
