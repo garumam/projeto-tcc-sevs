@@ -186,21 +186,14 @@ class BudgetController extends Controller
                                 $idsExists[] = $vidro->id;
                             }
                         }
-
-                        $vidrodeletar = $vidrosAntigos->whereNotIn('vidro_id',$idsExists)->get();
-
-                        foreach ($vidrodeletar as $vdelete){
-                            $vdelete->delete();
-                        }
+                        $vidrosAntigos->whereNotIn('id', $idsExists)->delete();
 
                         $product->glasses()->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
-                        foreach ($vidrosAntigos->get() as $vdelete){
-                            $vdelete->delete();
-                        }
-                        $product->glasses()->detach();
+                        $vidrosAntigos->delete();
+
                     }
 
 
