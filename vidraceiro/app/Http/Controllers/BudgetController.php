@@ -162,10 +162,10 @@ class BudgetController extends Controller
                     $glass = 'id_vidro_' . $product->id;
                     $aluminum = 'id_aluminio_' . $product->id;
                     $component = 'id_componente_' . $product->id;
-                    $vidrosAntigos = $product->glasses()->where('is_modelo',0);
+                    $vidrosAntigos = $product->glasses();
 
                     if ($request->has($glass)) {
-                        $glassesAll = Glass::wherein('id', $request->only($glass)[$glass] )->get();
+                        $glassesAll = Glass::wherein('id', $request->$glass )->get();
 
                         $idsNew = array();
                         $idsExists = array();
