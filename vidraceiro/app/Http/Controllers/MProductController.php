@@ -129,9 +129,12 @@ class MProductController extends Controller
             case '2':
                 $mproductcriado = MProduct::find($request->m_produto_id);
                 if ($mproductcriado) {
-                    $mproductcriado->glasses()->sync($request->id_vidro_);
-                    $mproductcriado->aluminums()->sync($request->id_aluminio_);
-                    $mproductcriado->components()->sync($request->id_componente_);
+                    $mproductcriado->glasses()->detach();
+                    $mproductcriado->aluminums()->detach();
+                    $mproductcriado->components()->detach();
+                    $mproductcriado->glasses()->attach($request->id_vidro_);
+                    $mproductcriado->aluminums()->attach($request->id_aluminio_);
+                    $mproductcriado->components()->attach($request->id_componente_);
                     if ($mproductcriado)
                         return redirect()->back()->with('success', 'Material atualizado no produto com sucesso')
                             ->with(compact('mproductcriado'));
