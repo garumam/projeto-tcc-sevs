@@ -70,7 +70,7 @@ class MProductController extends Controller
                 break;
             case '2':
                 $mproductcriado = MProduct::find($request->m_produto_id);
-                if ($mproductcriado){
+                if ($mproductcriado) {
                     $mproductcriado->glasses()->sync($request->id_vidro_);
                     $mproductcriado->aluminums()->sync($request->id_aluminio_);
                     $mproductcriado->components()->sync($request->id_componente_);
@@ -100,14 +100,11 @@ class MProductController extends Controller
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $categories = Category::where('tipo', 'produto')->get();
-        $mproductedit = MProduct::with('aluminums', 'glasses', 'components')->find($id);
-
+        $mproductedit = MProduct::with('glasses', 'aluminums', 'components')->find($id);
+//        dd($mproductedit);
         $titulotabs = ['Produto', 'Material'];
         if ($mproductedit) {
             $categoryEdit = $mproductedit->category()->get();
-            $aluminumsProduct = $mproductedit->aluminums()->get();
-            $glassesProduct = $mproductedit->glasses()->get();
-            $componentsProduct = $mproductedit->components()->get();
             return view('dashboard.create.mproduct', compact('aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada', 'categories', 'mproductedit', 'categoryEdit', 'aluminumsProduct', 'glassesProduct', 'componentsProduct', 'titulotabs'))->with('title', 'Atualizar produto');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');
@@ -127,7 +124,15 @@ class MProductController extends Controller
                 }
                 break;
             case '2':
-
+                $mproductcriado = MProduct::find($request->m_produto_id);
+                if ($mproductcriado) {
+                    $mproductcriado->glasses()->sync($request->id_vidro_);
+                    $mproductcriado->aluminums()->sync($request->id_aluminio_);
+                    $mproductcriado->components()->sync($request->id_componente_);
+                    if ($mproductcriado)
+                        return redirect()->back()->with('success', 'Material atualizado no produto com sucesso')
+                            ->with(compact('mproductcriado'));
+                }
                 break;
             default:
         }
