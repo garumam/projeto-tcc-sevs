@@ -164,6 +164,7 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
+                        $repeticoes = array_count_values($request->$glass);
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
 
                         $idsNew = array();
@@ -171,16 +172,18 @@ class BudgetController extends Controller
                         foreach ($glassesAll as $vidro){
 
                             if($vidro->is_modelo == 1){
-                                $glassCreate = Glass::create([
-                                    'nome' => $vidro->nome,
-                                    'descricao' => $vidro->descricao,
-                                    'tipo' => $vidro->tipo,
-                                    'espessura' => $vidro->espessura,
-                                    'preco' => $vidro->preco,
-                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                    'is_modelo' => 0
-                                ]);
-                                $idsNew[] = $glassCreate->id;
+                                for($i = 0;$i < $repeticoes[$vidro->id];$i++){
+                                    $glassCreate = Glass::create([
+                                        'nome' => $vidro->nome,
+                                        'descricao' => $vidro->descricao,
+                                        'tipo' => $vidro->tipo,
+                                        'espessura' => $vidro->espessura,
+                                        'preco' => $vidro->preco,
+                                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                        'is_modelo' => 0
+                                    ]);
+                                    $idsNew[] = $glassCreate->id;
+                                }
                             }else{
                                 $idsExists[] = $vidro->id;
                             }

@@ -246,12 +246,12 @@ $(document).ready(function () {
                 if (selectvidro.val().length !== 0) {
                     idselect = selectvidro.val();
                     nomeselect = selectvidro.find('option:selected').text();
-                    idinput = $('.id-material-vidro').attr('value');
+                    //idinput = $('.id-material-vidro').attr('value');
                     let precovidro = selectvidro.find('option:selected').data('preco');
                     tbody = $('#tabela-vidro');
-                    pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
+                    //pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
                     criaId = 'linha-vidro-' + idselect;
-                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                    //if (idinput !== idselect && pegaIdLinha !== criaId) {
                         $('#ids').append(
                             '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
@@ -265,9 +265,9 @@ $(document).ready(function () {
                             "</td>" +
                             "</tr>"
                         );
-                    } else {
-                        mensagemAlerta('Material ja foi adicionado!');
-                    }
+                    //} else {
+                        //mensagemAlerta('Material ja foi adicionado!');
+                    //}
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
                 }
@@ -278,14 +278,14 @@ $(document).ready(function () {
                 if (selectaluminio.val().length !== 0) {
                     idselect = selectaluminio.val();
                     nomeselect = selectaluminio.find('option:selected').text();
-                    idinput = $('.id-material-aluminio').attr('value');
+                    //idinput = $('.id-material-aluminio').attr('value');
                     let medida = selectaluminio.find('option:selected').data('medida');
                     let peso = selectaluminio.find('option:selected').data('peso');
                     let precoaluminio = selectaluminio.find('option:selected').data('preco');
                     tbody = $('#tabela-aluminio');
-                    pegaIdLinha = $('#linha-aluminio-' + idselect).attr('id');
+                    //pegaIdLinha = $('#linha-aluminio-' + idselect).attr('id');
                     criaId = 'linha-aluminio-' + idselect;
-                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                    //if (idinput !== idselect && pegaIdLinha !== criaId) {
                         $('#ids').append(
                             '<input type="number" class="id-material ' + criaId + '" name="id_aluminio_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
@@ -302,9 +302,9 @@ $(document).ready(function () {
                             "</tr>"
                         );
 
-                    } else {
-                        mensagemAlerta('Material ja foi adicionado!');
-                    }
+                    //} else {
+                        //mensagemAlerta('Material ja foi adicionado!');
+                   // }
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
                 }
@@ -315,13 +315,13 @@ $(document).ready(function () {
                 if (selectcomponente.val().length !== 0) {
                     idselect = selectcomponente.val();
                     nomeselect = selectcomponente.find('option:selected').text();
-                    idinput = $('.id-material-componente').attr('value');
+                    //idinput = $('.id-material-componente').attr('value');
                     let qtd = selectcomponente.find('option:selected').data('qtd');
                     let precocomponente = selectcomponente.find('option:selected').data('preco');
                     tbody = $('#tabela-componente');
-                    pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
+                    //pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
                     criaId = 'linha-componente-' + idselect;
-                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                    //if (idinput !== idselect && pegaIdLinha !== criaId) {
                         $('#ids').append(
                             '<input type="number" class="id-material ' + criaId + '" name="id_componente_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
@@ -337,9 +337,9 @@ $(document).ready(function () {
                             "</tr>"
                         );
 
-                    } else {
-                        mensagemAlerta('Material ja foi adicionado!');
-                    }
+                    //} else {
+                       // mensagemAlerta('Material ja foi adicionado!');
+                    //}
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
                 }
