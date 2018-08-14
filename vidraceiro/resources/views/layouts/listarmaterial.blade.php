@@ -1,3 +1,4 @@
+
 <div class="form-row">
     <div class="form-group col-md-8">
         <label for="select-material">Materiais</label>
@@ -92,14 +93,17 @@
 
                 <!--INICIO BODY DO VIDRO-->
                 <tbody id="tabela-vidro">
+                @php
+                    $contador = 1;
+                @endphp
                 @if(!empty(session('mproductcriado')) || !empty($mproductedit))
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $glassP)
-                        <tr id="linha-vidro-{{$glassP->id}}">
+                        <tr id="linha-vidro-{{$glassP->id}}-{{$contador}}">
                             <th scope="row">{{$glassP->id}}</th>
                             <td>{{$glassP->nome}}</td>
                             <td>R${{$glassP->preco}}</td>
                             <td>
-                                <button id="linha-vidro-{{$glassP->id}}"
+                                <button id="linha-vidro-{{$glassP->id}}-{{$contador++}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                 </button>
 
@@ -152,14 +156,14 @@
                 <tbody id="tabela-aluminio" style="display: none;">
                 @if(!empty(session('mproductcriado')) || !empty($mproductedit))
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->aluminums : $mproductedit->aluminums as $aluminumP)
-                        <tr id="linha-aluminio-{{$aluminumP->id}}">
+                        <tr id="linha-aluminio-{{$aluminumP->id}}-{{$contador}}">
                             <th scope="row">{{$aluminumP->id}}</th>
                             <td>{{$aluminumP->perfil}}</td>
                             <td>{{$aluminumP->medida}}</td>
                             <td>{{$aluminumP->peso}}</td>
                             <td>{{$aluminumP->preco}}</td>
                             <td>
-                                <button id="linha-aluminio-{{$aluminumP->id}}"
+                                <button id="linha-aluminio-{{$aluminumP->id}}-{{$contador++}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                 </button>
 
@@ -214,13 +218,13 @@
                 <tbody id="tabela-componente" style="display: none;">
                 @if(!empty(session('mproductcriado')) || !empty($mproductedit))
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $mproductedit->components as $componentP)
-                        <tr id="linha-componente-{{$componentP->id}}">
+                        <tr id="linha-componente-{{$componentP->id}}-{{$contador}}">
                             <th scope="row">{{$componentP->id}}</th>
                             <td>{{$componentP->nome}}</td>
                             <td>{{$componentP->preco}}</td>
                             <td>{{$componentP->qtd}}</td>
                             <td>
-                                <button id="linha-componente-{{$componentP->id}}"
+                                <button id="linha-componente-{{$componentP->id}}-{{$contador++}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                 </button>
 
@@ -282,18 +286,21 @@
     <div class="form-group col-12">
         <div id="ids">
             @if(!empty(session('mproductcriado')) || !empty($mproductedit))
+                @php
+                    $contador = 1;
+                @endphp
                 @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->aluminums : $mproductedit->aluminums as $aluminumP)
-                    <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
+                    <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}-{{$contador++}}"
                            name="id_aluminio_[]"
                            value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $aluminumP)
-                    <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
+                    <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}-{{$contador++}}"
                            name="id_vidro_[]"
                            value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $mproductedit->components as $aluminumP)
-                    <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"
+                    <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}-{{$contador++}}"
                            name="id_componente_[]"
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
