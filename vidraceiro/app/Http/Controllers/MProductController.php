@@ -71,9 +71,6 @@ class MProductController extends Controller
             case '2':
                 $mproductcriado = MProduct::find($request->m_produto_id);
                 if ($mproductcriado) {
-//                    if (count($request->id_vidro_) < count(array_unique($request->id_vidro_))){
-//
-//                    }
                     $mproductcriado->glasses()->detach();
                     $mproductcriado->aluminums()->detach();
                     $mproductcriado->components()->detach();

@@ -270,7 +270,6 @@ $(document).ready(function () {
                         );
                     } else {
                         // mensagemAlerta('Material ja foi adicionado!');
-                        if (produtoselecionado != undefined){
                             contador = tbody.find('tr').length + 1;
                             criaId = 'linha-vidro-' + idselect + '-' + contador++;
                             $('#ids').append(
@@ -286,8 +285,6 @@ $(document).ready(function () {
                                 "</td>" +
                                 "</tr>"
                             );
-                        }
-
                     }
                 } else {
                     mensagemAlerta('Selecione um material para adicionar!');
