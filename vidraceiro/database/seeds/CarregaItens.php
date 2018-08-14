@@ -100,7 +100,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Incolor Temperado',
-            'descricao' => '',
+            'cor' => 'Incolor',
             'tipo' => 'Padrão',
             'espessura' => 8,
             'preco' => 100.00,
@@ -111,7 +111,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Verde Temperado',
-            'descricao' => '',
+            'cor' => 'Verde',
             'tipo' => 'Padrão',
             'espessura' => 8,
             'preco' => 110.00,
@@ -122,7 +122,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Fumê Temperado',
-            'descricao' => '',
+            'cor' => 'Fumê',
             'tipo' => 'Padrão',
             'espessura' => 8,
             'preco' => 140.00,
@@ -133,7 +133,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Incolor Temperado',
-            'descricao' => '',
+            'cor' => 'Incolor',
             'tipo' => 'Engenharia',
             'espessura' => 8,
             'preco' => 110.00,
@@ -144,7 +144,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Verde Temperado',
-            'descricao' => '',
+            'cor' => 'Verde',
             'tipo' => 'Engenharia',
             'espessura' => 8,
             'preco' => 130.00,
@@ -155,7 +155,7 @@ class CarregaItens extends Seeder
 
         Glass::create([
             'nome' => 'Vidro Fumê Temperado',
-            'descricao' => '',
+            'cor' => 'Fumê',
             'tipo' => 'Engenharia',
             'espessura' => 8,
             'preco' => 180.00,

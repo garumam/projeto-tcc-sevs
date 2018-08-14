@@ -49,9 +49,9 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="descricao">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"
-                                   value="{{$material->descricao or old('descricao')}}">
+                            <label for="cor">Cor</label>
+                            <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor"
+                                   value="{{$material->cor or old('cor')}}">
                         </div>
 
                         <div class="form-group col-md-4">

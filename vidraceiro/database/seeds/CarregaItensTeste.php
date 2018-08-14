@@ -33,22 +33,22 @@ class CarregaItensTeste extends Seeder
 
         Glass::create([
             'categoria_vidro_id'=> 9,
-            'descricao'=> '',
+            'cor'=> 'Incolor',
             'espessura'=> 8,
             'is_modelo'=> 0,
-            'nome'=> 'vidro incolor temperado',
+            'nome'=> 'Vidro Incolor Temperado',
             'preco'=> 100.0,
-            'tipo'=> 'padrão'
+            'tipo'=> 'Padrão'
         ]);
 
         Glass::create([
             'categoria_vidro_id'=> 9,
-            'descricao'=> '',
+            'cor'=> 'Fumê',
             'espessura'=> 8,
             'is_modelo'=> 0,
-            'nome'=> 'vidro fumê temperado',
+            'nome'=> 'Vidro Fumê Temperado',
             'preco'=> 140.0,
-            'tipo'=> 'padrão'
+            'tipo'=> 'Padrão'
         ]);
 
         Component::create([
