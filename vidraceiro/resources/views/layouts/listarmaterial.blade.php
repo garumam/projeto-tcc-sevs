@@ -295,12 +295,12 @@
                            name="id_aluminio_[]"
                            value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
-                @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $aluminumP)
+                @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $glassP)
                     <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
                            name="id_vidro_[]"
                            value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
-                @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $mproductedit->components as $aluminumP)
+                @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $mproductedit->components as $componentP)
                     <input type="number" class="id-material-componente linha-componente-{{$componentP->id}}-{{$contador++}}"
                            name="id_componente_[]"
                            value="{{$componentP->id}}" style="display: none;"/>
