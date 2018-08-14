@@ -251,12 +251,14 @@ $(document).ready(function () {
                     nomeselect = selectvidro.find('option:selected').text();
                     idinput = $('.id-material-vidro').attr('value');
                     let precovidro = selectvidro.find('option:selected').data('preco');
+                    let comparador = selectvidro.find('option:selected').data('comparador');
+                    let inputcomparar = $('#' + comparador);
                     tbody = $('#tabela-vidro');
                     pegaIdLinha = $('#linha-vidro-' + idselect).attr('id');
                     criaId = 'linha-vidro-' + idselect;
-                    if (idinput !== idselect && pegaIdLinha !== criaId) {
+                    if (idinput !== idselect && pegaIdLinha !== criaId && inputcomparar.val() == undefined) {
                         $('#ids').append(
-                            '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
+                            '<input id="' + comparador + '" type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
                         tbody.append(
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +

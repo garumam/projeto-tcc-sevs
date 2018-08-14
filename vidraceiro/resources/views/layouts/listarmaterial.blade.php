@@ -18,7 +18,8 @@
         <select id="select-vidro" name="vidro_id" class="custom-select">
             <option value="" selected>Selecione um vidro</option>
             @foreach($glasses as $glass)
-                <option data-preco="{{$glass->preco}}" value="{{$glass->id}}">{{$glass->nome}}</option>
+                <option data-preco="{{$glass->preco}}"
+                        data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome}}</option>
             @endforeach
         </select>
         <select id="select-aluminio" name="aluminio_id" class="custom-select"
@@ -295,7 +296,7 @@
                            value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $aluminumP)
-                    <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}-{{$contador++}}"
+                    <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}-{{$contador++}}"
                            name="id_vidro_[]"
                            value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
@@ -332,7 +333,7 @@
                                value="{{$aluminumP->id}}" style="display: none;"/>
                     @endforeach
                     @foreach($product->glasses as $glassP)
-                        <input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
+                        <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
                                name="id_vidro_{{$product->id}}[]"
                                value="{{$glassP->id}}" style="display: none;"/>
                     @endforeach
