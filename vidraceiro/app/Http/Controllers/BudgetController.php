@@ -162,7 +162,7 @@ class BudgetController extends Controller
                     $glass = 'id_vidro_' . $product->id;
                     $aluminum = 'id_aluminio_' . $product->id;
                     $component = 'id_componente_' . $product->id;
-                    $vidrosAntigos = $product->glasses();
+                    $vidrosProduto = $product->glasses();
 
                     if ($request->has($glass)) {
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
@@ -186,13 +186,13 @@ class BudgetController extends Controller
                                 $idsExists[] = $vidro->id;
                             }
                         }
-                        $vidrosAntigos->whereNotIn('id', $idsExists)->delete();
+                        $vidrosProduto->whereNotIn('vidro_id', $idsExists)->delete();
 
-                        $product->glasses()->sync(array_merge($idsNew, $idsExists));
+                        $vidrosProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
-                        $vidrosAntigos->delete();
+                        $vidrosProduto->delete();
 
                     }
 
