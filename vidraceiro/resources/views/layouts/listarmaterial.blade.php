@@ -99,12 +99,12 @@
                 @endphp
                 @if(!empty(session('mproductcriado')) || !empty($mproductedit))
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $glassP)
-                        <tr id="linha-vidro-{{$glassP->id}}-{{$contador}}">
+                        <tr id="linha-vidro-{{$glassP->id}}">
                             <th scope="row">{{$glassP->id}}</th>
                             <td>{{$glassP->nome}}</td>
                             <td>R${{$glassP->preco}}</td>
                             <td>
-                                <button id="linha-vidro-{{$glassP->id}}-{{$contador++}}"
+                                <button id="linha-vidro-{{$glassP->id}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                 </button>
 
@@ -296,7 +296,7 @@
                            value="{{$aluminumP->id}}" style="display: none;"/>
                 @endforeach
                 @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $aluminumP)
-                    <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}-{{$contador++}}"
+                    <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
                            name="id_vidro_[]"
                            value="{{$glassP->id}}" style="display: none;"/>
                 @endforeach
