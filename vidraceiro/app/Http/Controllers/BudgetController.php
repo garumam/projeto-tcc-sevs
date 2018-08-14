@@ -88,7 +88,7 @@ class BudgetController extends Controller
                 foreach ($mproduct->glasses()->get() as $vidro) {
                     $glassCreate = Glass::create([
                         'nome' => $vidro->nome,
-                        'descricao' => $vidro->descricao,
+                        'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
                         'espessura' => $vidro->espessura,
                         'preco' => $vidro->preco,
@@ -176,7 +176,7 @@ class BudgetController extends Controller
                             if($vidro->is_modelo == 1){
                                 $glassCreate = Glass::create([
                                     'nome' => $vidro->nome,
-                                    'descricao' => $vidro->descricao,
+                                    'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
                                     'espessura' => $vidro->espessura,
                                     'preco' => $vidro->preco,
@@ -336,7 +336,7 @@ class BudgetController extends Controller
                 foreach ($mproduct->glasses()->get() as $vidro) {
                     $glassCreate = Glass::create([
                         'nome' => $vidro->nome,
-                        'descricao' => $vidro->descricao,
+                        'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
                         'espessura' => $vidro->espessura,
                         'preco' => $vidro->preco,
@@ -413,7 +413,7 @@ class BudgetController extends Controller
                             if($vidro->is_modelo == 1){
                                 $glassCreate = Glass::create([
                                     'nome' => $vidro->nome,
-                                    'descricao' => $vidro->descricao,
+                                    'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
                                     'espessura' => $vidro->espessura,
                                     'preco' => $vidro->preco,
