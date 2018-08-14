@@ -256,7 +256,7 @@ $(document).ready(function () {
                             '<input type="number" class="id-material ' + criaId + '" name="id_vidro_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
                         tbody.append(
-                            '<tr id="' + criaId + '">' +
+                            '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + 'R$' + precovidro + '</td>' +
@@ -290,7 +290,7 @@ $(document).ready(function () {
                             '<input type="number" class="id-material ' + criaId + '" name="id_aluminio_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
                         tbody.append(
-                            '<tr id="' + criaId + '">' +
+                            '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + medida + '</td>' +
@@ -326,7 +326,7 @@ $(document).ready(function () {
                             '<input type="number" class="id-material ' + criaId + '" name="id_componente_' + produtoselecionado + '[]" value="' + idselect + '" style="display: none;" />' +
                             '');
                         tbody.append(
-                            '<tr id="' + criaId + '">' +
+                            '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + 'R$' + precocomponente + '</td>' +
