@@ -164,30 +164,32 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $repeticoes = array_count_values($request->$glass);
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($glassesAll as $vidro){
+
+                        foreach($request->$glass as $id){
+
+                            $vidro = $glassesAll->where('id',$id)->shift();
 
                             if($vidro->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$vidro->id];$i++){
-                                    $glassCreate = Glass::create([
-                                        'nome' => $vidro->nome,
-                                        'descricao' => $vidro->descricao,
-                                        'tipo' => $vidro->tipo,
-                                        'espessura' => $vidro->espessura,
-                                        'preco' => $vidro->preco,
-                                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                        'is_modelo' => 0
-                                    ]);
-                                    $idsNew[] = $glassCreate->id;
-                                }
+                                $glassCreate = Glass::create([
+                                    'nome' => $vidro->nome,
+                                    'descricao' => $vidro->descricao,
+                                    'tipo' => $vidro->tipo,
+                                    'espessura' => $vidro->espessura,
+                                    'preco' => $vidro->preco,
+                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                    'is_modelo' => 0
+                                ]);
+                                $idsNew[] = $glassCreate->id;
+
                             }else{
                                 $idsExists[] = $vidro->id;
                             }
                         }
+
                         $vidrosProduto->whereNotIn('vidro_id', $idsExists)->delete();
 
                         $vidrosProduto->sync(array_merge($idsNew, $idsExists));
@@ -199,28 +201,31 @@ class BudgetController extends Controller
                     }
 
                     if ($request->has($aluminum)) {
-                        $repeticoes = array_count_values($request->$aluminum);
+
                         $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($aluminumsAll as $aluminio){
+
+                        foreach($request->$aluminum as $id){
+
+                            $aluminio = $aluminumsAll->where('id',$id)->shift();
 
                             if($aluminio->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$aluminio->id];$i++) {
-                                    $aluminumCreate = Aluminum::create([
-                                        'perfil' => $aluminio->perfil,
-                                        'descricao' => $aluminio->descricao,
-                                        'medida' => $aluminio->medida,
-                                        'qtd' => $aluminio->qtd,
-                                        'peso' => $aluminio->peso,
-                                        'preco' => $aluminio->preco,
-                                        'tipo_medida' => $aluminio->tipo_medida,
-                                        'is_modelo' => 0,
-                                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                                    ]);
-                                    $idsNew[] = $aluminumCreate->id;
-                                }
+
+                                $aluminumCreate = Aluminum::create([
+                                    'perfil' => $aluminio->perfil,
+                                    'descricao' => $aluminio->descricao,
+                                    'medida' => $aluminio->medida,
+                                    'qtd' => $aluminio->qtd,
+                                    'peso' => $aluminio->peso,
+                                    'preco' => $aluminio->preco,
+                                    'tipo_medida' => $aluminio->tipo_medida,
+                                    'is_modelo' => 0,
+                                    'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                                ]);
+                                $idsNew[] = $aluminumCreate->id;
+
                             }else{
                                 $idsExists[] = $aluminio->id;
                             }
@@ -237,25 +242,27 @@ class BudgetController extends Controller
 
 
                     if ($request->has($component)) {
-                        $repeticoes = array_count_values($request->$component);
                         $componentsAll = Component::wherein('id', $request->$component )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($componentsAll as $componente){
+
+                        foreach($request->$component as $id){
+
+                            $componente = $componentsAll->where('id',$id)->shift();
 
                             if($componente->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$componente->id];$i++) {
-                                    $componentCreate = Component::create([
-                                        'nome' => $componente->nome,
-                                        'qtd' => $componente->qtd,
-                                        'preco' => $componente->preco,
-                                        'is_modelo' => 0,
-                                        'categoria_componente_id' => $componente->categoria_componente_id,
 
-                                    ]);
-                                    $idsNew[] = $componentCreate->id;
-                                }
+                                $componentCreate = Component::create([
+                                    'nome' => $componente->nome,
+                                    'qtd' => $componente->qtd,
+                                    'preco' => $componente->preco,
+                                    'is_modelo' => 0,
+                                    'categoria_componente_id' => $componente->categoria_componente_id,
+
+                                ]);
+                                $idsNew[] = $componentCreate->id;
+
                             }else{
                                 $idsExists[] = $componente->id;
                             }
@@ -394,30 +401,32 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $repeticoes = array_count_values($request->$glass);
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($glassesAll as $vidro){
+
+                        foreach($request->$glass as $id){
+
+                            $vidro = $glassesAll->where('id',$id)->shift();
 
                             if($vidro->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$vidro->id];$i++){
-                                    $glassCreate = Glass::create([
-                                        'nome' => $vidro->nome,
-                                        'descricao' => $vidro->descricao,
-                                        'tipo' => $vidro->tipo,
-                                        'espessura' => $vidro->espessura,
-                                        'preco' => $vidro->preco,
-                                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                        'is_modelo' => 0
-                                    ]);
-                                    $idsNew[] = $glassCreate->id;
-                                }
+                                $glassCreate = Glass::create([
+                                    'nome' => $vidro->nome,
+                                    'descricao' => $vidro->descricao,
+                                    'tipo' => $vidro->tipo,
+                                    'espessura' => $vidro->espessura,
+                                    'preco' => $vidro->preco,
+                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                    'is_modelo' => 0
+                                ]);
+                                $idsNew[] = $glassCreate->id;
+
                             }else{
                                 $idsExists[] = $vidro->id;
                             }
                         }
+
                         $vidrosProduto->whereNotIn('vidro_id', $idsExists)->delete();
 
                         $vidrosProduto->sync(array_merge($idsNew, $idsExists));
@@ -429,28 +438,31 @@ class BudgetController extends Controller
                     }
 
                     if ($request->has($aluminum)) {
-                        $repeticoes = array_count_values($request->$aluminum);
+
                         $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($aluminumsAll as $aluminio){
+
+                        foreach($request->$aluminum as $id){
+
+                            $aluminio = $aluminumsAll->where('id',$id)->shift();
 
                             if($aluminio->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$aluminio->id];$i++) {
-                                    $aluminumCreate = Aluminum::create([
-                                        'perfil' => $aluminio->perfil,
-                                        'descricao' => $aluminio->descricao,
-                                        'medida' => $aluminio->medida,
-                                        'qtd' => $aluminio->qtd,
-                                        'peso' => $aluminio->peso,
-                                        'preco' => $aluminio->preco,
-                                        'tipo_medida' => $aluminio->tipo_medida,
-                                        'is_modelo' => 0,
-                                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                                    ]);
-                                    $idsNew[] = $aluminumCreate->id;
-                                }
+
+                                $aluminumCreate = Aluminum::create([
+                                    'perfil' => $aluminio->perfil,
+                                    'descricao' => $aluminio->descricao,
+                                    'medida' => $aluminio->medida,
+                                    'qtd' => $aluminio->qtd,
+                                    'peso' => $aluminio->peso,
+                                    'preco' => $aluminio->preco,
+                                    'tipo_medida' => $aluminio->tipo_medida,
+                                    'is_modelo' => 0,
+                                    'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                                ]);
+                                $idsNew[] = $aluminumCreate->id;
+
                             }else{
                                 $idsExists[] = $aluminio->id;
                             }
@@ -467,25 +479,27 @@ class BudgetController extends Controller
 
 
                     if ($request->has($component)) {
-                        $repeticoes = array_count_values($request->$component);
                         $componentsAll = Component::wherein('id', $request->$component )->get();
 
                         $idsNew = array();
                         $idsExists = array();
-                        foreach ($componentsAll as $componente){
+
+                        foreach($request->$component as $id){
+
+                            $componente = $componentsAll->where('id',$id)->shift();
 
                             if($componente->is_modelo == 1){
-                                for($i = 0;$i < $repeticoes[$componente->id];$i++) {
-                                    $componentCreate = Component::create([
-                                        'nome' => $componente->nome,
-                                        'qtd' => $componente->qtd,
-                                        'preco' => $componente->preco,
-                                        'is_modelo' => 0,
-                                        'categoria_componente_id' => $componente->categoria_componente_id,
 
-                                    ]);
-                                    $idsNew[] = $componentCreate->id;
-                                }
+                                $componentCreate = Component::create([
+                                    'nome' => $componente->nome,
+                                    'qtd' => $componente->qtd,
+                                    'preco' => $componente->preco,
+                                    'is_modelo' => 0,
+                                    'categoria_componente_id' => $componente->categoria_componente_id,
+
+                                ]);
+                                $idsNew[] = $componentCreate->id;
+
                             }else{
                                 $idsExists[] = $componente->id;
                             }
