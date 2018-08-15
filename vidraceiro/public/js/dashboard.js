@@ -24,9 +24,9 @@ $(document).ready(function () {
 
 
     $('#select-categoria').change(function () {
-        let base_url = "/img/semimagem.png";
-        $('#url-image').val(base_url);
-        $('#image-selecionar').attr("src", base_url);
+        // let base_url = "/img/semimagem.png";
+        // $('#url-image').val(base_url);
+        // $('#image-selecionar').attr("src", base_url);
         $('#gridImagens div img').removeClass('thumbnail');
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');

@@ -26,7 +26,7 @@
                     <div class="topo-tab">
 
                         <button id="bt-product-visible" class="btn btn-primary btn-custom"
-                                type="submit">{{empty($mproductedit) ? 'Adicionar': 'Atualizar'}}</button>
+                                type="submit">Salvar</button>
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                             <div class="form-group col-md-4">
                                 <label>Imagem</label>
                                 <div class="imagem-modal">
-                                    <img id="image-selecionar" src="{{ '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
+                                    <img id="image-selecionar" src="{{ !empty($mproductedit) ? $mproductedit->imagem : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
                                          alt="Responsive image">
                                     <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>
