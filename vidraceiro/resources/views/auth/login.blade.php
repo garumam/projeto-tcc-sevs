@@ -10,20 +10,20 @@
         </div>
         <h1 class="title">{{ __('Login') }}</h1>
         <div class="form-label-group">
+            <label for="email">{{ __('E-Mail') }}</label>
             <input type="email" id="email"
                    class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
                    value="{{ old('email') }}" placeholder="Email address" required>
-            <label for="email">{{ __('E-Mail Address') }}</label>
             @if($errors->has('email'))
                 <span class="badge badge-danger mt-3">{{ $errors->first('email') }}</span>
             @endif
         </div>
 
         <div class="form-label-group">
+            <label for="password">{{ __('Password') }}</label>
             <input type="password" id="password"
                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                    name="password" placeholder="Password" required>
-            <label for="password">{{ __('Password') }}</label>
             @if ($errors->has('password'))
                 <span class="badge badge-danger mt-3">{{ $errors->first('password') }}</span>
             @endif
@@ -36,7 +36,7 @@
                 {{ __('Remember Me') }}
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block btn-custom"
+        <button class="btn btn-md btn-primary btn-block btn-custom"
                 type="submit">{{ __('Login') }}</button>
         <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p> -->
     </form>
