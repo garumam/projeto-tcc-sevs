@@ -295,6 +295,7 @@ body {
 .nav-tabs .nav-link.disabled {
     color: #8a99a1 !important;
 }
+
 /*.form-group .topo {*/
 /*padding: 0 !important;*/
 /*}*/
@@ -305,7 +306,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.img-thumbnail {
+.images-modal {
     margin: .3rem;
     height: 110px;
 }
@@ -314,6 +315,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    width: 120px;
 }
 
 .alerta {
@@ -339,8 +341,18 @@ body {
     border-top: 0 !important;
 }
 
+.img-thumbnail {
+    padding: 0 !important;
+}
+
 .thumbnail {
     border: 5px solid #0acf97;
+}
+
+#image-selecionar {
+    border-radius: .4rem;
+    padding-left: 0 !important;
+    /*border: 2px solid #191919;*/
 }
 
 .modal-title {

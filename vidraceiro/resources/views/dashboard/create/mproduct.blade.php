@@ -75,9 +75,9 @@
                             <div class="form-group col-md-4">
                                 <label>Imagem</label>
                                 <div class="imagem-modal">
-                                    <img id="image-selecionar" src="{{ '/img/semimagem.png' }}" class="img-fluid"
+                                    <img id="image-selecionar" src="{{ '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
                                          alt="Responsive image">
-                                    <a href="#" class="btn btn-md btn-primary btn-custom w-50" data-toggle="modal"
+                                    <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>
                                     <label for="url-image"></label>
                                     <input type="text" id="url-image" name="imagem" style="display: none;">
@@ -175,7 +175,7 @@
                                     @for($i = 0; $i < count($boxdiversos); $i++ )
                                         <div class="col-">
                                             <img id="{{$i}}" src="{{ '/img/boxdiversos/'.$boxdiversos[$i]}}"
-                                                 class="img-fluid img-thumbnail"
+                                                 class="img-fluid img-thumbnail images-modal"
                                                  alt="Responsive image">
                                         </div>
                                     @endfor
@@ -186,7 +186,7 @@
                                     @for($i = 0; $i < count($boxpadrao); $i++ )
                                         <div class="col-">
                                             <img id="{{$i}}" src="{{ '/img/boxpadrao/'.$boxpadrao[$i]}}"
-                                                 class="img-fluid img-thumbnail"
+                                                 class="img-fluid img-thumbnail images-modal"
                                                  alt="Responsive image">
                                         </div>
                                     @endfor
@@ -197,7 +197,7 @@
                                     @for($i = 0; $i < count($ferragem1000); $i++ )
                                         <div class="col-">
                                             <img id="{{$i}}" src="{{ '/img/ferragem1000/'.$ferragem1000[$i]}}"
-                                                 class="img-fluid img-thumbnail"
+                                                 class="img-fluid img-thumbnail images-modal"
                                                  alt="Responsive image">
                                         </div>
                                     @endfor
@@ -208,7 +208,7 @@
                                     @for($i = 0; $i < count($ferragem3000); $i++ )
                                         <div class="col-">
                                             <img id="{{$i}}" src="{{ '/img/ferragem3000/'.$ferragem3000[$i]}}"
-                                                 class="img-fluid img-thumbnail"
+                                                 class="img-fluid img-thumbnail images-modal"
                                                  alt="Responsive image">
                                         </div>
                                     @endfor
@@ -219,7 +219,7 @@
                                     @for($i = 0; $i < count($kitsacada); $i++ )
                                         <div class="col-">
                                             <img id="{{$i}}" src="{{ '/img/kitsacada/'.$kitsacada[$i]}}"
-                                                 class="img-fluid img-thumbnail"
+                                                 class="img-fluid img-thumbnail images-modal"
                                                  alt="Responsive image">
                                         </div>
                                     @endfor
