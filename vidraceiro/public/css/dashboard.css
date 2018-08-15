@@ -341,17 +341,12 @@ body {
     border-top: 0 !important;
 }
 
-.img-thumbnail {
-    padding: 0 !important;
-}
-
 .thumbnail {
     border: 5px solid #0acf97;
 }
 
 #image-selecionar {
     border-radius: .4rem;
-    padding-left: 0 !important;
     /*border: 2px solid #191919;*/
 }
 
