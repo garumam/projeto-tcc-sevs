@@ -350,6 +350,16 @@ body {
     /*border: 2px solid #191919;*/
 }
 
+.card-text {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0 0 0;
+}
+
+.card-text label {
+    margin: 0;
+}
+
 .modal-title {
     color: #191919;
 }

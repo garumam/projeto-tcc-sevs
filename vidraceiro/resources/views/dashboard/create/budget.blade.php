@@ -457,12 +457,12 @@
                         </div>
 
 
-                    @include('layouts.listarmaterial')
+                        @include('layouts.listarmaterial')
 
-                            @if(empty($budgetedit))
-                                <input type="hidden" name="budgetid"
-                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
-                            @endif
+                        @if(empty($budgetedit))
+                            <input type="hidden" name="budgetid"
+                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
+                        @endif
                         <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
@@ -485,20 +485,18 @@
                                     <h4 class="card-title cor-texto">Total</h4>
                                 </div>
 
-                                @if(!empty(session('products')))
-                                    @foreach(Session::get('products') as $product)
-
-                                        <label class="card-text">{{$product->mproduct->nome}}</label>
-
-                                    @endforeach
+                                @if(!empty(session('products')) || !empty($products))
+                                    <div class="card-text">
+                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                            <label>{{$product->mproduct->nome}}</label>
+                                        @endforeach
+                                    </div>
                                 @endif
-                                @if(!empty($products))
-                                    @foreach($products as $product)
-
-                                        <label class="card-text">{{$product->mproduct->nome}}</label>
-
-                                    @endforeach
-                                @endif
+                                {{--@if(!empty($products))--}}
+                                {{--@foreach($products as $product)--}}
+                                {{--<label class="card-text">{{$product->mproduct->nome}}</label>--}}
+                                {{--@endforeach--}}
+                                {{--@endif--}}
 
                             </div>
 
@@ -507,13 +505,17 @@
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
-                                    <h4 class="card-title cor-texto">Materiais</h4>
+                                    <h4 class="card-title cor-texto">Vidros</h4>
                                 </div>
-                                <label class="card-text">Vidro 1</label>
-                                <label class="card-text">Vidro 1</label>
-                                <label class="card-text">Vidro 1</label>
-                                <label class="card-text">Vidro 1</label>
-                                <label class="card-text">Vidro 1</label>
+                                @if(!empty(session('products')) || !empty($products))
+                                    <div class="card-text">
+                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                            @foreach($product->glasses as $glass)
+                                                <label>{{$glass->nome}}</label>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                @endif
 
                             </div>
 
@@ -523,14 +525,38 @@
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
                                 <div class="topo px-0 py-0 h-auto">
-                                    <h4 class="card-title cor-texto">Componentes</h4>
+                                    <h4 class="card-title cor-texto">Aluminios</h4>
                                 </div>
-                                <label class="card-text">Roldana</label>
-                                <label class="card-text">Roldana</label>
-                                <label class="card-text">Roldana</label>
+                                @if(!empty(session('products')) || !empty($products))
+                                    <div class="card-text">
+                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                            @foreach($product->aluminums as $aluminum)
+                                                <label>{{$aluminum->perfil .' '. $aluminum->descricao}}</label>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
 
                         </div>
+                            <div class="form-row">
+
+                                <div class="card-material custom-card custom-card-total col-md p-3">
+                                    <div class="topo px-0 py-0 h-auto">
+                                        <h4 class="card-title cor-texto">Componentes</h4>
+                                    </div>
+                                    @if(!empty(session('products')) || !empty($products))
+                                        <div class="card-text">
+                                            @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                                @foreach($product->components as $component)
+                                                    <label>{{$component->nome}}</label>
+                                                @endforeach
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+
+                            </div>
 
                         <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 
