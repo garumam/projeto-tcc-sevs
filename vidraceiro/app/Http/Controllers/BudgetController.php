@@ -132,9 +132,9 @@ class BudgetController extends Controller
                 if ($product) {
                     $budgetcriado = Budget::find($request->budgetid);
                     $budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal($request->budgetid)) {
+                    if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
                         $products = $budgetcriado->products;
-                        $budgetcriado = Budget::find($request->budgetid);
+                        //$budgetcriado = Budget::find($request->budgetid);
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
                             ->with(compact('budgetcriado'))
                             ->with(compact('products'));
@@ -146,9 +146,8 @@ class BudgetController extends Controller
 
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid', 'budgetid']));
-
-                if ($product && self::atualizaTotal($request->budgetid)) {
-                    $budgetcriado = Budget::find($request->budgetid);
+                $budgetcriado = Budget::find($request->budgetid);
+                if ($product && self::atualizaTotal(null,$budgetcriado)) {
                     $products = $budgetcriado->products;
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
                         ->with(compact('budgetcriado'))
@@ -283,7 +282,7 @@ class BudgetController extends Controller
 
                 }
 
-                if ($budgetcriado && self::atualizaTotal($request->budgetid)) {
+                if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
                     $budgetcriado = Budget::with('products')->find($request->budgetid);
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
                         ->with(compact('budgetcriado'))
@@ -330,8 +329,8 @@ class BudgetController extends Controller
             case '1': //tab orçamento
                 $budgetcriado = Budget::find($id);
                 $margemlucro = $request->margem_lucro === null? 100 : $request->margem_lucro;
-                $budgetcriado = $budgetcriado->update(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
-                if ($budgetcriado && self::atualizaTotal($id))
+                $budgetcriado->update(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
+                if ($budgetcriado && self::atualizaTotal(null,$budgetcriado))
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
@@ -383,14 +382,14 @@ class BudgetController extends Controller
                 if ($product) {
                     $budgetcriado = Budget::find($id);
                     $budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal($id))
+                    if ($budgetcriado && self::atualizaTotal(null,$budgetcriado))
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
                 }
                 break;
             case '3': //tab editar
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
-                if ($product && self::atualizaTotal($id))
+                if ($product && self::atualizaTotal($id, null))
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso');
 
                 break;
@@ -520,7 +519,7 @@ class BudgetController extends Controller
 
                     }
                 }
-                if ($products && self::atualizaTotal($id))
+                if ($products && self::atualizaTotal(null,$budgetcriado))
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
                 break;
             case '5': //tab total
@@ -547,10 +546,14 @@ class BudgetController extends Controller
     }
 
 
-    public function atualizaTotal($budgetid){
+    public function atualizaTotal($budgetid, $budget){
 
+        if($budgetid === null){
+            $budgetcriado = $budget;
+        }else{
+            $budgetcriado = Budget::with('products')->find($budgetid);
+        }
 
-        $budgetcriado = Budget::with('products')->find($budgetid);
         $productsids = array();
         foreach($budgetcriado->products as $product){
             $productsids[] = $product->id;
@@ -564,12 +567,13 @@ class BudgetController extends Controller
             $resultVidro += $m2 * $product->glasses()->sum('preco');
 
             $resultAluminio = 0.0;
-            foreach($product->aluminums() as $aluminum){
+            foreach($product->aluminums()->get() as $aluminum){
                 //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
                 $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
             }
+
             $resultComponente = 0.0;
-            foreach($product->components() as $component){
+            foreach($product->components()->get() as $component){
                 $resultComponente += $component['preco'] * $component['qtd'];
             }
 
