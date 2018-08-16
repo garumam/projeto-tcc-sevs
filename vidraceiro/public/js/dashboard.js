@@ -36,6 +36,8 @@ $(document).ready(function () {
             if (contadorCategoria !== 1) {
                 $('#url-image').val(base_url);
                 $('#image-selecionar').attr("src", base_url);
+            }else{
+                $('#url-image').val(imagemselecionar.attr('src'));
             }
         }
 
