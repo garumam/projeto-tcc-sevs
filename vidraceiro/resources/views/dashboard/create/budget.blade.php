@@ -488,15 +488,20 @@
                                 @if(!empty(session('products')) || !empty($products))
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                            <label>Produto:{{$product->mproduct->nome}} M²:{{$product['altura']*$product['largura']}} Qtd:{{$product['qtd']}}</label>
+                                            <label>Produto: {{$product->mproduct->nome}}
+                                                M²: {{$product['altura']*$product['largura']}}
+                                                Qtd: {{$product['qtd']}}</label>
                                         @endforeach
 
                                         @if(!empty($budgetedit))
-                                                <label><b>Valor do orçamento sem lucro: R$ {{ $budgetedit['total']/(1+$budgetedit['margem_lucro']/100) }}</b></label>
-                                                <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
+                                            <label><b>Valor do orçamento sem lucro:
+                                                    R$ {{ $budgetedit['total']/(1+$budgetedit['margem_lucro']/100) }}</b></label>
+                                            <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
                                         @elseif(Session::get('budgetcriado'))
-                                                <label><b>Valor do orçamento sem lucro: R$ {{ Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100) }}</b></label>
-                                                <label><b>Valor do orçamento: R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
+                                            <label><b>Valor do orçamento sem lucro:
+                                                    R$ {{ Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100) }}</b></label>
+                                            <label><b>Valor do orçamento:
+                                                    R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
                                         @endif
                                     </div>
                                 @endif
@@ -519,11 +524,9 @@
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
-                                            @forelse($product->glasses as $glass)
+                                            @foreach($product->glasses as $glass)
                                                 <label>Nome:{{$glass->nome .' '. $glass->tipo .' Preço: R$'. $glass->preco}}</label>
-                                            @empty
-                                                <label>Nenhum vidro adicionado!</label>
-                                            @endforelse
+                                            @endforeach
                                         @endforeach
                                     </div>
                                 @endif
@@ -542,38 +545,34 @@
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
-                                            @forelse($product->aluminums as $aluminum)
+                                            @foreach($product->aluminums as $aluminum)
                                                 <label>Perfil:{{$aluminum->perfil .' '. $aluminum->descricao .' Qtd: '.$aluminum->qtd}}</label>
-                                            @empty
-                                                <label>Nenhum alumínio adicionado!</label>
-                                            @endforelse
+                                            @endforeach
                                         @endforeach
                                     </div>
                                 @endif
                             </div>
 
                         </div>
-                            <div class="form-row">
+                        <div class="form-row">
 
-                                <div class="card-material custom-card custom-card-total col-md p-3">
-                                    <div class="topo px-0 py-0 h-auto">
-                                        <h4 class="card-title cor-texto">Componentes</h4>
-                                    </div>
-                                    @if(!empty(session('products')) || !empty($products))
-                                        <div class="card-text">
-                                            @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                                <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
-                                                @forelse($product->components as $component)
-                                                    <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' Preço:R$ '.$component->preco}}</label>
-                                                @empty
-                                                    <label>Nenhum componente adicionado!</label>
-                                                @endforelse
-                                            @endforeach
-                                        </div>
-                                    @endif
+                            <div class="card-material custom-card custom-card-total col-md p-3">
+                                <div class="topo px-0 py-0 h-auto">
+                                    <h4 class="card-title cor-texto">Componentes</h4>
                                 </div>
-
+                                @if(!empty(session('products')) || !empty($products))
+                                    <div class="card-text">
+                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                            <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
+                                            @foreach($product->components as $component)
+                                                <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' Preço:R$ '.$component->preco}}</label>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
+
+                        </div>
 
                         <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 
