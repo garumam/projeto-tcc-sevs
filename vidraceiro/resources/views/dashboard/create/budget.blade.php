@@ -473,8 +473,8 @@
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budget) ?  route('budgets.update',['id'=>$budget->id,'tag' => '5']) :  route('budgets.store',['tag' => '5'])}}">
-                        @if(!empty($budget))
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '5']) :  route('budgets.store',['tag' => '5'])}}">
+                        @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
                         @csrf
@@ -488,8 +488,16 @@
                                 @if(!empty(session('products')) || !empty($products))
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                            <label>{{$product->mproduct->nome}}</label>
+                                            <label>Produto:{{$product->mproduct->nome}} M²:{{$product['altura']*$product['largura']}} Qtd:{{$product['qtd']}}</label>
                                         @endforeach
+
+                                        @if(!empty($budgetedit))
+                                                <label><b>Valor do orçamento sem lucro: R$ {{ $budgetedit['total']/(1+$budgetedit['margem_lucro']/100) }}</b></label>
+                                                <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
+                                        @elseif(Session::get('budgetcriado'))
+                                                <label><b>Valor do orçamento sem lucro: R$ {{ Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100) }}</b></label>
+                                                <label><b>Valor do orçamento: R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
+                                        @endif
                                     </div>
                                 @endif
                                 {{--@if(!empty($products))--}}
@@ -510,9 +518,12 @@
                                 @if(!empty(session('products')) || !empty($products))
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                            @foreach($product->glasses as $glass)
-                                                <label>{{$glass->nome}}</label>
-                                            @endforeach
+                                            <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
+                                            @forelse($product->glasses as $glass)
+                                                <label>Nome:{{$glass->nome .' '. $glass->tipo .' Preço: R$'. $glass->preco}}</label>
+                                            @empty
+                                                <label>Nenhum vidro adicionado!</label>
+                                            @endforelse
                                         @endforeach
                                     </div>
                                 @endif
@@ -530,9 +541,12 @@
                                 @if(!empty(session('products')) || !empty($products))
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                            @foreach($product->aluminums as $aluminum)
-                                                <label>{{$aluminum->perfil .' '. $aluminum->descricao}}</label>
-                                            @endforeach
+                                            <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
+                                            @forelse($product->aluminums as $aluminum)
+                                                <label>Perfil:{{$aluminum->perfil .' '. $aluminum->descricao .' Qtd: '.$aluminum->qtd}}</label>
+                                            @empty
+                                                <label>Nenhum alumínio adicionado!</label>
+                                            @endforelse
                                         @endforeach
                                     </div>
                                 @endif
@@ -548,9 +562,12 @@
                                     @if(!empty(session('products')) || !empty($products))
                                         <div class="card-text">
                                             @foreach(!empty($products) ? $products : Session::get('products') as $product)
-                                                @foreach($product->components as $component)
-                                                    <label>{{$component->nome}}</label>
-                                                @endforeach
+                                                <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
+                                                @forelse($product->components as $component)
+                                                    <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' Preço:R$ '.$component->preco}}</label>
+                                                @empty
+                                                    <label>Nenhum componente adicionado!</label>
+                                                @endforelse
                                             @endforeach
                                         </div>
                                     @endif
