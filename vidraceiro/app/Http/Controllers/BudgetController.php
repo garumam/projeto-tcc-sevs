@@ -76,7 +76,7 @@ class BudgetController extends Controller
             case '1': //tab orçamento
                 $budgetcriado = new Budget;
 
-                $margemlucro = $request->margem_lucro == null? 100 : $request->margem_lucro;
+                $margemlucro = $request->margem_lucro === null? 100 : $request->margem_lucro;
                 $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
@@ -329,7 +329,7 @@ class BudgetController extends Controller
         switch ($tab) {
             case '1': //tab orçamento
                 $budgetcriado = Budget::find($id);
-                $margemlucro = $request->margem_lucro == null? 100 : $request->margem_lucro;
+                $margemlucro = $request->margem_lucro === null? 100 : $request->margem_lucro;
                 $budgetcriado = $budgetcriado->update(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
                 if ($budgetcriado && self::atualizaTotal($id))
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
@@ -576,9 +576,8 @@ class BudgetController extends Controller
             $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);
 
         }
-        $margemLucro = ($budgetcriado['margem_lucro'] != 0)? $budgetcriado['margem_lucro'] : 0;
 
-        $valorTotalDeProdutos *= (1 + $margemLucro / 100);
+        $valorTotalDeProdutos *= (1 + $budgetcriado['margem_lucro'] / 100);
 
         return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
 
