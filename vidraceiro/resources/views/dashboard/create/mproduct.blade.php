@@ -75,7 +75,7 @@
                             <div class="form-group col-md-4">
                                 <label>Imagem</label>
                                 <div class="imagem-modal">
-                                    <img id="image-selecionar" src="{{ !empty($mproductedit) ? $mproductedit->imagem : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
+                                    <img id="image-selecionar" data-produto="{{!empty($mproductedit) ? true : false}}" src="{{ !empty($mproductedit) ? $mproductedit->imagem : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
                                          alt="Responsive image">
                                     <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
                                        data-target="#imagensModal">Selecionar</a>

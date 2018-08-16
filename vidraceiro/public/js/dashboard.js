@@ -22,11 +22,23 @@ $(document).ready(function () {
         $(this).addClass('thumbnail');
     });
 
+    var contadorCategoria = 0;
 
     $('#select-categoria').change(function () {
-        // let base_url = "/img/semimagem.png";
-        // $('#url-image').val(base_url);
-        // $('#image-selecionar').attr("src", base_url);
+        let base_url = "/img/semimagem.png";
+        let imagemselecionar = $('#image-selecionar');
+
+        if (imagemselecionar.attr('src') !== base_url && imagemselecionar.data('produto') === false) {
+            $('#url-image').val(base_url);
+            $('#image-selecionar').attr("src", base_url);
+        } else {
+            contadorCategoria++;
+            if (contadorCategoria !== 1) {
+                $('#url-image').val(base_url);
+                $('#image-selecionar').attr("src", base_url);
+            }
+        }
+
         $('#gridImagens div img').removeClass('thumbnail');
         let valueSelected = $('#select-categoria option:selected').val();
         let boxdiversos = $('#boxdiversos');
