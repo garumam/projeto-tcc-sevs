@@ -576,7 +576,8 @@ class BudgetController extends Controller
             $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);
 
         }
-        $margemLucro = $budgetcriado['margem_lucro'] != null? $budgetcriado['margem_lucro'] : 100;
+        $margemLucro = ($budgetcriado['margem_lucro'] != 0)? $budgetcriado['margem_lucro'] : 0;
+
         $valorTotalDeProdutos *= (1 + $margemLucro / 100);
 
         return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
