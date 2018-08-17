@@ -333,7 +333,7 @@
                                value="{{$aluminumP->id}}" style="display: none;"/>
                     @endforeach
                     @foreach($product->glasses as $glassP)
-                        <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
+                        <input id="{{ trim($glassP->cor . $glassP->tipo . $glassP->categoria_vidro_id . $product['id']) }}" type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"
                                name="id_vidro_{{$product->id}}[]"
                                value="{{$glassP->id}}" style="display: none;"/>
                     @endforeach
