@@ -270,7 +270,7 @@
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
-                                <input type="hidden" name="budgetid"
+                                <input type="hidden" name="budget_id"
                                        value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                             @endif
                         </div>
@@ -390,7 +390,7 @@
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
-                                <input type="hidden" name="budgetid"
+                                <input type="hidden" name="budget_id"
                                        value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                             @endif
                         </div>
@@ -463,7 +463,7 @@
                         @include('layouts.listarmaterial')
 
                         @if(empty($budgetedit))
-                            <input type="hidden" name="budgetid"
+                            <input type="hidden" name="budget_id"
                                    value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
                         @endif
                         <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>

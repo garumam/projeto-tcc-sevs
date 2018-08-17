@@ -97,47 +97,6 @@ class CarregaItensTeste extends Seeder
             'nome'=> 'modelo produto1',
         ]);
 
-        Product::create([
-            'altura'=> 4.321,
-            'largura'=> 1.234,
-            'localizacao'=> 'Quarto',
-            'm_produto_id'=> 1,
-            'qtd'=> 1,
-            'valor_mao_obra'=> 100
-        ]);
-
-        Product::create([
-            'altura'=> 0.544,
-            'largura'=> 0.866,
-            'localizacao'=> 'Banheiro',
-            'm_produto_id'=> 3,
-            'qtd'=> 2,
-            'valor_mao_obra'=> 200
-        ]);
-
-        Product::create([
-            'altura'=> 0.123,
-            'largura'=> 0.321,
-            'localizacao'=> 'Sala',
-            'm_produto_id'=> 2,
-            'qtd'=> 3,
-            'valor_mao_obra'=> 50
-        ]);
-
-        $mproduct = MProduct::find(3);
-        $mproduct->aluminums()->attach([1]);
-        $mproduct->components()->attach([1]);
-        $mproduct->glasses()->attach([1]);
-
-        $product = Product::find(2);
-        $product->aluminums()->attach([17]);
-        $product->components()->attach([2]);
-        $product->glasses()->attach([7]);
-
-        $product = Product::find(3);
-        $product->glasses()->attach([8]);
-
-
         Budget::create([
             'bairro'=> 'Centro',
             'cep'=> 28907170,
@@ -168,6 +127,50 @@ class CarregaItensTeste extends Seeder
             'uf' => 'RJ'
         ]);
 
+        Product::create([
+            'altura'=> 4.321,
+            'largura'=> 1.234,
+            'localizacao'=> 'Quarto',
+            'm_produto_id'=> 1,
+            'budget_id'=> 1,
+            'qtd'=> 1,
+            'valor_mao_obra'=> 100
+        ]);
+
+        Product::create([
+            'altura'=> 0.544,
+            'largura'=> 0.866,
+            'localizacao'=> 'Banheiro',
+            'm_produto_id'=> 3,
+            'budget_id'=> 1,
+            'qtd'=> 2,
+            'valor_mao_obra'=> 200
+        ]);
+
+        Product::create([
+            'altura'=> 0.123,
+            'largura'=> 0.321,
+            'localizacao'=> 'Sala',
+            'm_produto_id'=> 2,
+            'budget_id'=> 2,
+            'qtd'=> 3,
+            'valor_mao_obra'=> 50
+        ]);
+
+        $mproduct = MProduct::find(3);
+        $mproduct->aluminums()->attach([1]);
+        $mproduct->components()->attach([1]);
+        $mproduct->glasses()->attach([1]);
+
+        $product = Product::find(2);
+        $product->aluminums()->attach([17]);
+        $product->components()->attach([2]);
+        $product->glasses()->attach([7]);
+
+        $product = Product::find(3);
+        $product->glasses()->attach([8]);
+
+        /*
         $product = Product::find(1);
         $product->budgets()->attach([1]);
 
@@ -176,7 +179,7 @@ class CarregaItensTeste extends Seeder
 
         $product = Product::find(3);
         $product->budgets()->attach([2]);
-
+        */
         Order::create([
             'data_final' => '2018-08-05',
             'data_inicial' => '2018-08-03',

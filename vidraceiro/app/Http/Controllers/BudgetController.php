@@ -84,7 +84,7 @@ class BudgetController extends Controller
                 break;
             case '2': //tab adicionar
                 $product = new Product();
-                $product = $product->create($request->except('budgetid'));
+                $product = $product->create($request->all());
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
@@ -130,8 +130,8 @@ class BudgetController extends Controller
                 }
 
                 if ($product) {
-                    $budgetcriado = Budget::find($request->budgetid);
-                    $budgetcriado->products()->attach($product->id);
+                    $budgetcriado = Budget::find($request->budget_id);
+                    //$budgetcriado->products()->attach($product->id);
                     if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
                         $products = $budgetcriado->products;
                         //$budgetcriado = Budget::find($request->budgetid);
@@ -145,8 +145,8 @@ class BudgetController extends Controller
             case '3': //tab editar
 
                 $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid', 'budgetid']));
-                $budgetcriado = Budget::find($request->budgetid);
+                $product->update($request->except(['produtoid']));
+                $budgetcriado = Budget::find($request->budget_id);
                 if ($product && self::atualizaTotal(null,$budgetcriado)) {
                     $products = $budgetcriado->products;
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
@@ -155,7 +155,7 @@ class BudgetController extends Controller
                 }
                 break;
             case '4': //tab material
-                $budgetcriado = Budget::with('products')->find($request->budgetid);
+                $budgetcriado = Budget::with('products')->find($request->budget_id);
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
@@ -283,7 +283,7 @@ class BudgetController extends Controller
                 }
 
                 if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
-                    $budgetcriado = Budget::with('products')->find($request->budgetid);
+                    $budgetcriado = Budget::with('products')->find($request->budget_id);
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
@@ -335,7 +335,7 @@ class BudgetController extends Controller
                 break;
             case '2': //tab adicionar
                 $product = new Product();
-                $product = $product->create($request->all());
+                $product = $product->create(array_merge($request->all(),['budget_id'=>$id]));
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
@@ -381,7 +381,7 @@ class BudgetController extends Controller
                 }
                 if ($product) {
                     $budgetcriado = Budget::find($id);
-                    $budgetcriado->products()->attach($product->id);
+                    //$budgetcriado->products()->attach($product->id);
                     if ($budgetcriado && self::atualizaTotal(null,$budgetcriado))
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
                 }
@@ -546,8 +546,18 @@ class BudgetController extends Controller
             }
         }else{
 
-            $product = Product::find($id);
-            if ($product) {
+            $product = Product::with('glasses','aluminums','components')->find($id);
+
+            if ($product && self::atualizaTotal($product->budget['id'], null)) {
+                foreach ($product->glasses()->get() as $glass){
+                    $glass->delete();
+                }
+                foreach ($product->aluminums()->get() as $aluminum){
+                    $aluminum->delete();
+                }
+                foreach ($product->components()->get() as $component){
+                    $component->delete();
+                }
                 $product->delete();
                 return redirect()->back()->with('success', 'Produto deletado com sucesso');
             } else {

@@ -21,7 +21,9 @@ class CreateProductsTable extends Migration
             $table->string('localizacao')->nullable();
             $table->float('valor_mao_obra')->nullable();
             $table->integer('m_produto_id')->unsigned();
-            $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');;
+            $table->integer('budget_id')->unsigned();
+            $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
+            $table->foreign('budget_id')->references('id')->on('budgets')->onDelete('cascade');
             $table->timestamps();
         });
 

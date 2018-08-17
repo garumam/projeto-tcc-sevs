@@ -38,12 +38,20 @@ class Product extends Model
         );
     }
 
-    public function budgets(){
+    public function budget(){
+        return $this->belongsTo(
+            Budget::class,
+            'budget_id'
+        );
+    }
+
+
+    /*public function budgets(){
         return $this->belongsToMany(
             Budget::class,
             'budget_product',
             'produto_id',
             'orcamento_id'
         );
-    }
+    }*/
 }

@@ -29,14 +29,14 @@ class CreateBudgetsTable extends Migration
             $table->float('margem_lucro')->nullable();
             $table->timestamps();
         });
-
+        /*
         Schema::create('budget_product', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('orcamento_id')->unsigned();
             $table->integer('produto_id')->unsigned();
             $table->foreign('orcamento_id')->references('id')->on('budgets')->onDelete('cascade');
             $table->foreign('produto_id')->references('id')->on('products')->onDelete('cascade');
-        });
+        });*/
     }
 
     /**
@@ -47,6 +47,6 @@ class CreateBudgetsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('budgets');
-        Schema::dropIfExists('budget_product');
+        //Schema::dropIfExists('budget_product');
     }
 }

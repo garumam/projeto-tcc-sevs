@@ -10,11 +10,9 @@ class Budget extends Model
     protected $guarded = [];
 
     public function products(){
-        return $this->belongsToMany(
+        return $this->hasMany(
             Product::class,
-            'budget_product',
-            'orcamento_id',
-            'produto_id'
+            'budget_id'
         );
     }
 
