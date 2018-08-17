@@ -531,18 +531,31 @@ class BudgetController extends Controller
         return redirect()->back()->with('error', "Erro ao atualizar");
     }
 
-    public function destroy($id)
+    public function destroy($del, $id)
     {
-        $budget = Budget::find($id);
-        if ($budget) {
-            foreach ($budget->products as $product) {
-                $product->delete();
+        if($del == 'budget'){
+            $budget = Budget::find($id);
+            if ($budget) {
+                foreach ($budget->products as $product) {
+                    $product->delete();
+                }
+                $budget->delete();
+                return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
+            } else {
+                return redirect()->back()->with('error', 'Erro ao deletar orçamento');
             }
-            $budget->delete();
-            return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
-        } else {
-            return redirect()->back()->with('error', 'Erro ao deletar orçamento');
+        }else{
+
+            $product = Product::find($id);
+            if ($product) {
+                $product->delete();
+                return redirect()->back()->with('success', 'Produto deletado com sucesso');
+            } else {
+                return redirect()->back()->with('error', 'Erro ao deletar produto');
+            }
+
         }
+
     }
 
 

@@ -9,18 +9,18 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left"
+                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left"
                                id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @elseif($i == 1)
-                            <a class="nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}"
+                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}"
+                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
@@ -48,6 +48,9 @@
                     {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
+                        <a class="btn-link bt-budget-deletar-produto" onclick="deletar(this.id,'budgets/product')" id="vazio" style="display: none;">
+                            <button class="btn btn-danger">Deletar</button>
+                        </a>
                         <button id="bt-budget-visible" class="btn btn-primary btn-custom" type="submit">
                             Salvar
                         </button>

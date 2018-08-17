@@ -201,10 +201,12 @@
 
 <script>
     function deletar(id, nome) {
-        var form = document.getElementById('delete-form');
-        form.action = "/" + nome + "/" + id;
-        event.preventDefault();
-        form.submit();
+        if(id != 'vazio'){
+            var form = document.getElementById('delete-form');
+            form.action = "/" + nome + "/" + id;
+            event.preventDefault();
+            form.submit();
+        }
     }
 </script>
 </body>

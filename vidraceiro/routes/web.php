@@ -73,7 +73,7 @@ Route::prefix('budgets')->group(function () {
     Route::get('/{user}', 'BudgetController@show')->name('budgets.show');
     Route::get('/{id}/edit', 'BudgetController@edit')->name('budgets.edit');
     Route::patch('/{tab}/{id}', 'BudgetController@update')->name('budgets.update');
-    Route::delete('/{id}', 'BudgetController@destroy')->name('budgets.destroy');
+    Route::delete('/{del}/{id}', 'BudgetController@destroy')->name('budgets.destroy');
 });
 
 //rotas das ordens de serviço

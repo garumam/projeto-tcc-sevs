@@ -46,7 +46,7 @@
                                 <a class="btn-link" href="{{ route('budgets.edit',['id'=> $budget->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
-                                <a class="btn-link" onclick="deletar(this.id,'budgets')" id="{{ $budget->id }}">
+                                <a class="btn-link" onclick="deletar(this.id,'budgets/budget')" id="{{ $budget->id }}">
                                     <button class="btn btn-danger mb-1">Deletar</button>
                                 </a>
                             </td>

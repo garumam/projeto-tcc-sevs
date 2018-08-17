@@ -185,6 +185,20 @@ $(document).ready(function () {
     });
     //fim orçamento form
 
+    //inicio orcamento troca de tab esconder botão delete
+    $('.tabs-budget').each(function(index) {
+        $(this).on("click", function(){
+
+            if($('#nav-Editar-tab').attr('id') == $(this).attr('id') && !$(this).hasClass('disabled')){
+                $('.bt-budget-deletar-produto').show();
+            }else{
+                $('.bt-budget-deletar-produto').hide();
+            }
+
+        });
+    });
+    //fim orcamento troca de tab esconder botão delete
+
 
     $('#bt-provider-visible').click(function () {
         $('#bt-provider-invisible').click();
@@ -540,6 +554,7 @@ $(document).ready(function () {
 
         if (produtoselecionado.val() != "") {
 
+            $('.bt-budget-deletar-produto').attr('id',produtoselecionado.val());
             imagem = produtoselecionado.data('image');
             descricao = produtoselecionado.data('descricao');
             altura = produtoselecionado.data('altura');
@@ -549,6 +564,7 @@ $(document).ready(function () {
             maoObra = produtoselecionado.data('valor_mao_obra');
 
         } else {
+            $('.bt-budget-deletar-produto').attr('id','vazio');
             imagem = '/img/semimagem.png';
             descricao = altura = largura = qtd = localizacao = maoObra = '';
         }
@@ -613,4 +629,6 @@ $(document).ready(function () {
     //     // });
     //
     // });
+
+
 });
