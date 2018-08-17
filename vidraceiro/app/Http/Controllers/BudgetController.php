@@ -548,18 +548,15 @@ class BudgetController extends Controller
 
             $product = Product::with('glasses','aluminums','components')->find($id);
 
-            if ($product && self::atualizaTotal($product->budget['id'], null)) {
-                foreach ($product->glasses()->get() as $glass){
-                    $glass->delete();
-                }
-                foreach ($product->aluminums()->get() as $aluminum){
-                    $aluminum->delete();
-                }
-                foreach ($product->components()->get() as $component){
-                    $component->delete();
-                }
+            if ($product) {
+                $product->glasses()->delete();
+                $product->aluminums()->delete();
+                $product->components()->delete();
                 $product->delete();
-                return redirect()->back()->with('success', 'Produto deletado com sucesso');
+
+                if(self::atualizaTotal($product->budget['id'], null)){
+                    return redirect()->back()->with('success', 'Produto deletado com sucesso');
+                }
             } else {
                 return redirect()->back()->with('error', 'Erro ao deletar produto');
             }

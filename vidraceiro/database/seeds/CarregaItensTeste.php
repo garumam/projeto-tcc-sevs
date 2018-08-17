@@ -108,7 +108,7 @@ class CarregaItensTeste extends Seeder
             'numero_endereco'=> 250,
             'rua'=> 'Fim do mundo',
             'telefone'=> '2212344321',
-            'total'=> 200.6056,
+            'total'=> 800.04,
             'uf' => 'RJ'
         ]);
 
@@ -123,7 +123,7 @@ class CarregaItensTeste extends Seeder
             'numero_endereco'=> 125,
             'rua'=> 'Goiaba',
             'telefone'=> '4565432456',
-            'total'=> 33.16572,
+            'total'=> 198.38,
             'uf' => 'RJ'
         ]);
 
