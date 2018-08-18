@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('endereco')->nullable();
             $table->string('cidade')->nullable();
             $table->string('bairro')->nullable();
+            $table->integer('cep')->nullable();
             $table->string('uf')->nullable();
             $table->string('email')->nullable();
             $table->string('telefone')->nullable();

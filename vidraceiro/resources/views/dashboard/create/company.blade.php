@@ -44,7 +44,7 @@
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
                         <input type="text" class="form-control" name="endereco"
-                               value="{{ $company->endereco or old('endereco')}}" placeholder="Endereço:" required>
+                               value="{{ $company->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250" required>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -57,6 +57,12 @@
                         <label for="bairro">Bairro</label>
                         <input type="text" class="form-control" name="bairro"
                                value="{{ $company->bairro or old('bairro') }}" placeholder="Bairro" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="cep">Cep</label>
+                        <input type="text" class="form-control" name="cep"
+                               value="{{ $company->cep or old('cep') }}" placeholder="Cep" required>
                     </div>
 
                     <div class="form-group col-md-4">

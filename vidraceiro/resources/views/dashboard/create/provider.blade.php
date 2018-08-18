@@ -76,16 +76,11 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="rua">Rua</label>
-                        <input type="text" class="form-control" id="rua" name="rua"
-                               value="{{ $provider->rua or old('rua')}}" placeholder="Rua">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" class="form-control" id="rua" name="endereco"
+                               value="{{ $provider->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250">
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="numero_endereco">N°</label>
-                        <input type="number" class="form-control" id="numero_endereco" name="numero_endereco"
-                               value="{{ $provider->numero_endereco or old('numero_endereco')}}" placeholder="N°">
-                    </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>

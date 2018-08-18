@@ -20,9 +20,8 @@ class CreateProvidersTable extends Migration
             $table->string('telefone')->nullable();
             $table->string('celular')->nullable();
             $table->string('cnpj')->nullable();
-            $table->integer('numero_endereco');
             $table->integer('cep');
-            $table->string('rua')->nullable();
+            $table->string('endereco')->nullable();
             $table->string('bairro')->nullable();
             $table->string('email')->nullable();
             $table->string('cidade')->nullable();

@@ -36,8 +36,7 @@ class CarregaItensTeste extends Seeder
             'data'=> '2018-08-07',
             'margem_lucro'=> 100.0,
             'nome'=> 'orcamento1',
-            'numero_endereco'=> 250,
-            'rua'=> 'Fim do mundo',
+            'endereco'=> 'Fim do mundo, n° 250',
             'telefone'=> '2212344321',
             'total'=> 800.04,
             'uf' => 'RJ'
@@ -51,8 +50,7 @@ class CarregaItensTeste extends Seeder
             'data'=> '2018-08-08',
             'margem_lucro'=> 200.0,
             'nome'=> 'orçamento2',
-            'numero_endereco'=> 125,
-            'rua'=> 'Goiaba',
+            'endereco'=> 'Goiaba, n° 130',
             'telefone'=> '4565432456',
             'total'=> 198.38,
             'uf' => 'RJ'
@@ -147,8 +145,7 @@ class CarregaItensTeste extends Seeder
             'cnpj'=> '21312412412',
             'email'=> 'fornecedor1@fornecedor.com',
             'nome'=> 'fornecedor 1',
-            'numero_endereco'=> 23,
-            'rua'=> 'rua1',
+            'endereco'=> 'rua1, n° 23',
             'situacao'=> 'ativo',
             'telefone'=> '1122334455',
             'uf'=> 'BA'
@@ -162,8 +159,7 @@ class CarregaItensTeste extends Seeder
             'cnpj'=> '12325674747',
             'email'=> 'fornecedor2@fornecedor.com',
             'nome'=> 'fornecedor2',
-            'numero_endereco'=> 74,
-            'rua'=> 'rua2',
+            'endereco'=> 'rua2, n° 120',
             'situacao'=> 'desativado',
             'telefone'=> '0998877665',
             'uf'=> 'MG'
@@ -213,6 +209,7 @@ class CarregaItensTeste extends Seeder
         Company::create([
             'bairro'=> 'centro',
             'cidade'=> 'Cabo frio',
+            'cep'=> 52930120,
             'email'=> 'vidracaria@sv.com',
             'nome'=> 'Vidraçaria S&V',
             'endereco'=> 'av. souza n°255',

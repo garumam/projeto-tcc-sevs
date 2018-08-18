@@ -109,23 +109,16 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="rua">Rua</label>
-                                <input type="text" class="form-control" id="rua" name="rua"
-                                       placeholder="av. de algum lugar"
-                                       value="{{$budgetedit->rua or old('rua')}}">
+                                <label for="endereco">Endereço</label>
+                                <input type="text" class="form-control" id="endereco" name="endereco"
+                                       placeholder="Av. exemplo, n° 250"
+                                       value="{{$budgetedit->endereco or old('endereco')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="cep">Cep</label>
                                 <input type="number" class="form-control" id="cep" name="cep" placeholder="00000-000"
                                        value="{{$budgetedit->cep or old('cep')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="numero_endereco">N°</label>
-                                <input type="number" class="form-control" id="numero_endereco" name="numero_endereco"
-                                       placeholder="100"
-                                       value="{{$budgetedit->numero_endereco or old('numero_endereco')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
