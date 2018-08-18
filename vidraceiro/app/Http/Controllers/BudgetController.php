@@ -76,8 +76,8 @@ class BudgetController extends Controller
             case '1': //tab orçamento
                 $budgetcriado = new Budget;
 
-                $margemlucro = $request->margem_lucro === null? 100 : $request->margem_lucro;
-                $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
+                $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
+                $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));
@@ -134,7 +134,7 @@ class BudgetController extends Controller
                 if ($product) {
                     $budgetcriado = Budget::find($request->budget_id);
                     //$budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
+                    if ($budgetcriado && self::atualizaTotal(null, $budgetcriado)) {
                         $products = $budgetcriado->products;
                         //$budgetcriado = Budget::find($request->budgetid);
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
@@ -149,7 +149,7 @@ class BudgetController extends Controller
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
                 $budgetcriado = Budget::find($request->budget_id);
-                if ($product && self::atualizaTotal(null,$budgetcriado)) {
+                if ($product && self::atualizaTotal(null, $budgetcriado)) {
                     $products = $budgetcriado->products;
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
                         ->with(compact('budgetcriado'))
@@ -169,14 +169,14 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $glassesAll = Glass::wherein('id', $request->$glass )->get();
+                        $glassesAll = Glass::wherein('id', $request->$glass)->get();
                         $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
 
-                        foreach($request->$glass as $id){
+                        foreach ($request->$glass as $id) {
 
-                            $vidro = $glassesAll->where('id',$id)->shift();
+                            $vidro = $glassesAll->where('id', $id)->shift();
 
-                            if($vidro->is_modelo == 1){
+                            if ($vidro->is_modelo == 1) {
                                 Glass::create([
                                     'nome' => $vidro->nome,
                                     'cor' => $vidro->cor,
@@ -199,14 +199,14 @@ class BudgetController extends Controller
 
                     if ($request->has($aluminum)) {
 
-                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
+                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum)->get();
                         $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
 
-                        foreach($request->$aluminum as $id){
+                        foreach ($request->$aluminum as $id) {
 
-                            $aluminio = $aluminumsAll->where('id',$id)->shift();
+                            $aluminio = $aluminumsAll->where('id', $id)->shift();
 
-                            if($aluminio->is_modelo == 1){
+                            if ($aluminio->is_modelo == 1) {
 
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
@@ -232,14 +232,14 @@ class BudgetController extends Controller
 
 
                     if ($request->has($component)) {
-                        $componentsAll = Component::wherein('id', $request->$component )->get();
+                        $componentsAll = Component::wherein('id', $request->$component)->get();
                         $componentesProduto->whereNotIn('id', $request->$component)->delete();
 
-                        foreach($request->$component as $id){
+                        foreach ($request->$component as $id) {
 
-                            $componente = $componentsAll->where('id',$id)->shift();
+                            $componente = $componentsAll->where('id', $id)->shift();
 
-                            if($componente->is_modelo == 1){
+                            if ($componente->is_modelo == 1) {
 
                                 Component::create([
                                     'nome' => $componente->nome,
@@ -262,7 +262,7 @@ class BudgetController extends Controller
 
                 }
 
-                if ($budgetcriado && self::atualizaTotal(null,$budgetcriado)) {
+                if ($budgetcriado && self::atualizaTotal(null, $budgetcriado)) {
                     $budgetcriado = Budget::with('products')->find($request->budget_id);
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
                         ->with(compact('budgetcriado'))
@@ -309,14 +309,14 @@ class BudgetController extends Controller
         switch ($tab) {
             case '1': //tab orçamento
                 $budgetcriado = Budget::find($id);
-                $margemlucro = $request->margem_lucro === null? 100 : $request->margem_lucro;
-                $budgetcriado->update(array_merge($request->except('margem_lucro'),['margem_lucro'=>$margemlucro]));
-                if ($budgetcriado && self::atualizaTotal(null,$budgetcriado))
+                $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
+                $budgetcriado->update(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
+                if ($budgetcriado && self::atualizaTotal(null, $budgetcriado))
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
                 $product = new Product();
-                $product = $product->create(array_merge($request->all(),['budget_id'=>$id]));
+                $product = $product->create(array_merge($request->all(), ['budget_id' => $id]));
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
@@ -363,7 +363,7 @@ class BudgetController extends Controller
                 if ($product) {
                     $budgetcriado = Budget::find($id);
                     //$budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal(null,$budgetcriado))
+                    if ($budgetcriado && self::atualizaTotal(null, $budgetcriado))
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
                 }
                 break;
@@ -387,14 +387,14 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $glassesAll = Glass::wherein('id', $request->$glass )->get();
+                        $glassesAll = Glass::wherein('id', $request->$glass)->get();
                         $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
 
-                        foreach($request->$glass as $id){
+                        foreach ($request->$glass as $id) {
 
-                            $vidro = $glassesAll->where('id',$id)->shift();
+                            $vidro = $glassesAll->where('id', $id)->shift();
 
-                            if($vidro->is_modelo == 1){
+                            if ($vidro->is_modelo == 1) {
 
                                 Glass::create([
                                     'nome' => $vidro->nome,
@@ -419,14 +419,14 @@ class BudgetController extends Controller
 
                     if ($request->has($aluminum)) {
 
-                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
+                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum)->get();
                         $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
 
-                        foreach($request->$aluminum as $id){
+                        foreach ($request->$aluminum as $id) {
 
-                            $aluminio = $aluminumsAll->where('id',$id)->shift();
+                            $aluminio = $aluminumsAll->where('id', $id)->shift();
 
-                            if($aluminio->is_modelo == 1){
+                            if ($aluminio->is_modelo == 1) {
 
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
@@ -452,14 +452,14 @@ class BudgetController extends Controller
 
 
                     if ($request->has($component)) {
-                        $componentsAll = Component::wherein('id', $request->$component )->get();
+                        $componentsAll = Component::wherein('id', $request->$component)->get();
                         $componentesProduto->whereNotIn('id', $request->$component)->delete();
 
-                        foreach($request->$component as $id){
+                        foreach ($request->$component as $id) {
 
-                            $componente = $componentsAll->where('id',$id)->shift();
+                            $componente = $componentsAll->where('id', $id)->shift();
 
-                            if($componente->is_modelo == 1){
+                            if ($componente->is_modelo == 1) {
 
                                 Component::create([
                                     'nome' => $componente->nome,
@@ -480,7 +480,7 @@ class BudgetController extends Controller
 
                     }
                 }
-                if ($products && self::atualizaTotal(null,$budgetcriado))
+                if ($products && self::atualizaTotal(null, $budgetcriado))
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
                 break;
             case '5': //tab total
@@ -494,7 +494,7 @@ class BudgetController extends Controller
 
     public function destroy($del, $id)
     {
-        if($del == 'budget'){
+        if ($del == 'budget') {
             $budget = Budget::find($id);
             if ($budget) {
                 foreach ($budget->products as $product) {
@@ -505,17 +505,22 @@ class BudgetController extends Controller
             } else {
                 return redirect()->back()->with('error', 'Erro ao deletar orçamento');
             }
-        }else{
+        } else {
 
-            $product = Product::with('glasses','aluminums','components')->find($id);
+            $product = Product::with('glasses', 'aluminums', 'components')->find($id);
 
             if ($product) {
                 $product->glasses()->delete();
                 $product->aluminums()->delete();
                 $product->components()->delete();
+                $budgetcriado = $product->budget;
                 $product->delete();
-
-                if(self::atualizaTotal($product->budget['id'], null)){
+                $voltar = redirect()->back();
+                if (self::atualizaTotal(null, $budgetcriado)) {
+                    if (strpos($voltar->getTargetUrl(), 'create')) {
+                        return redirect()->back()->with('success', 'Produto deletado com sucesso')
+                            ->with(compact('budgetcriado'));
+                    }
                     return redirect()->back()->with('success', 'Produto deletado com sucesso');
                 }
             } else {
@@ -527,34 +532,35 @@ class BudgetController extends Controller
     }
 
 
-    public function atualizaTotal($budgetid, $budget){
+    public function atualizaTotal($budgetid, $budget)
+    {
 
-        if($budgetid === null){
+        if ($budgetid === null) {
             $budgetcriado = $budget;
-        }else{
+        } else {
             $budgetcriado = Budget::with('products')->find($budgetid);
         }
 
         $productsids = array();
-        foreach($budgetcriado->products as $product){
+        foreach ($budgetcriado->products as $product) {
             $productsids[] = $product->id;
         }
-        $products = Product::with('glasses','aluminums','components')->wherein('id',$productsids)->get();
+        $products = Product::with('glasses', 'aluminums', 'components')->wherein('id', $productsids)->get();
 
         $valorTotalDeProdutos = 0.0;
-        foreach($products as $product){
+        foreach ($products as $product) {
             $resultVidro = 0.0;
             $m2 = $product['altura'] * $product['largura'] * $product['qtd'];
             $resultVidro += $m2 * $product->glasses()->sum('preco');
 
             $resultAluminio = 0.0;
-            foreach($product->aluminums()->get() as $aluminum){
+            foreach ($product->aluminums()->get() as $aluminum) {
                 //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
                 $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
             }
 
             $resultComponente = 0.0;
-            foreach($product->components()->get() as $component){
+            foreach ($product->components()->get() as $component) {
                 $resultComponente += $component['preco'] * $component['qtd'];
             }
 
