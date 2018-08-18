@@ -17,10 +17,10 @@ class CreateAluminumsTable extends Migration
             $table->increments('id');
             $table->string('perfil');
             $table->string('descricao')->nullable();
-            $table->float('medida')->nullable();
+            $table->double('medida')->nullable();
             $table->integer('qtd');
-            $table->float('peso')->nullable();
-            $table->float('preco')->nullable();
+            $table->double('peso')->nullable();
+            $table->double('preco')->nullable();
             $table->string('tipo_medida');
             $table->integer('is_modelo');
             $table->integer('categoria_aluminio_id')->unsigned();

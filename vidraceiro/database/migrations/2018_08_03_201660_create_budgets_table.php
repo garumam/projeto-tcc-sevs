@@ -25,8 +25,8 @@ class CreateBudgetsTable extends Migration
             $table->string('uf')->nullable();
             $table->string('cidade')->nullable();
             $table->string('complemento')->nullable();
-            $table->float('total')->nullable();
-            $table->float('margem_lucro')->nullable();
+            $table->double('total')->nullable();
+            $table->double('margem_lucro')->nullable();
             $table->timestamps();
         });
         /*

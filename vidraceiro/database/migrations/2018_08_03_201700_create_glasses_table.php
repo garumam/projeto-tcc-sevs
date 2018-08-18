@@ -19,7 +19,7 @@ class CreateGlassesTable extends Migration
             $table->string('cor')->nullable();
             $table->string('tipo')->nullable();
             $table->integer('espessura');
-            $table->float('preco')->nullable();
+            $table->double('preco')->nullable();
             $table->integer('is_modelo');
             $table->integer('categoria_vidro_id')->unsigned();
             $table->integer('product_id')->nullable()->unsigned();

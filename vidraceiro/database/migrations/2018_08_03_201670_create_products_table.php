@@ -15,11 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('largura')->nullable();
-            $table->float('altura')->nullable();
+            $table->double('largura')->nullable();
+            $table->double('altura')->nullable();
             $table->integer('qtd');
             $table->string('localizacao')->nullable();
-            $table->float('valor_mao_obra')->nullable();
+            $table->double('valor_mao_obra')->nullable();
             $table->integer('m_produto_id')->unsigned();
             $table->integer('budget_id')->unsigned();
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');

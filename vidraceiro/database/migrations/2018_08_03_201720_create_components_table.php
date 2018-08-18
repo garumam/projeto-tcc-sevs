@@ -17,7 +17,7 @@ class CreateComponentsTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->integer('qtd');
-            $table->float('preco')->nullable();
+            $table->double('preco')->nullable();
             $table->string('imagem')->nullable();
             $table->integer('is_modelo');
             $table->integer('categoria_componente_id')->unsigned();

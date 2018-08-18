@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('data_inicial')->nullable();
-            $table->float('total')->nullable();
+            $table->double('total')->nullable();
             $table->string('data_final')->nullable();
             $table->string('situacao')->nullable();
             $table->timestamps();
