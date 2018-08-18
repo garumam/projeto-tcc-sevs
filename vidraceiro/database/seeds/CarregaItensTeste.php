@@ -8,6 +8,7 @@ use App\MProduct;
 use App\Order;
 use App\Product;
 use App\Provider;
+use App\Company;
 use Illuminate\Database\Seeder;
 
 class CarregaItensTeste extends Seeder
@@ -150,7 +151,7 @@ class CarregaItensTeste extends Seeder
             'rua'=> 'rua1',
             'situacao'=> 'ativo',
             'telefone'=> '1122334455',
-            'uf'=> 'ba'
+            'uf'=> 'BA'
         ]);
 
         Provider::create([
@@ -165,7 +166,7 @@ class CarregaItensTeste extends Seeder
             'rua'=> 'rua2',
             'situacao'=> 'desativado',
             'telefone'=> '0998877665',
-            'uf'=> 'mg'
+            'uf'=> 'MG'
         ]);
 
 
@@ -208,6 +209,16 @@ class CarregaItensTeste extends Seeder
 
         $order = Order::find(2);
         $order->budgets()->attach([1]);
+
+        Company::create([
+            'bairro'=> 'centro',
+            'cidade'=> 'Cabo frio',
+            'email'=> 'fornecedor2@fornecedor.com',
+            'nome'=> 'Vidraçaria S&V',
+            'endereco'=> 'av. souza n°255',
+            'telefone'=> '26776451',
+            'uf'=> 'RJ'
+        ]);
 
     }
 }
