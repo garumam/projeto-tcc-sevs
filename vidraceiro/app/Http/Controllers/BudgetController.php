@@ -94,6 +94,7 @@ class BudgetController extends Controller
                         'tipo' => $vidro->tipo,
                         'espessura' => $vidro->espessura,
                         'preco' => $vidro->preco,
+                        'product_id' => $product->id,
                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
                         'is_modelo' => 0
                     ]);
@@ -112,6 +113,7 @@ class BudgetController extends Controller
                         'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                        'product_id' => $product->id
 
                     ]);
                     $product->aluminums()->attach($aluminumCreate->id);
@@ -124,6 +126,7 @@ class BudgetController extends Controller
                         'preco' => $componente->preco,
                         'is_modelo' => 0,
                         'categoria_componente_id' => $componente->categoria_componente_id,
+                        'product_id' => $product->id
 
                     ]);
                     $product->components()->attach($componentCreate->id);
@@ -168,34 +171,26 @@ class BudgetController extends Controller
 
                     if ($request->has($glass)) {
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
 
                         foreach($request->$glass as $id){
 
                             $vidro = $glassesAll->where('id',$id)->shift();
 
                             if($vidro->is_modelo == 1){
-                                $glassCreate = Glass::create([
+                                Glass::create([
                                     'nome' => $vidro->nome,
                                     'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
                                     'espessura' => $vidro->espessura,
                                     'preco' => $vidro->preco,
+                                    'product_id' => $product->id,
                                     'categoria_vidro_id' => $vidro->categoria_vidro_id,
                                     'is_modelo' => 0
                                 ]);
-                                $idsNew[] = $glassCreate->id;
 
-                            }else{
-                                $idsExists[] = $vidro->id;
                             }
                         }
-
-                        $vidrosProduto->whereNotIn('vidro_id', $idsExists)->delete();
-
-                        $vidrosProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
@@ -206,9 +201,7 @@ class BudgetController extends Controller
                     if ($request->has($aluminum)) {
 
                         $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
 
                         foreach($request->$aluminum as $id){
 
@@ -216,7 +209,7 @@ class BudgetController extends Controller
 
                             if($aluminio->is_modelo == 1){
 
-                                $aluminumCreate = Aluminum::create([
+                                Aluminum::create([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
                                     'medida' => $aluminio->medida,
@@ -225,17 +218,12 @@ class BudgetController extends Controller
                                     'preco' => $aluminio->preco,
                                     'tipo_medida' => $aluminio->tipo_medida,
                                     'is_modelo' => 0,
+                                    'product_id' => $product->id,
                                     'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
                                 ]);
-                                $idsNew[] = $aluminumCreate->id;
 
-                            }else{
-                                $idsExists[] = $aluminio->id;
                             }
                         }
-                        $aluminiosProduto->whereNotIn('aluminio_id', $idsExists)->delete();
-
-                        $aluminiosProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
@@ -246,9 +234,7 @@ class BudgetController extends Controller
 
                     if ($request->has($component)) {
                         $componentsAll = Component::wherein('id', $request->$component )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $componentesProduto->whereNotIn('id', $request->$component)->delete();
 
                         foreach($request->$component as $id){
 
@@ -256,23 +242,18 @@ class BudgetController extends Controller
 
                             if($componente->is_modelo == 1){
 
-                                $componentCreate = Component::create([
+                                Component::create([
                                     'nome' => $componente->nome,
                                     'qtd' => $componente->qtd,
                                     'preco' => $componente->preco,
                                     'is_modelo' => 0,
+                                    'product_id' => $product->id,
                                     'categoria_componente_id' => $componente->categoria_componente_id,
 
                                 ]);
-                                $idsNew[] = $componentCreate->id;
 
-                            }else{
-                                $idsExists[] = $componente->id;
                             }
                         }
-                        $componentesProduto->whereNotIn('componente_id', $idsExists)->delete();
-
-                        $componentesProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
@@ -316,6 +297,7 @@ class BudgetController extends Controller
         $budgetedit = Budget::with('products')->find($id);
         if ($budgetedit) {
             $products = $budgetedit->products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
+
             return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'products', 'budgetedit'))->with('title', 'Atualizar Orçamento');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');
@@ -345,6 +327,7 @@ class BudgetController extends Controller
                         'tipo' => $vidro->tipo,
                         'espessura' => $vidro->espessura,
                         'preco' => $vidro->preco,
+                        'product_id' => $product->id,
                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
                         'is_modelo' => 0
                     ]);
@@ -362,6 +345,7 @@ class BudgetController extends Controller
                         'preco' => $aluminio->preco,
                         'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
+                        'product_id' => $product->id,
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
 
                     ]);
@@ -374,6 +358,7 @@ class BudgetController extends Controller
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
                         'is_modelo' => 0,
+                        'product_id' => $product->id,
                         'categoria_componente_id' => $componente->categoria_componente_id,
 
                     ]);
@@ -407,34 +392,28 @@ class BudgetController extends Controller
 
                     if ($request->has($glass)) {
                         $glassesAll = Glass::wherein('id', $request->$glass )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
 
                         foreach($request->$glass as $id){
 
                             $vidro = $glassesAll->where('id',$id)->shift();
 
                             if($vidro->is_modelo == 1){
-                                $glassCreate = Glass::create([
+
+                                Glass::create([
                                     'nome' => $vidro->nome,
                                     'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
                                     'espessura' => $vidro->espessura,
                                     'preco' => $vidro->preco,
                                     'categoria_vidro_id' => $vidro->categoria_vidro_id,
+                                    'product_id' => $product->id,
                                     'is_modelo' => 0
                                 ]);
-                                $idsNew[] = $glassCreate->id;
 
-                            }else{
-                                $idsExists[] = $vidro->id;
                             }
                         }
 
-                        $vidrosProduto->whereNotIn('vidro_id', $idsExists)->delete();
-
-                        $vidrosProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
@@ -445,9 +424,7 @@ class BudgetController extends Controller
                     if ($request->has($aluminum)) {
 
                         $aluminumsAll = Aluminum::wherein('id', $request->$aluminum )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
 
                         foreach($request->$aluminum as $id){
 
@@ -455,7 +432,7 @@ class BudgetController extends Controller
 
                             if($aluminio->is_modelo == 1){
 
-                                $aluminumCreate = Aluminum::create([
+                                Aluminum::create([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
                                     'medida' => $aluminio->medida,
@@ -464,17 +441,12 @@ class BudgetController extends Controller
                                     'preco' => $aluminio->preco,
                                     'tipo_medida' => $aluminio->tipo_medida,
                                     'is_modelo' => 0,
+                                    'product_id' => $product->id,
                                     'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
                                 ]);
-                                $idsNew[] = $aluminumCreate->id;
 
-                            }else{
-                                $idsExists[] = $aluminio->id;
                             }
                         }
-                        $aluminiosProduto->whereNotIn('aluminio_id', $idsExists)->delete();
-
-                        $aluminiosProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 
@@ -485,9 +457,7 @@ class BudgetController extends Controller
 
                     if ($request->has($component)) {
                         $componentsAll = Component::wherein('id', $request->$component )->get();
-
-                        $idsNew = array();
-                        $idsExists = array();
+                        $componentesProduto->whereNotIn('id', $request->$component)->delete();
 
                         foreach($request->$component as $id){
 
@@ -495,23 +465,18 @@ class BudgetController extends Controller
 
                             if($componente->is_modelo == 1){
 
-                                $componentCreate = Component::create([
+                                Component::create([
                                     'nome' => $componente->nome,
                                     'qtd' => $componente->qtd,
                                     'preco' => $componente->preco,
                                     'is_modelo' => 0,
+                                    'product_id' => $product->id,
                                     'categoria_componente_id' => $componente->categoria_componente_id,
 
                                 ]);
-                                $idsNew[] = $componentCreate->id;
 
-                            }else{
-                                $idsExists[] = $componente->id;
                             }
                         }
-                        $componentesProduto->whereNotIn('componente_id', $idsExists)->delete();
-
-                        $componentesProduto->sync(array_merge($idsNew, $idsExists));
 
                     } else {
 

@@ -19,76 +19,6 @@ class CarregaItensTeste extends Seeder
      */
     public function run()
     {
-        Aluminum::create([
-            'categoria_aluminio_id'=> 7,
-            'descricao'=> 'capa',
-            'is_modelo'=> 0,
-            'medida'=> 0.866,
-            'perfil'=> 'xt-201',
-            'peso'=> 0.231,
-            'preco'=> 22.0,
-            'qtd'=> 1,
-            'tipo_medida'=> 'largura'
-        ]);
-
-        Glass::create([
-            'categoria_vidro_id'=> 9,
-            'cor'=> 'Incolor',
-            'espessura'=> 8,
-            'is_modelo'=> 0,
-            'nome'=> 'Vidro Incolor Temperado',
-            'preco'=> 100.0,
-            'tipo'=> 'Padrão'
-        ]);
-
-        Glass::create([
-            'categoria_vidro_id'=> 9,
-            'cor'=> 'Fumê',
-            'espessura'=> 8,
-            'is_modelo'=> 0,
-            'nome'=> 'Vidro Fumê Temperado',
-            'preco'=> 140.0,
-            'tipo'=> 'Padrão'
-        ]);
-
-        Component::create([
-            'imagem'=> '',
-            'is_modelo'=> 0,
-            'nome'=> 'roldana',
-            'preco'=> 1.0,
-            'qtd'=> 1,
-            'categoria_componente_id' => 8
-        ]);
-
-        Provider::create([
-            'bairro'=> 'bairro1',
-            'celular'=> '1134567890',
-            'cep'=> 12345678,
-            'cidade'=> 'cidade1',
-            'cnpj'=> '21312412412',
-            'email'=> 'fornecedor1@fornecedor.com',
-            'nome'=> 'fornecedor 1',
-            'numero_endereco'=> 23,
-            'rua'=> 'rua1',
-            'situacao'=> 'ativo',
-            'telefone'=> '1122334455',
-            'uf'=> 'ba'
-        ]);
-
-        Provider::create([
-            'bairro'=> 'bairro2',
-            'celular'=> '1232435465',
-            'cep'=> 64364364,
-            'cidade'=> 'cidade2',
-            'cnpj'=> '12325674747',
-            'email'=> 'fornecedor2@fornecedor.com',
-            'nome'=> 'fornecedor2',
-            'numero_endereco'=> 74,
-            'rua'=> 'rua2',
-            'situacao'=> 'desativado',
-            'telefone'=> '0998877665',
-            'uf'=> 'mg'
-        ]);
 
         MProduct::create([
             'categoria_produto_id'=> '1',
@@ -162,13 +92,90 @@ class CarregaItensTeste extends Seeder
         $mproduct->components()->attach([1]);
         $mproduct->glasses()->attach([1]);
 
-        $product = Product::find(2);
+
+        Aluminum::create([
+            'categoria_aluminio_id'=> 7,
+            'descricao'=> 'capa',
+            'is_modelo'=> 0,
+            'medida'=> 0.866,
+            'perfil'=> 'xt-201',
+            'peso'=> 0.231,
+            'preco'=> 22.0,
+            'qtd'=> 1,
+            'product_id' => 2,
+            'tipo_medida'=> 'largura'
+        ]);
+
+        Glass::create([
+            'categoria_vidro_id'=> 9,
+            'cor'=> 'Incolor',
+            'espessura'=> 8,
+            'is_modelo'=> 0,
+            'nome'=> 'Vidro Incolor Temperado',
+            'product_id' => 2,
+            'preco'=> 100.0,
+            'tipo'=> 'Padrão'
+        ]);
+
+        Glass::create([
+            'categoria_vidro_id'=> 9,
+            'cor'=> 'Fumê',
+            'espessura'=> 8,
+            'is_modelo'=> 0,
+            'nome'=> 'Vidro Fumê Temperado',
+            'product_id' => 3,
+            'preco'=> 140.0,
+            'tipo'=> 'Padrão'
+        ]);
+
+        Component::create([
+            'imagem'=> '',
+            'is_modelo'=> 0,
+            'nome'=> 'roldana',
+            'preco'=> 1.0,
+            'qtd'=> 1,
+            'product_id' => 2,
+            'categoria_componente_id' => 8
+        ]);
+
+        Provider::create([
+            'bairro'=> 'bairro1',
+            'celular'=> '1134567890',
+            'cep'=> 12345678,
+            'cidade'=> 'cidade1',
+            'cnpj'=> '21312412412',
+            'email'=> 'fornecedor1@fornecedor.com',
+            'nome'=> 'fornecedor 1',
+            'numero_endereco'=> 23,
+            'rua'=> 'rua1',
+            'situacao'=> 'ativo',
+            'telefone'=> '1122334455',
+            'uf'=> 'ba'
+        ]);
+
+        Provider::create([
+            'bairro'=> 'bairro2',
+            'celular'=> '1232435465',
+            'cep'=> 64364364,
+            'cidade'=> 'cidade2',
+            'cnpj'=> '12325674747',
+            'email'=> 'fornecedor2@fornecedor.com',
+            'nome'=> 'fornecedor2',
+            'numero_endereco'=> 74,
+            'rua'=> 'rua2',
+            'situacao'=> 'desativado',
+            'telefone'=> '0998877665',
+            'uf'=> 'mg'
+        ]);
+
+
+        /*$product = Product::find(2);
         $product->aluminums()->attach([17]);
         $product->components()->attach([2]);
         $product->glasses()->attach([7]);
 
         $product = Product::find(3);
-        $product->glasses()->attach([8]);
+        $product->glasses()->attach([8]);*/
 
         /*
         $product = Product::find(1);

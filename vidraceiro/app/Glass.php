@@ -14,13 +14,21 @@ class Glass extends Model
         return $this->belongsTo(Category::class, 'categoria_vidro_id');
     }
 
-    public function products()
+    /*public function products()
     {
         return $this->belongsToMany(
             Product::class,
             'product_glass',
             'vidro_id',
             'produto_id'
+        );
+    }*/
+
+    public function product()
+    {
+        return $this->belongsTo(
+            Product::class,
+            'product_id'
         );
     }
 

@@ -23,7 +23,7 @@ class CreateMProductsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('m_product_aluminum', function (Blueprint $table) {
+        /*Schema::create('m_product_aluminum', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('m_produto_id')->unsigned();
             $table->integer('aluminio_id')->unsigned();
@@ -45,7 +45,7 @@ class CreateMProductsTable extends Migration
             $table->integer('vidro_id')->unsigned();
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('vidro_id')->references('id')->on('glasses')->onDelete('cascade');
-        });
+        });*/
     }
 
     /**
@@ -56,8 +56,8 @@ class CreateMProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('m_products');
-        Schema::dropIfExists('m_product_aluminum');
+        /*Schema::dropIfExists('m_product_aluminum');
         Schema::dropIfExists('m_product_component');
-        Schema::dropIfExists('m_product_glass');
+        Schema::dropIfExists('m_product_glass');*/
     }
 }

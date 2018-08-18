@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->foreign('budget_id')->references('id')->on('budgets')->onDelete('cascade');
             $table->timestamps();
         });
-
+        /*
         Schema::create('product_aluminum', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('produto_id')->unsigned();
@@ -51,6 +51,7 @@ class CreateProductsTable extends Migration
             $table->foreign('produto_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('vidro_id')->references('id')->on('glasses')->onDelete('cascade');
         });
+        */
     }
 
     /**
@@ -61,8 +62,8 @@ class CreateProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('products');
-        Schema::dropIfExists('product_aluminum');
+        /*Schema::dropIfExists('product_aluminum');
         Schema::dropIfExists('product_component');
-        Schema::dropIfExists('product_glass');
+        Schema::dropIfExists('product_glass');*/
     }
 }

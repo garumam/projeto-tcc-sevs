@@ -22,8 +22,18 @@ class CreateGlassesTable extends Migration
             $table->float('preco')->nullable();
             $table->integer('is_modelo');
             $table->integer('categoria_vidro_id')->unsigned();
+            $table->integer('product_id')->nullable()->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('categoria_vidro_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
+        });
+
+        Schema::create('m_product_glass', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('m_produto_id')->unsigned();
+            $table->integer('vidro_id')->unsigned();
+            $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
+            $table->foreign('vidro_id')->references('id')->on('glasses')->onDelete('cascade');
         });
     }
 
@@ -34,6 +44,7 @@ class CreateGlassesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('m_product_glass');
         Schema::dropIfExists('glasses');
     }
 }

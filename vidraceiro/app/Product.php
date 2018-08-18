@@ -13,7 +13,7 @@ class Product extends Model
         return $this->belongsTo(MProduct::class, 'm_produto_id');
     }
 
-    public function glasses(){
+    /*public function glasses(){
         return $this->belongsToMany(
             Glass::class,
             'product_glass',
@@ -35,6 +35,25 @@ class Product extends Model
             'product_component',
             'produto_id',
             'componente_id'
+        );
+    }*/
+
+    public function glasses(){
+        return $this->hasMany(
+            Glass::class,
+            'product_id'
+        );
+    }
+    public function aluminums(){
+        return $this->hasMany(
+            Aluminum::class,
+            'product_id'
+        );
+    }
+    public function components(){
+        return $this->hasMany(
+            Component::class,
+            'product_id'
         );
     }
 
