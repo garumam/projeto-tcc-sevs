@@ -308,6 +308,10 @@ class BudgetController extends Controller
     {
         switch ($tab) {
             case '1': //tab orçamento
+                $validado = $this->rules_budget($request->all());
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado);
+                }
                 $budgetcriado = Budget::find($id);
                 $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
                 $budgetcriado->update(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
@@ -572,6 +576,20 @@ class BudgetController extends Controller
 
         return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
 
+    }
+
+    public function rules_budget(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'telefone' => 'string|min:10|max:255',
+            'cep' => 'integer|min:8',
+            'bairro' => 'string|max:255',
+            'cidade' => 'string|max:255',
+            'uf' => 'string|max:255'
+        ]);
+
+        return $validator;
     }
 
 }

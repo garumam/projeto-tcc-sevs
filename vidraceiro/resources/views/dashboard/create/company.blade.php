@@ -61,7 +61,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="cep">Cep</label>
-                        <input type="text" class="form-control" name="cep"
+                        <input type="text" class="form-control" name="cep" id="cep"
                                value="{{ $company->cep or old('cep') }}" placeholder="Cep" required>
                     </div>
 
@@ -78,13 +78,13 @@
 
                     <div class="form-group col-md-4">
                         <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" name="email"
+                        <input type="email" class="form-control" name="email" id="e-mail"
                                value="{{ $company->email or old('email') }}" placeholder="E-mail:" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" class="form-control" name="telefone"
+                        <input type="tel" class="form-control" name="telefone" id="telefone"
                                value="{{ $company->telefone or old('telefone') }}" placeholder="Telefone" required>
                     </div>
 

@@ -47,19 +47,19 @@
 
                     <div class="form-group col-md-4">
                         <label for="cnpj">CNPJ</label>
-                        <input type="number" class="form-control" id="cnpj" name="cnpj"
+                        <input type="text" class="form-control" id="cnpj" name="cnpj"
                                value="{{ $provider->cnpj or old('cnpj')}}" placeholder="CNPJ">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
-                        <input type="number" class="form-control" id="telefone" name="telefone"
+                        <input type="tel" class="form-control" id="telefone" name="telefone"
                                value="{{ $provider->telefone or old('telefone')}}" placeholder="Telefone">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="celular">Celular</label>
-                        <input type="number" class="form-control" id="celular" name="celular"
+                        <input type="tel" class="form-control" id="celular" name="celular"
                                value="{{ $provider->celular or old('celular')}}" placeholder="Celular">
                     </div>
 
@@ -71,8 +71,8 @@
 
                     <div class="form-group col-md-4">
                         <label for="cep">Cep</label>
-                        <input type="number" class="form-control" id="cep" name="cep"
-                               value="{{ $provider->cep or old('cep')}}" placeholder="Cep" required>
+                        <input type="text" class="form-control" id="cep" name="cep"
+                               value="{{ $provider->cep or old('cep')}}" placeholder="00000-000" required>
                     </div>
 
                     <div class="form-group col-md-4">

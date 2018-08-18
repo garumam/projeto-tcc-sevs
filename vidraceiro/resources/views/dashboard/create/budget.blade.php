@@ -117,7 +117,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="cep">Cep</label>
-                                <input type="number" class="form-control" id="cep" name="cep" placeholder="00000-000"
+                                <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000"
                                        value="{{$budgetedit->cep or old('cep')}}" required>
                             </div>
 
@@ -259,7 +259,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra">Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
+                                <input type="text" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))

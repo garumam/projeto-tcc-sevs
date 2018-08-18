@@ -197,7 +197,9 @@
 <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
+<script src="{{ asset('js/jquery.mask.js') }}" defer></script>
 <script src="{{ asset('js/dashboard.js') }}" defer></script>
+
 
 <script>
     function deletar(id, nome) {

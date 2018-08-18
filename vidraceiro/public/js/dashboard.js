@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $(".navbar-toggler").click(function (event) {
         event.stopPropagation();
         $('#menu-dashboard').toggle();
@@ -156,6 +157,8 @@ $(document).ready(function () {
 
         switch (true) {
             case $('#nav-Orçamento-tab').hasClass('active'):
+                $('#cep').unmask();
+                $('#telefone').unmask();
 
                 $('#bt-orcamento-budget-invisible').click();
 
@@ -201,10 +204,17 @@ $(document).ready(function () {
 
 
     $('#bt-provider-visible').click(function () {
+        $('#cep').unmask();
+        $('#telefone').unmask();
+        $('#cnpj').unmask();
+
         $('#bt-provider-invisible').click();
     });
 
     $('#bt-company-visible').click(function () {
+        $('#cep').unmask();
+        $('#telefone').unmask();
+
         $('#bt-company-invisible').click();
     });
 
@@ -630,5 +640,18 @@ $(document).ready(function () {
     //
     // });
 
+    $('#telefone').mask('(00) 0000-0000');
+    $('#cep').mask('00000-000');
+
+    var maskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        options = {onKeyPress: function(val, e, field, options) {
+                field.mask(maskBehavior.apply({}, arguments), options);
+            }
+        };
+
+    $('#celular').mask(maskBehavior, options);
+    $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
 
 });
