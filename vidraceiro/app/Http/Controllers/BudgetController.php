@@ -74,6 +74,10 @@ class BudgetController extends Controller
     {
         switch ($tab) {
             case '1': //tab orçamento
+                $validado = $this->rules_budget($request->all());
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado);
+                }
                 $budgetcriado = new Budget;
 
                 $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
