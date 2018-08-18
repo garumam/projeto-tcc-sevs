@@ -213,7 +213,7 @@ class CarregaItensTeste extends Seeder
         Company::create([
             'bairro'=> 'centro',
             'cidade'=> 'Cabo frio',
-            'email'=> 'fornecedor2@fornecedor.com',
+            'email'=> 'vidracaria@sv.com',
             'nome'=> 'Vidraçaria S&V',
             'endereco'=> 'av. souza n°255',
             'telefone'=> '26776451',

@@ -44,19 +44,19 @@
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
                         <input type="text" class="form-control" name="endereco"
-                               value="{{ $company->nome or old('endereco')}}" placeholder="Endereço:" required>
+                               value="{{ $company->endereco or old('endereco')}}" placeholder="Endereço:" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
                         <input type="text" class="form-control" name="cidade"
-                               value="{{ $company->nome or old('cidade')}}" placeholder="Cidade" required>
+                               value="{{ $company->cidade or old('cidade')}}" placeholder="Cidade" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
                         <input type="text" class="form-control" name="bairro"
-                               value="{{ $company->nome or old('bairro') }}" placeholder="Bairro" required>
+                               value="{{ $company->bairro or old('bairro') }}" placeholder="Bairro" required>
                     </div>
 
                     <div class="form-group col-md-4">
