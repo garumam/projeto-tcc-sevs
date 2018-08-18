@@ -88,7 +88,7 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $glassCreate = Glass::create([
+                    Glass::create([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -99,11 +99,10 @@ class BudgetController extends Controller
                         'is_modelo' => 0
                     ]);
 
-                    $product->glasses()->attach($glassCreate->id);
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
-                    $aluminumCreate = Aluminum::create([
+                    Aluminum::create([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminio->medida,
@@ -116,11 +115,11 @@ class BudgetController extends Controller
                         'product_id' => $product->id
 
                     ]);
-                    $product->aluminums()->attach($aluminumCreate->id);
+
                 }
 
                 foreach ($mproduct->components()->get() as $componente) {
-                    $componentCreate = Component::create([
+                    Component::create([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
@@ -129,7 +128,7 @@ class BudgetController extends Controller
                         'product_id' => $product->id
 
                     ]);
-                    $product->components()->attach($componentCreate->id);
+
                 }
 
                 if ($product) {
@@ -321,7 +320,7 @@ class BudgetController extends Controller
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
                 foreach ($mproduct->glasses()->get() as $vidro) {
-                    $glassCreate = Glass::create([
+                    Glass::create([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -332,11 +331,10 @@ class BudgetController extends Controller
                         'is_modelo' => 0
                     ]);
 
-                    $product->glasses()->attach($glassCreate->id);
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
-                    $aluminumCreate = Aluminum::create([
+                    Aluminum::create([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminio->medida,
@@ -349,11 +347,10 @@ class BudgetController extends Controller
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
 
                     ]);
-                    $product->aluminums()->attach($aluminumCreate->id);
                 }
 
                 foreach ($mproduct->components()->get() as $componente) {
-                    $componentCreate = Component::create([
+                    Component::create([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
@@ -362,7 +359,6 @@ class BudgetController extends Controller
                         'categoria_componente_id' => $componente->categoria_componente_id,
 
                     ]);
-                    $product->components()->attach($componentCreate->id);
                 }
                 if ($product) {
                     $budgetcriado = Budget::find($id);
