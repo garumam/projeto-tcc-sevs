@@ -11,6 +11,7 @@ use App\Component;
 use App\Glass;
 use App\Category;
 use phpDocumentor\Reflection\Types\Array_;
+use Illuminate\Support\Facades\Validator;
 
 class BudgetController extends Controller
 {
@@ -313,6 +314,7 @@ class BudgetController extends Controller
         switch ($tab) {
             case '1': //tab orçamento
                 $validado = $this->rules_budget($request->all());
+
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
@@ -587,7 +589,7 @@ class BudgetController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'telefone' => 'string|min:10|max:255',
-            'cep' => 'integer|min:8',
+            'cep' => 'string|min:8|max:255',
             'bairro' => 'string|max:255',
             'cidade' => 'string|max:255',
             'uf' => 'string|max:255'
