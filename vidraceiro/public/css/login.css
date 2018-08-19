@@ -28,6 +28,7 @@ body {
 .btn-custom {
     background-color: #4264FB !important;
     border-color: #4264FB !important;
+    font-weight: 500;
 }
 
 .btn-custom:hover {
@@ -76,6 +77,10 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 2;
+}
+
+.form-control,label{
+    font-weight: 500;
 }
 
 /* shadow */
