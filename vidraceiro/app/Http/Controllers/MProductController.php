@@ -9,6 +9,7 @@ use App\Glass;
 use App\MProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class MProductController extends Controller
 {
@@ -62,6 +63,10 @@ class MProductController extends Controller
 
         switch ($tab) {
             case '1':
+                $validado = $this->rules_mproduct($request->all());
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado);
+                }
                 $mproductcriado = new MProduct;
                 $mproductcriado = $mproductcriado->create($request->all());
                 if ($mproductcriado)
@@ -69,6 +74,12 @@ class MProductController extends Controller
                         ->with(compact('mproductcriado'));
                 break;
             case '2':
+                $validado = $this->rules_mproduct_material($request->all());
+                if ($validado->fails()) {
+                    $mproductcriado = MProduct::orderBy('created_at', 'desc')->first();
+                    return redirect()->back()->withErrors($validado)
+                        ->with(compact('mproductcriado'));
+                }
                 $mproductcriado = MProduct::find($request->m_produto_id);
                 if ($mproductcriado) {
                     $mproductcriado->glasses()->detach();
@@ -119,15 +130,28 @@ class MProductController extends Controller
 //        var_dump($request->all());
         switch ($tab) {
             case '1':
+
                 $mproductcriado = MProduct::find($id);
+
+                $validado = $this->rules_mproduct($request->all());
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado)
+                        ->with(compact('mproductcriado'));
+                }
                 $mproductcriado->update($request->all());
+
                 if ($mproductcriado) {
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
                         ->with(compact('mproductcriado'));
                 }
                 break;
             case '2':
-                $mproductcriado = MProduct::find($request->m_produto_id);
+                $mproductcriado = MProduct::find($id);
+                $validado = $this->rules_mproduct_material($request->all());
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado)
+                        ->with(compact('mproductcriado'));
+                }
                 if ($mproductcriado) {
                     $mproductcriado->glasses()->detach();
                     $mproductcriado->aluminums()->detach();
@@ -154,4 +178,25 @@ class MProductController extends Controller
             return redirect()->back()->with('error', 'Erro ao deletar modelo de produto');
         }
     }
+
+    public function rules_mproduct(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'imagem' => 'required|string|max:255',
+            'categoria_produto_id' => 'required|integer'
+        ]);
+
+        return $validator;
+    }
+
+    public function rules_mproduct_material(array $data)
+    {
+        $validator = Validator::make($data, [
+            'm_produto_id' => 'required|integer'
+        ]);
+
+        return $validator;
+    }
+
 }

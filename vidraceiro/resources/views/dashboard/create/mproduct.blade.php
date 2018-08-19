@@ -47,7 +47,13 @@
                         @endif
                         @csrf
                         <div class="form-row">
-
+                            <div class="col-12">
+                                @foreach($errors->all() as $error)
+                                    <div class="alert alert-danger">
+                                        {{ $error }}
+                                    </div>
+                                @endforeach
+                            </div>
                             <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
@@ -118,6 +124,11 @@
                                         </div>
                                     </div>
                                 @endif
+                                    @foreach($errors->all() as $error)
+                                        <div class="alert alert-danger">
+                                            {{ $error }}
+                                        </div>
+                                    @endforeach
                             </div>
 
                             <div class="form-group col-md-4">
