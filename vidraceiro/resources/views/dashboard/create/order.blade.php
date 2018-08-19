@@ -31,6 +31,11 @@
                                 </div>
                             </div>
                         @endif
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
                     </div>
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
@@ -81,7 +86,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-orcamentos">Orçamentos</label>
-                        <select id="select-orcamentos" class="custom-select" {{empty($order) ? 'required': '' }}>
+                        <select id="select-orcamentos" class="custom-select">
                             <option value="" selected>Selecione um orçamento</option>
                             @foreach($budgets as $budget)
                                 <option id="option-linha-{{$budget->id}}" name="{{$budget->total}}"
