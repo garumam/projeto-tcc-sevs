@@ -37,7 +37,7 @@ $(document).ready(function () {
             if (contadorCategoria !== 1) {
                 $('#url-image').val(base_url);
                 $('#image-selecionar').attr("src", base_url);
-            }else{
+            } else {
                 $('#url-image').val(imagemselecionar.attr('src'));
             }
         }
@@ -189,12 +189,12 @@ $(document).ready(function () {
     //fim orçamento form
 
     //inicio orcamento troca de tab esconder botão delete
-    $('.tabs-budget').each(function(index) {
-        $(this).on("click", function(){
+    $('.tabs-budget').each(function (index) {
+        $(this).on("click", function () {
 
-            if($('#nav-Editar-tab').attr('id') == $(this).attr('id') && !$(this).hasClass('disabled')){
+            if ($('#nav-Editar-tab').attr('id') == $(this).attr('id') && !$(this).hasClass('disabled')) {
                 $('.bt-budget-deletar-produto').show();
-            }else{
+            } else {
                 $('.bt-budget-deletar-produto').hide();
             }
 
@@ -564,7 +564,7 @@ $(document).ready(function () {
 
         if (produtoselecionado.val() != "") {
 
-            $('.bt-budget-deletar-produto').attr('id',produtoselecionado.val());
+            $('.bt-budget-deletar-produto').attr('id', produtoselecionado.val());
             imagem = produtoselecionado.data('image');
             descricao = produtoselecionado.data('descricao');
             altura = produtoselecionado.data('altura');
@@ -576,7 +576,7 @@ $(document).ready(function () {
             maoObra = produtoselecionado.data('valor_mao_obra');
 
         } else {
-            $('.bt-budget-deletar-produto').attr('id','vazio');
+            $('.bt-budget-deletar-produto').attr('id', 'vazio');
             imagem = '/img/semimagem.png';
             descricao = altura = largura = qtd = localizacao = maoObra = '';
         }
@@ -648,13 +648,29 @@ $(document).ready(function () {
     var maskBehavior = function (val) {
             return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
         },
-        options = {onKeyPress: function(val, e, field, options) {
+        options = {
+            onKeyPress: function (val, e, field, options) {
                 field.mask(maskBehavior.apply({}, arguments), options);
             }
         };
 
     $('#celular').mask(maskBehavior, options);
     $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
-    $('.largura').mask('##.000', {reverse: true});
-    $('.altura').mask('##.000', {reverse: true});
+    // $('.largura').mask('##.000', {reverse: true});
+    // $('.altura').mask('##.000', {reverse: true});
+    let altura = $('.altura');
+    altura.keyup(function () {
+        altura.val(mskDigitos(altura.val()));
+    });
+
+    let largura = $('.largura');
+    largura.keyup(function () {
+        largura.val(mskDigitos(largura.val()));
+    });
+
+    function mskDigitos(v) {
+        v = v.replace(/\D/g, "");
+        v = v.replace(/(\d)(\d{1,3}$)/, "$1.$2");
+        return v;
+    }
 });
