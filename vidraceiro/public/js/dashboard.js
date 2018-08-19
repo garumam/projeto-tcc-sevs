@@ -655,6 +655,6 @@ $(document).ready(function () {
 
     $('#celular').mask(maskBehavior, options);
     $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
-    $('.largura').mask('#0.000', {reverse: true});
-    $('.altura').mask('#0.000', {reverse: true});
+    $('.largura').mask('##.000', {reverse: true});
+    $('.altura').mask('##.000', {reverse: true});
 });
