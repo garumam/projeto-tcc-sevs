@@ -66,7 +66,6 @@
                             <p>Categorias</p>
                         </a>
                     </li>
-
                     <li {{ Request::is('materials') ? 'class=active' : '' }}>
                         <a href="{{ route('materials.index') }}">
                             <i class="pe-7s-science"></i>
@@ -79,9 +78,6 @@
                             <p>Usuarios</p>
                         </a>
                     </li>
-
-
-
                     <li {{ Request::is('providers') ? 'class=active' : '' }}>
                         <a href="{{ route('providers.index') }}">
                             <i class="pe-7s-rocket"></i>
