@@ -15,8 +15,8 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('largura')->nullable();
-            $table->double('altura')->nullable();
+            $table->double('largura');
+            $table->double('altura');
             $table->integer('qtd');
             $table->string('localizacao')->nullable();
             $table->double('valor_mao_obra')->nullable();

@@ -568,9 +568,9 @@ $(document).ready(function () {
             imagem = produtoselecionado.data('image');
             descricao = produtoselecionado.data('descricao');
             altura = produtoselecionado.data('altura');
-            altura = parseFloat(Math.round(altura * 1000) / 1000).toFixed(3);
+            //altura = parseFloat(Math.round(altura * 1000) / 1000).toFixed(3);
             largura = produtoselecionado.data('largura');
-            largura = parseFloat(Math.round(largura * 1000) / 1000).toFixed(3);
+            //largura = parseFloat(Math.round(largura * 1000) / 1000).toFixed(3);
             qtd = produtoselecionado.data('qtd');
             localizacao = produtoselecionado.data('localizacao');
             maoObra = produtoselecionado.data('valor_mao_obra');
@@ -656,16 +656,18 @@ $(document).ready(function () {
 
     $('#celular').mask(maskBehavior, options);
     $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
-    // $('.largura').mask('##.000', {reverse: true});
-    // $('.altura').mask('##.000', {reverse: true});
-    let altura = $('.altura');
-    altura.keyup(function () {
-        altura.val(mskDigitos(altura.val()));
+
+
+    $('.altura').each(function (index) {
+        $(this).keyup(function () {
+            $(this).val(mskDigitos($(this).val()));
+        });
     });
 
-    let largura = $('.largura');
-    largura.keyup(function () {
-        largura.val(mskDigitos(largura.val()));
+    $('.largura').each(function (index) {
+        $(this).keyup(function () {
+            $(this).val(mskDigitos($(this).val()));
+        });
     });
 
     function mskDigitos(v) {

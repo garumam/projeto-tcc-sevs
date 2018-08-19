@@ -88,6 +88,15 @@ class BudgetController extends Controller
                         ->with(compact('budgetcriado'));
                 break;
             case '2': //tab adicionar
+                $validado = $this->rules_budget_product_add($request->all());
+
+                if ($validado->fails()) {
+                    $budgetcriado = Budget::find($request->budget_id);
+                    $products = $budgetcriado->products;
+                    return redirect()->back()->withErrors($validado)
+                        ->with(compact('budgetcriado'))
+                        ->with(compact('products'));
+                }
                 $product = new Product();
                 $product = $product->create($request->all());
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
@@ -325,6 +334,11 @@ class BudgetController extends Controller
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
+                $validado = $this->rules_budget_product_add($request->all());
+
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado);
+                }
                 $product = new Product();
                 $product = $product->create(array_merge($request->all(), ['budget_id' => $id]));
                 $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
@@ -592,6 +606,17 @@ class BudgetController extends Controller
             'cep' => 'string|min:8|max:255',
             'bairro' => 'max:255',
             'cidade' => 'max:255',
+        ]);
+
+        return $validator;
+    }
+
+    public function rules_budget_product_add(array $data)
+    {
+        $validator = Validator::make($data, [
+            'largura' => 'required|string|max:255',
+            'altura' => 'required|string|max:255',
+            'qtd' => 'required|integer'
         ]);
 
         return $validator;
