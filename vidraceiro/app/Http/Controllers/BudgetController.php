@@ -160,6 +160,16 @@ class BudgetController extends Controller
                 break;
             case '3': //tab editar
 
+                $validado = $this->rules_budget_product_edit($request->all());
+
+                if ($validado->fails()) {
+                    $budgetcriado = Budget::find($request->budget_id);
+                    $products = $budgetcriado->products;
+                    return redirect()->back()->withErrors($validado)
+                        ->with(compact('budgetcriado'))
+                        ->with(compact('products'));
+                }
+
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
                 $budgetcriado = Budget::find($request->budget_id);
@@ -392,6 +402,11 @@ class BudgetController extends Controller
                 }
                 break;
             case '3': //tab editar
+                $validado = $this->rules_budget_product_edit($request->all());
+
+                if ($validado->fails()) {
+                    return redirect()->back()->withErrors($validado);
+                }
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
                 if ($product && self::atualizaTotal($id, null))
@@ -614,6 +629,19 @@ class BudgetController extends Controller
     public function rules_budget_product_add(array $data)
     {
         $validator = Validator::make($data, [
+            'm_produto_id' => 'required|integer',
+            'largura' => 'required|string|max:255',
+            'altura' => 'required|string|max:255',
+            'qtd' => 'required|integer'
+        ]);
+
+        return $validator;
+    }
+
+    public function rules_budget_product_edit(array $data)
+    {
+        $validator = Validator::make($data, [
+            'produtoid' => 'required|integer',
             'largura' => 'required|string|max:255',
             'altura' => 'required|string|max:255',
             'qtd' => 'required|integer'
