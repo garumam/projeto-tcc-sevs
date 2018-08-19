@@ -239,15 +239,15 @@
 
                             <div class="form-group col-md-4">
                                 <label for="altura">Altura</label>
-                                <input type="number" step="0.001" class="form-control" id="altura" name="altura"
-                                       placeholder="0,000"
+                                <input type="text" class="form-control altura" id="altura" name="altura"
+                                       placeholder="0.000"
                                        value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="largura">Largura</label>
-                                <input type="number" step="0.001" class="form-control" id="largura" name="largura"
-                                       placeholder="0,000" value="{{old('largura')}}" required>
+                                <input type="text" class="form-control largura" id="largura" name="largura"
+                                       placeholder="0.000" value="{{old('largura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
@@ -264,7 +264,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra">Valor da mão de obra</label>
-                                <input type="text" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
+                                <input type="number" step=".01" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
@@ -359,14 +359,14 @@
 
                             <div class="form-group col-md-4">
                                 <label for="altura-edit">Altura</label>
-                                <input type="number" step="0.001" class="form-control" id="altura-edit" name="altura"
+                                <input type="text" class="form-control altura" id="altura-edit" name="altura"
                                        placeholder="0,000"
                                        value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="largura-edit">Largura</label>
-                                <input type="number" step="0.001" class="form-control" id="largura-edit" name="largura"
+                                <input type="text" class="form-control largura" id="largura-edit" name="largura"
                                        placeholder="0,000" value="{{old('largura')}}" required>
                             </div>
 
@@ -384,7 +384,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra-edit">Valor da mão de obra</label>
-                                <input type="number" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
+                                <input type="number" step=".01" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))

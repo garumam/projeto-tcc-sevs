@@ -590,9 +590,8 @@ class BudgetController extends Controller
             'nome' => 'required|string|max:255',
             'telefone' => 'string|min:10|max:255',
             'cep' => 'string|min:8|max:255',
-            'bairro' => 'string|max:255',
-            'cidade' => 'string|max:255',
-            'uf' => 'string|max:255'
+            'bairro' => 'max:255',
+            'cidade' => 'max:255',
         ]);
 
         return $validator;

@@ -568,7 +568,9 @@ $(document).ready(function () {
             imagem = produtoselecionado.data('image');
             descricao = produtoselecionado.data('descricao');
             altura = produtoselecionado.data('altura');
+            altura = parseFloat(Math.round(altura * 1000) / 1000).toFixed(3);
             largura = produtoselecionado.data('largura');
+            largura = parseFloat(Math.round(largura * 1000) / 1000).toFixed(3);
             qtd = produtoselecionado.data('qtd');
             localizacao = produtoselecionado.data('localizacao');
             maoObra = produtoselecionado.data('valor_mao_obra');
@@ -653,5 +655,6 @@ $(document).ready(function () {
 
     $('#celular').mask(maskBehavior, options);
     $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
-
+    $('.largura').mask('#0.000', {reverse: true});
+    $('.altura').mask('#0.000', {reverse: true});
 });
