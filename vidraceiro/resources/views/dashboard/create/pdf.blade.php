@@ -13,7 +13,7 @@
                 @csrf
                 <div class="form-row">
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="orcamento">Selecione um Orçamento</label>
                         <select class="custom-select" id="orcamento" required>
                             <option value="" selected>Selecione...</option>

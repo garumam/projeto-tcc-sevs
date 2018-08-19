@@ -42,30 +42,6 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li {{ Request::is('users') ? 'class=active' : '' }}>
-                        <a href="{{ route('users.index') }}">
-                            <i class="pe-7s-user"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li>
-                    <li {{ Request::is('categories') ? 'class=active' : '' }}>
-                        <a href="{{ route('categories.index') }}">
-                            <i class="pe-7s-note2"></i>
-                            <p>Categorias</p>
-                        </a>
-                    </li>
-                    <li {{ Request::is('products') ? 'class=active' : '' }}>
-                        <a href="{{ route('mproducts.index') }}">
-                            <i class="pe-7s-news-paper"></i>
-                            <p>Produtos</p>
-                        </a>
-                    </li>
-                    <li {{ Request::is('materials') ? 'class=active' : '' }}>
-                        <a href="{{ route('materials.index') }}">
-                            <i class="pe-7s-science"></i>
-                            <p>Materiais</p>
-                        </a>
-                    </li>
                     <li {{ Request::is('budgets') ? 'class=active' : '' }}>
                         <a href="{{ route('budgets.index') }}">
                             <i class="pe-7s-map-marker"></i>
@@ -78,6 +54,34 @@
                             <p>Ordens de serviço</p>
                         </a>
                     </li>
+                    <li {{ Request::is('products') ? 'class=active' : '' }}>
+                        <a href="{{ route('mproducts.index') }}">
+                            <i class="pe-7s-news-paper"></i>
+                            <p>Produtos</p>
+                        </a>
+                    </li>
+                    <li {{ Request::is('categories') ? 'class=active' : '' }}>
+                        <a href="{{ route('categories.index') }}">
+                            <i class="pe-7s-note2"></i>
+                            <p>Categorias</p>
+                        </a>
+                    </li>
+
+                    <li {{ Request::is('materials') ? 'class=active' : '' }}>
+                        <a href="{{ route('materials.index') }}">
+                            <i class="pe-7s-science"></i>
+                            <p>Materiais</p>
+                        </a>
+                    </li>
+                    <li {{ Request::is('users') ? 'class=active' : '' }}>
+                        <a href="{{ route('users.index') }}">
+                            <i class="pe-7s-user"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+
+
+
                     <li {{ Request::is('providers') ? 'class=active' : '' }}>
                         <a href="{{ route('providers.index') }}">
                             <i class="pe-7s-rocket"></i>
@@ -93,7 +97,7 @@
                     <li {{ Request::is('pdf') ? 'class=active' : '' }}>
                         <a href="{{ route('pdf.index') }}">
                             <i class="pe-7s-rocket"></i>
-                            <p>Gerar PDF</p>
+                            <p>Relatórios</p>
                         </a>
                     </li>
                     <li class="">
@@ -151,7 +155,7 @@
                 </section>
 
                 {{--<footer class="shadow-top">--}}
-                    {{--<p>© 2018 Vidraceiro.</p>--}}
+                {{--<p>© 2018 Vidraceiro.</p>--}}
                 {{--</footer>--}}
             </div>
 
@@ -203,7 +207,7 @@
 
 <script>
     function deletar(id, nome) {
-        if(id != 'vazio'){
+        if (id != 'vazio') {
             var form = document.getElementById('delete-form');
             form.action = "/" + nome + "/" + id;
             event.preventDefault();
