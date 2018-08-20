@@ -195,7 +195,7 @@ class MProductController extends Controller
     {
         $validator = Validator::make($data, [
             'm_produto_id' => 'required|integer',
-            'id_vidro_' => 'array'
+            'id_vidro_' => 'nullable|array'
         ]);
 
         return $validator;
