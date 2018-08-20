@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -47,6 +48,10 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        $validado = $this->rules_category($request->all());
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $category = new Category();
         $category = $category->create($request->all());
         if ($category)
@@ -69,6 +74,10 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_category($request->all());
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $category = Category::find($id);
         if ($category) {
             $category->update($request->all());
@@ -87,4 +96,16 @@ class CategoryController extends Controller
             return redirect()->back()->with('error', 'Erro ao deletar categoria');
         }
     }
+
+    public function rules_category(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'grupo_imagem' => 'required|string|max:255'
+        ]);
+
+        return $validator;
+    }
+
 }

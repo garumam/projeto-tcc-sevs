@@ -151,17 +151,32 @@ class MaterialController extends Controller
         switch($type){
             case 'glass':
                 $validator = Validator::make($data, [
-                    'nome' => 'required|string|max:255'
+                    'nome' => 'required|string|max:255',
+                    'cor' => 'required|string|max:255',
+                    'tipo' => 'required|string|max:255',
+                    'espessura' => 'required|integer',
+                    'preco' => 'nullable|numeric',
+                    'categoria_vidro_id' => 'required|integer'
                 ]);
                 break;
             case 'aluminum':
                 $validator = Validator::make($data, [
-                    'perfil' => 'required|string|max:255'
+                    'perfil' => 'required|string|max:255',
+                    'descricao' => 'nullable|string|max:255',
+                    'medida' => 'nullable|numeric',
+                    'qtd' => 'required|integer',
+                    'peso' => 'nullable|numeric',
+                    'preco' => 'nullable|numeric',
+                    'tipo_medida' => 'required|string|max:255',
+                    'categoria_aluminio_id' => 'required|integer'
                 ]);
                 break;
             case 'component':
                 $validator = Validator::make($data, [
-                    'nome' => 'required|string|max:255'
+                    'nome' => 'required|string|max:255',
+                    'qtd' => 'required|integer',
+                    'preco' => 'nullable|numeric',
+                    'categoria_componente_id' => 'required|integer'
                 ]);
                 break;
         }
@@ -193,4 +208,6 @@ class MaterialController extends Controller
             return redirect()->back()->with('error', "Erro ao deletar $tipoNome");
         }
     }
+
+
 }

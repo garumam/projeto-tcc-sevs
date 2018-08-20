@@ -58,41 +58,41 @@ $(document).ready(function () {
         kitsacada.css("display", "none");
 
         switch (valueSelected) {
-            case '6':
-            case '1':
+            case 'todasimagens':
+            case 'boxdiversos':
                 boxdiversos.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if (valueSelected != '6')
+                if (valueSelected != 'todasimagens')
                     break;
-            case '2':
+            case 'boxpadrao':
                 boxpadrao.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if (valueSelected != '6')
+                if (valueSelected != 'todasimagens')
                     break;
-            case '3':
+            case 'ferragem1000':
                 ferragem1000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
 
-                if (valueSelected != '6')
+                if (valueSelected != 'todasimagens')
                     break;
-            case '4':
+            case 'ferragem3000':
                 ferragem3000.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',
                 });
-                if (valueSelected != '6')
+                if (valueSelected != 'todasimagens')
                     break;
-            case '5':
+            case 'kitsacada':
                 kitsacada.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',

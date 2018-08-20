@@ -51,13 +51,13 @@
                         <div class="form-group col-md-4">
                             <label for="cor">Cor</label>
                             <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor"
-                                   value="{{$material->cor or old('cor')}}">
+                                   value="{{$material->cor or old('cor')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="tipo">Tipo</label>
                             <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo"
-                                   value="{{$material->tipo or old('tipo')}}">
+                                   value="{{$material->tipo or old('tipo')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">

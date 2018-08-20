@@ -16,8 +16,8 @@ class CreateGlassesTable extends Migration
         Schema::create('glasses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('cor')->nullable();
-            $table->string('tipo')->nullable();
+            $table->string('cor');
+            $table->string('tipo');
             $table->integer('espessura');
             $table->double('preco')->nullable();
             $table->integer('is_modelo');
