@@ -617,10 +617,14 @@ class BudgetController extends Controller
     {
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
-            'telefone' => 'string|min:10|max:255',
+            'telefone' => 'nullable|string|min:10|max:255',
             'cep' => 'string|min:8|max:255',
-            'bairro' => 'max:255',
-            'cidade' => 'max:255',
+            'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'uf' => 'nullable|string|max:255',
+            'complemento' => 'nullable|string|max:255',
+            'margem_lucro' => 'nullable|numeric|max:255'
         ]);
 
         return $validator;
@@ -632,7 +636,9 @@ class BudgetController extends Controller
             'm_produto_id' => 'required|integer',
             'largura' => 'required|string|max:255',
             'altura' => 'required|string|max:255',
-            'qtd' => 'required|integer'
+            'qtd' => 'required|integer',
+            'localizacao' => 'nullable|string|max:255',
+            'valor_mao_obra' => 'nullable|numeric'
         ]);
 
         return $validator;
@@ -644,7 +650,9 @@ class BudgetController extends Controller
             'produtoid' => 'required|integer',
             'largura' => 'required|string|max:255',
             'altura' => 'required|string|max:255',
-            'qtd' => 'required|integer'
+            'qtd' => 'required|integer',
+            'localizacao' => 'nullable|string|max:255',
+            'valor_mao_obra' => 'nullable|numeric'
         ]);
 
         return $validator;

@@ -184,6 +184,7 @@ class MProductController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'imagem' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:255',
             'categoria_produto_id' => 'required|integer'
         ]);
 
@@ -193,7 +194,8 @@ class MProductController extends Controller
     public function rules_mproduct_material(array $data)
     {
         $validator = Validator::make($data, [
-            'm_produto_id' => 'required|integer'
+            'm_produto_id' => 'required|integer',
+            'id_vidro_' => 'array'
         ]);
 
         return $validator;

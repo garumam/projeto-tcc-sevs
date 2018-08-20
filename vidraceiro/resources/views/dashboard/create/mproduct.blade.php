@@ -63,8 +63,7 @@
                             <div class="form-group col-md-4">
                                 <label for="descricao">Descrição</label>
                                 <input type="text" class="form-control" id="descricao" name="descricao"
-                                       value="{{$mproductedit->descricao or old('descricao')}}" placeholder="Descrição"
-                                       required>
+                                       value="{{$mproductedit->descricao or old('descricao')}}" placeholder="Descrição">
                             </div>
 
                             <div class="form-group col-md-4">
