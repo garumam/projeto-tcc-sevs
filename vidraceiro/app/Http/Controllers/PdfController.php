@@ -21,19 +21,19 @@ class PdfController extends Controller
 
     public function create()
     {
-        return view('dashboard.create.pdf')->with('title','Gerar PDF');
+        return view('dashboard.create.pdf')->with('title', 'Gerar PDF');
     }
 
     public function store(Request $request)
     {
-        $budget = Budget::with('products')->find($request->idorcamento);
-        $pdf = PDF::loadView('dashboard.pdf.budget',compact('budget'));
-        return $pdf->stream('orcamento.pdf');
+
     }
 
-    public function show()
+    public function show(Request $request)
     {
-
+        $budget = Budget::with('products')->find($request->idorcamento);
+        $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget'));
+        return $pdf->stream('orcamento.pdf');
     }
 
     public function edit()

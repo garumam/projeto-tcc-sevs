@@ -6,10 +6,11 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}} </h4>
-                <button id="bt-pdf-visible" class="btn btn-primary btn-custom" type="button">Gerar PDF</button>
+                <button id="bt-pdf-visible" class="btn btn-primary btn-custom" href="{{route('pdf.show')}}" type="button">Gerar PDF</button>
+
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('pdf.store')}}">
+            <form class="formulario" method="GET" role="form" target="_blank" action="{{route('pdf.show')}}">
                 @csrf
                 <div class="form-row">
 
