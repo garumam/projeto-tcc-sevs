@@ -9,13 +9,13 @@
                 <button id="bt-pdf-visible" class="btn btn-primary btn-custom" type="button">Gerar PDF</button>
             </div>
 
-            <form class="formulario" method="POST" role="form" action="{{route('pdf.create')}}">
+            <form class="formulario" method="POST" role="form" action="{{route('pdf.store')}}">
                 @csrf
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
                         <label for="orcamento">Selecione um Orçamento</label>
-                        <select class="custom-select" id="orcamento" required>
+                        <select class="custom-select" id="orcamento" name="idorcamento" required>
                             <option value="" selected>Selecione...</option>
                             @foreach($budgets as $budget)
                                 <option value="{{$budget->id}}">{{$budget->nome}}</option>

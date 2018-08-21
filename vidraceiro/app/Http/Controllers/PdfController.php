@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 
 class PdfController extends Controller
 {
@@ -22,9 +24,11 @@ class PdfController extends Controller
         return view('dashboard.create.pdf')->with('title','Gerar PDF');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-
+        $budget = Budget::with('products')->find($request->idorcamento);
+        $pdf = PDF::loadView('dashboard.pdf.budget',compact('budget'));
+        return $pdf->stream('orcamento.pdf');
     }
 
     public function show()
