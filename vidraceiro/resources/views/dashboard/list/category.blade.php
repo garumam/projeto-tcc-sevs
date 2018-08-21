@@ -56,6 +56,7 @@
                     </tbody>
                 </table>
 
+                {{$categories->links('layouts.pagination')}}
 
             </div>
         </div>

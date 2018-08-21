@@ -55,6 +55,7 @@
                     </tbody>
                 </table>
 
+                {{$budgets->links('layouts.pagination')}}
 
             </div>
         </div>

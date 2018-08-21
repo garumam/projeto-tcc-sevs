@@ -54,7 +54,7 @@ class BudgetController extends Controller
 
     public function index()
     {
-        $budgets = Budget::all();
+        $budgets = Budget::paginate(10);
         return view('dashboard.list.budget', compact('budgets'))->with('title', 'Orçamentos');
     }
 

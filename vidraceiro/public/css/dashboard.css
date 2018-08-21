@@ -344,6 +344,15 @@ body {
     border: 5px solid #0acf97;
 }
 
+.page-link {
+    color: #4264FB;
+}
+
+.page-item.active .page-link {
+    background-color: #4264FB;
+    border-color: #4264FB;
+}
+
 #image-selecionar {
     border-radius: .4rem;
     /*border: 2px solid #191919;*/
