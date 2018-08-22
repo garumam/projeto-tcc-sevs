@@ -79,23 +79,23 @@
 
                 <td class="indice">{{$loop->index + 1}}</td>
 
-                <td>{{$product->mproduct->nome . ' '. $product->mproduct->descricao}}
+                <td><b>Nome: {{$product->mproduct->nome .' - '}}</b> {{$product->mproduct->descricao}}
                     <br>
-                    Linha: {{$product->mproduct->category->nome}}
+                    <b>Linha:</b> {{$product->mproduct->category->nome}}
                     <br>
                     @foreach($product->glasses as $glass)
-                        Vidro: {{$glass->nome}}
+                        <b>Vidro:</b> {{$glass->nome}}
                     @endforeach
                     <br>
                     @foreach($product->aluminums as $aluminum)
-                        Aluminios: {{$aluminum->perfil . ' '. $aluminum->descricao}}
+                        <b>Aluminios:</b> {{$aluminum->perfil . ' '. $aluminum->descricao}}
                     @endforeach
                     <br>
-                    Largura: {{$product->largura . ' '}}
-                    Altura: {{$product->altura}}
-                    Quantidade: {{$product->qtd}}
+                    <b>Largura:</b> {{$product->largura . ' '}}
+                    <b>Altura:</b> {{$product->altura}}
+                    <b>Quantidade:</b> {{$product->qtd}}
                     <br>
-                    Localização: {{$product->localizacao}}
+                    <b>Localização:</b> {{$product->localizacao}}
                 </td>
 
             </table>
