@@ -41,4 +41,13 @@ class Glass extends Model
             'm_produto_id'
         );
     }
+
+    public function providers(){
+        return $this->belongsToMany(
+            Provider::class,
+            'provider_glass',
+            'vidro_id',
+            'provider_id'
+        );
+    }
 }

@@ -37,6 +37,14 @@ class CreateAluminumsTable extends Migration
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('aluminio_id')->references('id')->on('aluminums')->onDelete('cascade');
         });
+
+        Schema::create('provider_aluminum', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('provider_id')->unsigned();
+            $table->integer('aluminio_id')->unsigned();
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
+            $table->foreign('aluminio_id')->references('id')->on('aluminums')->onDelete('cascade');
+        });
     }
 
     /**
@@ -46,6 +54,7 @@ class CreateAluminumsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('provider_aluminum');
         Schema::dropIfExists('m_product_aluminum');
         Schema::dropIfExists('aluminums');
     }

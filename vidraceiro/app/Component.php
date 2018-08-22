@@ -40,4 +40,13 @@ class Component extends Model
             'm_produto_id'
         );
     }
+
+    public function providers(){
+        return $this->belongsToMany(
+            Provider::class,
+            'provider_component',
+            'componente_id',
+            'provider_id'
+        );
+    }
 }

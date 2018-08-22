@@ -40,4 +40,13 @@ class Aluminum extends Model
             'm_produto_id'
         );
     }
+
+    public function providers(){
+        return $this->belongsToMany(
+            Provider::class,
+            'provider_aluminum',
+            'aluminio_id',
+            'provider_id'
+        );
+    }
 }

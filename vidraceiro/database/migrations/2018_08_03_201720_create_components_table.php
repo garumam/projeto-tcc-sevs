@@ -34,6 +34,14 @@ class CreateComponentsTable extends Migration
             $table->foreign('m_produto_id')->references('id')->on('m_products')->onDelete('cascade');
             $table->foreign('componente_id')->references('id')->on('components')->onDelete('cascade');
         });
+
+        Schema::create('provider_component', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('provider_id')->unsigned();
+            $table->integer('componente_id')->unsigned();
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
+            $table->foreign('componente_id')->references('id')->on('components')->onDelete('cascade');
+        });
     }
 
     /**
@@ -43,6 +51,7 @@ class CreateComponentsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('provider_component');
         Schema::dropIfExists('m_product_component');
         Schema::dropIfExists('components');
     }
