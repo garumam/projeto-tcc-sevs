@@ -31,13 +31,13 @@
             display: block;
             margin-top: 20px;
             width: 15%;
-            height: 120px;
+            height: 140px;
         }
 
         .tabela-produto {
-            margin-top: 13px;
+            margin-top: 10px;
             width: 80%;
-            height: 120px;
+            height: 140px;
             float: right;
             border: 1px solid #1b1e21;
             font-family: 'Raleway', sans-serif;
@@ -49,7 +49,7 @@
             width: 40px;
             text-align: center;
             border-right: 1px solid #1b1e21;
-            padding-top: 50px;
+            padding-top: 60px;
         }
 
     </style>
