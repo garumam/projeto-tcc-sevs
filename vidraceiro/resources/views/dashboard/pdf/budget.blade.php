@@ -43,15 +43,39 @@
             font-family: 'Raleway', sans-serif;
             font-size: .9rem;
             border-spacing: 0;
+            padding: 0;
         }
-
+        .tabela-produto tr,td{
+            border-spacing: 0;
+            padding: .6rem;
+        }
         .indice {
             width: 40px;
-            text-align: center;
-            border-right: 1px solid #1b1e21;
             padding-top: 60px;
-        }
+            text-align: center;
+            vertical-align: center;
+            border-right: 1px solid #1b1e21;
 
+        }
+        .texto {
+            margin: 0 auto;
+            text-align: left;
+            vertical-align: center;
+        }
+        .total{
+            width: 100%;
+            height: 35px;
+        }
+        .total p {
+            margin: 0;
+            padding: 0;
+        }
+        #texto-left{
+            float: left;
+        }
+        #texto-right{
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -69,17 +93,22 @@
 <p>Cep: {{$budget->cep}}</p>
 <p>Complemento: {{$budget->complemento}}</p>
 <h3>Produtos</h3>
-<p>Valor total do orçamento: {{$budget->total}}</p>
+<div class="total">
+    <p id="texto-left">Valor total do orçamento: </p>
+    <p id="texto-right">R$ {{$budget->total}}</p>
+
+</div>
 
 
-    @forelse($budget->products as $product)
-        <div class="flex">
-            <img class="image-produto" src="{{ public_path().$product->mproduct->imagem}}">
-            <table class="tabela-produto">
 
+@forelse($budget->products as $product)
+    <div class="flex">
+        <img class="image-produto" src="{{ public_path().$product->mproduct->imagem}}">
+        <table class="tabela-produto">
+            <tr>
                 <td class="indice">{{$loop->index + 1}}</td>
 
-                <td><b>Nome: {{$product->mproduct->nome .' - '}}</b> {{$product->mproduct->descricao}}
+                <td class="texto"><b>Nome: {{$product->mproduct->nome .' - '}}</b> {{$product->mproduct->descricao}}
                     <br>
                     <b>Linha:</b> {{$product->mproduct->category->nome}}
                     <br>
@@ -97,13 +126,14 @@
                     <br>
                     <b>Localização:</b> {{$product->localizacao}}
                 </td>
+            </tr>
 
-            </table>
-        </div>
-    @empty
-        <p>Nenhum Produto Cadastrado.</p>
-    @endforelse
 
+        </table>
+    </div>
+@empty
+    <p>Nenhum Produto Cadastrado.</p>
+@endforelse
 
 
 </body>
