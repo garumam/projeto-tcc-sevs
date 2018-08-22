@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Order;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class PdfController extends Controller
     public function index()
     {
         $budgets = Budget::all();
-        return view('dashboard.create.pdf', compact('budgets'))->with('title', 'Gerar PDF');
+        $orders = Order::all();
+        return view('dashboard.create.pdf', compact('budgets','orders'))->with('title', 'Gerar PDF');
     }
 
     public function create()
@@ -31,9 +33,20 @@ class PdfController extends Controller
 
     public function show(Request $request)
     {
-        $budget = Budget::with('products')->find($request->idorcamento);
-        $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget'));
-        return $pdf->stream('orcamento.pdf');
+        $pdf = null;
+        $nomearquivo = '';
+        if($request->has('idorcamento')){
+            $budget = Budget::with('products')->find($request->idorcamento);
+            $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget'));
+            $nomearquivo = 'orcamento.pdf';
+        }else{
+            $order = Order::with('budgets.products')->find($request->idordem);
+            $pdf = PDF::loadView('dashboard.pdf.order', compact('order'));
+            $nomearquivo = 'ordem_servico.pdf';
+        }
+
+
+        return $pdf->stream($nomearquivo);
     }
 
     public function edit()

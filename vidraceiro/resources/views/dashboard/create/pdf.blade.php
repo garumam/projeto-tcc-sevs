@@ -15,11 +15,22 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
-                        <label for="orcamento">Selecione um Orçamento</label>
-                        <select class="custom-select" id="orcamento" name="idorcamento" required>
-                            <option value="" selected>Selecione...</option>
+                        <label for="opcao-pdf">Selecione qual deseja visualizar</label>
+                        <select class="custom-select" id="opcao-pdf" name="opcao">
+                            <option value="orcamento">Orçamentos</option>
+                            <option value="ordem">Ordens de serviço</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="opcao">Selecione uma das opções</label>
+                        <select class="custom-select" id="opcao" name="idorcamento" required>
+                            <option value="" selected>Selecione uma das opções</option>
                             @foreach($budgets as $budget)
-                                <option value="{{$budget->id}}">{{$budget->nome}}</option>
+                                <option class="orcamento-select-pdf" value="{{$budget->id}}">{{$budget->nome}}</option>
+                            @endforeach
+                            @foreach($orders as $order)
+                                <option class="ordem-select-pdf" value="{{$order->id}}" style="display: none;">{{$order->nome}}</option>
                             @endforeach
                         </select>
                     </div>

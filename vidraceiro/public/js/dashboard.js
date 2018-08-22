@@ -609,6 +609,28 @@ $(document).ready(function () {
 
     });
 
+    $('#opcao-pdf').change(function (e) {
+        $('#opcao').prop('selectedIndex',0);
+
+        let opcaoselecionada = $('#opcao-pdf option:selected');
+
+        if(opcaoselecionada.val() == 'orcamento'){
+
+            $('.orcamento-select-pdf').show();
+            $('.ordem-select-pdf').hide();
+            $('#opcao').attr('name', 'idorcamento');
+
+        }else{
+
+            $('.ordem-select-pdf').show();
+            $('.orcamento-select-pdf').hide();
+            $('#opcao').attr('name', 'idordem');
+
+        }
+
+    });
+
+
     function linhaProdutoAtualiza(tr, produtoselecionado) {
         tr.each(function () {
             if ($(this).data('produtoid') == produtoselecionado.val()) {
