@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Budget;
 use App\Order;
+use App\Company;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
@@ -33,15 +34,16 @@ class PdfController extends Controller
 
     public function show(Request $request)
     {
+        $company = Company::all()->first();
         $pdf = null;
         $nomearquivo = '';
         if($request->has('idorcamento')){
             $budget = Budget::with('products')->find($request->idorcamento);
-            $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget'));
+            $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'));
             $nomearquivo = 'orcamento.pdf';
         }else{
             $order = Order::with('budgets.products')->find($request->idordem);
-            $pdf = PDF::loadView('dashboard.pdf.order', compact('order'));
+            $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'));
             $nomearquivo = 'ordem_servico.pdf';
         }
 

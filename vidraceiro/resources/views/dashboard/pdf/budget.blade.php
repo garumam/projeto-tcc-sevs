@@ -6,9 +6,25 @@
 
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
+    <style>
+        p {
+            font-weight: 700;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .line {
+            border-bottom: 2px solid #1b1e21;
+        }
+    </style>
 </head>
 <body>
 
+<p>{{$company->nome}}</p>
+<p>{{$company->endereco .' - '. $company->bairro}}</p>
+<p>{{$company->cidade .' - '. $company->uf}}</p>
+<p>E-mail: {{$company->email}}</p>
+<p>Telefone: {{$company->telefone}}</p>
+<div class="line"></div>
 
 <h1>Orçamentos</h1>
 
