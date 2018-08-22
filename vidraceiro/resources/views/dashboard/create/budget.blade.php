@@ -484,12 +484,9 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
 
-                    <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '5']) :  route('budgets.store',['tag' => '5'])}}">
-                        @if(!empty($budgetedit))
-                            <input type="hidden" name="_method" value="PATCH">
-                        @endif
-                        @csrf
+                    <form class="formulario" method="GET" role="form" target="_blank"
+                          action="{{ route('pdf.show') }}">
+
                         <div class="form-row">
 
                             <div class="card-material custom-card custom-card-total col-md p-3">
@@ -585,6 +582,8 @@
                             </div>
 
                         </div>
+
+                        <input type="hidden" name="idorcamento" value="{{!empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '')}}">
 
                         <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 

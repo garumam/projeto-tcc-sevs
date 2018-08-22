@@ -37,7 +37,7 @@ class PdfController extends Controller
         $company = Company::all()->first();
         $pdf = null;
         $nomearquivo = '';
-        if($request->has('idorcamento')){
+        if($request->has('idorcamento') && $request->idorcamento != ''){
             $budget = Budget::with('products')->find($request->idorcamento);
             $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'));
             $nomearquivo = 'orcamento.pdf';

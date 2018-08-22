@@ -11,12 +11,12 @@
             </div>
 
             <form class="formulario" method="GET" role="form" target="_blank" action="{{route('pdf.show')}}">
-                @csrf
+
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
                         <label for="opcao-pdf">Selecione qual deseja visualizar</label>
-                        <select class="custom-select" id="opcao-pdf" name="opcao">
+                        <select class="custom-select" id="opcao-pdf">
                             <option value="orcamento">Orçamentos</option>
                             <option value="ordem">Ordens de serviço</option>
                         </select>
