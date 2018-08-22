@@ -43,7 +43,7 @@ $(document).ready(function () {
         }
 
         $('#gridImagens div img').removeClass('thumbnail');
-        let valueSelected = $('#select-categoria option:selected').val();
+        let valueSelected = $('#select-categoria option:selected').data('grupoimagem');
         let boxdiversos = $('#boxdiversos');
         let boxpadrao = $('#boxpadrao');
         let ferragem1000 = $('#ferragem1000');
