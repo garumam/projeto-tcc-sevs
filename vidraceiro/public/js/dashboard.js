@@ -740,7 +740,6 @@ $(document).ready(function () {
     }
 
     //Deixando novos selects do plugin chosen invisíveis
-    $('#select_vidro_chosen').hide();
     $('#select_aluminio_chosen').hide();
     $('#select_componente_chosen').hide();
 

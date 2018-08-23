@@ -45,7 +45,7 @@
             <option></option>
             @foreach($glasses as $glass)
                 <option data-preco="{{$glass->preco}}"
-                        data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome}}</option>
+                        data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome .' '. $glass->tipo}}</option>
             @endforeach
         </select>
         <select id="select-aluminio" class="form-control form-control-chosen" name="aluminio_id" data-placeholder="Selecione um aluminio" style="display: none;">
