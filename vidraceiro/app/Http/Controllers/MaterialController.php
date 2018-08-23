@@ -6,6 +6,7 @@ use App\Aluminum;
 use App\Category;
 use App\Component;
 use App\Glass;
+use App\Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,6 +28,7 @@ class MaterialController extends Controller
 
     public function create($type)
     {
+        $providers = Provider::all();
 
         switch($type){
             case 'glass':
@@ -45,11 +47,12 @@ class MaterialController extends Controller
             default:
                 return redirect()->back();
         }
-        return view('dashboard.create.material',compact('type','categories'))->with('title','Criar '.$nome);
+        return view('dashboard.create.material',compact('type','categories', 'providers'))->with('title','Criar '.$nome);
     }
 
     public function store(Request $request, $type)
     {
+
         switch($type){
             case 'glass':
                 $validado = $this->rules_materiais($request->all(), $type);
@@ -73,10 +76,10 @@ class MaterialController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $is_modelo = (Request()->route()->getPrefix() == '/materials')? 1 : 0;
-
-        $material = $material->create(array_merge($request->all(), ['is_modelo' => $is_modelo]));
-
+        $material = $material->create(array_merge($request->except('providers'), ['is_modelo' => 1]));
+        if(count($request->providers) > 0){
+            $material->providers()->sync($request->providers);
+        }
         if ($material)
             return redirect()->back()->with('success', "$nome criado com sucesso");
     }
@@ -88,20 +91,20 @@ class MaterialController extends Controller
 
     public function edit($type, $id)
     {
-
+        $providers = Provider::all();
         switch($type){
             case 'glass':
-                $material = Glass::find($id);
+                $material = Glass::with('providers')->find($id);
                 $categories = Category::where('tipo','vidro')->get();
                 $nome = 'vidro';
                 break;
             case 'aluminum':
-                $material = Aluminum::find($id);
+                $material = Aluminum::with('providers')->find($id);
                 $categories = Category::where('tipo','aluminio')->get();
                 $nome = 'alumínio';
                 break;
             case 'component':
-                $material = Component::find($id);
+                $material = Component::with('providers')->find($id);
                 //$categories = Category::where('tipo','componente')->get();
                 $categories = Category::all();
                 $nome = 'componente';
@@ -110,7 +113,7 @@ class MaterialController extends Controller
                 return redirect()->back();
         }
 
-        return view('dashboard.create.material',compact('type','material','categories'))->with('title','Atualizar '.$nome);
+        return view('dashboard.create.material',compact('type','material','categories', 'providers'))->with('title','Atualizar '.$nome);
     }
 
 
@@ -139,7 +142,10 @@ class MaterialController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $material->update($request->except('_token'));
+        $material->update($request->except('_token','providers'));
+
+        $material->providers()->sync($request->providers);
+
         if ($material)
             return redirect()->back()->with('success', "$nome atualizado com sucesso");
 
