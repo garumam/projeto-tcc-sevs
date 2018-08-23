@@ -61,6 +61,10 @@ class ProviderController extends Controller
 
     public function store(Request $request)
     {
+        $validado = $this->rules_provider($request->all());
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $provider = new Provider();
         $provider = $provider->create($request->all());
         if($provider)
@@ -109,14 +113,14 @@ class ProviderController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'situacao' => 'required|string|max:255',
-            'telefone' => 'string|min:10|max:255',
-            'celular' => 'string|min:10|max:255',
-            'cnpj' => 'string|min:14|max:255',
-            'cep' => 'integer|min:8',
-            'bairro' => 'string|max:255',
-            'email' => 'string|email|max:255',
-            'cidade' => 'string|max:255',
-            'uf' => 'string|max:255',
+            'telefone' => 'nullable|string|min:10|max:255',
+            'celular' => 'nullable|string|min:10|max:255',
+            'cnpj' => 'nullable|string|min:14|max:255',
+            'cep' => 'required|string|min:8|max:8',
+            'bairro' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'uf' => 'nullable|string|max:255'
         ]);
 
         return $validator;

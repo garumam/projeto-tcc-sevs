@@ -15,14 +15,14 @@
 
     <div class="form-group col-md-4">
         <label for="select-vidro" id="label_categoria">Vidros</label>
-        <select id="select-vidro" name="vidro_id" class="custom-select">
+        {{--<select id="select-vidro" name="vidro_id" class="custom-select">
             <option value="" selected>Selecione um vidro</option>
             @foreach($glasses as $glass)
                 <option data-preco="{{$glass->preco}}"
                         data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome}}</option>
             @endforeach
-        </select>
-        <select id="select-aluminio" name="aluminio_id" class="custom-select"
+        </select>--}}
+        {{--<select id="select-aluminio" name="aluminio_id" class="custom-select"
                 style="display: none;">
             <option value="" selected>Selecione um aluminio</option>
             @foreach($aluminums as $aluminum)
@@ -31,10 +31,34 @@
                         data-preco="{{$aluminum->preco}}"
                         value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
             @endforeach
-        </select>
-        <select id="select-componente" name="componente_id" class="custom-select"
+        </select>--}}
+        {{--<select id="select-componente" name="componente_id" class="custom-select"
                 style="display: none;">
             <option value="" selected>Selecione um componente</option>
+            @foreach($components as $component)
+                <option data-qtd="{{$component->qtd}}"
+                        data-preco="{{$component->preco}}"
+                        value="{{$component->id}}">{{$component->nome}}</option>
+            @endforeach
+        </select>--}}
+        <select id="select-vidro" class="form-control form-control-chosen" name="vidro_id" data-placeholder="Selecione um vidro" style="display: none;">
+            <option></option>
+            @foreach($glasses as $glass)
+                <option data-preco="{{$glass->preco}}"
+                        data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome}}</option>
+            @endforeach
+        </select>
+        <select id="select-aluminio" class="form-control form-control-chosen" name="aluminio_id" data-placeholder="Selecione um aluminio" style="display: none;">
+            <option></option>
+            @foreach($aluminums as $aluminum)
+                <option data-medida="{{$aluminum->medida}}"
+                        data-peso="{{$aluminum->peso}}"
+                        data-preco="{{$aluminum->preco}}"
+                        value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
+            @endforeach
+        </select>
+        <select id="select-componente" class="form-control form-control-chosen" name="componente_id" data-placeholder="Selecione um componente" style="display: none;">
+            <option></option>
             @foreach($components as $component)
                 <option data-qtd="{{$component->qtd}}"
                         data-preco="{{$component->preco}}"

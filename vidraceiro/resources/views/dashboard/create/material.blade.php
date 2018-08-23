@@ -171,28 +171,31 @@
 
                     @endif
 
-                    <div class="form-group col-md-4">
-                        <label for="multiple">Selecione os fornecedores</label>
-                        <select id="multiple" class="form-control form-control-chosen" multiple name="providers[]" data-placeholder="Please select...">
+
+                    <div class="form-group col-md-12">
+                        <label for="select-providers-material">Selecione os fornecedores</label>
+
+                        <select id="select-providers-material" class="form-control form-control-chosen" multiple name="providers[]" data-placeholder="Please select..." style="display:none;">
                             <option></option>
                             @foreach ($providers as $provider)
-
                                 <option value="{{$provider->id}}"
 
-                                    @if(!empty($material->providers))
-                                        @foreach($material->providers as $materialProvider)
+                                @if(!empty($material->providers))
+                                    @foreach($material->providers as $materialProvider)
                                         {{ $materialProvider->id == $provider->id ? 'selected' :''}}
-                                        @endforeach
-                                    @endif
+                                            @endforeach
+                                        @endif
 
                                 >{{$provider->nome}}</option>
 
                             @endforeach
                         </select>
+
+
                     </div>
 
-
                 </div>
+                <div class="form-row" style="height: 150px"></div>
                 <button id="bt-{{$type}}-invisible" class="d-none" type="submit"></button>
 
             </form>

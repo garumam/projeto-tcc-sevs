@@ -490,6 +490,11 @@ td {
     border-radius: 1rem;
 }
 
+/*fixando tamanho do select com plugin chosen*/
+.chosen-drop .chosen-results{
+    max-height: 150px!important;
+}
+
 footer {
     bottom: 0;
     right: 0;

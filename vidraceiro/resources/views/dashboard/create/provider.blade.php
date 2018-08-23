@@ -34,12 +34,12 @@
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome"
-                               value="{{ $provider->nome or old('nome')}}" placeholder="Nome">
+                               value="{{ $provider->nome or old('nome')}}" placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="situacao">Situação</label>
-                        <select class="custom-select" id="situacao" name="situacao" required>
+                        <select class="custom-select" id="situacao" name="situacao">
                             <option value="ativo" @if(!empty($provider)){{$provider->situacao == 'ativo'? 'selected' :''}} @endif>Ativo</option>
                             <option value="desativado" @if(!empty($provider)){{$provider->situacao == 'desativado'? 'selected' :''}} @endif>Desativado</option>
                         </select>
@@ -72,7 +72,7 @@
                     <div class="form-group col-md-4">
                         <label for="cep">Cep</label>
                         <input type="text" class="form-control" id="cep" name="cep"
-                               value="{{ $provider->cep or old('cep')}}" placeholder="00000-000" required>
+                               value="{{ $provider->cep or old('cep')}}" placeholder="00000-000" minlength="9" required>
                     </div>
 
                     <div class="form-group col-md-4">

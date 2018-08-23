@@ -123,7 +123,7 @@
                             <div class="form-group col-md-4">
                                 <label for="cep">Cep</label>
                                 <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000"
-                                       value="{{$budgetedit->cep or old('cep')}}" required>
+                                       value="{{$budgetedit->cep or old('cep')}}" minlength="9" required>
                             </div>
 
                             <div class="form-group col-md-4">
@@ -411,7 +411,7 @@
                 </div>
                 <!-- FIM CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
 
-                <div class="tab-pane fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
+                <div class="tab-pane pb-5 fade" id="nav-{{$titulotabs[3]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form"

@@ -37,25 +37,25 @@
 
                     <div class="form-group col-md-4">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" value="{{ $company->nome or old('nome')}}"
+                        <input type="text" id="nome" class="form-control" name="nome" value="{{ $company->nome or old('nome')}}"
                                placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" name="endereco"
+                        <input type="text" id="endereco" class="form-control" name="endereco"
                                value="{{ $company->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" name="cidade"
+                        <input type="text" id="cidade" class="form-control" name="cidade"
                                value="{{ $company->cidade or old('cidade')}}" placeholder="Cidade" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" name="bairro"
+                        <input type="text" id="bairro" class="form-control" name="bairro"
                                value="{{ $company->bairro or old('bairro') }}" placeholder="Bairro" required>
                     </div>
 
@@ -77,8 +77,8 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" name="email" id="e-mail"
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control" name="email" id="email"
                                value="{{ $company->email or old('email') }}" placeholder="E-mail:" required>
                     </div>
 

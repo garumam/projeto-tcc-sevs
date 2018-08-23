@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+
+
     $(".navbar-toggler").click(function (event) {
         event.stopPropagation();
         $('#menu-dashboard').toggle();
@@ -157,8 +159,11 @@ $(document).ready(function () {
 
         switch (true) {
             case $('#nav-Orçamento-tab').hasClass('active'):
-                $('#cep').unmask();
-                $('#telefone').unmask();
+
+                if($('#nome').val().length !== 0 && $('#cep').val().length === 9){
+                    $('#cep').unmask();
+                    $('#telefone').unmask();
+                }
 
                 $('#bt-orcamento-budget-invisible').click();
 
@@ -204,16 +209,34 @@ $(document).ready(function () {
 
 
     $('#bt-provider-visible').click(function () {
-        $('#cep').unmask();
-        $('#telefone').unmask();
-        $('#cnpj').unmask();
+        if($('#nome').val().length !== 0)
+        {
+            if($('#cep').val().length === 9){
+                $('#cep').unmask();
+                $('#telefone').unmask();
+                $('#cnpj').unmask();
+                $('#celular').unmask();
+            }
+
+        }
+
 
         $('#bt-provider-invisible').click();
     });
 
     $('#bt-company-visible').click(function () {
-        $('#cep').unmask();
-        $('#telefone').unmask();
+        if($('#nome').val().length !== 0
+            && $('#endereco').val().length !== 0
+            && $('#cidade').val().length !== 0
+            && $('#bairro').val().length !== 0
+            && $('#uf').val().length !== 0
+            && $('#email').val().length !== 0
+            && $('#telefone').val().length !== 0){
+
+            $('#cep').unmask();
+            $('#telefone').unmask();
+        }
+
 
         $('#bt-company-invisible').click();
     });
@@ -273,9 +296,15 @@ $(document).ready(function () {
     var contador = 1;
 
     $('#bt-add-material-mproduct').click(function () {
+        //Todos as variaveis terminadas com false são os selects do plugin chosen
+        //O select real fica invisivel, mas ainda funcional por isso os selectvidro,
+        //selectaluminio e selectcomponente ainda existem
         let selectvidro = $('#select-vidro');
+        let selectvidrofalse = $('#select_vidro_chosen');
         let selectaluminio = $('#select-aluminio');
+        let selectaluminiofalse = $('#select_aluminio_chosen');
         let selectcomponente = $('#select-componente');
+        let selectcomponentefalse = $('#select_componente_chosen');
         let idselect, nomeselect, tbody, pegaIdLinha, criaId;
         let idinput;
         let produtoselecionado = $('#select-produto-material option:selected').val();
@@ -283,7 +312,7 @@ $(document).ready(function () {
             mensagemAlerta('Selecione um produto!');
         } else {
             produtoselecionado = produtoselecionado != undefined ? produtoselecionado : '';
-            if (selectvidro.is(":visible")) {
+            if (selectvidrofalse.is(":visible")) {
                 if (selectvidro.val().length !== 0) {
                     idselect = selectvidro.val();
                     nomeselect = selectvidro.find('option:selected').text();
@@ -329,7 +358,7 @@ $(document).ready(function () {
                 }
 
             }
-            if (selectaluminio.is(":visible")) {
+            if (selectaluminiofalse.is(":visible")) {
 
                 if (selectaluminio.val().length !== 0) {
                     idselect = selectaluminio.val();
@@ -382,7 +411,7 @@ $(document).ready(function () {
                 }
 
             }
-            if (selectcomponente.is(":visible")) {
+            if (selectcomponentefalse.is(":visible")) {
 
                 if (selectcomponente.val().length !== 0) {
                     idselect = selectcomponente.val();
@@ -487,9 +516,12 @@ $(document).ready(function () {
             case '0':
                 label.text('Vidros');
                 $('.titulo').text('Vidros');
-                $('#select-vidro').show();
-                $('#select-componente').hide();
-                $('#select-aluminio').hide();
+                //$('#select-vidro').show();
+                $('#select_vidro_chosen').show();
+                //$('#select-componente').hide();
+                $('#select_componente_chosen').hide();
+                //$('#select-aluminio').hide();
+                $('#select_aluminio_chosen').hide();
                 $('#topo-vidro').show();
                 $('#topo-aluminio').hide();
                 $('#topo-componente').hide();
@@ -500,9 +532,12 @@ $(document).ready(function () {
             case '1':
                 label.text('Aluminios');
                 $('.titulo').text('Aluminios');
-                $('#select-vidro').hide();
-                $('#select-componente').hide();
-                $('#select-aluminio').show();
+                //$('#select-vidro').hide();
+                $('#select_vidro_chosen').hide();
+                //$('#select-componente').hide();
+                $('#select_componente_chosen').hide();
+                //$('#select-aluminio').show();
+                $('#select_aluminio_chosen').show();
                 $('#topo-vidro').hide();
                 $('#topo-aluminio').show();
                 $('#topo-componente').hide();
@@ -513,9 +548,12 @@ $(document).ready(function () {
             case '2':
                 label.text('Componentes');
                 $('.titulo').text('Componentes');
-                $('#select-vidro').hide();
-                $('#select-componente').show();
-                $('#select-aluminio').hide();
+                //$('#select-vidro').hide();
+                $('#select_vidro_chosen').hide();
+                //$('#select-componente').show();
+                $('#select_componente_chosen').show();
+                //$('#select-aluminio').hide();
+                $('#select_aluminio_chosen').hide();
                 $('#topo-vidro').hide();
                 $('#topo-aluminio').hide();
                 $('#topo-componente').show();
@@ -700,4 +738,10 @@ $(document).ready(function () {
         v = v.replace(/(\d)(\d{1,3}$)/, "$1.$2");
         return v;
     }
+
+    //Deixando novos selects do plugin chosen invisíveis
+    $('#select_vidro_chosen').hide();
+    $('#select_aluminio_chosen').hide();
+    $('#select_componente_chosen').hide();
+
 });

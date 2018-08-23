@@ -96,7 +96,7 @@
                     </form>
 
                 </div>
-                <div class="tab-pane fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}"
+                <div class="tab-pane pb-5 fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}"
                      id="nav-{{$titulotabs[1]}}"
                      role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">

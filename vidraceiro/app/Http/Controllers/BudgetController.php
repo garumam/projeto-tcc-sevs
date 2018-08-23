@@ -618,7 +618,7 @@ class BudgetController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'telefone' => 'nullable|string|min:10|max:255',
-            'cep' => 'string|min:8|max:255',
+            'cep' => 'required|string|min:8|max:8',
             'endereco' => 'nullable|string|max:255',
             'bairro' => 'nullable|string|max:255',
             'cidade' => 'nullable|string|max:255',
