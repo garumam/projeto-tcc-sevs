@@ -59,8 +59,8 @@
                                     </div>
                                 @endif
 
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
+                                <div class="table-responsive text-dark p-2">
+                                    <table class="table table-hover search-table">
                                         <thead>
                                         <!--INICIO HEAD DO VIDRO-->
                                         <tr class="tabela-vidro">
@@ -190,8 +190,8 @@
                                     </div>
                                 @endif
 
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
+                                <div class="table-responsive text-dark p-2">
+                                    <table class="table table-hover search-table">
                                         <thead>
                                         {{--<!--INICIO HEAD DO VIDRO-->--}}
                                         {{--<tr class="tabela-vidro">--}}
@@ -319,8 +319,8 @@
                                     </div>
                                 @endif
 
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
+                                <div class="table-responsive text-dark p-2">
+                                    <table class="table table-hover search-table">
                                         <thead>
                                         {{--<!--INICIO HEAD DO VIDRO-->--}}
                                         {{--<tr class="tabela-vidro">--}}

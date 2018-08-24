@@ -25,7 +25,7 @@
             @endif
 
             <div class="table-responsive text-dark p-2">
-                <table id="search-table" class="table table-hover">
+                <table class="table table-hover search-table">
                     <thead>
                     <tr>
                         <th class="noborder" scope="col">Id</th>
