@@ -80,6 +80,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/tijsverkoyen/css-to-inline-styles" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/yajra/laravel-datatables-oracle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

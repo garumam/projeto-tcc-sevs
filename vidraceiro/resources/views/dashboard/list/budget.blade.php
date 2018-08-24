@@ -24,8 +24,8 @@
                 </div>
             @endif
 
-            <div class="table-responsive">
-                <table class="table table-hover">
+            <div class="table-responsive text-dark p-2">
+                <table id="search-table" class="table table-hover">
                     <thead>
                     <tr>
                         <th class="noborder" scope="col">Id</th>
@@ -55,7 +55,7 @@
                     </tbody>
                 </table>
 
-                {{$budgets->links('layouts.pagination')}}
+                {{--{{$budgets->links('layouts.pagination')}}--}}
 
             </div>
         </div>

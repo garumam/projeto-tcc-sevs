@@ -743,4 +743,28 @@ $(document).ready(function () {
     $('#select_aluminio_chosen').hide();
     $('#select_componente_chosen').hide();
 
+    //Adicionar procura nas tabelas e modificando mensagens
+    $('#search-table').DataTable({
+        language: {
+            search: "Procurar:",
+            lengthMenu:    "Mostrar _MENU_ itens",
+            info:           "",
+            infoEmpty:      "",
+            infoFiltered:   "",
+            infoPostFix:    "",
+            loadingRecords: "Chargement en cours...",
+            zeroRecords:    "Nenhum item encontrado com esses termos!",
+            emptyTable:     "Nenhum item cadastrado!",
+            paginate: {
+                first:      "Primeira",
+                previous:   "Anterior",
+                next:       "Próxima",
+                last:       "Última"
+            },
+            aria: {
+                sortAscending:  "",
+                sortDescending: ""
+            }
+        }
+    });
 });

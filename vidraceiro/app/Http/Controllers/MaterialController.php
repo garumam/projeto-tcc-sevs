@@ -19,9 +19,9 @@ class MaterialController extends Controller
 
     public function index()
     {
-        $aluminums = Aluminum::all();
-        $glasses = Glass::all();
-        $components = Component::all();
+        $aluminums = Aluminum::where('is_modelo',1)->get();
+        $glasses = Glass::where('is_modelo',1)->get();
+        $components = Component::where('is_modelo',1)->get();
         $titulotabs = ['Vidros','Aluminios','Componentes'];
         return view('dashboard.list.material', compact('titulotabs', 'aluminums', 'glasses', 'components'))->with('title', 'Materiais');
     }
