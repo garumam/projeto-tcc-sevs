@@ -114,6 +114,21 @@ $(document).ready(function () {
     $('#bt-user-visible').click(function () {
         $('#bt-user-invisible').click();
     });
+
+    $('#bt-client-visible').click(function () {
+
+        if($('#nome').val().length !== 0
+            && $('#cep').val().length === 9
+            && $('#cpf').val().length === 14){
+            $('#cep').unmask();
+            $('#cpf').unmask();
+            $('#telefone').unmask();
+            $('#celular').unmask();
+        }
+
+        $('#bt-client-invisible').click();
+    });
+
     $('#bt-category-visible').click(function () {
         $('#bt-category-invisible').click();
     });
@@ -719,6 +734,7 @@ $(document).ready(function () {
 
     $('#celular').mask(maskBehavior, options);
     $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
+    $('#cpf').mask('000.000.000-00', {reverse: true});
 
 
     $('.altura').each(function (index) {

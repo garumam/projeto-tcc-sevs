@@ -44,6 +44,12 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    <li {{ Request::is('clients') ? 'class=active' : '' }}>
+                        <a href="{{ route('clients.index') }}">
+                            <i class="pe-7s-map-marker"></i>
+                            <p>Clientes</p>
+                        </a>
+                    </li>
                     <li {{ Request::is('budgets') ? 'class=active' : '' }}>
                         <a href="{{ route('budgets.index') }}">
                             <i class="pe-7s-map-marker"></i>

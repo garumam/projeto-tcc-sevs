@@ -32,6 +32,17 @@ Route::prefix('users')->group(function () {
     Route::delete('/{id}', 'UserController@destroy')->name('users.destroy');
 });
 
+//rotas de cliente
+Route::prefix('clients')->group(function () {
+    Route::get('/', 'ClientController@index')->name('clients.index');
+    Route::get('/create', 'ClientController@create')->name('clients.create');
+    Route::post('/', 'ClientController@store')->name('clients.store');
+    Route::get('/{user}', 'ClientController@show')->name('clients.show');
+    Route::get('/{id}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::patch('/{id}', 'ClientController@update')->name('clients.update');
+    Route::delete('/{id}', 'ClientController@destroy')->name('clients.destroy');
+});
+
 //rotas de mproduto
 Route::prefix('products')->group(function () {
     Route::get('/', 'MProductController@index')->name('mproducts.index');
