@@ -683,6 +683,22 @@ $(document).ready(function () {
 
     });
 
+    $('#select-cliente').change(function (e) {
+
+        let clienteselecionado = $('#select-cliente option:selected');
+
+        $('#endereco').val(clienteselecionado.data('endereco'));
+        $('#bairro').val(clienteselecionado.data('bairro'));
+        $('#cidade').val(clienteselecionado.data('cidade'));
+        $('#complemento').val(clienteselecionado.data('complemento'));
+        let cep =  $('#cep');
+        cep.val(cep.masked(clienteselecionado.data('cep')));
+        let tel = $('#telefone');
+        tel.val(tel.masked(clienteselecionado.data('telefone')));
+        $('#select-UF').prop('selectedIndex',$("#select-UF option[value=" + clienteselecionado.data('uf') + "]").index());
+
+    });
+
     $('.form-control-chosen').chosen({
         // Chosen options here
     });

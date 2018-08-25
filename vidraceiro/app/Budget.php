@@ -24,4 +24,8 @@ class Budget extends Model
             'ordem_id'
         );
     }
+
+    public function client(){
+        return $this->belongsTo(Client::class,'cliente_id');
+    }
 }

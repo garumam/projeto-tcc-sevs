@@ -10,6 +10,7 @@ use App\MProduct;
 use App\Component;
 use App\Glass;
 use App\Category;
+use App\Client;
 use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,9 +67,10 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
+        $clients = Client::all();
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
         //dd($mproducts);
-        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts'))->with('title', 'Novo Orçamento');
+        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts','clients'))->with('title', 'Novo Orçamento');
     }
 
     public function store(Request $request, $tab)
@@ -315,13 +317,14 @@ class BudgetController extends Controller
         $components = Component::where('is_modelo', '1')->get();
         $categories = Category::where('tipo', 'produto')->get();
         $mproducts = MProduct::all();
+        $clients = Client::all();
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
 
         $budgetedit = Budget::with('products')->find($id);
         if ($budgetedit) {
             $products = $budgetedit->products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
 
-            return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'products', 'budgetedit'))->with('title', 'Atualizar Orçamento');
+            return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'products', 'budgetedit', 'clients'))->with('title', 'Atualizar Orçamento');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');
 

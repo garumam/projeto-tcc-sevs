@@ -95,6 +95,24 @@
                             </div>
 
                             <div class="form-group col-md-4">
+                            <label for="select-cliente">Cliente</label>
+                            <select id="select-cliente" class="form-control form-control-chosen" name="cliente_id" data-placeholder="Selecie um cliente(opcional)" style="display: none;">
+                                <option value="">Nada selecionado</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{$client->id}}"
+                                            data-endereco="{{$client->endereco}}"
+                                            data-cep="{{$client->cep}}"
+                                            data-bairro="{{$client->bairro}}"
+                                            data-cidade="{{$client->cidade}}"
+                                            data-uf="{{$client->uf}}"
+                                            data-complemento="{{$client->complemento}}"
+                                            data-telefone="{{$client->telefone}}"
+                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome.', cpf: '.$client->cpf}}</option>
+                                @endforeach
+                            </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
                                        value="{{$budgetedit->nome or old('nome')}}" required>
