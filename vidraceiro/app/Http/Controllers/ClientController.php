@@ -93,9 +93,19 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $client->update($request->all());
-        if ($client)
-            return redirect()->back()->with('success', 'Cliente atualizado com sucesso');
+        $client->update($request->except('att_budgets'));
+        if ($client){
+            $mensagem = 'Cliente atualizado com sucesso';
+            if($request->att_budgets != null){
+
+                foreach($client->budgets as $budget){
+                    $budget->update($request->except('nome','cpf','email','celular','att_budgets'));
+                }
+                $mensagem = 'Cliente e orçamentos atualizados com sucesso';
+            }
+            return redirect()->back()->with('success', $mensagem);
+        }
+
     }
 
     public function destroy($id)

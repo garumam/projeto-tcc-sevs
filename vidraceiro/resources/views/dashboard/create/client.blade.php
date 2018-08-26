@@ -105,7 +105,12 @@
                                placeholder="complemento"
                                value="{{$client->complemento or old('complemento')}}">
                     </div>
-
+                    @if(!empty($client))
+                    <div class="form-check col-md-12 ml-4">
+                        <input type="checkbox" class="form-check-input" name="att_budgets" id="att_budgets">
+                        <label class="form-check-label" for="att_budgets">Marque se deseja atualizar os dados em todos os orçamentos deste cliente.</label>
+                    </div>
+                    @endif
                 </div>
 
                 <button id="bt-client-invisible" class="d-none" type="submit"></button>
