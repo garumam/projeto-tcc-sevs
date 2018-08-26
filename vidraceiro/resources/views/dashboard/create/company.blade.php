@@ -36,37 +36,37 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
+                        <label for="nome" class="obrigatorio">Nome</label>
                         <input type="text" id="nome" class="form-control" name="nome" value="{{ $company->nome or old('nome')}}"
                                placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="endereco">Endereço</label>
+                        <label for="endereco" class="obrigatorio">Endereço</label>
                         <input type="text" id="endereco" class="form-control" name="endereco"
                                value="{{ $company->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cidade">Cidade</label>
+                        <label for="cidade" class="obrigatorio">Cidade</label>
                         <input type="text" id="cidade" class="form-control" name="cidade"
                                value="{{ $company->cidade or old('cidade')}}" placeholder="Cidade" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="bairro">Bairro</label>
+                        <label for="bairro" class="obrigatorio">Bairro</label>
                         <input type="text" id="bairro" class="form-control" name="bairro"
                                value="{{ $company->bairro or old('bairro') }}" placeholder="Bairro" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cep">Cep</label>
+                        <label for="cep" class="obrigatorio">Cep</label>
                         <input type="text" class="form-control" name="cep" id="cep"
                                value="{{ $company->cep or old('cep') }}" placeholder="Cep" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="uf">Selecione uma UF</label>
+                        <label for="uf" class="obrigatorio">Selecione uma UF</label>
                         <select id="uf" class="custom-select" name="uf" required>
                             {{--<option value="" selected>Selecione...</option>--}}
                             @foreach ($states as $uf => $estado)
@@ -77,13 +77,13 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="email">E-mail</label>
+                        <label for="email" class="obrigatorio">E-mail</label>
                         <input type="email" class="form-control" name="email" id="email"
                                value="{{ $company->email or old('email') }}" placeholder="E-mail:" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="telefone">Telefone</label>
+                        <label for="telefone" class="obrigatorio">Telefone</label>
                         <input type="tel" class="form-control" name="telefone" id="telefone"
                                value="{{ $company->telefone or old('telefone') }}" placeholder="Telefone" required>
                     </div>

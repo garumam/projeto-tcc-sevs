@@ -55,7 +55,7 @@
                                 @endforeach
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="nome">Nome</label>
+                                <label for="nome" class="obrigatorio">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
                                        value="{{$mproductedit->nome or old('nome')}}" required>
                             </div>
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="select-categoria">Categoria</label>
+                                <label for="select-categoria" class="obrigatorio">Categoria</label>
                                 <select id="select-categoria" name="categoria_produto_id" class="custom-select"
                                         required>
                                     <option value="" selected>Selecione uma categoria</option>

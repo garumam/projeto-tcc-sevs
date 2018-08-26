@@ -33,7 +33,7 @@
                     @if($type == 'glass')
 
                         <div class="form-group col-md-4">
-                            <label for="categoria_vidro_id">Categoria</label>
+                            <label for="categoria_vidro_id" class="obrigatorio">Categoria</label>
                             <select class="custom-select" id="categoria_vidro_id" name="categoria_vidro_id" required>
                                 @foreach ($categories as $category)
                                     <option value="{{$category->id}}"
@@ -43,25 +43,25 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="nome">Nome</label>
+                            <label for="nome" class="obrigatorio">Nome</label>
                             <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
                                    value="{{$material->nome or old('nome')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="cor">Cor</label>
+                            <label for="cor" class="obrigatorio">Cor</label>
                             <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor"
                                    value="{{$material->cor or old('cor')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="tipo">Tipo</label>
+                            <label for="tipo" class="obrigatorio">Tipo</label>
                             <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo"
                                    value="{{$material->tipo or old('tipo')}}" required>
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="espessura">Espessura</label>
+                            <label for="espessura" class="obrigatorio">Espessura</label>
                             <input type="number" class="form-control" id="espessura" name="espessura" placeholder="Espessura"
                                    value="{{$material->espessura or old('espessura')}}" required>
                         </div>
@@ -78,7 +78,7 @@
                     @if($type == 'aluminum')
 
                             <div class="form-group col-md-4">
-                                <label for="categoria_aluminio_id">Categoria</label>
+                                <label for="categoria_aluminio_id" class="obrigatorio">Categoria</label>
                                 <select class="custom-select" id="categoria_aluminio_id" name="categoria_aluminio_id" required>
                                     @foreach ($categories as $category)
                                         <option value="{{$category->id}}"
@@ -88,7 +88,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="perfil">Perfil</label>
+                                <label for="perfil" class="obrigatorio">Perfil</label>
                                 <input type="text" class="form-control" id="perfil" name="perfil" placeholder="Perfil"
                                        value="{{$material->perfil or old('perfil')}}" required>
                             </div>
@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="qtd">Quantidade</label>
+                                <label for="qtd" class="obrigatorio">Quantidade</label>
                                 <input type="number" class="form-control" id="qtd" name="qtd" placeholder="Quantidade"
                                        value="{{$material->qtd or old('qtd')}}" required>
                             </div>
@@ -124,7 +124,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="tipo_medida">Tipo de medida</label>
+                                <label for="tipo_medida" class="obrigatorio">Tipo de medida</label>
                                 <select class="custom-select" id="tipo_medida" name="tipo_medida" required>
                                     <option value="largura"
                                         @if(!empty($material)){{ $material->tipo_medida == 'largura' ? 'selected' :''}} @endif>Largura</option>
@@ -142,7 +142,7 @@
                     @if($type == 'component')
 
                             <div class="form-group col-md-4">
-                                <label for="categoria_componente_id">Categoria</label>
+                                <label for="categoria_componente_id" class="obrigatorio">Categoria</label>
                                 <select class="custom-select" id="categoria_componente_id" name="categoria_componente_id" required>
                                     @foreach ($categories as $category)
                                         <option value="{{$category->id}}"
@@ -152,7 +152,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Nome</label>
+                                <label for="nome" class="obrigatorio">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
                                        value="{{$material->nome or old('nome')}}" required>
                             </div>

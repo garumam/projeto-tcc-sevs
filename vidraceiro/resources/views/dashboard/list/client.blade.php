@@ -41,7 +41,7 @@
                             <th scope="row">{{$client->id}}</th>
                             <td>{{$client->nome}}</td>
                             <td>{{$client->cpf}}</td>
-                            <td>{{$client->telefone}}</td>
+                            <td class="telefone">{{$client->telefone}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>

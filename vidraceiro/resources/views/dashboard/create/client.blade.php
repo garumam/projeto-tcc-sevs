@@ -32,13 +32,13 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
+                        <label for="nome" class="obrigatorio">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome" value="{{$client->nome or old('nome')}}"
                                placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cpf">Cpf</label>
+                        <label for="cpf" class="obrigatorio">Cpf</label>
                         <input type="text" class="form-control" id="cpf" name="cpf" value="{{$client->cpf or old('cpf')}}"
                                placeholder="cpf" required>
                     </div>
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cep">Cep</label>
+                        <label for="cep" class="obrigatorio">Cep</label>
                         <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000"
                                value="{{$client->cep or old('cep')}}" minlength="9" required>
                     </div>

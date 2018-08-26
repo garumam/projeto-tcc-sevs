@@ -38,27 +38,27 @@
                         @endforeach
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
+                        <label for="nome" class="obrigatorio">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome"
                                value="{{$order->nome or old('nome')}}" placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="data_inicial">Data inicial</label>
+                        <label for="data_inicial" class="obrigatorio">Data inicial</label>
                         <input type="date" class="form-control" id="data_inicial" name="data_inicial"
                                value="{{$order->data_inicial or old('data_inicial')}}"
                                required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="data_final">Data de entrega</label>
+                        <label for="data_final" class="obrigatorio">Data de entrega</label>
                         <input type="date" class="form-control" id="data_final" name="data_final"
                                value="{{$order->data_final or old('data_final')}}" required>
                     </div>
 
 
                     <div class="form-group col-md-4">
-                        <label for="select-situacao">Situação</label>
+                        <label for="select-situacao" class="obrigatorio">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
                             <option value="" selected>Selecione...</option>
                             <option value="aberta" @if(!empty($order)) {{ $order->situacao == 'aberta' ? 'selected' : '' }} @endif>
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="total">Total</label>
+                        <label for="total" class="obrigatorio">Total</label>
                         <input type="number" class="form-control" id="total" name="total"
                                value="{{$order->total or old('total')}}" placeholder="R$" required
                                readonly>

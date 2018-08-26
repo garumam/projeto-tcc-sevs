@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="opcao">Selecione uma das opções</label>
+                        <label for="opcao" class="obrigatorio">Selecione uma das opções</label>
                         <select class="custom-select" id="opcao" name="idorcamento" required>
                             <option value="" selected>Selecione uma das opções</option>
                             @foreach($budgets as $budget)

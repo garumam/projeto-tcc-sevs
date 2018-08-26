@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
+                        <label for="nome" class="obrigatorio">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome"
                                value="{{ $provider->nome or old('nome')}}" placeholder="Nome" required>
                     </div>
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cep">Cep</label>
+                        <label for="cep" class="obrigatorio">Cep</label>
                         <input type="text" class="form-control" id="cep" name="cep"
                                value="{{ $provider->cep or old('cep')}}" placeholder="00000-000" minlength="9" required>
                     </div>
@@ -94,7 +94,7 @@
                                value="{{ $provider->cidade or old('cidade')}}" placeholder="Cidade">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="uf">UF</label>
+                        <label for="uf" class="obrigatorio">UF</label>
                         <select class="custom-select" id="uf" name="uf" required>
                             @foreach ($states as $uf => $estado)
                                 <option value="{{$uf}}"

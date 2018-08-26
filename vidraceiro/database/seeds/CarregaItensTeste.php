@@ -9,6 +9,7 @@ use App\Order;
 use App\Product;
 use App\Provider;
 use App\Company;
+use App\Client;
 use Illuminate\Database\Seeder;
 
 class CarregaItensTeste extends Seeder
@@ -20,6 +21,32 @@ class CarregaItensTeste extends Seeder
      */
     public function run()
     {
+
+        Client::create([
+            'nome'=> 'João da Silva',
+            'bairro'=> 'Centro',
+            'cep'=> 28907170,
+            'cpf' => '12043219632',
+            'cidade'=> 'Cabo frio',
+            'complemento'=> 'Logo ali',
+            'endereco'=> 'Fim do mundo, n° 250',
+            'telefone'=> '2212344321',
+            'celular'=> '22912344321',
+            'uf' => 'RJ'
+        ]);
+
+        Client::create([
+            'nome'=> 'Maria Pereira',
+            'bairro'=> 'Vila velha',
+            'cep'=> 10459289,
+            'cpf' => '98737284728',
+            'cidade'=> 'Terezina',
+            'complemento'=> 'Depois de la',
+            'endereco'=> 'Goiaba, n° 130',
+            'telefone'=> '4565432456',
+            'celular'=> '45925432456',
+            'uf' => 'MG'
+        ]);
 
         MProduct::create([
             'categoria_produto_id'=> '1',
@@ -39,7 +66,8 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Fim do mundo, n° 250',
             'telefone'=> '2212344321',
             'total'=> 800.04,
-            'uf' => 'RJ'
+            'uf' => 'RJ',
+            'cliente_id' => '1'
         ]);
 
         Budget::create([
@@ -53,7 +81,21 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Goiaba, n° 130',
             'telefone'=> '4565432456',
             'total'=> 198.38,
-            'uf' => 'RJ'
+            'uf' => 'MG',
+            'cliente_id' => '2'
+        ]);
+
+        Budget::create([
+            'bairro'=> 'Lugar nenhum',
+            'cep'=> 12345678,
+            'cidade'=> 'São Bento',
+            'complemento'=> '',
+            'data'=> '2018-08-08',
+            'margem_lucro'=> 150.0,
+            'nome'=> 'orçamento3',
+            'endereco'=> 'Freeza, n° 80',
+            'telefone'=> '8533756283',
+            'uf' => 'CE'
         ]);
 
         Product::create([
@@ -139,10 +181,10 @@ class CarregaItensTeste extends Seeder
 
         Provider::create([
             'bairro'=> 'bairro1',
-            'celular'=> '1134567890',
+            'celular'=> '91134567890',
             'cep'=> 12345678,
             'cidade'=> 'cidade1',
-            'cnpj'=> '21312412412',
+            'cnpj'=> '21312412412234',
             'email'=> 'fornecedor1@fornecedor.com',
             'nome'=> 'fornecedor 1',
             'endereco'=> 'rua1, n° 23',
@@ -153,10 +195,10 @@ class CarregaItensTeste extends Seeder
 
         Provider::create([
             'bairro'=> 'bairro2',
-            'celular'=> '1232435465',
+            'celular'=> '91232435465',
             'cep'=> 64364364,
             'cidade'=> 'cidade2',
-            'cnpj'=> '12325674747',
+            'cnpj'=> '12325674747547',
             'email'=> 'fornecedor2@fornecedor.com',
             'nome'=> 'fornecedor2',
             'endereco'=> 'rua2, n° 120',
@@ -213,7 +255,7 @@ class CarregaItensTeste extends Seeder
             'email'=> 'vidracaria@sv.com',
             'nome'=> 'Vidraçaria S&V',
             'endereco'=> 'av. souza n°255',
-            'telefone'=> '26776451',
+            'telefone'=> '2326776451',
             'uf'=> 'RJ'
         ]);
 

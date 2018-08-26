@@ -32,13 +32,13 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="nome">Nome</label>
+                        <label for="nome" class="obrigatorio">Nome</label>
                         <input type="text" class="form-control" name="nome" value="{{$category->nome or old('nome')}}"
                                placeholder="Nome" required>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="select-categoria">Tipo</label>
+                        <label for="select-categoria" class="obrigatorio">Tipo</label>
                         <select id="select-categoria" name="tipo" class="custom-select" required>
                             @foreach($types as $value => $name)
                                 <option value="{{$value}}"
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="select-categoria">Grupo de imagens</label>
+                        <label for="select-categoria" class="obrigatorio">Grupo de imagens</label>
                         <select id="select-categoria" name="grupo_imagem" class="custom-select" required>
                             @foreach($group_images as $value => $name)
                                 <option value="{{$value}}"

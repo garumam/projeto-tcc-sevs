@@ -113,7 +113,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="nome">Nome</label>
+                                <label for="nome" class="obrigatorio">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
                                        value="{{$budgetedit->nome or old('nome')}}" required>
                             </div>
@@ -139,7 +139,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="cep">Cep</label>
+                                <label for="cep" class="obrigatorio">Cep</label>
                                 <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000"
                                        value="{{$budgetedit->cep or old('cep')}}" minlength="9" required>
                             </div>
@@ -223,7 +223,7 @@
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="select-tipo-produto">Selecione um tipo</label>
+                                <label for="select-tipo-produto" class="obrigatorio">Selecione um tipo</label>
                                 <select id="select-tipo-produto" class="custom-select" required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
@@ -241,7 +241,7 @@
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="select-mproduto">Selecione o produto</label>
+                                <label for="select-mproduto" class="obrigatorio">Selecione o produto</label>
                                 <select id="select-mproduto" name="m_produto_id" class="custom-select" required>
                                     <option id="option-vazia" value="" selected>Selecione um produto</option>
                                     @foreach($mproducts as $mproduct)
@@ -262,20 +262,20 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="altura">Altura</label>
+                                <label for="altura" class="obrigatorio">Altura</label>
                                 <input type="text" class="form-control altura" id="altura" name="altura"
                                        placeholder="0.000"
                                        value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="largura">Largura</label>
+                                <label for="largura" class="obrigatorio">Largura</label>
                                 <input type="text" class="form-control largura" id="largura" name="largura"
                                        placeholder="0.000" value="{{old('largura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="qtd">Quantidade</label>
+                                <label for="qtd" class="obrigatorio">Quantidade</label>
                                 <input type="number" class="form-control" id="qtd" name="qtd"
                                        placeholder="quantidade" value="{{old('qtd')}}" required>
                             </div>
@@ -343,7 +343,7 @@
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="select-produto">Selecione o produto</label>
+                                <label for="select-produto" class="obrigatorio">Selecione o produto</label>
                                 <select id="select-produto-edit" name="produtoid" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
                                     @if(!empty(session('products')))
@@ -387,20 +387,20 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="altura-edit">Altura</label>
+                                <label for="altura-edit" class="obrigatorio">Altura</label>
                                 <input type="text" class="form-control altura" id="altura-edit" name="altura"
                                        placeholder="0,000"
                                        value="{{old('altura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="largura-edit">Largura</label>
+                                <label for="largura-edit" class="obrigatorio">Largura</label>
                                 <input type="text" class="form-control largura" id="largura-edit" name="largura"
                                        placeholder="0,000" value="{{old('largura')}}" required>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="qtd-edit">Quantidade</label>
+                                <label for="qtd-edit" class="obrigatorio">Quantidade</label>
                                 <input type="number" class="form-control" id="qtd-edit" name="qtd"
                                        placeholder="quantidade" value="{{old('qtd')}}" required>
                             </div>
@@ -462,7 +462,7 @@
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="select-produto">Selecione o produto</label>
+                                <label for="select-produto" class="obrigatorio">Selecione o produto</label>
                                 <select id="select-produto-material" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
                                     @if(!empty(session('products')))
