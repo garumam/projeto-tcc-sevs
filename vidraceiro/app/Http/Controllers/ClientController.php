@@ -60,12 +60,23 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        $validado = $this->rules_client($request->all(),'');
+        $docvalidation = null;
+        $arraydocnull = null;
+        if($request->has('cpf')){
+            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,'.''.'|min:11|max:20'];
+            $arraydocnull = ['cnpj' => null];
+        }elseif($request->has('cnpj')){
+            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,'.''.'|min:14|max:20'];
+            $arraydocnull = ['cpf' => null];
+        }else{
+            $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
+        }
+        $validado = $this->rules_client($request->all(),$docvalidation);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
         $client = new Client();
-        $client = $client->create($request->all());
+        $client = $client->create(array_merge($request->all(),$arraydocnull));
         if ($client)
             return redirect()->back()->with('success', 'Cliente cadastrado com sucesso');
     }
@@ -87,13 +98,25 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
 
-        $validado = $this->rules_client($request->all(),$id);
+        $docvalidation = null;
+        $arraydocnull = null;
+        if($request->has('cpf')){
+            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,'.$id.'|min:11|max:20'];
+            $arraydocnull = ['cnpj' => null];
+        }elseif($request->has('cnpj')){
+            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,'.$id.'|min:14|max:20'];
+            $arraydocnull = ['cpf' => null];
+        }else{
+            $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
+        }
+
+        $validado = $this->rules_client($request->all(),$docvalidation);
 
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
 
-        $client->update($request->except('att_budgets'));
+        $client->update(array_merge($request->except('att_budgets'),$arraydocnull));
         if ($client){
             $mensagem = 'Cliente atualizado com sucesso';
             if($request->att_budgets != null){
@@ -119,21 +142,24 @@ class ClientController extends Controller
         }
     }
 
-    public function rules_client(array $data, $id)
+    public function rules_client(array $data, $docarray)
     {
-        $validator = Validator::make($data, [
-            'nome' => 'required|string|max:255',
-            'cpf' => 'required|string|unique:clients,cpf,'.$id.'|min:11|max:20',
-            'telefone' => 'nullable|string|min:10|max:20',
-            'cep' => 'required|string|min:8|max:8',
-            'endereco' => 'nullable|string|max:255',
-            'bairro' => 'nullable|string|max:255',
-            'cidade' => 'nullable|string|max:255',
-            'uf' => 'nullable|string|max:255',
-            'complemento' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'celular' => 'nullable|string|min:10|max:20'
-        ]);
+        $validator = Validator::make($data, array_merge(
+
+            [
+                'nome' => 'required|string|max:255',
+                'telefone' => 'nullable|string|min:10|max:20',
+                'cep' => 'required|string|min:8|max:8',
+                'endereco' => 'nullable|string|max:255',
+                'bairro' => 'nullable|string|max:255',
+                'cidade' => 'nullable|string|max:255',
+                'uf' => 'nullable|string|max:255',
+                'complemento' => 'nullable|string|max:255',
+                'email' => 'nullable|email|max:255',
+                'celular' => 'nullable|string|min:10|max:20'
+            ],$docarray
+
+        ));
 
         return $validator;
     }

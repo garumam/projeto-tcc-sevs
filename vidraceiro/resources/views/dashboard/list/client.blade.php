@@ -33,7 +33,7 @@
                     <tr>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
-                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cpf</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cpf | Cnpj</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Telefone</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
                     </tr>
@@ -43,7 +43,7 @@
                         <tr>
                             <th scope="row">{{$client->id}}</th>
                             <td>{{$client->nome}}</td>
-                            <td>{{$client->cpf}}</td>
+                            <td>{{$client->cpf or $client->cnpj}}</td>
                             <td class="telefone">{{$client->telefone}}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">

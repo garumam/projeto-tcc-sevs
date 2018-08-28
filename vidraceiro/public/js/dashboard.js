@@ -152,14 +152,25 @@ $(document).ready(function () {
 
         if($('#nome').val().length !== 0
             && $('#cep').val().length === 9
-            && $('#cpf').val().length === 14){
+            && ($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)){
             $('#cep').unmask();
             $('#cpf').unmask();
+            $('#cnpj').unmask();
             $('#telefone').unmask();
             $('#celular').unmask();
+
+            $('#bt-client-invisible').click();
+        }else{
+            if(($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)){
+                $('#bt-client-invisible').click();
+            }else{
+                $('#erro-js').attr('class','alert alert-danger');
+                $('#erro-js').text('Documento fornecido é inválido');
+            }
         }
 
-        $('#bt-client-invisible').click();
+
+
     });
 
     $('#bt-category-visible').click(function () {
@@ -729,6 +740,34 @@ $(document).ready(function () {
         let tel = $('#telefone');
         tel.val(tel.masked(clienteselecionado.data('telefone')));
         $('#select-UF').prop('selectedIndex',$("#select-UF option[value=" + clienteselecionado.data('uf') + "]").index());
+
+    });
+
+    $('#select-documento').change(function (e) {
+        let documentoselecionado = $('#select-documento option:selected');
+        if(documentoselecionado.val() === 'cpf'){
+            $('#doc-cpf-input').show();
+            $('#cpf').attr('required',true);
+            $('#cpf').attr('name','cpf');
+            $('#doc-cnpj-input').hide();
+            $('#cnpj').attr('required',false);
+            $('#cnpj').attr('name','');
+            $('#cnpj').val('');
+            $('#cnpj').attr('value','');
+        }else if(documentoselecionado.val() === 'cnpj'){
+            $('#doc-cpf-input').hide();
+            $('#cpf').attr('required',false);
+            $('#cpf').attr('name','');
+            $('#cpf').val('');
+            $('#cpf').attr('value','');
+            $('#doc-cnpj-input').show();
+            $('#cnpj').attr('required',true);
+            $('#cnpj').attr('name','cnpj');
+        }else{
+            $('#doc-cpf-input').hide();
+            $('#doc-cnpj-input').hide();
+            alert('Problema inesperado reinicie a página!');
+        }
 
     });
 

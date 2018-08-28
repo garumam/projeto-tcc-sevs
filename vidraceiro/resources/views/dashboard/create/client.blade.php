@@ -29,6 +29,8 @@
                                 {{ $error }}
                             </div>
                         @endforeach
+
+                            <div id="erro-js"></div>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -38,9 +40,23 @@
                     </div>
 
                     <div class="form-group col-md-4">
+                        <label for="select-documento">Selecione um tipo de documento</label>
+                        <select id="select-documento" class="custom-select">
+                            <option value="cpf" @if(!empty($client)){{$client->cpf != null? 'selected':''}}@else {{'selected'}} @endif>CPF</option>
+                            <option value="cnpj" @if(!empty($client)){{$client->cnpj != null? 'selected':''}}@endif>CNPJ</option>
+                        </select>
+                    </div>
+
+                    <div id="doc-cpf-input" class="form-group col-md-4" @if(!empty($client))style="{{$client->cpf != null? '':'display: none'}}"@endif>
                         <label for="cpf" class="obrigatorio">Cpf</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" value="{{$client->cpf or old('cpf')}}"
-                               placeholder="cpf" required>
+                        <input type="text" class="form-control" id="cpf" @if(!empty($client))name="{{$client->cpf != null? 'cpf':''}}"@else name="cpf" @endif value="{{$client->cpf or old('cpf')}}"
+                               placeholder="cpf"  @if(!empty($client)){{$client->cpf != null? 'required':''}} @else required @endif>
+                    </div>
+
+                    <div id="doc-cnpj-input" class="form-group col-md-4" @if(!empty($client))style="{{$client->cnpj != null? '':'display: none'}}"@else style="display: none" @endif>
+                        <label for="cnpj" class="obrigatorio">Cnpj</label>
+                        <input type="text" class="form-control" id="cnpj" @if(!empty($client))name="{{$client->cnpj != null? 'cnpj':''}}"@endif value="{{$client->cnpj or old('cnpj')}}"
+                               placeholder="cnpj" @if(!empty($client)){{$client->cnpj != null? 'required':''}}@endif>
                     </div>
 
                     <div class="form-group col-md-4">
