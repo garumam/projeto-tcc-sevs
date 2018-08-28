@@ -25,14 +25,17 @@
             @endif
 
             <div class="table-responsive text-dark p-2">
-                <table class="table table-hover search-table">
+
+                @include('layouts.htmltablesearch')
+
+                <table class="table table-hover search-table" style="margin: 6px 0px 6px 0px;">
                     <thead>
                     <tr>
-                        <th class="noborder" scope="col">Id</th>
-                        <th class="noborder" scope="col">Nome</th>
-                        <th class="noborder" scope="col">Cpf</th>
-                        <th class="noborder" scope="col">Telefone</th>
-                        <th class="noborder" scope="col">Ação</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cpf</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Telefone</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,6 +59,7 @@
                     </tbody>
                 </table>
 
+                @include('layouts.htmlpaginationtable')
 
             </div>
         </div>

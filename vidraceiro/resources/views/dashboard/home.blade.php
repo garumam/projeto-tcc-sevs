@@ -13,6 +13,16 @@
     <div class="col-12 col-sm-6 col-md-6 col-lg-4">
         <div class="card-material">
             <div class="widget">
+                <h4 class="titulo">{{$clients}}
+                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                </h4>
+                <p class="subtitulo">Total de clientes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+        <div class="card-material">
+            <div class="widget">
                 <h4 class="titulo">{{$totalcategories}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
                 </h4>

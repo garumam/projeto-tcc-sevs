@@ -1,5 +1,38 @@
 $(document).ready(function () {
 
+    //Adicionar procura nas tabelas e modificando mensagens
+    $('.search-table').each(function(){
+        $('#htmlqtditens_search').remove();
+        $('#htmlqtditens_pagination').remove();
+        $(this).DataTable({
+            language: {
+                search: "Procurar:",
+                lengthMenu:    "Mostrar _MENU_ itens",
+                info:           "",
+                infoEmpty:      "",
+                infoFiltered:   "",
+                infoPostFix:    "",
+                loadingRecords: "Chargement en cours...",
+                zeroRecords:    "Nenhum item encontrado com esses termos!",
+                emptyTable:     "Nenhum item cadastrado!",
+                paginate: {
+                    first:      "Primeira",
+                    previous:   "Anterior",
+                    next:       "Próxima",
+                    last:       "Última"
+                },
+                aria: {
+                    sortAscending:  "",
+                    sortDescending: ""
+                }
+            }
+        });
+    });
+
+    //Iniciando selects com search dentro
+    $('.form-control-chosen').chosen({
+        // Chosen options here
+    });
 
 
     $(".navbar-toggler").click(function (event) {
@@ -699,10 +732,6 @@ $(document).ready(function () {
 
     });
 
-    $('.form-control-chosen').chosen({
-        // Chosen options here
-    });
-
     function linhaProdutoAtualiza(tr, produtoselecionado) {
         tr.each(function () {
             if ($(this).data('produtoid') == produtoselecionado.val()) {
@@ -775,32 +804,5 @@ $(document).ready(function () {
     //Deixando novos selects do plugin chosen invisíveis
     $('#select_aluminio_chosen').hide();
     $('#select_componente_chosen').hide();
-
-    //Adicionar procura nas tabelas e modificando mensagens
-    $('.search-table').each(function(){
-        $(this).DataTable({
-            language: {
-                search: "Procurar:",
-                lengthMenu:    "Mostrar _MENU_ itens",
-                info:           "",
-                infoEmpty:      "",
-                infoFiltered:   "",
-                infoPostFix:    "",
-                loadingRecords: "Chargement en cours...",
-                zeroRecords:    "Nenhum item encontrado com esses termos!",
-                emptyTable:     "Nenhum item cadastrado!",
-                paginate: {
-                    first:      "Primeira",
-                    previous:   "Anterior",
-                    next:       "Próxima",
-                    last:       "Última"
-                },
-                aria: {
-                    sortAscending:  "",
-                    sortDescending: ""
-                }
-            }
-        });
-    });
 
 });

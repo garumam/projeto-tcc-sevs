@@ -25,6 +25,17 @@
           integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <link href="{{ asset('css/component-chosen.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+
+
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.js') }}" ></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" ></script>
+
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}" ></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}" ></script>
+    <script src="{{ asset('js/jquery.mask.js') }}" ></script>
+    <script src="{{ asset('js/chosen.jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 </head>
 <body>
 
@@ -201,17 +212,10 @@
 </form>
 
 {{--<script src="{{ asset('js/jquery.min.js') }}" defer></script>--}}
-<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.js') }}" defer></script>
-<script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
 
-<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
-<script src="{{ asset('js/jquery.mask.js') }}" defer></script>
-<script src="{{ asset('js/chosen.jquery.min.js') }}" defer></script>
-<script src="{{ asset('js/dashboard.js') }}" defer></script>
+
 
 
 <script>
