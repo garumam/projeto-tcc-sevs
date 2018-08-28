@@ -107,7 +107,7 @@
                                             data-uf="{{$client->uf}}"
                                             data-complemento="{{$client->complemento}}"
                                             data-telefone="{{$client->telefone}}"
-                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome.', cpf: '.$client->cpf}}</option>
+                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome}}@if($client->cpf !== null){{', cpf: '.$client->cpf}}@else {{', cnpj: '.$client->cnpj}} @endif</option>
                                 @endforeach
                             </select>
                             </div>
