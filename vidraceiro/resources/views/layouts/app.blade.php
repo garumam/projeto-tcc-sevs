@@ -27,15 +27,6 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.js') }}" ></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}" ></script>
-
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}" ></script>
-    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}" ></script>
-    <script src="{{ asset('js/jquery.mask.js') }}" ></script>
-    <script src="{{ asset('js/chosen.jquery.min.js') }}" ></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
 </head>
 <body>
 
@@ -213,9 +204,16 @@
 
 {{--<script src="{{ asset('js/jquery.min.js') }}" defer></script>--}}
 
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/jquery.mask.js') }}"></script>
+<script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
-
 
 
 <script>
