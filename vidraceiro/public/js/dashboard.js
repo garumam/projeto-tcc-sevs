@@ -753,13 +753,11 @@ $(document).ready(function () {
             $('#cnpj').attr('required',false);
             $('#cnpj').attr('name','');
             $('#cnpj').val('');
-            $('#cnpj').attr('value','');
         }else if(documentoselecionado.val() === 'cnpj'){
             $('#doc-cpf-input').hide();
             $('#cpf').attr('required',false);
             $('#cpf').attr('name','');
             $('#cpf').val('');
-            $('#cpf').attr('value','');
             $('#doc-cnpj-input').show();
             $('#cnpj').attr('required',true);
             $('#cnpj').attr('name','cnpj');
