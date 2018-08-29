@@ -747,20 +747,15 @@ $(document).ready(function () {
         let documentoselecionado = $('#select-documento option:selected');
         if(documentoselecionado.val() === 'cpf'){
             $('#doc-cpf-input').show();
-            $('#cpf').attr('required',true);
-            $('#cpf').attr('name','cpf');
+            $('#cpf').attr({ required: true , name: 'cpf' });
             $('#doc-cnpj-input').hide();
-            $('#cnpj').attr('required',false);
-            $('#cnpj').attr('name','');
-            $('#cnpj').val('');
+            $('#cnpj').attr({ required: false , name: ''}).val('');
+
         }else if(documentoselecionado.val() === 'cnpj'){
             $('#doc-cpf-input').hide();
-            $('#cpf').attr('required',false);
-            $('#cpf').attr('name','');
-            $('#cpf').val('');
+            $('#cpf').attr({ required: false , name: '' }).val('');
             $('#doc-cnpj-input').show();
-            $('#cnpj').attr('required',true);
-            $('#cnpj').attr('name','cnpj');
+            $('#cnpj').attr({ required: true , name: 'cnpj'});
         }else{
             $('#doc-cpf-input').hide();
             $('#doc-cnpj-input').hide();
