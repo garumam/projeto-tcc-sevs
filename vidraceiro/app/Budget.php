@@ -28,4 +28,8 @@ class Budget extends Model
     public function client(){
         return $this->belongsTo(Client::class,'cliente_id');
     }
+
+    public function sale(){
+        return $this->belongsTo(Sale::class, 'orcamento_id');
+    }
 }

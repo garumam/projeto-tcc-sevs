@@ -173,6 +173,16 @@ $(document).ready(function () {
 
     });
 
+    $('#bt-sale-visible').click(function () {
+        if($('#select-orcamento-venda').val() !== ''){
+            $('#bt-sale-invisible').click();
+        }else{
+            $('#erro-js').attr('class','alert alert-danger');
+            $('#erro-js').text('Selecione um orçamento');
+        }
+
+    });
+
     $('#bt-category-visible').click(function () {
         $('#bt-category-invisible').click();
     });
@@ -760,6 +770,60 @@ $(document).ready(function () {
             $('#doc-cpf-input').hide();
             $('#doc-cnpj-input').hide();
             alert('Problema inesperado reinicie a página!');
+        }
+
+    });
+
+
+    $('#select-orcamento-venda').change(function (e) {
+        let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+        let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
+
+        if(orcamentoselecionado.val() === '') {
+            $('#total').val('');
+            $('#valor_parc').val('');
+        }else{
+            $('#total').val(orcamentoselecionado.data('total'));
+            if(tipopagamentoselecionado.val() === 'A PRAZO'){
+                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total')/$('#qtd_parc').val()).toFixed(2));
+            }
+        }
+
+    });
+
+
+    $('#select-tipo-pagamento').change(function (e) {
+        let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
+        let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+
+        if(tipopagamentoselecionado.val() === 'A VISTA'){
+
+            $('#qtd_parcelas').hide();
+            $('#valor_parcela').hide();
+            $('#valor_parc').attr('name','').val('');
+            $('#qtd_parc').attr('name','');
+
+        }else if(tipopagamentoselecionado.val() === 'A PRAZO'){
+
+            $('#qtd_parcelas').show();
+            $('#valor_parcela').show();
+            $('#valor_parc').attr('name','valor_parcela');
+            $('#qtd_parc').attr('name','qtd_parcelas');
+            if(orcamentoselecionado.val() !== '' && $('#qtd_parc').val() !== ''){
+                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total')/$('#qtd_parc').val()).toFixed(2));
+            }
+
+
+        }else{
+            alert('Problema inesperado reinicie a página!');
+        }
+
+    });
+
+    $('#qtd_parc').change(function (e) {
+
+        if($(this).val !== '' && $('#total').val() !== ''){
+            $('#valor_parc').val(parseFloat($('#total').val()/$(this).val()).toFixed(2));
         }
 
     });

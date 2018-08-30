@@ -84,7 +84,7 @@ class BudgetController extends Controller
                 $budgetcriado = new Budget;
 
                 $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
-                $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
+                $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status'=>'AGUARDANDO']));
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));

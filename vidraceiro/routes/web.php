@@ -87,6 +87,17 @@ Route::prefix('budgets')->group(function () {
     Route::delete('/{del}/{id}', 'BudgetController@destroy')->name('budgets.destroy');
 });
 
+//rotas de vendas
+Route::prefix('sales')->group(function () {
+    Route::get('/', 'SaleController@index')->name('sales.index');
+    Route::get('/create', 'SaleController@create')->name('sales.create');
+    Route::post('/', 'SaleController@store')->name('sales.store');
+    Route::get('/{user}', 'SaleController@show')->name('sales.show');
+    Route::get('/{id}/edit', 'SaleController@edit')->name('sales.edit');
+    Route::patch('/{id}', 'SaleController@update')->name('sales.update');
+    Route::delete('/{id}', 'SaleController@destroy')->name('sales.destroy');
+});
+
 //rotas das ordens de serviço
 Route::prefix('orders')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index');

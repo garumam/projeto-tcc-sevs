@@ -58,6 +58,12 @@
                             <p>Orçamentos</p>
                         </a>
                     </li>
+                    <li {{ Request::is('sales') ? 'class=active' : '' }}>
+                        <a href="{{ route('sales.index') }}">
+                            <i class="pe-7s-rocket"></i>
+                            <p>Vendas</p>
+                        </a>
+                    </li>
                     <li {{ Request::is('orders') ? 'class=active' : '' }}>
                         <a href="{{ route('orders.index') }}">
                             <i class="pe-7s-bell"></i>

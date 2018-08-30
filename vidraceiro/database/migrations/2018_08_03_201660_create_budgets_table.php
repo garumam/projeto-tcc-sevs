@@ -17,6 +17,7 @@ class CreateBudgetsTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('data')->nullable();
+            $table->string('status');
             $table->string('telefone')->nullable();
             $table->integer('cep');
             $table->string('endereco')->nullable();

@@ -10,6 +10,9 @@ use App\Product;
 use App\Provider;
 use App\Company;
 use App\Client;
+use App\Sale;
+use App\Installment;
+use App\Payment;
 use Illuminate\Database\Seeder;
 
 class CarregaItensTeste extends Seeder
@@ -56,6 +59,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Budget::create([
+            'status'=> 'APROVADO',
             'bairro'=> 'Centro',
             'cep'=> 28907170,
             'cidade'=> 'Cabo frio',
@@ -71,6 +75,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Budget::create([
+            'status'=> 'APROVADO',
             'bairro'=> 'Vila velha',
             'cep'=> 10459289,
             'cidade'=> 'Terezina',
@@ -86,6 +91,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Budget::create([
+            'status'=> 'AGUARDANDO',
             'bairro'=> 'Lugar nenhum',
             'cep'=> 12345678,
             'cidade'=> 'São Bento',
@@ -257,6 +263,45 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'av. souza n°255',
             'telefone'=> '2326776451',
             'uf'=> 'RJ'
+        ]);
+
+        Sale::create([
+            'tipo_pagamento'=> 'A VISTA',
+            'data_venda'=> '2018-08-29',
+            'orcamento_id'=> 1
+        ]);
+
+        Sale::create([
+            'tipo_pagamento'=> 'A PRAZO',
+            'data_venda'=> '2018-08-29',
+            'qtd_parcelas'=> 2,
+            'orcamento_id'=> 2
+        ]);
+
+        Installment::create([
+            'data_vencimento'=> '2018-09-29',
+            'status_parcela'=> 'PAGO',
+            'valor_parcela'=> 99.19,
+            'venda_id'=> 2
+        ]);
+
+        Installment::create([
+            'data_vencimento'=> '2018-09-29',
+            'status_parcela'=> 'ABERTO',
+            'valor_parcela'=> 99.19,
+            'venda_id'=> 2
+        ]);
+
+        Payment::create([
+            'data_pagamento'=> '2018-08-29',
+            'valor_pago'=> 800.04,
+            'venda_id'=> 1
+        ]);
+
+        Payment::create([
+            'data_pagamento'=> '2018-09-28',
+            'valor_pago'=> 99.19,
+            'venda_id'=> 2
         ]);
 
     }
