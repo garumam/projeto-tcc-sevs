@@ -43,84 +43,88 @@
                     <li {{ Request::is('home') ? 'class=active' : '' }}>
                         <a href="{{route('home')}}">
                             <i class="pe-7s-graph"></i>
-                            <p>Dashboard</p>
+                            Dashboard
                         </a>
                     </li>
                     <li {{ Request::is('clients') ? 'class=active' : '' }}>
                         <a href="{{ route('clients.index') }}">
                             <i class="pe-7s-map-marker"></i>
-                            <p>Clientes</p>
+                            Clientes
                         </a>
                     </li>
                     <li {{ Request::is('budgets') ? 'class=active' : '' }}>
                         <a href="{{ route('budgets.index') }}">
                             <i class="pe-7s-map-marker"></i>
-                            <p>Orçamentos</p>
+                            Orçamentos
                         </a>
                     </li>
                     <li {{ Request::is('sales') ? 'class=active' : '' }}>
                         <a href="{{ route('sales.index') }}">
                             <i class="pe-7s-rocket"></i>
-                            <p>Vendas</p>
+                            Vendas
                         </a>
                     </li>
                     <li {{ Request::is('orders') ? 'class=active' : '' }}>
                         <a href="{{ route('orders.index') }}">
                             <i class="pe-7s-bell"></i>
-                            <p>Ordens de serviço</p>
+                            Ordens de serviço
                         </a>
                     </li>
-                    <li {{ Request::is('products') ? 'class=active' : '' }}>
-                        <a href="{{ route('mproducts.index') }}">
+                    <li id="opensubmenu">
+                        <a>
                             <i class="pe-7s-news-paper"></i>
-                            <p>Produtos</p>
+                            Estoque
                         </a>
+                        <ul class="submenu">
+                            <li {{ Request::is('products') ? 'class=active' : '' }}><a href="{{ route('mproducts.index') }}">Produtos</a></li>
+                            <li {{ Request::is('materials') ? 'class=active' : '' }}><a href="{{ route('materials.index') }}">Materiais</a></li>
+                        </ul>
                     </li>
                     <li {{ Request::is('categories') ? 'class=active' : '' }}>
                         <a href="{{ route('categories.index') }}">
                             <i class="pe-7s-note2"></i>
-                            <p>Categorias</p>
+                            Categorias
                         </a>
                     </li>
-                    <li {{ Request::is('materials') ? 'class=active' : '' }}>
-                        <a href="{{ route('materials.index') }}">
-                            <i class="pe-7s-science"></i>
-                            <p>Materiais</p>
-                        </a>
-                    </li>
+                    {{--<li {{ Request::is('materials') ? 'class=active' : '' }}>--}}
+                        {{--<a href="{{ route('materials.index') }}">--}}
+                            {{--<i class="pe-7s-science"></i>--}}
+                            {{--Materiais--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                     <li {{ Request::is('users') ? 'class=active' : '' }}>
                         <a href="{{ route('users.index') }}">
                             <i class="pe-7s-user"></i>
-                            <p>Usuarios</p>
+                            Usuarios
                         </a>
                     </li>
                     <li {{ Request::is('providers') ? 'class=active' : '' }}>
                         <a href="{{ route('providers.index') }}">
                             <i class="pe-7s-rocket"></i>
-                            <p>Fornecedores</p>
+                            Fornecedores
                         </a>
                     </li>
                     <li {{ Request::is('companies') ? 'class=active' : '' }}>
                         <a href="{{ route('companies.index') }}">
                             <i class="pe-7s-rocket"></i>
-                            <p>Empresa</p>
+                            Empresa
                         </a>
                     </li>
                     <li {{ Request::is('pdf') ? 'class=active' : '' }}>
                         <a href="{{ route('pdf.index') }}">
                             <i class="pe-7s-rocket"></i>
-                            <p>Relatórios</p>
+                            Relatórios
                         </a>
                     </li>
                     <li class="">
                         <i class="pe-7s-rocket"></i>
                         <div class="borda-top"></div>
                         <a href="{{ route('home') }}">
-                            <p>{{ Auth::user()->name }}</p>
+                            {{ Auth::user()->name }}
                         </a>
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-nav').submit();">
-                            <p>{{ __('Logout') }}</p>
+                            {{ __('Logout') }}
                         </a>
                         <form id="logout-nav" action="{{ route('logout') }}" method="POST"
                               style="display: none;">

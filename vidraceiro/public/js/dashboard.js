@@ -1,5 +1,19 @@
 $(document).ready(function () {
 
+    $('#opensubmenu ul li').each(function () {
+        let ativo = $(this).attr("class");
+        if (ativo === "active"){
+            $('#opensubmenu').css('height',"auto");
+            $('.submenu').slideToggle("slow");
+        }
+    });
+    $('#opensubmenu a').click(function () {
+        $('#opensubmenu').css('height',"auto");
+        $('.submenu').slideToggle("slow");
+    });
+
+
+
     //Adicionar procura nas tabelas e modificando mensagens
     $('.search-table').each(function(){
         $('#htmlqtditens_search').remove();

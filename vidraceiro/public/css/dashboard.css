@@ -230,12 +230,19 @@ body {
 }
 
 .sidebar .nav li > a {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: .4rem 1rem;
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
     color: white;
-    border-radius: 4px;
     text-decoration: none;
 }
 
-.sidebar .nav .active a p {
+.sidebar .nav .active a {
     color: white;
     opacity: 1;
     width: 100%;
@@ -243,19 +250,17 @@ body {
     background: rgba(255, 255, 255, 0.23);
 }
 
-.sidebar .nav p {
-    margin: 0;
-    padding: .4rem 1rem;
-    line-height: 30px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.sidebar .nav p:hover {
+.sidebar .nav a:hover {
     background: rgba(255, 255, 255, 0.23);
 }
-
+.submenu{
+    position: relative;
+    display: none;
+}
+.submenu li a{
+    padding: .4rem 0 .4rem 1.5rem !important;
+    height: inherit !important;
+}
 /* fim sidebar*/
 
 .minhaconta {
