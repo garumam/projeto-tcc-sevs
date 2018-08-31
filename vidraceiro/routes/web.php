@@ -92,6 +92,8 @@ Route::prefix('sales')->group(function () {
     Route::get('/', 'SaleController@index')->name('sales.index');
     Route::get('/create', 'SaleController@create')->name('sales.create');
     Route::post('/', 'SaleController@store')->name('sales.store');
+    Route::get('/{id}/pay', 'SaleController@pay')->name('sales.pay');
+    Route::patch('/{id}/payupdate', 'SaleController@payupdate')->name('sales.payupdate');
     Route::get('/{user}', 'SaleController@show')->name('sales.show');
     Route::get('/{id}/edit', 'SaleController@edit')->name('sales.edit');
     Route::patch('/{id}', 'SaleController@update')->name('sales.update');

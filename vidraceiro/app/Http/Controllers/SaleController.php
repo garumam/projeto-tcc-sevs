@@ -20,8 +20,8 @@ class SaleController extends Controller
     public function index()
     {
         $sales = Sale::all();
-
-        return view('dashboard.list.sale', compact('sales'))->with('title', 'Vendas');
+        $titulotabs = ['Vendas','Pagamentos'];
+        return view('dashboard.list.sale', compact('sales','titulotabs'))->with('title', 'Vendas');
     }
 
     public function create()
@@ -198,6 +198,44 @@ class SaleController extends Controller
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar venda');
         }
+    }
+
+    public function pay($id){
+
+        $sale = Sale::find($id);
+
+        if($sale)
+            return view('dashboard.create.pay', compact('sale'))->with('title', 'Efetuar pagamentos');
+    }
+
+    public function payupdate(Request $request, $id){
+
+        $installments = null;
+
+        if($request->data_pagamento === null){
+            return redirect()->back()->with('error', 'Selecione a data do pagamento!');
+        }
+        if($request->parcelas !== null){
+
+            $installments = Installment::whereIn('id',$request->parcelas)->get();
+
+            foreach ($installments as $installment){
+                $payment = new Payment();
+                $payment->create([
+                    'valor_pago'=>$installment->valor_parcela,
+                    'data_pagamento'=>$request->data_pagamento,
+                    'venda_id'=>$id
+                ]);
+                $installment->update(['status_parcela'=>'PAGO']);
+            }
+
+        }else{
+            return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');
+        }
+
+
+        if($installments)
+            return redirect()->back()->with('success', 'Pagamento efetuado com sucesso');
     }
 
     public function rules_sale(array $data, $extra)
