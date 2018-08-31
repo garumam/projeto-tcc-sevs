@@ -46,9 +46,11 @@
                             <td>R${{empty($budget->total) ? 0 : $budget->total}}</td>
                             <td>{{$budget->status}}</td>
                             <td>
+                                @if($budget->status === 'AGUARDANDO')
                                 <a class="btn-link" href="{{ route('budgets.edit',['id'=> $budget->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
+                                @endif
                                 <a class="btn-link" onclick="deletar(this.id,'budgets/budget')" id="{{ $budget->id }}">
                                     <button class="btn btn-danger mb-1">Deletar</button>
                                 </a>

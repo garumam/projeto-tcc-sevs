@@ -24,6 +24,11 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         @foreach($errors->all() as $error)
                             <div class="alert alert-danger">
                                 {{ $error }}
@@ -35,13 +40,18 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-orcamento-venda" class="obrigatorio">Orçamento</label>
-                        <select id="select-orcamento-venda" class="form-control form-control-chosen" name="orcamento_id" data-placeholder="Selecie um orçamento" style="display: none;">
-                            <option value="" selected>Nada selecionado</option>
-                            @foreach ($budgets as $budget)
-                                <option value="{{$budget->id}}"
-                                        data-total="{{$budget->total}}"
-                                @if(!empty($sale)){{ $sale->orcamento_id == $budget->id ? 'selected' :''}} @endif>{{$budget->nome}}@if(!empty($budget->client)){{', Cliente: '.$budget->client->nome}}@else {{', Cliente: Anônimo'}} @endif</option>
-                            @endforeach
+                        <select id="select-orcamento-venda" class="form-control form-control-chosen" name="{{empty($sale)?'orcamento_id':''}}" data-placeholder="Selecie um orçamento" style="display: none;">
+                            @if(!empty($sale))
+                                <option value="{{$sale->budget->id}}"
+                                        data-total="{{$sale->budget->total}}" selected>{{$sale->budget->nome}}{{!empty($sale->budget->client)?', Cliente: '.$sale->budget->client->nome : ', Cliente: Anônimo'}}</option>
+                            @else
+                                <option value="" selected>Nada selecionado</option>
+                                @foreach ($budgets as $budget)
+                                    <option value="{{$budget->id}}"
+                                            data-total="{{$budget->total}}"
+                                    @if(!empty($sale)){{ $sale->orcamento_id == $budget->id ? 'selected' :''}} @endif>{{$budget->nome}}{{!empty($budget->client)?', Cliente: '.$budget->client->nome : ', Cliente: Anônimo'}} </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -75,7 +85,7 @@
                     <div id="valor_parcela" class="form-group col-md-4" @if(!empty($sale)) style="{{$sale->tipo_pagamento == 'A VISTA'? 'display: none':''}}"@else style="display: none;" @endif>
                         <label for="valor_parc">Valor das parcelas</label>
                         <input type="number" class="form-control" id="valor_parc" @if(!empty($sale))name="{{$sale->tipo_pagamento == 'A PRAZO'? 'valor_parcela':''}}"@endif
-                               @if(!empty($sale))value="{{$sale->budget->installments->shift()->valor_parcela or ''}}" @endif placeholder="R$"
+                               @if(!empty($sale))value="{{$sale->installments->shift()->valor_parcela or ''}}" @endif placeholder="R$"
                                readonly>
                     </div>
 

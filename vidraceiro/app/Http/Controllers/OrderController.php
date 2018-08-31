@@ -22,7 +22,7 @@ class OrderController extends Controller
 
     public function create()
     {
-        $budgets = Budget::all();
+        $budgets = Budget::where('status','APROVADO')->get();
         return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
     }
 
@@ -50,7 +50,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('budgets')->find($id);
-        $budgets = Budget::all();
+        $budgets = Budget::where('status','APROVADO')->get();
         if ($order) {
             $budgetsOrders = $order->budgets()->get();
             return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');

@@ -32,11 +32,28 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
+        $arrayextra = null;
+        if($request->tipo_pagamento === 'A PRAZO'){
 
-        /*$validado = $this->rules_sale($request->all());
+            $arrayextra = [
+                'orcamento_id'=>'required|integer|unique:sales,orcamento_id',
+                'valor_parcela'=>'required|numeric',
+                'qtd_parcelas'=>'required|integer'
+            ];
+
+        }else{
+
+            $arrayextra = [
+                'orcamento_id'=>'required|integer|unique:sales,orcamento_id'
+            ];
+
+        }
+
+        $validado = $this->rules_sale($request->all(),$arrayextra);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
-        }*/
+        }
+
         $sale = new Sale();
         $sale = $sale->create($request->except('valor_parcela'));
 
@@ -81,45 +98,92 @@ class SaleController extends Controller
 
     public function edit($id)
     {
-        $states = $this->states;
-        $client = Client::find($id);
-        return view('dashboard.create.client', compact('client','states'))->with('title', 'Atualizar cliente');
+        $sale = Sale::find($id);
+        return view('dashboard.create.sale', compact('sale'))->with('title', 'Atualizar venda');
     }
 
 
     public function update(Request $request, $id)
     {
-        $client = Client::find($id);
 
-        $docvalidation = null;
-        $arraydocnull = null;
-        if($request->has('cpf')){
-            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,'.$id.'|min:11|max:20'];
-            $arraydocnull = ['cnpj' => null];
-        }elseif($request->has('cnpj')){
-            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,'.$id.'|min:14|max:20'];
-            $arraydocnull = ['cpf' => null];
-        }else{
-            $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
+        $arrayextra = [];
+        if($request->tipo_pagamento === 'A PRAZO'){
+
+            $arrayextra = [
+                'valor_parcela'=>'required|numeric',
+                'qtd_parcelas'=>'required|integer'
+            ];
+
         }
 
-        $validado = $this->rules_sale($request->all(),$docvalidation);
-
+        $validado = $this->rules_sale($request->all(),$arrayextra);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
 
-        $client->update(array_merge($request->except('att_budgets'),$arraydocnull));
-        if ($client){
-            $mensagem = 'Cliente atualizado com sucesso';
-            if($request->att_budgets != null){
+        $sale = Sale::find($id);
 
-                foreach($client->budgets as $budget){
-                    $budget->update($request->except('nome','cpf','email','celular','att_budgets'));
-                }
-                $mensagem = 'Cliente e orçamentos atualizados com sucesso';
+        if($sale->tipo_pagamento === 'A PRAZO'){
+
+            if(empty($sale->installments->where('status_parcela','PAGO')->shift())){
+
+                $sale->installments()->delete();
+
+            }else{
+                return redirect()->back()->with('error', 'Não foi possível atualizar a venda pois já existem parcelas que foram pagas!');
             }
-            return redirect()->back()->with('success', $mensagem);
+
+            if($request->has('valor_parcela')){
+
+                for($i = 1; $i <= $request->qtd_parcelas; $i++){
+                    $installments = new Installment();
+                    $dias = $i * 30;
+                    $datavencimento = date('Y-m-d', strtotime("+$dias days",strtotime($request->data_venda)));
+                    $installments->create([
+                        'valor_parcela'=>$request->valor_parcela,
+                        'status_parcela'=>'ABERTO',
+                        'data_vencimento'=> $datavencimento,
+                        'venda_id'=> $sale->id
+                    ]);
+                }
+
+            }else{
+
+                $payment = new Payment();
+                $payment->create([
+                    'valor_pago'=> $sale->budget->total,
+                    'data_pagamento'=>$request->data_venda,
+                    'venda_id'=>$sale->id
+                ]);
+
+            }
+
+        }else{
+
+            if($request->has('valor_parcela')){
+
+                $sale->payments()->delete();
+
+                for($i = 1; $i <= $request->qtd_parcelas; $i++){
+                    $installments = new Installment();
+                    $dias = $i * 30;
+                    $datavencimento = date('Y-m-d', strtotime("+$dias days",strtotime($request->data_venda)));
+                    $installments->create([
+                        'valor_parcela'=>$request->valor_parcela,
+                        'status_parcela'=>'ABERTO',
+                        'data_vencimento'=> $datavencimento,
+                        'venda_id'=> $sale->id
+                    ]);
+                }
+
+            }
+
+        }
+
+        $sale->update($request->except('valor_parcela'));
+
+        if ($sale){
+            return redirect()->back()->with('success', 'Venda atualizada com sucesso');
         }
 
     }
@@ -136,23 +200,16 @@ class SaleController extends Controller
         }
     }
 
-    public function rules_sale(array $data)
+    public function rules_sale(array $data, $extra)
     {
         $validator = Validator::make($data,
-
-            [
-                'nome' => 'required|string|max:255',
-                'telefone' => 'nullable|string|min:10|max:20',
-                'cep' => 'required|string|min:8|max:8',
-                'endereco' => 'nullable|string|max:255',
-                'bairro' => 'nullable|string|max:255',
-                'cidade' => 'nullable|string|max:255',
-                'uf' => 'nullable|string|max:255',
-                'complemento' => 'nullable|string|max:255',
-                'email' => 'nullable|email|max:255',
-                'celular' => 'nullable|string|min:10|max:20'
-            ]
-
+            array_merge(
+                [
+                    'tipo_pagamento' => 'required|string|max:255',
+                    'data_venda' => 'required|date'
+                ],
+                $extra
+            )
         );
 
         return $validator;
