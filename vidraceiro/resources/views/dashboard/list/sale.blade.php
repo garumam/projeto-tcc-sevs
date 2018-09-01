@@ -117,9 +117,10 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             @foreach($sales->where('tipo_pagamento','A PRAZO') as $sale)
 
-                                @if(!empty($sale->budget->client) && !empty($sale->installments->where('status_parcela','ABERTO')))
+                                @if(!empty($sale->budget->client) && !empty($sale->installments->where('status_parcela','ABERTO')->shift()))
 
                                     @php $valorpago = 0; @endphp
                                     @foreach($sale->payments as $payment)

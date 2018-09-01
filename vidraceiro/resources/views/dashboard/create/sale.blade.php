@@ -43,11 +43,16 @@
                         <select id="select-orcamento-venda" class="form-control form-control-chosen" name="{{empty($sale)?'orcamento_id':''}}" data-placeholder="Selecie um orçamento" style="display: none;">
                             @if(!empty($sale))
                                 <option value="{{$sale->budget->id}}"
+                                        data-cliente="{{!empty($budget->client)}}"
                                         data-total="{{$sale->budget->total}}" selected>{{$sale->budget->nome}}{{!empty($sale->budget->client)?', Cliente: '.$sale->budget->client->nome : ', Cliente: Anônimo'}}</option>
                             @else
-                                <option value="" selected>Nada selecionado</option>
+                                <option value=""
+                                        data-cliente="{{0}}"
+                                        data-total="{{0}}"
+                                        selected>Nada selecionado</option>
                                 @foreach ($budgets as $budget)
                                     <option value="{{$budget->id}}"
+                                            data-cliente="{{!empty($budget->client)}}"
                                             data-total="{{$budget->total}}"
                                     @if(!empty($sale)){{ $sale->orcamento_id == $budget->id ? 'selected' :''}} @endif>{{$budget->nome}}{{!empty($budget->client)?', Cliente: '.$budget->client->nome : ', Cliente: Anônimo'}} </option>
                                 @endforeach

@@ -19,7 +19,7 @@ class SaleController extends Controller
 
     public function index()
     {
-        $sales = Sale::all();
+        $sales = Sale::with('installments','payments','budget')->get();
         $titulotabs = ['Vendas','Pagamentos'];
         return view('dashboard.list.sale', compact('sales','titulotabs'))->with('title', 'Vendas');
     }

@@ -790,25 +790,30 @@ $(document).ready(function () {
 
 
     $('#select-orcamento-venda').change(function (e) {
+        $('#select-tipo-pagamento').val('A VISTA').trigger('change');
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
-        let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
         if(orcamentoselecionado.val() === '') {
             $('#total').val('');
             $('#valor_parc').val('');
         }else{
             $('#total').val(orcamentoselecionado.data('total'));
-            if(tipopagamentoselecionado.val() === 'A PRAZO'){
-                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total')/$('#qtd_parc').val()).toFixed(2));
-            }
         }
 
     });
 
 
     $('#select-tipo-pagamento').change(function (e) {
-        let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
+
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+
+        if(!orcamentoselecionado.data('cliente') && orcamentoselecionado.val() !== '' && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO'){
+            $('#erro-js').attr('class','alert alert-danger')
+                .text('Selecione um orçamento com cliente cadastrado para liberar o pagamento a prazo!');
+            $('#select-tipo-pagamento').val('A VISTA');
+        }
+
+        let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
         if(tipopagamentoselecionado.val() === 'A VISTA'){
 
