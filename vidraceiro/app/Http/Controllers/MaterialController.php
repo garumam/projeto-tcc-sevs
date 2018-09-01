@@ -12,9 +12,19 @@ use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
 {
+    protected $espessuraAlum;
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->espessuraAlum = [
+            ' '=>'Selecione uma espessura(opcional)',
+            '8'=>'Linha Temperado 8mm',
+            '10'=>'Linha Temperado 10mm',
+            '25'=>'Linha Suprema 25mm',
+            '33'=>'Linha Gold 33mm'
+        ];
     }
 
     public function index()
@@ -29,7 +39,7 @@ class MaterialController extends Controller
     public function create($type)
     {
         $providers = Provider::all();
-
+        $espessuras = $this->espessuraAlum;
         switch($type){
             case 'glass':
                 $categories = Category::where('tipo','vidro')->get();
@@ -47,7 +57,7 @@ class MaterialController extends Controller
             default:
                 return redirect()->back();
         }
-        return view('dashboard.create.material',compact('type','categories', 'providers'))->with('title','Criar '.$nome);
+        return view('dashboard.create.material',compact('type','categories', 'providers','espessuras'))->with('title','Criar '.$nome);
     }
 
     public function store(Request $request, $type)
@@ -92,6 +102,7 @@ class MaterialController extends Controller
     public function edit($type, $id)
     {
         $providers = Provider::all();
+        $espessuras = $this->espessuraAlum;
         switch($type){
             case 'glass':
                 $material = Glass::with('providers')->find($id);
@@ -113,7 +124,7 @@ class MaterialController extends Controller
                 return redirect()->back();
         }
 
-        return view('dashboard.create.material',compact('type','material','categories', 'providers'))->with('title','Atualizar '.$nome);
+        return view('dashboard.create.material',compact('type','material','categories', 'providers', 'espessuras'))->with('title','Atualizar '.$nome);
     }
 
 

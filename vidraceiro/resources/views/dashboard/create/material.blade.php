@@ -124,6 +124,16 @@
                             </div>
 
                             <div class="form-group col-md-4">
+                                <label for="espessura_aluminio_id">Espessuras</label>
+                                <select class="custom-select" id="espessura_aluminio_id" name="espessura">
+                                    @foreach($espessuras as $key => $value)
+                                    <option value="{{$key}}"
+                                        @if(!empty($material)){{ $key == $material->espessura? 'selected' : ''}}@endif>{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
                                 <label for="tipo_medida" class="obrigatorio">Tipo de medida</label>
                                 <select class="custom-select" id="tipo_medida" name="tipo_medida" required>
                                     <option value="largura"
