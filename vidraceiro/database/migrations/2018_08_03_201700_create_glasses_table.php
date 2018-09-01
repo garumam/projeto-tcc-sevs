@@ -21,9 +21,11 @@ class CreateGlassesTable extends Migration
             $table->integer('espessura');
             $table->double('preco')->nullable();
             $table->integer('is_modelo');
+            $table->integer('mglass_id')->nullable()->unsigned();
             $table->integer('categoria_vidro_id')->unsigned();
             $table->integer('product_id')->nullable()->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('mglass_id')->references('id')->on('glasses')->onDelete('cascade');
             $table->foreign('categoria_vidro_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

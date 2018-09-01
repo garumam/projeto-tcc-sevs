@@ -49,4 +49,12 @@ class Component extends Model
             'provider_id'
         );
     }
+
+    public function mcomponent()
+    {
+        return $this->belongsTo(
+            Component::class,
+            'mcomponent_id'
+        );
+    }
 }

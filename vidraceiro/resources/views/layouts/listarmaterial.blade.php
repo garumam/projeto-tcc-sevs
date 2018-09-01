@@ -54,6 +54,7 @@
                 <option data-medida="{{$aluminum->medida}}"
                         data-peso="{{$aluminum->peso}}"
                         data-preco="{{$aluminum->preco}}"
+                        data-tipomedida="{{$aluminum->tipo_medida}}"
                         value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
             @endforeach
         </select>
@@ -184,9 +185,9 @@
                         <tr id="linha-aluminio-{{$aluminumP->id}}-{{$contador}}">
                             <th scope="row">{{$aluminumP->id}}</th>
                             <td>{{$aluminumP->perfil}}</td>
-                            <td>{{$aluminumP->medida}}</td>
-                            <td>{{$aluminumP->peso}}</td>
-                            <td>{{$aluminumP->preco}}</td>
+                            <td>{{$aluminumP->medida.'M'}}</td>
+                            <td>{{$aluminumP->peso.'Kg'}}</td>
+                            <td>{{'R$'.$aluminumP->preco}}</td>
                             <td>
                                 <button id="linha-aluminio-{{$aluminumP->id}}-{{$contador++}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
@@ -223,9 +224,9 @@
                                 style="display: none;">
                                 <th scope="row">{{$aluminumP->id}}</th>
                                 <td>{{$aluminumP->perfil}}</td>
-                                <td>{{$aluminumP->medida}}</td>
-                                <td>{{$aluminumP->peso}}</td>
-                                <td>{{$aluminumP->preco}}</td>
+                                <td>{{$aluminumP->medida.'M'}}</td>
+                                <td>{{$aluminumP->peso.'Kg'}}</td>
+                                <td>{{'R$'.$aluminumP->preco}}</td>
                                 <td>
                                     <button id="linha-aluminio-{{$aluminumP->id}}"
                                             class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete

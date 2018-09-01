@@ -50,4 +50,12 @@ class Glass extends Model
             'provider_id'
         );
     }
+
+    public function mglass()
+    {
+        return $this->belongsTo(
+            Glass::class,
+            'mglass_id'
+        );
+    }
 }

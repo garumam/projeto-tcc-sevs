@@ -118,12 +118,18 @@ class BudgetController extends Controller
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
+
+                    $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                                                        ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                    $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
                     Aluminum::create([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
-                        'medida' => $aluminio->medida,
+                        'medida' => $aluminioMedida,
                         'qtd' => $aluminio->qtd,
-                        'peso' => $aluminio->peso,
+                        'peso' => $aluminioPeso,
                         'preco' => $aluminio->preco,
                         'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
@@ -174,6 +180,20 @@ class BudgetController extends Controller
 
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
+
+                foreach ($product->aluminums()->get() as $aluminio) {
+
+                    $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                        ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                    $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
+                    $aluminio->update([
+                        'medida' => $aluminioMedida,
+                        'peso' => $aluminioPeso
+                    ]);
+                }
+
                 $budgetcriado = Budget::find($request->budget_id);
                 if ($product && self::atualizaTotal(null, $budgetcriado)) {
                     $products = $budgetcriado->products;
@@ -234,12 +254,17 @@ class BudgetController extends Controller
 
                             if ($aluminio->is_modelo == 1) {
 
+                                $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                                    ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                                $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                                $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
-                                    'medida' => $aluminio->medida,
+                                    'medida' => $aluminioMedida,
                                     'qtd' => $aluminio->qtd,
-                                    'peso' => $aluminio->peso,
+                                    'peso' => $aluminioPeso,
                                     'preco' => $aluminio->preco,
                                     'tipo_medida' => $aluminio->tipo_medida,
                                     'is_modelo' => 0,
@@ -371,12 +396,18 @@ class BudgetController extends Controller
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
+
+                    $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                        ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                    $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
                     Aluminum::create([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
-                        'medida' => $aluminio->medida,
+                        'medida' => $aluminioMedida,
                         'qtd' => $aluminio->qtd,
-                        'peso' => $aluminio->peso,
+                        'peso' => $aluminioPeso,
                         'preco' => $aluminio->preco,
                         'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
@@ -412,6 +443,20 @@ class BudgetController extends Controller
                 }
                 $product = Product::find($request->produtoid);
                 $product->update($request->except(['produtoid']));
+
+                foreach ($product->aluminums()->get() as $aluminio) {
+
+                    $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                        ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                    $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
+                    $aluminio->update([
+                        'medida' => $aluminioMedida,
+                        'peso' => $aluminioPeso
+                    ]);
+                }
+
                 if ($product && self::atualizaTotal($id, null))
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso');
 
@@ -470,12 +515,16 @@ class BudgetController extends Controller
 
                             if ($aluminio->is_modelo == 1) {
 
+                                $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
+                                    ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
+                                $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
+                                $aluminioPeso = number_format($aluminioPeso, 3, '.','');
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
-                                    'medida' => $aluminio->medida,
+                                    'medida' => $aluminioMedida,
                                     'qtd' => $aluminio->qtd,
-                                    'peso' => $aluminio->peso,
+                                    'peso' => $aluminioPeso,
                                     'preco' => $aluminio->preco,
                                     'tipo_medida' => $aluminio->tipo_medida,
                                     'is_modelo' => 0,

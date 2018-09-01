@@ -449,6 +449,18 @@ $(document).ready(function () {
                     idinput = $('.id-material-aluminio').attr('value');
                     let medida = selectaluminio.find('option:selected').data('medida');
                     let peso = selectaluminio.find('option:selected').data('peso');
+                    let produto = $('#select-produto-material option:selected');
+                    if(produto.data('largura') !== undefined){
+                        let tipo_medida = selectaluminio.find('option:selected').data('tipomedida');
+                        let largura = produto.data('largura');
+                        let altura = produto.data('altura');
+                        let aluminioMedida = tipo_medida === 'largura'?largura :
+                            ( tipo_medida === 'altura'? altura : medida ) ;
+                        let aluminioPeso = (peso/medida)* aluminioMedida;
+                        aluminioPeso = parseFloat(aluminioPeso).toFixed(3);
+                        medida = aluminioMedida;
+                        peso = aluminioPeso;
+                    }
                     let precoaluminio = selectaluminio.find('option:selected').data('preco');
                     tbody = $('#tabela-aluminio');
                     pegaIdLinha = $('#linha-aluminio-' + idselect).attr('id');
@@ -461,8 +473,8 @@ $(document).ready(function () {
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
                             '<td>' + nomeselect + '</td>' +
-                            '<td>' + medida + '</td>' +
-                            '<td>' + peso + '</td>' +
+                            '<td>' + medida + 'M' + '</td>' +
+                            '<td>' + peso + 'Kg' + '</td>' +
                             '<td>' + 'R$' + precoaluminio + '</td>' +
                             '<td>' +
                             "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
@@ -480,8 +492,8 @@ $(document).ready(function () {
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
                             '<td>' + nomeselect + '</td>' +
-                            '<td>' + medida + '</td>' +
-                            '<td>' + peso + '</td>' +
+                            '<td>' + medida + 'M' + '</td>' +
+                            '<td>' + peso + 'Kg' + '</td>' +
                             '<td>' + 'R$' + precoaluminio + '</td>' +
                             '<td>' +
                             "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +

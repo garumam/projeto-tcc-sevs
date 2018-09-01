@@ -469,6 +469,8 @@
                                         @foreach(Session::get('products') as $product)
 
                                             <option data-image="{{$product->mproduct->imagem}}"
+                                                    data-largura="{{$product->largura}}"
+                                                    data-altura="{{$product->altura}}"
                                                     value="{{$product->id}}">{{$product->mproduct->nome}}</option>
 
                                         @endforeach
@@ -478,6 +480,8 @@
                                         @foreach($products as $product)
 
                                             <option data-image="{{$product->mproduct->imagem}}"
+                                                    data-largura="{{$product->largura}}"
+                                                    data-altura="{{$product->altura}}"
                                                     value="{{$product->id}}">{{$product->mproduct->nome}}</option>
 
                                         @endforeach

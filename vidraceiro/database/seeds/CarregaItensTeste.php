@@ -150,6 +150,7 @@ class CarregaItensTeste extends Seeder
             'preco'=> 22.0,
             'qtd'=> 1,
             'product_id' => 2,
+            'maluminum_id'=> 1,
             'tipo_medida'=> 'largura'
         ]);
 
@@ -161,6 +162,7 @@ class CarregaItensTeste extends Seeder
             'nome'=> 'Vidro Incolor Temperado',
             'product_id' => 2,
             'preco'=> 100.0,
+            'mglass_id'=> 1,
             'tipo'=> 'Padrão'
         ]);
 
@@ -172,6 +174,7 @@ class CarregaItensTeste extends Seeder
             'nome'=> 'Vidro Fumê Temperado',
             'product_id' => 3,
             'preco'=> 140.0,
+            'mglass_id'=> 3,
             'tipo'=> 'Padrão'
         ]);
 
@@ -182,6 +185,7 @@ class CarregaItensTeste extends Seeder
             'preco'=> 1.0,
             'qtd'=> 1,
             'product_id' => 2,
+            'mcomponent_id'=> 1,
             'categoria_componente_id' => 8
         ]);
 
