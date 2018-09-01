@@ -67,6 +67,7 @@
                                         <tr class="tabela-vidro">
                                             <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
                                             <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
+                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Categoria</th>
                                             <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Preço m²</th>
                                             <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Modelo</th>
                                             <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
@@ -101,6 +102,7 @@
                                             <tr class="tabela-vidro">
                                                 <th scope="row">{{ $glass->id }}</th>
                                                 <td>{{ $glass->nome }}</td>
+                                                <td>{{ $glass->category->nome }}</td>
                                                 <td>R${{ $glass->preco }}</td>
                                                 <td>{{ $glass->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
@@ -208,9 +210,10 @@
                                         <tr class="tabela-aluminio">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Perfil</th>
+                                            <th class="noborder" scope="col">Categoria</th>
                                             <th class="noborder" scope="col">Medida</th>
                                             <th class="noborder" scope="col">Peso</th>
-                                            <th class="noborder" scope="col">Preço</th>
+                                            <th class="noborder" scope="col">Preço kg</th>
                                             <th class="noborder" scope="col">Modelo</th>
                                             <th class="noborder" scope="col">Ação</th>
                                         </tr>
@@ -249,8 +252,9 @@
                                         @foreach($aluminums as $aluminum)
                                             <tr class="tabela-aluminio">
                                                 <th scope="row">{{ $aluminum->id }}</th>
-                                                <td>{{ $aluminum->perfil }} {{ $aluminum->descricao }}</td>
-                                                <td>{{ $aluminum->medida }}</td>
+                                                <td>{{ $aluminum->perfil }}</td>
+                                                <td>{{ $aluminum->category->nome }} {{ $aluminum->espessura ? $aluminum->espessura.'mm' : ''}}</td>
+                                                <td>{{ $aluminum->medida ? $aluminum->medida.'m' : ''}}</td>
                                                 <td>{{ $aluminum->peso }}kg</td>
                                                 <td>R${{ $aluminum->preco }}</td>
                                                 <td>{{ $aluminum->is_modelo ? 'Sim' : 'Não' }}</td>
@@ -348,6 +352,7 @@
                                         <tr class="tabela-componente">
                                             <th class="noborder" scope="col">Id</th>
                                             <th class="noborder" scope="col">Nome</th>
+                                            <th class="noborder" scope="col">Categoria</th>
                                             <th class="noborder" scope="col">Preço</th>
                                             <th class="noborder" scope="col">Qtd</th>
                                             <th class="noborder" scope="col">Modelo</th>
@@ -398,7 +403,8 @@
                                             <tr class="tabela-componente">
                                                 <th scope="row">{{ $component->id }}</th>
                                                 <td>{{ $component->nome }}</td>
-                                                <td>{{ $component->preco }}</td>
+                                                <td>{{ $component->category->nome }}</td>
+                                                <td>R${{ $component->preco }}</td>
                                                 <td>{{ $component->qtd }}</td>
                                                 <td>{{ $component->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
