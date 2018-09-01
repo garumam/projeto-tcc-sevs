@@ -23,11 +23,10 @@ class CreateAluminumsTable extends Migration
             $table->double('preco')->nullable();
             $table->string('tipo_medida');
             $table->integer('is_modelo');
-            $table->integer('maluminum_id')->nullable()->unsigned();
+            $table->integer('maluminum_id')->nullable();
             $table->integer('categoria_aluminio_id')->unsigned();
             $table->integer('product_id')->nullable()->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('maluminum_id')->references('id')->on('aluminums')->onDelete('cascade');
             $table->foreign('categoria_aluminio_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

@@ -50,11 +50,4 @@ class Component extends Model
         );
     }
 
-    public function mcomponent()
-    {
-        return $this->belongsTo(
-            Component::class,
-            'mcomponent_id'
-        );
-    }
 }

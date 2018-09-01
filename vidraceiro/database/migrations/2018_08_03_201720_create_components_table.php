@@ -20,11 +20,10 @@ class CreateComponentsTable extends Migration
             $table->double('preco')->nullable();
             $table->string('imagem')->nullable();
             $table->integer('is_modelo');
-            $table->integer('mcomponent_id')->nullable()->unsigned();
+            $table->integer('mcomponent_id')->nullable();
             $table->integer('categoria_componente_id')->unsigned();
             $table->integer('product_id')->nullable()->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('mcomponent_id')->references('id')->on('components')->onDelete('cascade');
             $table->foreign('categoria_componente_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

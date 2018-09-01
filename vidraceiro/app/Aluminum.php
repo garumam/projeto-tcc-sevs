@@ -50,11 +50,4 @@ class Aluminum extends Model
         );
     }
 
-    public function maluminum()
-    {
-        return $this->belongsTo(
-            Aluminum::class,
-            'maluminum_id'
-        );
-    }
 }

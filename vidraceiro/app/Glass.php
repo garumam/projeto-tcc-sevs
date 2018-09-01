@@ -51,11 +51,4 @@ class Glass extends Model
         );
     }
 
-    public function mglass()
-    {
-        return $this->belongsTo(
-            Glass::class,
-            'mglass_id'
-        );
-    }
 }
