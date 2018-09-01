@@ -451,6 +451,7 @@ $(document).ready(function () {
                     let peso = selectaluminio.find('option:selected').data('peso');
                     let produto = $('#select-produto-material option:selected');
                     if(produto.data('largura') !== undefined){
+                        //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO DOS ALUMINIOS
                         let tipo_medida = selectaluminio.find('option:selected').data('tipomedida');
                         let largura = produto.data('largura');
                         let altura = produto.data('altura');

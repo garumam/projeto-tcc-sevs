@@ -52,7 +52,7 @@ class BudgetController extends Controller
             'TO' => 'Tocantins'
         );
     }
-
+    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO COMENTARIO NAS POSIÇÕES QUE PRECISA ALTERAR
     public function index()
     {
         $budgets = Budget::all();
@@ -118,7 +118,7 @@ class BudgetController extends Controller
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
-
+                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                     $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                                                         ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                     $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
@@ -182,7 +182,7 @@ class BudgetController extends Controller
                 $product->update($request->except(['produtoid']));
 
                 foreach ($product->aluminums()->get() as $aluminio) {
-
+                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                     $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                         ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                     $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
@@ -253,7 +253,7 @@ class BudgetController extends Controller
                             $aluminio = $aluminumsAll->where('id', $id)->shift();
 
                             if ($aluminio->is_modelo == 1) {
-
+                                //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                                 $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                                     ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                                 $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
@@ -396,7 +396,7 @@ class BudgetController extends Controller
                 }
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
-
+                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                     $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                         ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                     $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
@@ -445,7 +445,7 @@ class BudgetController extends Controller
                 $product->update($request->except(['produtoid']));
 
                 foreach ($product->aluminums()->get() as $aluminio) {
-
+                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                     $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                         ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                     $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
@@ -514,7 +514,7 @@ class BudgetController extends Controller
                             $aluminio = $aluminumsAll->where('id', $id)->shift();
 
                             if ($aluminio->is_modelo == 1) {
-
+                                //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                                 $aluminioMedida = $aluminio->tipo_medida === 'largura'? $product->largura :
                                     ( $aluminio->tipo_medida === 'altura'? $product->altura : $aluminio->medida ) ;
                                 $aluminioPeso = ($aluminio->peso/$aluminio->medida)*$aluminioMedida;
