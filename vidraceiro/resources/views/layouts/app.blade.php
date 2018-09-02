@@ -87,12 +87,12 @@
                             Estoque
                         </a>
                     </li>
-                    <li {{ Request::is('categories') ? 'class=active' : '' }}>
-                        <a href="{{ route('categories.index') }}">
-                            <i class="pe-7s-note2"></i>
-                            Categorias
-                        </a>
-                    </li>
+                    {{--<li {{ Request::is('categories') ? 'class=active' : '' }}>--}}
+                        {{--<a href="{{ route('categories.index') }}">--}}
+                            {{--<i class="pe-7s-note2"></i>--}}
+                            {{--Categorias--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                     {{--<li {{ Request::is('materials') ? 'class=active' : '' }}>--}}
                         {{--<a href="{{ route('materials.index') }}">--}}
                             {{--<i class="pe-7s-science"></i>--}}
