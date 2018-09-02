@@ -73,12 +73,19 @@
                     <li id="opensubmenu">
                         <a>
                             <i class="pe-7s-news-paper"></i>
-                            Estoque
+                            Modelos
                         </a>
                         <ul class="submenu">
                             <li {{ Request::is('products') ? 'class=active' : '' }}><a href="{{ route('mproducts.index') }}">Produtos</a></li>
                             <li {{ Request::is('materials') ? 'class=active' : '' }}><a href="{{ route('materials.index') }}">Materiais</a></li>
+                            <li {{ Request::is('categories') ? 'class=active' : '' }}><a href="{{ route('categories.index') }}">Categorias</a></li>
                         </ul>
+                    </li>
+                    <li {{ Request::is('storage') ? 'class=active' : '' }}>
+                        <a href="{{ route('storage.index') }}">
+                            <i class="pe-7s-bell"></i>
+                            Estoque
+                        </a>
                     </li>
                     <li {{ Request::is('categories') ? 'class=active' : '' }}>
                         <a href="{{ route('categories.index') }}">

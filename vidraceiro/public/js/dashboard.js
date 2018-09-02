@@ -604,6 +604,31 @@ $(document).ready(function () {
 
     });
 
+    $('#nav-Vidros-tab').on('click', function(){
+
+        $('#select_componente_chosen').hide();
+        $('#select_aluminio_chosen').hide();
+        $('#select_vidro_chosen').show();
+
+    });
+
+    $('#nav-Aluminios-tab').on('click', function(){
+
+
+        $('#select_vidro_chosen').hide();
+        $('#select_componente_chosen').hide();
+        $('#select_aluminio_chosen').show();
+
+    });
+
+    $('#nav-Componentes-tab').on('click', function(){
+
+        $('#select_vidro_chosen').hide();
+        $('#select_aluminio_chosen').hide();
+        $('#select_componente_chosen').show();
+
+    });
+
     $('#select-material').change(function (e) {
         let selecionado = $('#select-material option:selected').val();
         let label = $('#label_categoria');

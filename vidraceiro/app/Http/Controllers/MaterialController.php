@@ -7,6 +7,7 @@ use App\Category;
 use App\Component;
 use App\Glass;
 use App\Provider;
+use App\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -87,11 +88,33 @@ class MaterialController extends Controller
         }
 
         $material = $material->create(array_merge($request->except('providers'), ['is_modelo' => 1]));
-        if(count($request->providers) > 0){
-            $material->providers()->sync($request->providers);
+        if(!empty($request->providers)){
+            if(count($request->providers) > 0){
+                $material->providers()->sync($request->providers);
+            }
         }
-        if ($material)
+
+
+        if ($material){
+            if($type === 'glass'){
+                Storage::create([
+                    'metros_quadrados' => 0,
+                    'glass_id' => $material->id
+                ]);
+            }elseif($type === 'aluminum'){
+                Storage::create([
+                    'qtd' => 0,
+                    'aluminum_id' => $material->id
+                ]);
+            }elseif($type === 'component'){
+                Storage::create([
+                    'qtd' => 0,
+                    'component_id' => $material->id
+                ]);
+            }
             return redirect()->back()->with('success', "$nome criado com sucesso");
+        }
+
     }
 
     public function show()

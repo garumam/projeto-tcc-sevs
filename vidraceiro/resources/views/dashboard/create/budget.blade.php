@@ -208,7 +208,7 @@
                                         </div>
                                     </div>
                                 @elseif(session('error'))
-                                    <div class="alerta">
+                                    <div class="alerta p-0">
                                         <div class="alert alert-danger">
                                             {{ session('error') }}
                                         </div>

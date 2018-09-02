@@ -51,4 +51,12 @@ class Glass extends Model
         );
     }
 
+    public function storage()
+    {
+        return $this->hasOne(
+            Storage::class,
+            'glass_id'
+        );
+    }
+
 }

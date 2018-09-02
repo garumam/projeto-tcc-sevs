@@ -7,6 +7,7 @@ use App\Glass;
 use App\Aluminum;
 use App\Component;
 use App\User;
+use App\Storage;
 
 class CarregaItens extends Seeder
 {
@@ -961,6 +962,30 @@ class CarregaItens extends Seeder
             'is_modelo' => 1,
             'categoria_componente_id' => 8
         ]);
+
+        $glassesModel = Glass::where('is_modelo',1)->get();
+        foreach($glassesModel as $glass){
+            Storage::create([
+                'metros_quadrados' => 0,
+                'glass_id' => $glass->id
+            ]);
+        }
+
+        $aluminumsModel = Aluminum::where('is_modelo',1)->get();
+        foreach($aluminumsModel as $aluminum){
+            Storage::create([
+                'qtd' => 0,
+                'aluminum_id' => $aluminum->id
+            ]);
+        }
+
+        $componentsModel = Component::where('is_modelo',1)->get();
+        foreach($componentsModel as $component){
+            Storage::create([
+                'qtd' => 0,
+                'component_id' => $component->id
+            ]);
+        }
 
 
     }

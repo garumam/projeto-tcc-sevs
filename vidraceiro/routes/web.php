@@ -102,6 +102,17 @@ Route::prefix('sales')->group(function () {
     Route::delete('/{id}', 'SaleController@destroy')->name('sales.destroy');
 });
 
+//rotas de estoque
+Route::prefix('storage')->group(function () {
+    Route::get('/', 'StorageController@index')->name('storage.index');
+    Route::get('/create', 'StorageController@create')->name('storage.create');
+    Route::post('/', 'StorageController@store')->name('storage.store');
+    Route::get('/{user}', 'StorageController@show')->name('storage.show');
+    Route::get('/{id}/edit', 'StorageController@edit')->name('storage.edit');
+    Route::patch('/{tab}', 'StorageController@update')->name('storage.update');
+    Route::delete('/{id}', 'StorageController@destroy')->name('storage.destroy');
+});
+
 //rotas das ordens de serviço
 Route::prefix('orders')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index');

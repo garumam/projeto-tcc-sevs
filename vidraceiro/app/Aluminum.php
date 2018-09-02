@@ -50,4 +50,11 @@ class Aluminum extends Model
         );
     }
 
+    public function storage()
+    {
+        return $this->hasOne(
+            Storage::class,
+            'aluminum_id'
+        );
+    }
 }

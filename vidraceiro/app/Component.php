@@ -50,4 +50,12 @@ class Component extends Model
         );
     }
 
+    public function storage()
+    {
+        return $this->hasOne(
+            Storage::class,
+            'component_id'
+        );
+    }
+
 }
