@@ -78,7 +78,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <label for="m2" class="obrigatorio">Qtd m²</label>
+                                <label for="m2" class="obrigatorio">M²</label>
                                 <input type="number" class="form-control" id="m2" name="m2"
                                        placeholder="0" required>
                             </div>
@@ -88,13 +88,9 @@
 
 
                             <div class="form-group col-12">
-                                <div class="topo">
-                                    <h4 class="titulo">{{$titulotabs[0]}}</h4>
-                                </div>
-
                                 <div class="table-responsive text-dark p-2">
                                     @include('layouts.htmltablesearch')
-                                    <table class="table table-hover search-table" style="margin: 6px 0px 6px 0px;">
+                                    <table class="table table-hover search-table" style="margin: 6px 0 6px 0;">
                                         <thead>
                                         <!--INICIO HEAD DO VIDRO-->
                                         <tr class="tabela-vidro">
