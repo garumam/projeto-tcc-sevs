@@ -112,7 +112,8 @@ class BudgetController extends Controller
                         'preco' => $vidro->preco,
                         'product_id' => $product->id,
                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                        'is_modelo' => 0
+                        'is_modelo' => 0,
+                        'mglass_id'=>$vidro->id
                     ]);
 
                 }
@@ -134,7 +135,8 @@ class BudgetController extends Controller
                         'tipo_medida' => $aluminio->tipo_medida,
                         'is_modelo' => 0,
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                        'product_id' => $product->id
+                        'product_id' => $product->id,
+                        'maluminum_id'=>$aluminio->id
 
                     ]);
 
@@ -147,7 +149,8 @@ class BudgetController extends Controller
                         'preco' => $componente->preco,
                         'is_modelo' => 0,
                         'categoria_componente_id' => $componente->categoria_componente_id,
-                        'product_id' => $product->id
+                        'product_id' => $product->id,
+                        'mcomponent_id'=>$componente->id
 
                     ]);
 
@@ -231,7 +234,8 @@ class BudgetController extends Controller
                                     'preco' => $vidro->preco,
                                     'product_id' => $product->id,
                                     'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                    'is_modelo' => 0
+                                    'is_modelo' => 0,
+                                    'mglass_id'=>$vidro->id
                                 ]);
 
                             }
@@ -270,6 +274,7 @@ class BudgetController extends Controller
                                     'is_modelo' => 0,
                                     'product_id' => $product->id,
                                     'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                                    'maluminum_id'=>$aluminio->id
                                 ]);
 
                             }
@@ -299,7 +304,7 @@ class BudgetController extends Controller
                                     'is_modelo' => 0,
                                     'product_id' => $product->id,
                                     'categoria_componente_id' => $componente->categoria_componente_id,
-
+                                    'mcomponent_id'=>$componente->id
                                 ]);
 
                             }
@@ -390,7 +395,8 @@ class BudgetController extends Controller
                         'preco' => $vidro->preco,
                         'product_id' => $product->id,
                         'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                        'is_modelo' => 0
+                        'is_modelo' => 0,
+                        'mglass_id'=>$vidro->id
                     ]);
 
                 }
@@ -413,7 +419,7 @@ class BudgetController extends Controller
                         'is_modelo' => 0,
                         'product_id' => $product->id,
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-
+                        'maluminum_id'=>$aluminio->id
                     ]);
                 }
 
@@ -425,7 +431,7 @@ class BudgetController extends Controller
                         'is_modelo' => 0,
                         'product_id' => $product->id,
                         'categoria_componente_id' => $componente->categoria_componente_id,
-
+                        'mcomponent_id'=>$componente->id
                     ]);
                 }
                 if ($product) {
@@ -491,7 +497,8 @@ class BudgetController extends Controller
                                     'preco' => $vidro->preco,
                                     'categoria_vidro_id' => $vidro->categoria_vidro_id,
                                     'product_id' => $product->id,
-                                    'is_modelo' => 0
+                                    'is_modelo' => 0,
+                                    'mglass_id'=>$vidro->id
                                 ]);
 
                             }
@@ -530,6 +537,7 @@ class BudgetController extends Controller
                                     'is_modelo' => 0,
                                     'product_id' => $product->id,
                                     'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
+                                    'maluminum_id'=>$aluminio->id
                                 ]);
 
                             }
@@ -559,7 +567,7 @@ class BudgetController extends Controller
                                     'is_modelo' => 0,
                                     'product_id' => $product->id,
                                     'categoria_componente_id' => $componente->categoria_componente_id,
-
+                                    'mcomponent_id'=>$componente->id
                                 ]);
 
                             }

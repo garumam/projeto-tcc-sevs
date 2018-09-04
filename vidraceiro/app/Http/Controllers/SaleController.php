@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Installment;
 use App\Payment;
+use App\Storage;
 use Illuminate\Http\Request;
 use App\Sale;
 use App\Client;
@@ -55,7 +56,7 @@ class SaleController extends Controller
         }
 
         $sale = new Sale();
-        $sale = $sale->create($request->except('valor_parcela'));
+        $sale = $sale->create($request->except('valor_parcela','usar_estoque'));
 
         if($request->has('valor_parcela')){
 
@@ -83,10 +84,77 @@ class SaleController extends Controller
             ]);
 
         }
+        $mensagem = '';
+        if($request->usar_estoque != null){
+
+            $mensagem = ', não havia nenhum material em estoque!';
+            foreach($sale->budget->products()->with('glasses','aluminums','components')->get() as $product){
+                foreach($product->glasses as $glass){
+                    $m2 = ceil(($product->largura * $product->altura));
+                    $glassestoque = Storage::where('glass_id',$glass->mglass_id)->first();
+
+                    if($glassestoque->metros_quadrados > 0){
+                        $qtd_reservada = null;
+                        $resto = 0;
+                        if($glassestoque->metros_quadrados < $m2){
+                            $qtd_reservada = $glassestoque->metros_quadrados;
+                        }else{
+                            $qtd_reservada = $m2;
+                            $resto = $glassestoque->metros_quadrados - $m2;
+                        }
+                        $sale->storages()->sync([$glassestoque->id => [ 'qtd_reservada' => $qtd_reservada]],false);
+
+                        $glassestoque->update(['metros_quadrados'=>$resto]);
+                        $mensagem = ', estoque atualizado!';
+
+                    }
+                }
+
+                foreach($product->aluminums as $aluminum){
+                    $aluminumestoque = Storage::where('aluminum_id',$aluminum->maluminum_id)->first();
+                    $qtdreservadavenda = $sale->storages()->where('aluminum_id',$aluminum->maluminum_id)->first();
+
+                    if($aluminumestoque->qtd > 0){
+                        $qtd_reservada = 1;
+                        $resto = $aluminumestoque->qtd - $qtd_reservada;
+
+                        if(!empty($qtdreservadavenda)){
+                            $qtd_reservada += $qtdreservadavenda->pivot->qtd_reservada;
+                        }
+                        $sale->storages()->sync([$aluminumestoque->id => [ 'qtd_reservada' => $qtd_reservada]],false);
+
+                        $aluminumestoque->update(['qtd'=>$resto]);
+                        $mensagem = ', estoque atualizado!';
+
+                    }
+                }
+
+                foreach($product->components as $component){
+                    $componentestoque = Storage::where('component_id',$component->mcomponent_id)->first();
+                    $qtdreservadavenda = $sale->storages()->where('component_id',$component->mcomponent_id)->first();
+
+                    if($componentestoque->qtd > 0){
+                        $qtd_reservada = 1;
+                        $resto = $componentestoque->qtd - $qtd_reservada;
+
+                        if(!empty($qtdreservadavenda)){
+                            $qtd_reservada += $qtdreservadavenda->pivot->qtd_reservada;
+                        }
+                        $sale->storages()->sync([$componentestoque->id => [ 'qtd_reservada' => $qtd_reservada]],false);
+
+                        $componentestoque->update(['qtd'=>$resto]);
+                        $mensagem = ', estoque atualizado!';
+
+                    }
+                }
+            }
+
+        }
+
 
         if ($sale){
             $sale->budget->update(['status'=>'APROVADO']);
-            return redirect()->back()->with('success', 'Venda realizada com sucesso');
+            return redirect()->back()->with('success', 'Venda realizada com sucesso'.$mensagem);
         }
 
     }

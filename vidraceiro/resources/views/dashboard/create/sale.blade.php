@@ -100,6 +100,13 @@
                                value="{{$sale->data_venda or date('Y-m-d', time())}}">
                     </div>
 
+                    @if(empty($sale))
+                        <div class="form-check col-md-12 ml-4">
+                            <input type="checkbox" class="form-check-input" name="usar_estoque" id="usar_estoque">
+                            <label class="form-check-label" for="usar_estoque">Marque se desejar utilizar materiais disponíveis em estoque para esta venda.</label>
+                        </div>
+                    @endif
+
                 </div>
 
                 <div class="form-row" style="height: 100px!important;"></div>

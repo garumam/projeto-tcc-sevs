@@ -31,4 +31,13 @@ class Storage extends Model
             'component_id'
         );
     }
+
+    public function sales(){
+        return $this->belongsToMany(
+            Sale::class,
+            'storage_sale',
+            'estoque_id',
+            'venda_id'
+        )->withPivot('qtd_reservada');
+    }
 }

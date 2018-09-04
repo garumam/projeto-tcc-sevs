@@ -27,6 +27,15 @@ class CreateStoragesTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('storage_sale', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('venda_id')->unsigned();
+            $table->integer('estoque_id')->unsigned();
+            $table->integer('qtd_reservada');
+            $table->foreign('venda_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('estoque_id')->references('id')->on('storages')->onDelete('cascade');
+            $table->timestamps();
+        });
         /*Schema::create('storage_glasses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('metro_quadrado')->default(0);

@@ -19,4 +19,14 @@ class Sale extends Model
     public function payments(){
         return $this->hasMany(Payment::class, 'venda_id');
     }
+
+    public function storages(){
+        return $this->belongsToMany(
+            Storage::class,
+            'storage_sale',
+            'venda_id',
+            'estoque_id'
+        )->withPivot('qtd_reservada');
+    }
+
 }
