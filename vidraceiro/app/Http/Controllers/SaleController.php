@@ -287,9 +287,23 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         if ($sale) {
+            $mensagem = '';
+            if($sale->budget->status === 'APROVADO'){
+                foreach($sale->storages as $storage){
+
+                    $qtdentrada = $storage->pivot->qtd_reservada;
+                    if($storage->qtd !== null){
+                        $storage->update(['qtd'=> ($storage->qtd + $qtdentrada)]);
+                    }elseif($storage->metros_quadrados !== null){
+                        $storage->update(['metros_quadrados'=>($storage->metros_quadrados + $qtdentrada)]);
+                    }
+                    $mensagem = ', materiais em uso retornaram ao estoque!';
+                }
+            }
+
             $sale->budget->update(['status'=>'AGUARDANDO']);
             $sale->delete();
-            return redirect()->back()->with('success', 'Venda deletada com sucesso');
+            return redirect()->back()->with('success', 'Venda deletada com sucesso'.$mensagem);
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar venda');
         }
