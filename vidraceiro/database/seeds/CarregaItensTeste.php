@@ -58,6 +58,22 @@ class CarregaItensTeste extends Seeder
             'nome'=> 'modelo produto1',
         ]);
 
+        Order::create([
+            'data_final' => '2018-08-05',
+            'data_inicial' => '2018-08-03',
+            'nome'=> 'order1',
+            'situacao' => 'ABERTA',
+            'total'=> 998.42
+        ]);
+
+        Order::create([
+            'data_final' => '2018-08-05',
+            'data_inicial' => '2018-04-05',
+            'nome'=> 'order2',
+            'situacao' => 'ANDAMENTO',
+            'total'=> 800.04
+        ]);
+
         Budget::create([
             'status'=> 'APROVADO',
             'bairro'=> 'Centro',
@@ -70,6 +86,7 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Fim do mundo, n° 250',
             'telefone'=> '2212344321',
             'total'=> 800.04,
+            'ordem_id'=> 1,
             'uf' => 'RJ',
             'cliente_id' => '1'
         ]);
@@ -86,6 +103,7 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Goiaba, n° 130',
             'telefone'=> '4565432456',
             'total'=> 198.38,
+            'ordem_id'=> 2,
             'uf' => 'MG',
             'cliente_id' => '2'
         ]);
@@ -101,6 +119,7 @@ class CarregaItensTeste extends Seeder
             'nome'=> 'orçamento3',
             'endereco'=> 'Freeza, n° 80',
             'telefone'=> '8533756283',
+            'total'=> 0,
             'uf' => 'CE'
         ]);
 
@@ -236,27 +255,13 @@ class CarregaItensTeste extends Seeder
         $product = Product::find(3);
         $product->budgets()->attach([2]);
         */
-        Order::create([
-            'data_final' => '2018-08-05',
-            'data_inicial' => '2018-08-03',
-            'nome'=> 'order1',
-            'situacao' => 'aberta',
-            'total'=> 998.42
-        ]);
 
-        Order::create([
-            'data_final' => '2018-08-05',
-            'data_inicial' => '2018-04-05',
-            'nome'=> 'order2',
-            'situacao' => 'concluida',
-            'total'=> 800.04
-        ]);
 
-        $order = Order::find(1);
+        /*$order = Order::find(1);
         $order->budgets()->attach([1,2]);
 
         $order = Order::find(2);
-        $order->budgets()->attach([1]);
+        $order->budgets()->attach([2]);*/
 
         Company::create([
             'bairro'=> 'centro',

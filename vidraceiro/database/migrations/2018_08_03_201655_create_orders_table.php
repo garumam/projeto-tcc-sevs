@@ -23,13 +23,13 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('order_budget', function (Blueprint $table) {
+        /*Schema::create('order_budget', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('ordem_id')->unsigned();
             $table->integer('orcamento_id')->unsigned();
             $table->foreign('ordem_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('orcamento_id')->references('id')->on('budgets')->onDelete('cascade');
-        });
+        });*/
     }
 
     /**

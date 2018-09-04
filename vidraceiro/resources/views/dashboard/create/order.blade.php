@@ -61,13 +61,16 @@
                         <label for="select-situacao" class="obrigatorio">Situação</label>
                         <select id="select-situacao" name="situacao" class="custom-select" required>
                             <option value="" selected>Selecione...</option>
-                            <option value="aberta" @if(!empty($order)) {{ $order->situacao == 'aberta' ? 'selected' : '' }} @endif>
+                            <option value="ABERTA" @if(!empty($order)) {{ $order->situacao == 'ABERTA' ? 'selected' : '' }} @endif>
                                 Aberta
                             </option>
-                            <option value="concluida" @if(!empty($order)) {{ $order->situacao == 'concluida' ? 'selected' : '' }} @endif>
+                            <option value="ANDAMENTO" @if(!empty($order)) {{ $order->situacao == 'ANDAMENTO' ? 'selected' : '' }} @endif>
+                                Em andamento
+                            </option>
+                            <option value="CONCLUIDA" @if(!empty($order)) {{ $order->situacao == 'CONCLUIDA' ? 'selected' : '' }} @endif>
                                 Concluída
                             </option>
-                            <option value="cancelada" @if(!empty($order)) {{ $order->situacao == 'cancelada' ? 'selected' : '' }} @endif>
+                            <option value="CANCELADA" @if(!empty($order)) {{ $order->situacao == 'CANCELADA' ? 'selected' : '' }} @endif>
                                 Cancelada
                             </option>
                         </select>

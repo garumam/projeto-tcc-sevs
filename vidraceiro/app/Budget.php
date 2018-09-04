@@ -16,13 +16,16 @@ class Budget extends Model
         );
     }
 
-    public function orders(){
+    /*public function orders(){
         return $this->belongsToMany(
             Order::class,
             'order_budget',
             'orcamento_id',
             'ordem_id'
         );
+    }*/
+    public function order(){
+        return $this->belongsTo(Order::class,'ordem_id');
     }
 
     public function client(){
