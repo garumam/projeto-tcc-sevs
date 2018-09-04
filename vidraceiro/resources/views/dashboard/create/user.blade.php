@@ -10,7 +10,7 @@
                         type="button">{{empty($user) ? 'Adicionar': 'Atualizar'}}</button>
             </div>
 
-            <form id="formulario-create-user" class="formulario" method="POST" role="form"
+            <form id="formulario-create-user" class="formulario" method="POST" role="form" enctype="multipart/form-data"
                   action="{{ Request::is('users/*/edit') ? route('users.update',['id'=> $user->id]) : route('users.store') }}">
                 @if(Request::is('users/*/edit'))
                     <input type="hidden" name="_method" value="PATCH">
@@ -47,6 +47,11 @@
                         <label for="password" class="obrigatorio">Password</label>
                         <input type="password" class="form-control" id="password" name="password"
                                placeholder="Password" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="image" class="obrigatorio">Selecione uma Imagem</label>
+                        <img id="image-user" class="img-thumbnail img-fluid w-50 mb-2" src="{{asset('img/semimagem.png')}}">
+                        <input type="file" class="form-control" id="image" name="image" required>
                     </div>
 
                 </div>
