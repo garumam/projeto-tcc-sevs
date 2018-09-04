@@ -33,15 +33,18 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validado);
         }
         $user = new User;
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = $request->file('image');
-            $destino = 'img/users';
+            $destino = 'img/users/';
             $image->move($destino, $image->getClientOriginalName());
-            $user->name = $request->get('name');
-            $user->email = $request->get('email');
-            $user->password = $request->get('password');
-            $user->image = $destino . '/' . $image->getClientOriginalName();
-            $user->save();
+//            $user->name = $request->get('name');
+//            $user->email = $request->get('email');
+//            $user->password = $request->get('password');
+//            $user->image = $destino . $image->getClientOriginalName();
+//            $user->save();
+            $resq = $request->except('image');
+            $resq['image'] = $destino . $image->getClientOriginalName();
+            $user = $user->create($resq);
         } else {
             $user = $user->create($request->except('image'));
         }
@@ -69,7 +72,14 @@ class UserController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $user->update($request->except(['_token']));
+        $resq = $request->except(['_token', 'image']);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $destino = 'img/users/';
+            $image->move($destino, $image->getClientOriginalName());
+            $resq['image'] = $destino . $image->getClientOriginalName();
+        }
+        $user->update($resq);
         if ($user)
             return redirect()->back()->with('success', 'Usuario atualizado com sucesso');
 
