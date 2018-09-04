@@ -2,41 +2,40 @@ $(document).ready(function () {
 
     $('#opensubmenu ul li').each(function () {
         let ativo = $(this).attr("class");
-        if (ativo === "active"){
-            $('#opensubmenu').css('height',"auto");
+        if (ativo === "active") {
+            $('#opensubmenu').css('height', "auto");
             $('.submenu').slideToggle("slow");
         }
     });
     $('#opensubmenu a').click(function () {
-        $('#opensubmenu').css('height',"auto");
+        $('#opensubmenu').css('height', "auto");
         $('.submenu').slideToggle("slow");
     });
 
 
-
     //Adicionar procura nas tabelas e modificando mensagens
-    $('.search-table').each(function(){
+    $('.search-table').each(function () {
         $('#htmlqtditens_search').remove();
         $('#htmlqtditens_pagination').remove();
         $(this).DataTable({
             language: {
                 search: "Procurar:",
-                lengthMenu:    "Mostrar _MENU_ itens",
-                info:           "",
-                infoEmpty:      "",
-                infoFiltered:   "",
-                infoPostFix:    "",
+                lengthMenu: "Mostrar _MENU_ itens",
+                info: "",
+                infoEmpty: "",
+                infoFiltered: "",
+                infoPostFix: "",
                 loadingRecords: "Chargement en cours...",
-                zeroRecords:    "Nenhum item encontrado com esses termos!",
-                emptyTable:     "Nenhum item cadastrado!",
+                zeroRecords: "Nenhum item encontrado com esses termos!",
+                emptyTable: "Nenhum item cadastrado!",
                 paginate: {
-                    first:      "Primeira",
-                    previous:   "Anterior",
-                    next:       "Próxima",
-                    last:       "Última"
+                    first: "Primeira",
+                    previous: "Anterior",
+                    next: "Próxima",
+                    last: "Última"
                 },
                 aria: {
-                    sortAscending:  "",
+                    sortAscending: "",
                     sortDescending: ""
                 }
             }
@@ -164,9 +163,9 @@ $(document).ready(function () {
 
     $('#bt-client-visible').click(function () {
 
-        if($('#nome').val().length !== 0
+        if ($('#nome').val().length !== 0
             && $('#cep').val().length === 9
-            && ($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)){
+            && ($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)) {
             $('#cep').unmask();
             $('#cpf').unmask();
             $('#cnpj').unmask();
@@ -174,24 +173,23 @@ $(document).ready(function () {
             $('#celular').unmask();
 
             $('#bt-client-invisible').click();
-        }else{
-            if(($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)){
+        } else {
+            if (($('#cpf').val().length === 14 || $('#cnpj').val().length === 18)) {
                 $('#bt-client-invisible').click();
-            }else{
-                $('#erro-js').attr('class','alert alert-danger');
+            } else {
+                $('#erro-js').attr('class', 'alert alert-danger');
                 $('#erro-js').text('Documento fornecido é inválido');
             }
         }
 
 
-
     });
 
     $('#bt-sale-visible').click(function () {
-        if($('#select-orcamento-venda').val() !== ''){
+        if ($('#select-orcamento-venda').val() !== '') {
             $('#bt-sale-invisible').click();
-        }else{
-            $('#erro-js').attr('class','alert alert-danger');
+        } else {
+            $('#erro-js').attr('class', 'alert alert-danger');
             $('#erro-js').text('Selecione um orçamento');
         }
 
@@ -243,7 +241,7 @@ $(document).ready(function () {
         switch (true) {
             case $('#nav-Orçamento-tab').hasClass('active'):
 
-                if($('#nome').val().length !== 0 && $('#cep').val().length === 9){
+                if ($('#nome').val().length !== 0 && $('#cep').val().length === 9) {
                     $('#cep').unmask();
                     $('#telefone').unmask();
                 }
@@ -292,9 +290,8 @@ $(document).ready(function () {
 
 
     $('#bt-provider-visible').click(function () {
-        if($('#nome').val().length !== 0)
-        {
-            if($('#cep').val().length === 9){
+        if ($('#nome').val().length !== 0) {
+            if ($('#cep').val().length === 9) {
                 $('#cep').unmask();
                 $('#telefone').unmask();
                 $('#cnpj').unmask();
@@ -308,13 +305,13 @@ $(document).ready(function () {
     });
 
     $('#bt-company-visible').click(function () {
-        if($('#nome').val().length !== 0
+        if ($('#nome').val().length !== 0
             && $('#endereco').val().length !== 0
             && $('#cidade').val().length !== 0
             && $('#bairro').val().length !== 0
             && $('#uf').val().length !== 0
             && $('#email').val().length !== 0
-            && $('#telefone').val().length !== 0){
+            && $('#telefone').val().length !== 0) {
 
             $('#cep').unmask();
             $('#telefone').unmask();
@@ -450,14 +447,14 @@ $(document).ready(function () {
                     let medida = selectaluminio.find('option:selected').data('medida');
                     let peso = selectaluminio.find('option:selected').data('peso');
                     let produto = $('#select-produto-material option:selected');
-                    if(produto.data('largura') !== undefined){
+                    if (produto.data('largura') !== undefined) {
                         //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO DOS ALUMINIOS
                         let tipo_medida = selectaluminio.find('option:selected').data('tipomedida');
                         let largura = produto.data('largura');
                         let altura = produto.data('altura');
-                        let aluminioMedida = tipo_medida === 'largura'?largura :
-                            ( tipo_medida === 'altura'? altura : medida ) ;
-                        let aluminioPeso = (peso/medida)* aluminioMedida;
+                        let aluminioMedida = tipo_medida === 'largura' ? largura :
+                            (tipo_medida === 'altura' ? altura : medida);
+                        let aluminioPeso = (peso / medida) * aluminioMedida;
                         aluminioPeso = parseFloat(aluminioPeso).toFixed(3);
                         medida = aluminioMedida;
                         peso = aluminioPeso;
@@ -604,7 +601,7 @@ $(document).ready(function () {
 
     });
 
-    $('#nav-Vidros-tab').on('click', function(){
+    $('#nav-Vidros-tab').on('click', function () {
 
         $('#select_componente_chosen').hide();
         $('#select_aluminio_chosen').hide();
@@ -612,7 +609,7 @@ $(document).ready(function () {
 
     });
 
-    $('#nav-Aluminios-tab').on('click', function(){
+    $('#nav-Aluminios-tab').on('click', function () {
 
 
         $('#select_vidro_chosen').hide();
@@ -621,7 +618,7 @@ $(document).ready(function () {
 
     });
 
-    $('#nav-Componentes-tab').on('click', function(){
+    $('#nav-Componentes-tab').on('click', function () {
 
         $('#select_vidro_chosen').hide();
         $('#select_aluminio_chosen').hide();
@@ -769,17 +766,17 @@ $(document).ready(function () {
     });
 
     $('#opcao-pdf').change(function (e) {
-        $('#opcao').prop('selectedIndex',0);
+        $('#opcao').prop('selectedIndex', 0);
 
         let opcaoselecionada = $('#opcao-pdf option:selected');
 
-        if(opcaoselecionada.val() == 'orcamento'){
+        if (opcaoselecionada.val() == 'orcamento') {
 
             $('.orcamento-select-pdf').show();
             $('.ordem-select-pdf').hide();
             $('#opcao').attr('name', 'idorcamento');
 
-        }else{
+        } else {
 
             $('.ordem-select-pdf').show();
             $('.orcamento-select-pdf').hide();
@@ -797,28 +794,28 @@ $(document).ready(function () {
         $('#bairro').val(clienteselecionado.data('bairro'));
         $('#cidade').val(clienteselecionado.data('cidade'));
         $('#complemento').val(clienteselecionado.data('complemento'));
-        let cep =  $('#cep');
+        let cep = $('#cep');
         cep.val(cep.masked(clienteselecionado.data('cep')));
         let tel = $('#telefone');
         tel.val(tel.masked(clienteselecionado.data('telefone')));
-        $('#select-UF').prop('selectedIndex',$("#select-UF option[value=" + clienteselecionado.data('uf') + "]").index());
+        $('#select-UF').prop('selectedIndex', $("#select-UF option[value=" + clienteselecionado.data('uf') + "]").index());
 
     });
 
     $('#select-documento').change(function (e) {
         let documentoselecionado = $('#select-documento option:selected');
-        if(documentoselecionado.val() === 'cpf'){
+        if (documentoselecionado.val() === 'cpf') {
             $('#doc-cpf-input').show();
-            $('#cpf').attr({ required: true , name: 'cpf' });
+            $('#cpf').attr({required: true, name: 'cpf'});
             $('#doc-cnpj-input').hide();
-            $('#cnpj').attr({ required: false , name: ''}).val('');
+            $('#cnpj').attr({required: false, name: ''}).val('');
 
-        }else if(documentoselecionado.val() === 'cnpj'){
+        } else if (documentoselecionado.val() === 'cnpj') {
             $('#doc-cpf-input').hide();
-            $('#cpf').attr({ required: false , name: '' }).val('');
+            $('#cpf').attr({required: false, name: ''}).val('');
             $('#doc-cnpj-input').show();
-            $('#cnpj').attr({ required: true , name: 'cnpj'});
-        }else{
+            $('#cnpj').attr({required: true, name: 'cnpj'});
+        } else {
             $('#doc-cpf-input').hide();
             $('#doc-cnpj-input').hide();
             alert('Problema inesperado reinicie a página!');
@@ -831,10 +828,10 @@ $(document).ready(function () {
         $('#select-tipo-pagamento').val('A VISTA').trigger('change');
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
 
-        if(orcamentoselecionado.val() === '') {
+        if (orcamentoselecionado.val() === '') {
             $('#total').val('');
             $('#valor_parc').val('');
-        }else{
+        } else {
             $('#total').val(orcamentoselecionado.data('total'));
         }
 
@@ -845,33 +842,33 @@ $(document).ready(function () {
 
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
 
-        if(!orcamentoselecionado.data('cliente') && orcamentoselecionado.val() !== '' && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO'){
-            $('#erro-js').attr('class','alert alert-danger')
+        if (!orcamentoselecionado.data('cliente') && orcamentoselecionado.val() !== '' && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO') {
+            $('#erro-js').attr('class', 'alert alert-danger')
                 .text('Selecione um orçamento com cliente cadastrado para liberar o pagamento a prazo!');
             $('#select-tipo-pagamento').val('A VISTA');
         }
 
         let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
-        if(tipopagamentoselecionado.val() === 'A VISTA'){
+        if (tipopagamentoselecionado.val() === 'A VISTA') {
 
             $('#qtd_parcelas').hide();
             $('#valor_parcela').hide();
-            $('#valor_parc').attr('name','').val('');
-            $('#qtd_parc').attr('name','');
+            $('#valor_parc').attr('name', '').val('');
+            $('#qtd_parc').attr('name', '');
 
-        }else if(tipopagamentoselecionado.val() === 'A PRAZO'){
+        } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
 
             $('#qtd_parcelas').show();
             $('#valor_parcela').show();
-            $('#valor_parc').attr('name','valor_parcela');
-            $('#qtd_parc').attr('name','qtd_parcelas');
-            if(orcamentoselecionado.val() !== '' && $('#qtd_parc').val() !== ''){
-                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total')/$('#qtd_parc').val()).toFixed(2));
+            $('#valor_parc').attr('name', 'valor_parcela');
+            $('#qtd_parc').attr('name', 'qtd_parcelas');
+            if (orcamentoselecionado.val() !== '' && $('#qtd_parc').val() !== '') {
+                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total') / $('#qtd_parc').val()).toFixed(2));
             }
 
 
-        }else{
+        } else {
             alert('Problema inesperado reinicie a página!');
         }
 
@@ -879,8 +876,8 @@ $(document).ready(function () {
 
     $('#qtd_parc').change(function (e) {
 
-        if($(this).val !== '' && $('#total').val() !== ''){
-            $('#valor_parc').val(parseFloat($('#total').val()/$(this).val()).toFixed(2));
+        if ($(this).val !== '' && $('#total').val() !== '') {
+            $('#valor_parc').val(parseFloat($('#total').val() / $(this).val()).toFixed(2));
         }
 
     });
@@ -957,5 +954,14 @@ $(document).ready(function () {
     //Deixando novos selects do plugin chosen invisíveis
     $('#select_aluminio_chosen').hide();
     $('#select_componente_chosen').hide();
+
+    $('#image').on('change', function () {
+        var reader = new FileReader();
+        reader.readAsDataURL($(this).prop('files')[0]);
+        reader.onload = function (event) {
+            $('#image-user').attr('src', event.target.result);
+        }
+    });
+
 
 });
