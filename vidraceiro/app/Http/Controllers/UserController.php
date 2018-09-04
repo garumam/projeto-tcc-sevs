@@ -33,7 +33,18 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validado);
         }
         $user = new User;
-        $user = $user->create($request->all());
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $destino = 'img/users';
+            $image->move($destino, $image->getClientOriginalName());
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password');
+            $user->image = $destino . '/' . $image->getClientOriginalName();
+            $user->save();
+        } else {
+            $user = $user->create($request->except('image'));
+        }
         if ($user)
             return redirect()->back()->with('success', 'Usuario criado com sucesso');
 
@@ -89,6 +100,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         return $validator;
@@ -100,6 +112,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|',
             'password' => 'required|string|min:6',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         return $validator;

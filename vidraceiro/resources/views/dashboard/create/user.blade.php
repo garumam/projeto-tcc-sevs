@@ -51,7 +51,7 @@
                     <div class="form-group col-md-4">
                         <label for="image" class="obrigatorio">Selecione uma Imagem</label>
                         <img id="image-user" class="img-thumbnail img-fluid w-50 mb-2" src="{{asset('img/semimagem.png')}}">
-                        <input type="file" class="form-control" id="image" name="image" required>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
 
                 </div>
