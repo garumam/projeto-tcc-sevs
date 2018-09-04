@@ -48,9 +48,11 @@
                             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
                             <td>R${{$order->total}}</td>
                             <td>
+                                @if(!($order->situacao === 'CONCLUIDA') && !($order->situacao === 'CANCELADA'))
                                 <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
+                                @endif
                                 <a class="btn-link" onclick="deletar(this.id,'orders')" id="{{$order->id}}">
                                     <button class="btn btn-danger mb-1">Deletar</button>
                                 </a>

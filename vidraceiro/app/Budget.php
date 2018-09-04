@@ -33,6 +33,6 @@ class Budget extends Model
     }
 
     public function sale(){
-        return $this->belongsTo(Sale::class, 'orcamento_id');
+        return $this->hasOne(Sale::class, 'orcamento_id');
     }
 }

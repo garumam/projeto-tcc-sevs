@@ -80,13 +80,31 @@
                                     @endforeach
                                     <td>{{$valorpago}}</td>
                                     <td>
-                                        <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
-                                            <button class="btn btn-warning mb-1">Editar</button>
-                                        </a>
-                                        <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
-                                            <button class="btn btn-danger mb-1">Deletar</button>
-                                        </a>
 
+                                        @if($sale->budget->ordem_id !== null)
+
+                                            @if($sale->budget->order()->first()->situacao !== 'ANDAMENTO')
+                                                @if($sale->budget->status !== 'FINALIZADO')
+                                                <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
+                                                    <button class="btn btn-warning mb-1">Editar</button>
+                                                </a>
+                                                @endif
+                                                <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
+                                                    <button class="btn btn-danger mb-1">Deletar</button>
+                                                </a>
+                                            @else
+                                                <b>Ordem de serviço em andamento!</b>
+                                            @endif
+                                        @else
+                                            @if($sale->budget->status !== 'FINALIZADO')
+                                                <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
+                                                    <button class="btn btn-warning mb-1">Editar</button>
+                                                </a>
+                                            @endif
+                                            <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
+                                                <button class="btn btn-danger mb-1">Deletar</button>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

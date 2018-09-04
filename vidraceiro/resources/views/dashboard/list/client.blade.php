@@ -46,12 +46,36 @@
                             <td>{{$client->cpf or $client->cnpj}}</td>
                             <td class="telefone">{{$client->telefone}}</td>
                             <td>
+
                                 <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
-                                <a class="btn-link" onclick="deletar(this.id,'clients')" id="{{ $client->id }}">
-                                    <button class="btn btn-danger mb-1">Deletar</button>
-                                </a>
+                                @if(!empty($client->budgets()))
+                                    @php $emandamento = $devendo = false; @endphp
+                                    @foreach($client->budgets as $budget)
+                                        @if($budget->order()->first()->situacao === 'ANDAMENTO')
+                                            @php $emandamento = true; @endphp
+                                            @break
+                                        @endif
+                                        @php $sale = $budget->sale()->first(); @endphp
+                                        @if(!empty($sale))
+
+                                            @if(!empty($sale->installments()->where('status_parcela','ABERTO')->first()))
+                                                @php $devendo = true; @endphp
+                                                @break
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                    @if(!$emandamento && !$devendo)
+                                        <a class="btn-link" onclick="deletar(this.id,'clients')" id="{{ $client->id }}">
+                                            <button class="btn btn-danger mb-1">Deletar</button>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a class="btn-link" onclick="deletar(this.id,'clients')" id="{{ $client->id }}">
+                                        <button class="btn btn-danger mb-1">Deletar</button>
+                                    </a>
+                                @endif
 
                             </td>
                         </tr>
@@ -60,7 +84,7 @@
                 </table>
 
                 @include('layouts.htmlpaginationtable')
-
+                <p class="obrigatorio">Não é possível deletar clientes que estão com ordem de serviço em andando ou devendo!</p>
             </div>
         </div>
     </div>

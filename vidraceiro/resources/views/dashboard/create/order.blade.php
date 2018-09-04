@@ -70,9 +70,11 @@
                             <option value="CONCLUIDA" @if(!empty($order)) {{ $order->situacao == 'CONCLUIDA' ? 'selected' : '' }} @endif>
                                 Concluída
                             </option>
+                            @if(!empty($order))
                             <option value="CANCELADA" @if(!empty($order)) {{ $order->situacao == 'CANCELADA' ? 'selected' : '' }} @endif>
                                 Cancelada
                             </option>
+                            @endif
                         </select>
                     </div>
 

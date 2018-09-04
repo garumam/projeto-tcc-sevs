@@ -63,7 +63,7 @@ class CarregaItensTeste extends Seeder
             'data_inicial' => '2018-08-03',
             'nome'=> 'order1',
             'situacao' => 'ABERTA',
-            'total'=> 998.42
+            'total'=> 800.04
         ]);
 
         Order::create([
@@ -71,7 +71,7 @@ class CarregaItensTeste extends Seeder
             'data_inicial' => '2018-04-05',
             'nome'=> 'order2',
             'situacao' => 'ANDAMENTO',
-            'total'=> 800.04
+            'total'=> 198.38
         ]);
 
         Budget::create([

@@ -37,8 +37,12 @@ class OrderController extends Controller
         $budgets = Budget::wherein('id',$request->id_orcamento)->get();
 
         if ($order) {
+            $alterastatus = [];
+            if($request->situacao === 'CONCLUIDA'){
+                $alterastatus = ['status' => 'FINALIZADO'];
+            }
             foreach($budgets as $budget){
-                $budget->update(['ordem_id'=>$order->id]);
+                $budget->update(array_merge(['ordem_id'=>$order->id],$alterastatus));
             }
             return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
         }
@@ -79,8 +83,17 @@ class OrderController extends Controller
         if ($order) {
             $order->update($request->except('id_orcamento', '_token'));
             if ($order) {
+                $alterastatus = [];
+                $ordemid = $order->id;
+                if($request->situacao === 'CONCLUIDA'){
+                    $alterastatus = ['status' => 'FINALIZADO'];
+                }elseif($request->situacao === 'CANCELADA'){
+                    $alterastatus = ['status' => 'APROVADO'];
+                    $ordemid = null;
+                }
+
                 foreach($budgets as $budget){
-                    $budget->update(['ordem_id'=>$order->id]);
+                    $budget->update(array_merge(['ordem_id'=>$ordemid],$alterastatus));
                 }
                 return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
             }
