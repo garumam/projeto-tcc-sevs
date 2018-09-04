@@ -53,9 +53,12 @@
                                 @if(!empty($client->budgets()))
                                     @php $emandamento = $devendo = false; @endphp
                                     @foreach($client->budgets as $budget)
-                                        @if($budget->order()->first()->situacao === 'ANDAMENTO')
-                                            @php $emandamento = true; @endphp
-                                            @break
+                                        @php $ordem= $budget->order()->first(); @endphp
+                                        @if(!empty($ordem))
+                                            @if($budget->order()->first()->situacao === 'ANDAMENTO')
+                                                @php $emandamento = true; @endphp
+                                                @break
+                                            @endif
                                         @endif
                                         @php $sale = $budget->sale()->first(); @endphp
                                         @if(!empty($sale))
@@ -84,7 +87,7 @@
                 </table>
 
                 @include('layouts.htmlpaginationtable')
-                <p class="obrigatorio">Não é possível deletar clientes que estão com ordem de serviço em andando ou devendo!</p>
+                <p class="info-importante">Não é possível deletar clientes que estão com ordem de serviço em andando ou devendo!</p>
             </div>
         </div>
     </div>

@@ -506,6 +506,11 @@ td {
     color: red;
 }
 
+.info-importante:before {
+    content:" *";
+    color: red;
+}
+
 footer {
     bottom: 0;
     right: 0;

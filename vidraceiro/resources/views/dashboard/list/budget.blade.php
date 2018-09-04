@@ -80,7 +80,7 @@
                 </table>
 
                 @include('layouts.htmlpaginationtable')
-
+                <p class="info-importante">Não é possível deletar orçamentos que estão com ordem de serviço em andando!</p>
             </div>
         </div>
     </div>
