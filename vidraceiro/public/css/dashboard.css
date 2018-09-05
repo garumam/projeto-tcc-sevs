@@ -188,6 +188,12 @@ body {
     font-weight: 600;
 }
 
+.imagem-usuario{
+    width: 58px;
+    height: 60px;
+    margin-right: 1rem;
+}
+
 /* fim navbar */
 
 /* sidebar */
