@@ -179,6 +179,9 @@ body {
     padding-right: .5rem;
     padding-left: .5rem;
 }
+.navbar-expand-md .navbar-nav{
+    justify-content: flex-end;
+}
 
 .navbar-brand {
     margin-right: 0 !important;

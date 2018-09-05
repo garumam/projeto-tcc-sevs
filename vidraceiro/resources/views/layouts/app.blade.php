@@ -147,6 +147,7 @@
                     <a class="navbar-brand" href="{{ Request::url() }}">{{ $title }}</a>
                     <div class="collapse navbar-collapse" id="navbarsExample0233">
                         <ul class="navbar-nav ml-auto">
+                            <img width="5%;" src="{{ asset(Auth::user()->image ?? 'img/semimagem.png') }}" class="rounded-circle">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle minhaconta" href="https://example.com"
                                    id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -957,10 +957,17 @@ $(document).ready(function () {
 
     $('#image').on('change', function () {
         var reader = new FileReader();
-        reader.readAsDataURL($(this).prop('files')[0]);
-        reader.onload = function (event) {
-            $('#image-user').attr('src', event.target.result);
+        if ($(this).prop('files')[0].size > 7244183) {
+            $('#formAlert').append("<div class='alert alert-danger'>Tamanho do arquivo muito grande</div>");
+            $(this).val("");
+        } else {
+            $('#formAlert').html("");
+            reader.readAsDataURL($(this).prop('files')[0]);
+            reader.onload = function (event) {
+                $('#image-user').attr('src', event.target.result);
+            }
         }
+
     });
 
 
