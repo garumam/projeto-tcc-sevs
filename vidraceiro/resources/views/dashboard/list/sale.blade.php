@@ -81,7 +81,38 @@
                                     <td>{{$valorpago}}</td>
                                     <td>
 
-                                        @if($sale->budget->ordem_id !== null)
+                                        @php
+                                            $ordem = $sale->budget->order()->first();
+                                            $parcela = $sale->installments()->where('status_parcela','ABERTO')->first();
+                                            $editar = $deletar = true;
+                                        @endphp
+                                        @if(!empty($ordem))
+                                            @if($ordem->situacao === 'ANDAMENTO')
+                                                @php $editar = $deletar = false; @endphp
+                                            @endif
+                                        @endif
+
+                                        @if(!empty($parcela))
+                                            @php $editar = $deletar = false; @endphp
+                                        @endif
+
+                                        @if($sale->budget->status === 'FINALIZADO')
+                                            @php $editar = false; @endphp
+                                        @endif
+
+                                        @if($editar)
+                                            <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
+                                                <button class="btn btn-warning mb-1">Editar</button>
+                                            </a>
+                                        @endif
+                                        @if($deletar)
+                                            <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
+                                                <button class="btn btn-danger mb-1">Deletar</button>
+                                            </a>
+                                        @endif
+
+
+                                        {{--@if($sale->budget->ordem_id !== null)
 
                                             @if($sale->budget->order()->first()->situacao !== 'ANDAMENTO')
                                                 @if($sale->budget->status !== 'FINALIZADO')
@@ -104,7 +135,8 @@
                                             <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
                                                 <button class="btn btn-danger mb-1">Deletar</button>
                                             </a>
-                                        @endif
+                                        @endif--}}
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -112,7 +144,8 @@
                         </table>
 
                         @include('layouts.htmlpaginationtable')
-
+                        <p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem serviço em andando ou que está com pagamento pendente!</p>
+                        <p class="info-importante">Não é possível editar venda relacionada a orçamento finalizado!</p>
                     </div>
 
                 </div>

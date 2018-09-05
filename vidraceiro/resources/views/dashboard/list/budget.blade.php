@@ -47,7 +47,40 @@
                             <td>{{$budget->status}}</td>
                             <td>
 
-                                @if($budget->ordem_id !== null)
+
+                                @php
+                                    $ordem = $budget->order()->first();
+                                    $sale = $budget->sale()->first();
+                                    $parcela = $sale === null? $sale : $sale->installments()->where('status_parcela','ABERTO')->first();
+                                    $editar = $deletar = true;
+                                @endphp
+
+                                @if(!empty($ordem))
+                                    @if($ordem->situacao === 'ANDAMENTO')
+                                        @php $editar = $deletar = false; @endphp
+                                    @endif
+                                @endif
+
+                                @if(!empty($parcela))
+                                    @php $editar = $deletar = false; @endphp
+                                @endif
+
+                                @if($budget->status === 'FINALIZADO')
+                                    @php $editar = false; @endphp
+                                @endif
+
+                                @if($editar)
+                                    <a class="btn-link" href="{{ route('budgets.edit',['id'=> $budget->id]) }}">
+                                        <button class="btn btn-warning mb-1">Editar</button>
+                                    </a>
+                                @endif
+                                @if($deletar)
+                                    <a class="btn-link" onclick="deletar(this.id,'budgets/budget')" id="{{ $budget->id }}">
+                                        <button class="btn btn-danger mb-1">Deletar</button>
+                                    </a>
+                                @endif
+
+                                {{--@if($budget->ordem_id !== null)
 
                                     @if($budget->order()->first()->situacao !== 'ANDAMENTO')
                                         @if($budget->status === 'AGUARDANDO')
@@ -70,7 +103,7 @@
                                     <a class="btn-link" onclick="deletar(this.id,'budgets/budget')" id="{{ $budget->id }}">
                                         <button class="btn btn-danger mb-1">Deletar</button>
                                     </a>
-                                @endif
+                                @endif--}}
 
 
                             </td>
@@ -80,7 +113,8 @@
                 </table>
 
                 @include('layouts.htmlpaginationtable')
-                <p class="info-importante">Não é possível deletar orçamentos que estão com ordem de serviço em andando!</p>
+                <p class="info-importante">Não é possível deletar ou editar orçamento relacionado a ordem serviço em andando ou que está com pagamento pendente!</p>
+                <p class="info-importante">Não é possível editar orçamento finalizado!</p>
             </div>
         </div>
     </div>

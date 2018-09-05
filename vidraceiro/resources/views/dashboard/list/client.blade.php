@@ -47,10 +47,42 @@
                             <td class="telefone">{{$client->telefone}}</td>
                             <td>
 
+
+                                @php
+                                    $editar = $deletar = true;
+                                    $ordem = null;
+                                    foreach($client->budgets as $budget){
+                                        $ordem = $budget->order()->first();
+                                        if(!empty($ordem)){
+
+                                            if($ordem->situacao === 'ANDAMENTO'){
+                                                $deletar = false;
+                                                break;
+                                            }
+
+                                        }
+                                        $sale = $budget->sale()->first();
+                                        $parcela = $sale === null? $sale : $sale->installments()->where('status_parcela','ABERTO')->first();
+                                        if(!empty($parcela)){
+                                            $deletar = false;
+                                            break;
+                                        }
+                                    }
+
+                                @endphp
+
+
                                 <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
                                 </a>
-                                @if(!empty($client->budgets()))
+
+                                @if($deletar)
+                                    <a class="btn-link" onclick="deletar(this.id,'clients')" id="{{ $client->id }}">
+                                        <button class="btn btn-danger mb-1">Deletar</button>
+                                    </a>
+                                @endif
+
+                                {{--@if(!empty($client->budgets()))
                                     @php $emandamento = $devendo = false; @endphp
                                     @foreach($client->budgets as $budget)
                                         @php $ordem= $budget->order()->first(); @endphp
@@ -78,7 +110,7 @@
                                     <a class="btn-link" onclick="deletar(this.id,'clients')" id="{{ $client->id }}">
                                         <button class="btn btn-danger mb-1">Deletar</button>
                                     </a>
-                                @endif
+                                @endif--}}
 
                             </td>
                         </tr>
@@ -87,7 +119,7 @@
                 </table>
 
                 @include('layouts.htmlpaginationtable')
-                <p class="info-importante">Não é possível deletar clientes que estão com ordem de serviço em andando ou devendo!</p>
+                <p class="info-importante">Não é possível deletar cliente relacionado a ordem serviço em andando ou que está com pagamento pendente!</p>
             </div>
         </div>
     </div>
