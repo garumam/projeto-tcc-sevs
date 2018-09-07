@@ -42,7 +42,7 @@
                             <th scope="row">{{ $provider->id }}</th>
                             <td>{{ $provider->nome }}</td>
                             <td>{{ $provider->email }}</td>
-                            <td>{{ ucfirst($provider->situacao) }}</td>
+                            <td><span class="badge {{$provider->situacao == "ativo" ? 'badge-success' : 'badge-secondary'}}">{{ ucfirst($provider->situacao) }}</span></td>
                             <td>
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
                                     <button class="btn btn-warning mb-1">Editar</button>
