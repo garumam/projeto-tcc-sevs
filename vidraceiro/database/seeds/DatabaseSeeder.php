@@ -23,5 +23,55 @@ class DatabaseSeeder extends Seeder
         // gerada + 3
         factory(App\Product::class, 30)->create();
         factory(App\Glass::class, 30)->create();
+        factory(App\Aluminum::class, 50)->create();
+        factory(App\Component::class, 50)->create();
+        $this->atualizaTotal();
+
+    }
+
+    public function atualizaTotal()
+    {
+
+        $budgets = App\Budget::with('products')->get();
+
+        foreach ($budgets as $budgetcriado){
+
+
+            $productsids = array();
+            foreach ($budgetcriado->products as $product) {
+                $productsids[] = $product->id;
+            }
+            $products = App\Product::with('glasses', 'aluminums', 'components')->wherein('id', $productsids)->get();
+
+            $valorTotalDeProdutos = 0.0;
+            foreach ($products as $product) {
+                $resultVidro = 0.0;
+                $m2 = $product['altura'] * $product['largura'] * $product['qtd'];
+                $resultVidro += $m2 * $product->glasses()->sum('preco');
+
+                $resultAluminio = 0.0;
+                foreach ($product->aluminums()->get() as $aluminum) {
+                    //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
+                    $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
+                }
+
+                $resultComponente = 0.0;
+                foreach ($product->components()->get() as $component) {
+                    $resultComponente += $component['preco'] * $component['qtd'];
+                }
+
+                $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);
+
+            }
+
+            $valorTotalDeProdutos *= (1 + $budgetcriado['margem_lucro'] / 100);
+
+            $valorTotalDeProdutos = number_format($valorTotalDeProdutos, 2, '.', '');
+
+            $budgetcriado->update(['total' => $valorTotalDeProdutos]);
+
+
+        }
+
     }
 }

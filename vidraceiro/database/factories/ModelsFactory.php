@@ -119,3 +119,56 @@ $factory->define(App\Glass::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Aluminum::class, function (Faker $faker) {
+    $maluminum = App\Aluminum::where('is_modelo',1)->get()->toArray();
+    $produto = App\Product::all()->toArray();
+
+    $max_product = count($produto);
+    $position_produto = $faker->numberBetween(0,$max_product-1);
+
+    $max = count($maluminum);
+    $position = $faker->numberBetween(0,$max-1);
+
+
+    $aluminioMedida = $maluminum[$position]['tipo_medida'] === 'largura'? $produto[$position_produto]['largura'] :
+        ($maluminum[$position]['tipo_medida'] === 'altura'?$produto[$position_produto]['altura'] : $maluminum[$position]['medida']);
+    $aluminioPeso = ($maluminum[$position]['peso']/$maluminum[$position]['medida'])*$aluminioMedida;
+    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+
+
+    return [
+        'categoria_aluminio_id'=> $maluminum[$position]['categoria_aluminio_id'],
+        'descricao'=> $maluminum[$position]['descricao'],
+        'is_modelo'=> 0,
+        'medida'=> $aluminioMedida,
+        'perfil'=> $maluminum[$position]['perfil'],
+        'peso'=> $aluminioPeso,
+        'preco'=> $maluminum[$position]['preco'],
+        'qtd'=> $maluminum[$position]['qtd'],
+        'product_id' => $produto[$position_produto]['id'],
+        'maluminum_id'=> $maluminum[$position]['id'],
+        'tipo_medida'=> $maluminum[$position]['tipo_medida'],
+    ];
+});
+
+$factory->define(App\Component::class, function (Faker $faker) {
+    $mcomponent = App\Component::where('is_modelo',1)->get()->toArray();
+    $produto = App\Product::all()->toArray();
+
+    $max_product = count($produto);
+    $position_produto = $faker->numberBetween(0,$max_product-1);
+
+    $max = count($mcomponent);
+    $position = $faker->numberBetween(0,$max-1);
+
+    return [
+        'is_modelo'=> 0,
+        'nome'=> $mcomponent[$position]['nome'],
+        'preco'=> $mcomponent[$position]['preco'],
+        'qtd'=> $mcomponent[$position]['qtd'],
+        'product_id' => $produto[$position_produto]['id'],
+        'mcomponent_id'=> $mcomponent[$position]['id'],
+        'categoria_componente_id' => $mcomponent[$position]['categoria_componente_id']
+    ];
+});
+

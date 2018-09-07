@@ -958,7 +958,7 @@ class CarregaItens extends Seeder
             'nome' => 'Roldana',
             'qtd' => 1,
             'preco' => 1.0,
-            'imagem' => '',
+            'imagem' => null,
             'is_modelo' => 1,
             'categoria_componente_id' => 8
         ]);

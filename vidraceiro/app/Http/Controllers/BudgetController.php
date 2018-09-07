@@ -669,6 +669,8 @@ class BudgetController extends Controller
 
         $valorTotalDeProdutos *= (1 + $budgetcriado['margem_lucro'] / 100);
 
+        $valorTotalDeProdutos = number_format($valorTotalDeProdutos, 2, '.', '');
+
         return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
 
     }

@@ -198,7 +198,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Component::create([
-            'imagem'=> '',
+            'imagem'=> null,
             'is_modelo'=> 0,
             'nome'=> 'roldana',
             'preco'=> 1.0,
