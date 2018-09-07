@@ -14,25 +14,93 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(CarregaItens::class);
         $this->call(CarregaItensTeste::class);
+
+        //INICIO FACTORY
+
         factory(App\Client::class, 10)->create();
         factory(App\MProduct::class, 20)->create();
         factory(App\Budget::class, 15)->create();
-        //product e glass precisam ser geradas com a mesma quantidade ,para testar
-        //e deve ser alterado em modelsfactory la em glass o max do between
-        // $faker->unique()->numberBetween(4,33) de 33 para a quantidade
-        // gerada + 3
         factory(App\Product::class, 30)->create();
-        factory(App\Glass::class, 30)->create();
+        $products = App\Product::whereNotIn('id',[1,2,3])->get();
+
+        foreach ($products as $product){
+            factory(App\Glass::class)->create(['product_id' => $product->id]);
+        }
+
         factory(App\Aluminum::class, 50)->create();
         factory(App\Component::class, 50)->create();
         $this->atualizaTotal();
+
+        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
+
+        foreach ($budgets as $budget){
+            factory(App\Sale::class)->create(['orcamento_id' => $budget->id]);
+        }
+
+
+        $sales = App\Sale::with('budget')->where('tipo_pagamento','A PRAZO')->whereNotIn('id',[1,2,3])->get();
+
+        foreach ($sales as $sale){
+
+            $valor_parcela = $sale->budget->total/$sale->qtd_parcelas;
+
+            $valor_parcela = number_format($valor_parcela, 2, '.', '');
+
+            for($i = 1; $i <= $sale->qtd_parcelas; $i++){
+                $installments = new App\Installment();
+                $dias = $i * 30;
+                $datavencimento = date('Y-m-d', strtotime("+$dias days",strtotime($sale->data_venda)));
+                $installments->create([
+                    'valor_parcela'=>$valor_parcela,
+                    'status_parcela'=>'ABERTO',
+                    'data_vencimento'=> $datavencimento,
+                    'venda_id'=> $sale->id
+                ]);
+            }
+
+        }
+
+        $sales = App\Sale::with('budget')->where('tipo_pagamento','A VISTA')->whereNotIn('id',[1,2,3])->get();
+
+        foreach ($sales as $sale){
+
+            $payment = new App\Payment();
+            $payment->create([
+                'valor_pago'=> $sale->budget->total,
+                'data_pagamento'=>$sale->data_venda,
+                'venda_id'=>$sale->id
+            ]);
+        }
+
+
+        $installments = App\Installment::whereNotIn('id',[1,2])->get();
+        $installarray = $installments->toArray();
+        $quantidade_parcelas = count($installarray);
+        $loopqtd = ceil($quantidade_parcelas/2);
+        for($i = 0;$i < $loopqtd;$i++){
+            $position = rand(0,$quantidade_parcelas-1);
+            $installments[$position]->update([
+                'status_parcela'=>'PAGO'
+            ]);
+        }
+        $installments = App\Installment::where('status_parcela','PAGO')->whereNotIn('id',[1,2])->get();
+        foreach($installments as $installment){
+            $payment = new App\Payment();
+            $payment->create([
+                'valor_pago'=> $installment->valor_parcela,
+                'data_pagamento'=>$installment->data_vencimento,
+                'venda_id'=>$installment->venda_id
+            ]);
+        }
+
+        //FIM FACTORY
 
     }
 
     public function atualizaTotal()
     {
 
-        $budgets = App\Budget::with('products')->get();
+        $budgets = App\Budget::with('products')->whereNotIn('id',[1,2,3])->get();
 
         foreach ($budgets as $budgetcriado){
 

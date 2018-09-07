@@ -71,7 +71,7 @@ $factory->define(App\Budget::class, function (Faker $faker) {
         'cidade'=> $clients[$position]['cidade'],
         'complemento'=> $clients[$position]['complemento'],
         'data'=> $faker->date('Y-m-d', 'now'),
-        'margem_lucro'=> $faker->randomFloat(2,0,1000),
+        'margem_lucro'=> $faker->randomFloat(2,0,100),
         'nome'=> 'orçamento '.$faker->word,
         'endereco'=> $clients[$position]['endereco'],
         'telefone'=> $clients[$position]['telefone'],
@@ -84,7 +84,7 @@ $factory->define(App\Budget::class, function (Faker $faker) {
 
 $factory->define(App\Product::class, function (Faker $faker) {
     $mproduct = App\MProduct::all()->toArray();
-    $budget = App\Budget::all()->toArray();
+    $budget = App\Budget::whereNotIn('id',[1,2,3])->get()->toArray();
     $max_budget = count($budget);
     $position_budget = $faker->numberBetween(0,$max_budget-1);
     $max_mproduct = count($mproduct);
@@ -112,7 +112,6 @@ $factory->define(App\Glass::class, function (Faker $faker) {
         'espessura'=> $mglass[$position]['espessura'],
         'is_modelo'=> 0,
         'nome'=> $mglass[$position]['nome'],
-        'product_id' => $faker->unique()->numberBetween(4,33),
         'preco'=> $mglass[$position]['preco'],
         'mglass_id'=> $mglass[$position]['id'],
         'tipo'=> $mglass[$position]['tipo']
@@ -121,7 +120,7 @@ $factory->define(App\Glass::class, function (Faker $faker) {
 
 $factory->define(App\Aluminum::class, function (Faker $faker) {
     $maluminum = App\Aluminum::where('is_modelo',1)->get()->toArray();
-    $produto = App\Product::all()->toArray();
+    $produto = App\Product::whereNotIn('id',[1,2,3])->get()->toArray();
 
     $max_product = count($produto);
     $position_produto = $faker->numberBetween(0,$max_product-1);
@@ -153,7 +152,7 @@ $factory->define(App\Aluminum::class, function (Faker $faker) {
 
 $factory->define(App\Component::class, function (Faker $faker) {
     $mcomponent = App\Component::where('is_modelo',1)->get()->toArray();
-    $produto = App\Product::all()->toArray();
+    $produto = App\Product::whereNotIn('id',[1,2,3])->get()->toArray();
 
     $max_product = count($produto);
     $position_produto = $faker->numberBetween(0,$max_product-1);
@@ -169,6 +168,24 @@ $factory->define(App\Component::class, function (Faker $faker) {
         'product_id' => $produto[$position_produto]['id'],
         'mcomponent_id'=> $mcomponent[$position]['id'],
         'categoria_componente_id' => $mcomponent[$position]['categoria_componente_id']
+    ];
+});
+
+
+$factory->define(App\Sale::class, function (Faker $faker) {
+
+    $tipo_pagamento = $faker->randomElement(['A PRAZO','A VISTA']);
+    $qtd_parcelas = null;
+
+    if($tipo_pagamento === 'A PRAZO'){
+        $qtd_parcelas = $faker->numberBetween(2,12);
+    }
+
+
+    return [
+        'tipo_pagamento'=> $tipo_pagamento,
+        'data_venda'=> $faker->date('Y-m-d', 'now'),
+        'qtd_parcelas'=> $qtd_parcelas
     ];
 });
 
