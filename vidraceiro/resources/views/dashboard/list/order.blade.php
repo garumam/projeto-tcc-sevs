@@ -43,7 +43,7 @@
                         <tr>
                             <th scope="row">{{$order->id}}</th>
                             <td>{{$order->nome}}</td>
-                            <td>{{ucfirst($order->situacao)}}</td>
+                            <td><span class="badge badge-secondary">{{ucfirst($order->situacao)}}</span></td>
                             <td>{{date_format(date_create($order->data_inicial), 'd/m/Y')}}</td>
                             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
                             <td>R${{$order->total}}</td>
