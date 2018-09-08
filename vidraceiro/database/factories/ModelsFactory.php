@@ -64,8 +64,21 @@ $factory->define(App\Budget::class, function (Faker $faker) {
 
     $max = count($clients);
     $position = $faker->numberBetween(0,$max-1);
+
+    $status = $faker->randomElement(['APROVADO','AGUARDANDO','FINALIZADO']);
+
+    $id_order = null;
+    if($status === 'APROVADO'){
+        $criarordem = $faker->numberBetween(0,1) === 1? true : false;
+        if($criarordem){
+            $order = factory(App\Order::class)->create();
+            $id_order = $order->id;
+        }
+    }
+
+
     return [
-        'status'=> $faker->randomElement(['APROVADO','AGUARDANDO','FINALIZADO']),
+        'status'=> $status,
         'bairro'=> $clients[$position]['bairro'],
         'cep'=>$clients[$position]['cep'],
         'cidade'=> $clients[$position]['cidade'],
@@ -76,7 +89,7 @@ $factory->define(App\Budget::class, function (Faker $faker) {
         'endereco'=> $clients[$position]['endereco'],
         'telefone'=> $clients[$position]['telefone'],
         'total'=> 0,
-        'ordem_id'=> null,
+        'ordem_id'=> $id_order,
         'uf' => $clients[$position]['uf'],
         'cliente_id' => $clients[$position]['id']
     ];
@@ -189,3 +202,18 @@ $factory->define(App\Sale::class, function (Faker $faker) {
     ];
 });
 
+
+$factory->define(App\Order::class, function (Faker $faker) {
+    $data_inicial = $faker->date('Y-m-d', 'now');
+    $dias = $faker->numberBetween(5,50);
+    $data_final = date('Y-m-d', strtotime("+$dias days",strtotime($data_inicial)));;
+    $situacao = $faker->randomElement(['ABERTA','ANDAMENTO']);
+
+    return [
+        'data_final' => $data_final,
+        'data_inicial' => $data_inicial,
+        'nome'=> 'order '.$faker->word,
+        'situacao' => $situacao,
+        'total'=> 0
+    ];
+});

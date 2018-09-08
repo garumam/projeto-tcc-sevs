@@ -19,16 +19,18 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Client::class, 10)->create();
         factory(App\MProduct::class, 20)->create();
-        factory(App\Budget::class, 15)->create();
-        factory(App\Product::class, 30)->create();
+
+        factory(App\Budget::class, 20)->create();
+
+        factory(App\Product::class, 40)->create();
         $products = App\Product::whereNotIn('id',[1,2,3])->get();
 
         foreach ($products as $product){
             factory(App\Glass::class)->create(['product_id' => $product->id]);
         }
 
-        factory(App\Aluminum::class, 50)->create();
-        factory(App\Component::class, 50)->create();
+        factory(App\Aluminum::class, 65)->create();
+        factory(App\Component::class, 65)->create();
         $this->atualizaTotal();
 
         $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
@@ -92,6 +94,39 @@ class DatabaseSeeder extends Seeder
                 'venda_id'=>$installment->venda_id
             ]);
         }
+
+        $budgets = App\Budget::where('status','FINALIZADO')->whereNotIn('id',[1,2,3])->get();
+        $totalOrdem = 0;
+
+        foreach($budgets as $budget){
+            $totalOrdem += $budget->total;
+        }
+
+        if(!empty($budgets)){
+            $totalOrdem = number_format($totalOrdem, 2, '.', '');
+
+            $order = factory(App\Order::class)->create([
+                'nome'=> 'order com orçamentos finalizados',
+                'situacao' => 'CONCLUIDA',
+                'total'=> $totalOrdem
+            ]);
+
+            foreach ($budgets as $budget){
+                $budget->update(['ordem_id'=>$order->id]);
+            }
+
+        }
+
+        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
+        foreach($budgets as $budget){
+
+            $order = $budget->order()->first();
+            if(!empty($order)){
+                $order->update(['total'=>$budget->total]);
+            }
+
+        }
+
 
         //FIM FACTORY
 
