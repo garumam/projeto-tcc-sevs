@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Budget;
 use App\Order;
 use App\Company;
+use App\Storage;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
@@ -30,18 +31,24 @@ class PdfController extends Controller
 
                 break;
             case 'orders':
-                $situacao = [
-                    'TODAS'=>'Todas',
+                $status = [
+                    'TODOS'=>'Todos',
                     'ABERTA'=>'Aberta',
                     'ANDAMENTO'=>'Em andamento',
                     'CONCLUIDA'=>'Concluída',
                     'CANCELADA'=>'Cancelada'
                 ];
-                return view('dashboard.create.relatorios', compact('situacao'))->with('title', 'Relatório de Ordens de serviço')->with('tipo',$tipo);
+                return view('dashboard.create.relatorios', compact('status'))->with('title', 'Relatório de Ordens de serviço')->with('tipo',$tipo);
 
                 break;
             case 'storage':
-                return view('dashboard.create.relatorios')->with('title', 'Relatório de Estoque')->with('tipo',$tipo);
+                $materials = [
+                    'TODOS'=>'Todos',
+                    'glass_id'=>'Vidro',
+                    'aluminum_id'=>'Alumínio',
+                    'component_id'=>'Componente'
+                ];
+                return view('dashboard.create.relatorios',compact('materials'))->with('title', 'Relatório de Estoque')->with('tipo',$tipo);
 
                 break;
             case 'financial':
@@ -107,15 +114,31 @@ class PdfController extends Controller
         switch($tipo){
             case 'budgets':
                 $status = $request->status;
-                $budgets = null;
+                $budgets = new Budget();
                 $totalde = $request->total_de;
                 $totalate = $request->total_ate;
-
+                $data_inicial = $request->data_inicial;
+                $data_final = $request->data_final;
+                $totalentrou = $dataentrou = false;
                 if($totalde < $totalate){
-                    $budgets =  Budget::whereBetween('total', [$totalde, $totalate]);
-                }else{
-                    $budgets = new Budget;
+                    $totalentrou = true;
                 }
+                if(strtotime($data_inicial) < strtotime($data_final)){
+                    $dataentrou = true;
+                }
+
+                if($totalentrou || $dataentrou){
+                    $budgets =  Budget::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
+                        if($dataentrou){
+                            $query->whereBetween('data', [$data_inicial,$data_final]);
+                        }
+
+                        if($totalentrou){
+                            $query->whereBetween('total', [$totalde,$totalate]);
+                        }
+                    });
+                }
+
                 if($status === 'TODOS'){
                     $budgets = $budgets->get();
                 }else{
@@ -128,33 +151,36 @@ class PdfController extends Controller
                 break;
             case 'orders':
 
-                $situacao = $request->situacao;
+                $situacao = $request->status;
                 $orders = new Order();
                 $totalde = $request->total_de;
                 $totalate = $request->total_ate;
                 $data_inicial = $request->data_inicial;
                 $data_final = $request->data_final;
-                $between = false;
+                $totalentrou = $dataentrou = false;
                 if($totalde < $totalate){
-                    //$orders =  Order::whereBetween('total', [$totalde, $totalate]);
-                    $orders =  Order::where(function ($query) use ($totalde,$totalate){
-                        $query->where('total', '>=' ,$totalde);
-                        $query->where('total', '<=' ,$totalate);
-                    });
-                    //$between = true;
+                    $totalentrou = true;
                 }
 
                 if(strtotime($data_inicial) < strtotime($data_final)){
 
-                        $orders =  Order::where(function ($query) use ($data_inicial,$data_final){
-                            $query->where('data_inicial', '>=' ,$data_inicial);
-                            $query->where('data_inicial', '<=' ,$data_final);
-                        });
-                        //$orders =  Order::whereBetween('data_inicial', [$data_inicial, $data_final]);
-
+                    $dataentrou = true;
                 }
 
-                if($situacao === 'TODAS'){
+                if($totalentrou || $dataentrou){
+
+                    $orders =  Order::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
+                        if($dataentrou){
+                            $query->whereBetween('data_inicial', [$data_inicial,$data_final]);
+                        }
+
+                        if($totalentrou){
+                            $query->whereBetween('total', [$totalde,$totalate]);
+                        }
+                    });
+                }
+
+                if($situacao === 'TODOS'){
                     $orders = $orders->get();
                 }else{
                     $orders = $orders->where('situacao',$situacao)->get();
@@ -166,7 +192,73 @@ class PdfController extends Controller
                 break;
             case 'storage':
 
+                $material = $request->material;
+                $qtd_de = $request->qtd_de;
+                $qtd_ate = $request->qtd_ate;
+                $ordenar = $request->ordenar;
+                $glasses = null;
+                $aluminums = null;
+                $components = null;
+                if($material === 'TODOS') {
+                    $glasses = Storage::with('glass')->where('glass_id', '!=', null);
+                    $aluminums = Storage::with('aluminum')->where('aluminum_id', '!=', null);
+                    $components = Storage::with('component')->where('component_id', '!=', null);
+                }else{
+                    if($material === 'glass_id'){
+                        $glasses = Storage::with('glass')->where('glass_id', '!=', null);
+                    }elseif($material === 'aluminum_id'){
+                        $aluminums = Storage::with('aluminum')->where('aluminum_id', '!=', null);
+                    }elseif($material === 'component_id'){
+                        $components = Storage::with('component')->where('component_id', '!=', null);
+                    }
+                }
+                if($qtd_de < $qtd_ate){
+                    if($material === 'TODOS'){
+                        $glasses = $glasses->whereBetween('metros_quadrados', [$qtd_de,$qtd_ate]);
+                        $aluminums = $aluminums->whereBetween('qtd', [$qtd_de,$qtd_ate]);
+                        $components = $components->whereBetween('qtd', [$qtd_de,$qtd_ate]);
+                    }else{
+                        if($material === 'glass_id'){
+                            $glasses = $glasses->whereBetween('metros_quadrados', [$qtd_de,$qtd_ate]);
+                        }elseif($material === 'aluminum_id'){
+                            $aluminums = $aluminums->whereBetween('qtd', [$qtd_de,$qtd_ate]);
+                        }elseif($material === 'component_id'){
+                            $components = $components->whereBetween('qtd', [$qtd_de,$qtd_ate]);
+                        }
+                    }
+                }
+                if($ordenar !== 'nao') {
+                    if ($material === 'TODOS') {
+                        $glasses = $glasses->orderBy('metros_quadrados',$ordenar);
+                        $aluminums = $aluminums->orderBy('qtd',$ordenar);
+                        $components = $components->orderBy('qtd',$ordenar);
+                    } else {
+                        if ($glasses !== null) {
+                            $glasses = $glasses->orderBy('metros_quadrados',$ordenar);
+                        } elseif ($aluminums !== null) {
+                            $aluminums = $aluminums->orderBy('qtd',$ordenar);
+                        } elseif ($components !== null) {
+                            $components = $components->orderBy('qtd',$ordenar);
+                        }
+                    }
+                }
+                if($material === 'TODOS'){
+                    $glasses = $glasses->get();
+                    $aluminums = $aluminums->get();
+                    $components = $components->get();
+                }else{
+                    if($glasses !== null){
+                        $glasses = $glasses->get();
+                    }elseif($aluminums !== null){
+                        $aluminums = $aluminums->get();
+                    }elseif($components !== null){
+                        $components = $components->get();
+                    }
+                }
 
+                $pdf = PDF::loadView('dashboard.pdf.relatorios',
+                    compact('tipo','glasses','aluminums','components'));
+                $nomearquivo = 'orcamento-relatório.pdf';
                 break;
             case 'financial':
 

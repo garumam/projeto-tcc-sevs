@@ -89,6 +89,7 @@
                     <td class="texto">
                         <b>Nome:</b> {{$budget->nome .' |'}}
                         <b>Status:</b> {{$budget->status .' |'}}
+                        <b>Data:</b> {{date_format(date_create($budget->data), 'd/m/Y')}}
                         <b>Total:</b> {{$budget->total}}
                     </td>
                 </tr>
@@ -134,10 +135,89 @@
 
     @case('storage')
 
+    @php
+        $quantidade = 0;
+        if($glasses !== null){
+            $quantidade += count($glasses->toArray());
+        }
 
-    <p>AQUI É ESTOQUE</p>
+        if($aluminums !== null){
+            $quantidade += count($aluminums->toArray());
+        }
 
+        if($components !== null){
+            $quantidade += count($components->toArray());
+        }
+    @endphp
 
+    <h3>Relatório de estoque</h3>
+    <h4>Quantidade encontrada: {{$quantidade}}</h4>
+
+    @if($glasses !== null)
+    <h5>Vidros:</h5>
+
+    @forelse($glasses as $glass)
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$glass->id}}</td>
+
+                    <td class="texto">
+                        <b>Nome:</b> {{$glass->glass->nome .' |'}}
+                        <b>Tipo:</b> {{$glass->glass->tipo .' |'}}
+                        <b>Em estoque:</b> {{$glass->metros_quadrados . ' m²'}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum vidro encontrado com as características passadas.</p>
+    @endforelse
+    @endif
+    @if($aluminums !== null)
+        <h5>Alumínios:</h5>
+
+    @forelse($aluminums as $aluminum)
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$aluminum->id}}</td>
+
+                    <td class="texto">
+                        <b>Perfil:</b> {{$aluminum->aluminum->perfil .' |'}}
+                        <b>Descrição:</b> {{$aluminum->aluminum->descricao .' |'}}
+                        <b>Em estoque:</b> {{$aluminum->qtd}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum alumínio encontrado com as características passadas.</p>
+    @endforelse
+    @endif
+    @if($components !== null)
+        <h5>Componentes:</h5>
+
+    @forelse($components as $component)
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$component->id}}</td>
+
+                    <td class="texto">
+                        <b>Nome:</b> {{$component->component->nome .' |'}}
+                        <b>Em estoque:</b> {{$component->qtd}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum componente encontrado com as características passadas.</p>
+    @endforelse
+    @endif
     @break
 
     @case('financial')
