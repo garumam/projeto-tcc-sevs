@@ -146,6 +146,13 @@ Route::prefix('companies')->group(function () {
     Route::delete('/{id}', 'CompanyController@destroy')->name('companies.destroy');
 });
 
+//rotas da financeiro
+Route::prefix('financial')->group(function () {
+    Route::get('/', 'FinancialController@index')->name('financial.index');
+    Route::post('/', 'FinancialController@store')->name('financial.store');
+    Route::delete('/{id}', 'FinancialController@destroy')->name('financial.destroy');
+});
+
 //rotas da gerar pdf
 Route::prefix('pdf')->group(function () {
     Route::get('/{tipo}', 'PdfController@index')->name('pdf.index');

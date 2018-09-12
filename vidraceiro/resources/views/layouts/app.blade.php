@@ -87,6 +87,12 @@
                             Estoque
                         </a>
                     </li>
+                    <li {{ Request::is('financial') ? 'class=active' : '' }}>
+                        <a href="{{ route('financial.index') }}">
+                            <i class="pe-7s-bell"></i>
+                            Financeiro
+                        </a>
+                    </li>
                     {{--<li {{ Request::is('categories') ? 'class=active' : '' }}>--}}
                         {{--<a href="{{ route('categories.index') }}">--}}
                             {{--<i class="pe-7s-note2"></i>--}}
