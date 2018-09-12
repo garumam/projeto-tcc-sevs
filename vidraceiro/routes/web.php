@@ -148,13 +148,14 @@ Route::prefix('companies')->group(function () {
 
 //rotas da gerar pdf
 Route::prefix('pdf')->group(function () {
-    Route::get('/', 'PdfController@index')->name('pdf.index');
-    Route::get('/create', 'PdfController@create')->name('pdf.create');
-    Route::post('/', 'PdfController@store')->name('pdf.store');
-    Route::get('/show', 'PdfController@show')->name('pdf.show');
-    Route::get('/{id}/edit', 'PdfController@edit')->name('pdf.edit');
-    Route::patch('/{id}', 'PdfController@update')->name('pdf.update');
-    Route::delete('/{id}', 'PdfController@destroy')->name('pdf.destroy');
+    Route::get('/{tipo}', 'PdfController@index')->name('pdf.index');
+    //Route::get('/create', 'PdfController@create')->name('pdf.create');
+    //Route::post('/', 'PdfController@store')->name('pdf.store');
+    Route::get('/show/{tipo}/{id}', 'PdfController@show')->name('pdf.show');
+    Route::get('/show/{tipo}', 'PdfController@showRelatorio')->name('pdf.showRelatorio');
+    //Route::get('/{id}/edit', 'PdfController@edit')->name('pdf.edit');
+    //Route::patch('/{id}', 'PdfController@update')->name('pdf.update');
+    //Route::delete('/{id}', 'PdfController@destroy')->name('pdf.destroy');
 });
 
 // Authentication Routes...

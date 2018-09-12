@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#opensubmenu ul li').each(function () {
+    /*$('#opensubmenu ul li').each(function () {
         let ativo = $(this).attr("class");
         if (ativo === "active") {
             $('#opensubmenu').css('height', "auto");
@@ -10,6 +10,34 @@ $(document).ready(function () {
     $('#opensubmenu a').click(function () {
         $('#opensubmenu').css('height', "auto");
         $('.submenu').slideToggle("slow");
+    });*/
+
+
+    $('.opensubmenu ul li').each(function () {
+        let ativo = $(this).attr("class");
+        if (ativo === "active") {
+            let submenu = null;
+            let menuid = $(this).parent().closest('li').attr('id');
+            if(menuid === 'relatorios-menu'){
+                submenu = $('#submenu-relatorios');
+            }
+            if(menuid === 'modelos-menu'){
+                submenu = $('#submenu-modelos');
+            }
+            $(this).parent().closest('li').css('height', "auto");
+            submenu.slideToggle("slow");
+        }
+    });
+    $('.opensubmenu a').click(function () {
+        let submenu = null;
+        if($(this).parent().attr('id') === 'relatorios-menu'){
+            submenu = $('#submenu-relatorios');
+        }
+        if($(this).parent().attr('id') === 'modelos-menu'){
+            submenu = $('#submenu-modelos');
+        }
+        $(this).parent().css('height', "auto");
+        submenu.slideToggle("slow");
     });
 
 

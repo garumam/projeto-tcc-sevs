@@ -505,9 +505,9 @@
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
-
+                    @php $id = !empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '') @endphp
                     <form class="formulario" method="GET" role="form" target="_blank"
-                          action="{{ route('pdf.show') }}">
+                          action="{{ route('pdf.show',['tipo'=>'budget','id'=>$id]) }}">
 
                         <div class="form-row">
 
@@ -605,7 +605,7 @@
 
                         </div>
 
-                        <input type="hidden" name="idorcamento" value="{{!empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '')}}">
+                        {{--<input type="hidden" name="idorcamento" value="{{!empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '')}}">--}}
 
                         <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 
