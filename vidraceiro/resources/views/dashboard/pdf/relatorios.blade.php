@@ -231,7 +231,42 @@
     @case('clients')
 
 
-    <p>AQUI É CLIENTE</p>
+    <h3>Relatório de clientes</h3>
+    <h4>Quantidade encontrada: {{count($clients->toArray())}}</h4>
+
+    @forelse($clients as $client)
+        @php
+            $telefone = $client->telefone;
+            $celular = $client->celular;
+            if($telefone !== null){
+            // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+            $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+            }
+
+            if($celular !== null){
+            $celular="(".substr($celular,0,2).") ".substr($celular,2,-4)." - ".substr($celular,-4);
+            }
+
+        @endphp
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$client->id}}</td>
+
+                    <td class="texto">
+                        <b>Nome:</b> {{$client->nome .' |'}}
+                        <b>Situação:</b> {{$client->status .' |'}}
+                        <b>Telefone:</b> {{$telefone??'Não possui.'}}
+                        <b>Celular:</b> {{$celular??'Não possui.'}}
+                        <b>Cadastrado em:</b> {{date_format(date_create($client->created_at), 'd/m/Y')}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum cliente encontrado com as características passadas.</p>
+    @endforelse
 
 
     @break

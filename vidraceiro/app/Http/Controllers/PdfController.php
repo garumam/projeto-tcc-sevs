@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Client;
 use App\Order;
 use App\Company;
 use App\Storage;
@@ -56,7 +57,12 @@ class PdfController extends Controller
 
                 break;
             case 'clients':
-                return view('dashboard.create.relatorios')->with('title', 'Relatório de Clientes')->with('tipo',$tipo);
+                $status = [
+                    'TODOS'=>'Todos',
+                    'EM DIA'=>'Em dia',
+                    'DEVENDO'=>'Devendo'
+                ];
+                return view('dashboard.create.relatorios', compact('status'))->with('title', 'Relatório de Clientes')->with('tipo',$tipo);
 
                 break;
         }
@@ -187,7 +193,7 @@ class PdfController extends Controller
                 }
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('orders','tipo'));
-                $nomearquivo = 'orcamento-relatório.pdf';
+                $nomearquivo = 'ordem-de-serviço-relatório.pdf';
 
                 break;
             case 'storage':
@@ -258,13 +264,31 @@ class PdfController extends Controller
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios',
                     compact('tipo','glasses','aluminums','components'));
-                $nomearquivo = 'orcamento-relatório.pdf';
+                $nomearquivo = 'estoque-relatório.pdf';
                 break;
             case 'financial':
 
 
+
                 break;
             case 'clients':
+                $status = $request->status;
+                $data_inicial = $request->data_inicial;
+                $data_final = $request->data_final;
+                $clients = new Client();
+
+                if(strtotime($data_inicial) < strtotime($data_final)){
+                    $clients = $clients->whereBetween('created_at', [$data_inicial,$data_final]);
+                }
+
+                if($status === 'TODOS'){
+                    $clients = $clients->get();
+                }else{
+                    $clients = $clients->where('status',$status)->get();
+                }
+
+                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('clients','tipo'));
+                $nomearquivo = 'cliente-relatório.pdf';
 
 
                 break;

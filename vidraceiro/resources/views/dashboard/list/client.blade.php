@@ -35,6 +35,7 @@
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cpf | Cnpj</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Telefone</th>
+                        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Situação</th>
                         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
                     </tr>
                     </thead>
@@ -45,6 +46,7 @@
                             <td>{{$client->nome}}</td>
                             <td>{{$client->cpf or $client->cnpj}}</td>
                             <td class="telefone">{{$client->telefone}}</td>
+                            <td><span class="badge badge-secondary">{{$client->status}}</span></td>
                             <td>
 
 

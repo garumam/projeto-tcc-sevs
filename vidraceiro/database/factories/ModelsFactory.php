@@ -13,6 +13,7 @@ $factory->define(App\Client::class, function (Faker $faker) {
         'endereco'=> $faker->address,
         'telefone'=> $faker->numerify('##########'),
         'celular'=> $faker->numerify('9##########'),
+        'status'=> 'EM DIA',
         'uf' => $faker->stateAbbr
     ];
 });
@@ -60,7 +61,7 @@ $factory->define(App\MProduct::class, function (Faker $faker) {
 
 
 $factory->define(App\Budget::class, function (Faker $faker) {
-    $clients = App\Client::all()->toArray();
+    $clients = App\Client::whereNotIn('id',[1,2])->get()->toArray();
 
     $max = count($clients);
     $position = $faker->numberBetween(0,$max-1);

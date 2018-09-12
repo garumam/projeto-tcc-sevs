@@ -131,7 +131,39 @@
                 @case('clients')
 
 
-                <p>AQUI É CLIENTE</p>
+                <form class="formulario" method="GET" role="form" target="_blank"
+                      action="{{route('pdf.showRelatorio',['tipo'=>$tipo])}}">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h5 class="titulo">Filtros (opcionais)</h5>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="status">Situação do cliente</label>
+                            <select class="custom-select" id="status" name="status" required>
+                                @foreach($status as $index => $value)
+                                    <option value="{{$index}}">{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="data-inicial">Cadastrados desde:</label>
+                            <input type="date" class="form-control" id="data-inicial" name="data_inicial">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="data-final">até:</label>
+                            <input type="date" class="form-control" id="data-final" name="data_final">
+                        </div>
+
+
+                    </div>
+
+                    <button id="bt-pdf-invisible" class="d-none" type="submit"></button>
+
+                </form>
 
 
                 @break

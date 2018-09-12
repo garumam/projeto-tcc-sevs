@@ -35,6 +35,7 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Fim do mundo, n° 250',
             'telefone'=> '2212344321',
             'celular'=> '22912344321',
+            'status'=> 'EM DIA',
             'uf' => 'RJ'
         ]);
 
@@ -48,6 +49,7 @@ class CarregaItensTeste extends Seeder
             'endereco'=> 'Goiaba, n° 130',
             'telefone'=> '4565432456',
             'celular'=> '45925432456',
+            'status'=> 'DEVENDO',
             'uf' => 'MG'
         ]);
 

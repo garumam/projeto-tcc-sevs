@@ -127,6 +127,19 @@ class DatabaseSeeder extends Seeder
 
         }
 
+        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
+        foreach($budgets as $budget){
+
+            if($budget->sale->tipo_pagamento === 'A PRAZO'){
+                $sale = $budget->sale()->with('installments')->first();
+                $devendo = $sale->installments->where('status_parcela','ABERTO')->shift();
+                if($devendo !== null){
+                    $budget->client()->first()->update(['status'=>'DEVENDO']);
+                }
+            }
+
+        }
+
 
         //FIM FACTORY
 
