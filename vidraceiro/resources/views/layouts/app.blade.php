@@ -75,10 +75,13 @@
                             <i class="pe-7s-news-paper"></i>
                             Modelos
                         </a>
-                        <ul id="submenu-modelos"  class="submenu">
-                            <li {{ Request::is('products') ? 'class=active' : '' }}><a href="{{ route('mproducts.index') }}">Produtos</a></li>
-                            <li {{ Request::is('materials') ? 'class=active' : '' }}><a href="{{ route('materials.index') }}">Materiais</a></li>
-                            <li {{ Request::is('categories') ? 'class=active' : '' }}><a href="{{ route('categories.index') }}">Categorias</a></li>
+                        <ul class="submenu">
+                            <li {{ Request::is('products') ? 'class=active' : '' }}><a
+                                        href="{{ route('mproducts.index') }}">Produtos</a></li>
+                            <li {{ Request::is('materials') ? 'class=active' : '' }}><a
+                                        href="{{ route('materials.index') }}">Materiais</a></li>
+                            <li {{ Request::is('categories') ? 'class=active' : '' }}><a
+                                        href="{{ route('categories.index') }}">Categorias</a></li>
                         </ul>
                     </li>
                     <li {{ Request::is('storage') ? 'class=active' : '' }}>
@@ -94,22 +97,28 @@
                         </a>
                     </li>
                     {{--<li {{ Request::is('categories') ? 'class=active' : '' }}>--}}
-                        {{--<a href="{{ route('categories.index') }}">--}}
-                            {{--<i class="pe-7s-note2"></i>--}}
-                            {{--Categorias--}}
-                        {{--</a>--}}
+                    {{--<a href="{{ route('categories.index') }}">--}}
+                    {{--<i class="pe-7s-note2"></i>--}}
+                    {{--Categorias--}}
+                    {{--</a>--}}
                     {{--</li>--}}
                     {{--<li {{ Request::is('materials') ? 'class=active' : '' }}>--}}
-                        {{--<a href="{{ route('materials.index') }}">--}}
-                            {{--<i class="pe-7s-science"></i>--}}
-                            {{--Materiais--}}
-                        {{--</a>--}}
+                    {{--<a href="{{ route('materials.index') }}">--}}
+                    {{--<i class="pe-7s-science"></i>--}}
+                    {{--Materiais--}}
+                    {{--</a>--}}
                     {{--</li>--}}
-                    <li {{ Request::is('users') ? 'class=active' : '' }}>
-                        <a href="{{ route('users.index') }}">
+                    <li id="usuarios-menu" class="opensubmenu">
+                        <a>
                             <i class="pe-7s-user"></i>
                             Usuarios
                         </a>
+                        <ul class="submenu">
+                            <li {{ Request::is('users') ? 'class=active' : '' }}><a href="{{ route('users.index') }}">Usuarios</a>
+                            </li>
+                            <li {{ Request::is('roles') ? 'class=active' : '' }}><a href="{{ route('roles.index') }}">Funções</a>
+                            </li>
+                        </ul>
                     </li>
                     <li {{ Request::is('providers') ? 'class=active' : '' }}>
                         <a href="{{ route('providers.index') }}">
@@ -134,15 +143,20 @@
                             <i class="pe-7s-news-paper"></i>
                             Relatórios
                         </a>
-                        <ul id="submenu-relatorios" class="submenu">
-                            <li {{ Request::is('pdf/budgets') ? 'class=active' : '' }}><a href="{{ route('pdf.index',['tipo'=>'budgets'])}}">Orçamentos</a></li>
-                            <li {{ Request::is('pdf/orders') ? 'class=active' : '' }}><a href="{{ route('pdf.index',['tipo'=>'orders']) }}">Ordens de serviço</a></li>
-                            <li {{ Request::is('pdf/storage') ? 'class=active' : '' }}><a href="{{ route('pdf.index',['tipo'=>'storage']) }}">Estoque</a></li>
-                            <li {{ Request::is('pdf/financial') ? 'class=active' : '' }}><a href="{{ route('pdf.index',['tipo'=>'financial']) }}">Financeiro</a></li>
-                            <li {{ Request::is('pdf/clients') ? 'class=active' : '' }}><a href="{{ route('pdf.index',['tipo'=>'clients']) }}">Clientes</a></li>
+                        <ul class="submenu">
+                            <li {{ Request::is('pdf/budgets') ? 'class=active' : '' }}><a
+                                        href="{{ route('pdf.index',['tipo'=>'budgets'])}}">Orçamentos</a></li>
+                            <li {{ Request::is('pdf/orders') ? 'class=active' : '' }}><a
+                                        href="{{ route('pdf.index',['tipo'=>'orders']) }}">Ordens de serviço</a></li>
+                            <li {{ Request::is('pdf/storage') ? 'class=active' : '' }}><a
+                                        href="{{ route('pdf.index',['tipo'=>'storage']) }}">Estoque</a></li>
+                            <li {{ Request::is('pdf/financial') ? 'class=active' : '' }}><a
+                                        href="{{ route('pdf.index',['tipo'=>'financial']) }}">Financeiro</a></li>
+                            <li {{ Request::is('pdf/clients') ? 'class=active' : '' }}><a
+                                        href="{{ route('pdf.index',['tipo'=>'clients']) }}">Clientes</a></li>
                         </ul>
                     </li>
-                    <li class="">
+                    <li>
                         <i class="pe-7s-rocket"></i>
                         <div class="borda-top"></div>
                         <a href="{{ route('home') }}">
@@ -166,7 +180,8 @@
                     <a class="navbar-brand" href="{{ Request::url() }}">{{ $title }}</a>
                     <div class="collapse navbar-collapse" id="navbarsExample0233">
                         <ul class="navbar-nav ml-auto">
-                            <img src="{{ asset(Auth::user()->image ?? 'img/semimagem.png') }}" class="imagem-usuario rounded-circle">
+                            <img src="{{ asset(Auth::user()->image ?? 'img/semimagem.png') }}"
+                                 class="imagem-usuario rounded-circle">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle minhaconta" href="https://example.com"
                                    id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
