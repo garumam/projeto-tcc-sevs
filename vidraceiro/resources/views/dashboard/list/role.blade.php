@@ -48,7 +48,7 @@
                                     </button>
                                 </a>
                                 <a class="btn-link" href="{{ route('roles.permission.show',['id' => $role->id]) }}">
-                                    <button class="btn btn-warning mb-1" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                    <button class="btn btn-dark mb-1" {{$role->nome === 'admin' ? 'disabled' :'' }}>
                                         Permissão
                                     </button>
                                 </a>
