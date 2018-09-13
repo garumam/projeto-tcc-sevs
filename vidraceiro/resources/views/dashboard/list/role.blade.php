@@ -43,10 +43,14 @@
                             <td>{{ $role->descricao }}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('roles.edit',['id' => $role->id]) }}">
-                                    <button class="btn btn-warning mb-1">Editar</button>
+                                    <button class="btn btn-warning mb-1" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                        Editar
+                                    </button>
                                 </a>
                                 <a class="btn-link" onclick="deletar(this.id,'roles')" id="{{ $role->id }}">
-                                    <button class="btn btn-danger mb-1">Deletar</button>
+                                    <button class="btn btn-danger mb-1" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                        Deletar
+                                    </button>
                                 </a>
                             </td>
                         </tr>
