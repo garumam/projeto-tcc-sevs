@@ -15,7 +15,10 @@ class Role extends Model
 
     public function addPermission($permission)
     {
-        return $this->permissions()->save($permission);
+        if (!empty($permission)) {
+            return !$this->permissions()->where('nome', $permission->nome)->first() ? $this->permissions()->save($permission) : false;
+        }
+        return false;
     }
 
     public function removePermission($permission)

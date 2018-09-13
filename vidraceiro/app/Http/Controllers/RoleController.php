@@ -68,8 +68,10 @@ class RoleController extends Controller
     public function permissionstore(Request $request,$id){
         $role = Role::find($id);
         $permission = Permission::find($request->permission_id);
-        $role->addPermission($permission);
-        return redirect()->back()->with('success','Permissão adicionada com sucesso');
+        if ($role->addPermission($permission)){
+            return redirect()->back()->with('success','Permissão adicionada com sucesso');
+        }
+        return redirect()->back()->with('error','Permissão ja foi adicionada ou não existe');
     }
 
     public function permissiondestroy($id,$permission_id){

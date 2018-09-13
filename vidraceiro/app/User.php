@@ -39,14 +39,17 @@ class User extends Authenticatable
 
     public function addRole($role)
     {
-        if (is_string($role)) {
-            return $this->roles()->save(
-                Role::where('nome', '=', $role)->firstOrFail()
-            );
+        if (!empty($role)) {
+            if (is_string($role)) {
+                return !$this->roles()->where('nome', $role)->first() ? $this->roles()->save(
+                    Role::where('nome', '=', $role)->firstOrFail()
+                ) : false;
+            }
+            return !$this->roles()->where('nome', $role->nome)->first() ? $this->roles()->save(
+                Role::where('nome', '=', $role->nome)->firstOrFail()
+            ) : false;
         }
-        return $this->roles()->save(
-            Role::where('nome', '=', $role->nome)->firstOrFail()
-        );
+        return false;
     }
 
     public function removeRole($role)

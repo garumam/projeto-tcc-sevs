@@ -17,11 +17,11 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Auth::user()->can('usuario_listar')){
-            dd('sim');
-        }else{
-            dd('nao');
-        }
+//        if (Auth::user()->can('usuario_listar')){
+//            dd('sim');
+//        }else{
+//            dd('nao');
+//        }
         $users = User::all();
         return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
 
@@ -109,8 +109,10 @@ class UserController extends Controller
     public function rolestore(Request $request,$id){
         $user = User::find($id);
         $role = Role::find($request->role_id);
-        $user->addRole($role);
-        return redirect()->back()->with('success','Função adicionada no usuario');
+        if ($user->addRole($role)){
+            return redirect()->back()->with('success','Função adicionada no usuario');
+        }
+        return redirect()->back()->with('error','Função ja foi adicionada ou não existe essa função');
     }
 
     public function roledestroy($id,$role_id){
