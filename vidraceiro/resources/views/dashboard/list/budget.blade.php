@@ -44,7 +44,8 @@
                             <td>{{$budget->nome}}</td>
                             <td>{{date_format(date_create($budget->data), 'd/m/Y')}}</td>
                             <td>R${{empty($budget->total) ? 0 : $budget->total}}</td>
-                            <td><span class="badge badge-secondary">{{$budget->status}}</span></td>
+                            <td><span class="badge {{$budget->status === 'AGUARDANDO'?'badge-secondary'
+                                        :($budget->status === 'APROVADO'?'badge-success':'badge-primary')}}">{{$budget->status}}</span></td>
                             <td>
 
 

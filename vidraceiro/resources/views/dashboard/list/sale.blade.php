@@ -72,7 +72,7 @@
                                     <th scope="row">{{$sale->id}}</th>
                                     <td>{{$sale->budget->nome}}</td>
                                     <td>{{$sale->budget->client->nome or 'Anônimo'}}</td>
-                                    <td><span class="badge badge-secondary">{{$sale->tipo_pagamento}}</span></td>
+                                    <td><span class="badge {{$sale->tipo_pagamento === 'A VISTA'? 'badge-secondary':'badge-warning'}}">{{$sale->tipo_pagamento}}</span></td>
                                     <td>{{$sale->budget->total}}</td>
                                     @php $valorpago = 0; @endphp
                                     @foreach($sale->payments as $payment)

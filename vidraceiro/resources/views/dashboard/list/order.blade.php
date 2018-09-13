@@ -43,7 +43,9 @@
                         <tr>
                             <th scope="row">{{$order->id}}</th>
                             <td>{{$order->nome}}</td>
-                            <td><span class="badge badge-secondary">{{ucfirst($order->situacao)}}</span></td>
+                            <td><span class="badge {{$order->situacao === 'ABERTA'?'badge-warning'
+                                        :($order->situacao === 'ANDAMENTO'?'badge-secondary'
+                                        :(($order->situacao === 'CONCLUIDA'?'badge-primary' :'badge-dark')))}}">{{ucfirst($order->situacao)}}</span></td>
                             <td>{{date_format(date_create($order->data_inicial), 'd/m/Y')}}</td>
                             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
                             <td>R${{$order->total}}</td>

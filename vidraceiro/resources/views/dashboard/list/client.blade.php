@@ -46,7 +46,7 @@
                             <td>{{$client->nome}}</td>
                             <td>{{$client->cpf or $client->cnpj}}</td>
                             <td class="telefone">{{$client->telefone}}</td>
-                            <td><span class="badge badge-secondary">{{$client->status}}</span></td>
+                            <td><span class="badge {{$client->status === 'EM DIA'? 'badge-success' : 'badge-danger'}}">{{$client->status}}</span></td>
                             <td>
 
 
