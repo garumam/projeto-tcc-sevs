@@ -58,15 +58,15 @@ Route::prefix('roles')->group(function () {
 });
 
 //rotas das permissoes
-Route::prefix('permissions')->group(function () {
-    Route::get('/', 'PermissionController@index')->name('permissions.index');
-    Route::get('/create', 'PermissionController@create')->name('permissions.create');
-    Route::post('/', 'PermissionController@store')->name('permissions.store');
-    Route::get('/{permission}', 'PermissionController@show')->name('permissions.show');
-    Route::get('/{id}/edit', 'PermissionController@edit')->name('permissions.edit');
-    Route::patch('/{id}', 'PermissionController@update')->name('permissions.update');
-    Route::delete('/{id}', 'PermissionController@destroy')->name('permissions.destroy');
-});
+//Route::prefix('permissions')->group(function () {
+//    Route::get('/', 'PermissionController@index')->name('permissions.index');
+//    Route::get('/create', 'PermissionController@create')->name('permissions.create');
+//    Route::post('/', 'PermissionController@store')->name('permissions.store');
+//    Route::get('/{permission}', 'PermissionController@show')->name('permissions.show');
+//    Route::get('/{id}/edit', 'PermissionController@edit')->name('permissions.edit');
+//    Route::patch('/{id}', 'PermissionController@update')->name('permissions.update');
+//    Route::delete('/{id}', 'PermissionController@destroy')->name('permissions.destroy');
+//});
 
 //rotas de cliente
 Route::prefix('clients')->group(function () {
