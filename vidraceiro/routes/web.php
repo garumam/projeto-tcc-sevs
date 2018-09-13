@@ -50,6 +50,11 @@ Route::prefix('roles')->group(function () {
     Route::get('/{id}/edit', 'RoleController@edit')->name('roles.edit');
     Route::patch('/{id}', 'RoleController@update')->name('roles.update');
     Route::delete('/{id}', 'RoleController@destroy')->name('roles.destroy');
+
+    Route::get('/permission/{id}', 'RoleController@permissionshow')->name('roles.permission.show');
+    Route::post('/permission/{id}', 'RoleController@permissionstore')->name('roles.permission.store');
+    Route::delete('/permission/{id}/{permission_id}', 'RoleController@permissiondestroy')->name('roles.permission.destroy');
+
 });
 
 //rotas das permissoes

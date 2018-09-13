@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -55,5 +56,26 @@ class RoleController extends Controller
         }
         $role->delete();
         return redirect()->back()->with('success','Função deletada com sucesso');
+    }
+
+    public function permissionshow($id){
+        $title = "Lista de Permissões";
+        $role = Role::find($id);
+        $permissions = Permission::all();
+        return view('dashboard.list.role-permission',compact('role','permissions','title'));
+    }
+
+    public function permissionstore(Request $request,$id){
+        $role = Role::find($id);
+        $permission = Permission::find($request->permission_id);
+        $role->addPermission($permission);
+        return redirect()->back()->with('success','Permissão adicionada com sucesso');
+    }
+
+    public function permissiondestroy($id,$permission_id){
+        $role = Role::find($id);
+        $permission = Permission::find($permission_id);
+        $role->removePermission($permission);
+        return redirect()->back()->with('success','Permissão removida com sucesso');
     }
 }

@@ -19,7 +19,7 @@ class CreateRolesTable extends Migration
             $table->string('descricao')->nullable();
             $table->timestamps();
         });
-        Schema::create('role_permission', function (Blueprint $table) {
+        Schema::create('permission_role', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
@@ -45,7 +45,7 @@ class CreateRolesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('roles');
-        Schema::dropIfExists('role_permission');
+        Schema::dropIfExists('permission_role');
         Schema::dropIfExists('role_user');
     }
 }
