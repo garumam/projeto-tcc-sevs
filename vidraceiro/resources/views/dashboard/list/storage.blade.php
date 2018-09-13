@@ -116,7 +116,9 @@
                                         </tbody>
                                     </table>
 
-                                    @include('layouts.htmlpaginationtable')
+                                    @if(!empty($glasses->shift()))
+                                        @include('layouts.htmlpaginationtable')
+                                    @endif
 
                                 </div>
                             </div>

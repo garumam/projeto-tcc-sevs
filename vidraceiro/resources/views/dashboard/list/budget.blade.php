@@ -112,7 +112,9 @@
                     </tbody>
                 </table>
 
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($budgets->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
                 <p class="info-importante">Não é possível deletar ou editar orçamento relacionado a ordem serviço em andando ou que está com pagamento pendente!</p>
                 <p class="info-importante">Não é possível editar orçamento finalizado!</p>
             </div>

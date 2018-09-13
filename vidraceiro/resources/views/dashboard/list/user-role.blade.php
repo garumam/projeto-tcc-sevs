@@ -71,7 +71,9 @@
                     </tbody>
                 </table>
 
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($user->roles->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
 
             </div>
         </div>

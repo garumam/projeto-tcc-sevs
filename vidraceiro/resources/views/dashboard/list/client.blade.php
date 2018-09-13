@@ -120,7 +120,9 @@
                     </tbody>
                 </table>
 
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($clients->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
                 <p class="info-importante">Não é possível deletar cliente relacionado a ordem serviço em andando ou que está com pagamento pendente!</p>
             </div>
         </div>

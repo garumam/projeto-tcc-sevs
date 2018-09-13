@@ -62,8 +62,9 @@
                     @endforeach
                     </tbody>
                 </table>
-
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($roles->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
 
             </div>
         </div>

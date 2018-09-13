@@ -143,7 +143,9 @@
                             </tbody>
                         </table>
 
-                        @include('layouts.htmlpaginationtable')
+                        @if(!empty($sales->shift()))
+                            @include('layouts.htmlpaginationtable')
+                        @endif
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem serviço em andando ou que está com pagamento pendente!</p>
                         <p class="info-importante">Não é possível editar venda relacionada a orçamento finalizado!</p>
                     </div>

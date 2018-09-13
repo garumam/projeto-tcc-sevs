@@ -57,7 +57,9 @@
                     </tbody>
                 </table>
 
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($categories->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
 
             </div>
         </div>

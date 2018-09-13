@@ -73,7 +73,7 @@
                     <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-news-paper"></i>
-                            Modelos
+                            Modelos<i class="fas fa-angle-down float-right m-1" style="font-size: 1.3rem;"></i>
                         </a>
                         <ul class="submenu">
                             <li {{ Request::is('products') ? 'class=active' : '' }}>
@@ -120,7 +120,7 @@
                     <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-user"></i>
-                            Usuarios
+                            Usuarios<i class="fas fa-angle-down float-right m-1" style="font-size: 1.3rem;"></i>
                         </a>
                         <ul class="submenu">
                             <li {{ Request::is('users') ? 'class=active' : '' }}>
@@ -156,7 +156,7 @@
                     <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-news-paper"></i>
-                            Relatórios
+                            Relatórios<i class="fas fa-angle-down float-right m-1" style="font-size: 1.3rem;"></i>
                         </a>
                         <ul class="submenu">
                             <li {{ Request::is('pdf/budgets') ? 'class=active' : '' }}>

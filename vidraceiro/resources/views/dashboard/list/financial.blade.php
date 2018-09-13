@@ -125,7 +125,9 @@
                                 </tbody>
                             </table>
 
-                            @include('layouts.htmlpaginationtable')
+                            @if(!empty($financials->shift()))
+                                @include('layouts.htmlpaginationtable')
+                            @endif
 
                         </div>
                     </div>

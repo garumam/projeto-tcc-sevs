@@ -62,7 +62,9 @@
                     </tbody>
                 </table>
 
-                @include('layouts.htmlpaginationtable')
+                @if(!empty($orders->shift()))
+                    @include('layouts.htmlpaginationtable')
+                @endif
 
             </div>
         </div>
