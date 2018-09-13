@@ -60,4 +60,17 @@ class User extends Authenticatable
             Role::where('nome', '=', $role->nome)->firstOrFail()
         );
     }
+
+    public function existsRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('nome', $role);
+        }
+        return $role->intersect($this->roles)->count();
+    }
+
+    public function existsAdmin()
+    {
+        return $this->existsRole('admin');
+    }
 }

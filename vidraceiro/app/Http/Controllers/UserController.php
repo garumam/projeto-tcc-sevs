@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -16,6 +17,11 @@ class UserController extends Controller
 
     public function index()
     {
+        if (Auth::user()->can('usuario_listar')){
+            dd('sim');
+        }else{
+            dd('nao');
+        }
         $users = User::all();
         return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
 
