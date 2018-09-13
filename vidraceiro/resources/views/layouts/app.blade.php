@@ -70,18 +70,27 @@
                             Ordens de serviço
                         </a>
                     </li>
-                    <li id="modelos-menu" class="opensubmenu">
+                    <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-news-paper"></i>
                             Modelos
                         </a>
                         <ul class="submenu">
-                            <li {{ Request::is('products') ? 'class=active' : '' }}><a
-                                        href="{{ route('mproducts.index') }}">Produtos</a></li>
-                            <li {{ Request::is('materials') ? 'class=active' : '' }}><a
-                                        href="{{ route('materials.index') }}">Materiais</a></li>
-                            <li {{ Request::is('categories') ? 'class=active' : '' }}><a
-                                        href="{{ route('categories.index') }}">Categorias</a></li>
+                            <li {{ Request::is('products') ? 'class=active' : '' }}>
+                                <a href="{{ route('mproducts.index') }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Produtos
+                                </a>
+                            </li>
+                            <li {{ Request::is('materials') ? 'class=active' : '' }}>
+                                <a href="{{ route('materials.index') }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Materiais
+                                </a>
+                            </li>
+                            <li {{ Request::is('categories') ? 'class=active' : '' }}>
+                                <a href="{{ route('categories.index') }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Categorias
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li {{ Request::is('storage') ? 'class=active' : '' }}>
@@ -108,15 +117,21 @@
                     {{--Materiais--}}
                     {{--</a>--}}
                     {{--</li>--}}
-                    <li id="usuarios-menu" class="opensubmenu">
+                    <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-user"></i>
                             Usuarios
                         </a>
                         <ul class="submenu">
-                            <li {{ Request::is('users') ? 'class=active' : '' }}><a href="{{ route('users.index') }}">Usuarios</a>
+                            <li {{ Request::is('users') ? 'class=active' : '' }}>
+                                <a href="{{ route('users.index') }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Usuarios
+                                </a>
                             </li>
-                            <li {{ Request::is('roles') ? 'class=active' : '' }}><a href="{{ route('roles.index') }}">Funções</a>
+                            <li {{ Request::is('roles') ? 'class=active' : '' }}>
+                                <a href="{{ route('roles.index') }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Funções
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -138,22 +153,37 @@
                             Relatórios
                         </a>
                     </li>--}}
-                    <li id="relatorios-menu" class="opensubmenu">
+                    <li class="opensubmenu">
                         <a>
                             <i class="pe-7s-news-paper"></i>
                             Relatórios
                         </a>
                         <ul class="submenu">
-                            <li {{ Request::is('pdf/budgets') ? 'class=active' : '' }}><a
-                                        href="{{ route('pdf.index',['tipo'=>'budgets'])}}">Orçamentos</a></li>
-                            <li {{ Request::is('pdf/orders') ? 'class=active' : '' }}><a
-                                        href="{{ route('pdf.index',['tipo'=>'orders']) }}">Ordens de serviço</a></li>
-                            <li {{ Request::is('pdf/storage') ? 'class=active' : '' }}><a
-                                        href="{{ route('pdf.index',['tipo'=>'storage']) }}">Estoque</a></li>
-                            <li {{ Request::is('pdf/financial') ? 'class=active' : '' }}><a
-                                        href="{{ route('pdf.index',['tipo'=>'financial']) }}">Financeiro</a></li>
-                            <li {{ Request::is('pdf/clients') ? 'class=active' : '' }}><a
-                                        href="{{ route('pdf.index',['tipo'=>'clients']) }}">Clientes</a></li>
+                            <li {{ Request::is('pdf/budgets') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'budgets'])}}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Orçamentos
+                                </a>
+                            </li>
+                            <li {{ Request::is('pdf/orders') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'orders']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Ordens de serviço
+                                </a>
+                            </li>
+                            <li {{ Request::is('pdf/storage') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'storage']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Estoque
+                                </a>
+                            </li>
+                            <li {{ Request::is('pdf/financial') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'financial']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Financeiro
+                                </a>
+                            </li>
+                            <li {{ Request::is('pdf/clients') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'clients']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Clientes
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>

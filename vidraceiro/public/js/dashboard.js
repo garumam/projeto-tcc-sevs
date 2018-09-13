@@ -32,19 +32,20 @@ $(document).ready(function () {
             submenu.slideToggle("slow");
         }
     });
-    $('.opensubmenu a').click(function () {
-        let submenu = null;
-        let id = $(this).parent().attr('id');
-        if(id === 'usuarios-menu'){
-            submenu = $('#usuarios-menu ul');
-        }
-        if(id === 'relatorios-menu'){
-            submenu = $('#relatorios-menu ul');
-        }
-        if(id === 'modelos-menu'){
-            submenu = $('#modelos-menu ul');
-        }
-        $(this).parent().css('height', "auto");
+    $('.opensubmenu').click(function () {
+        let submenu = $(this).children('ul');
+        // let id = $(this).parent().attr('id');
+        //
+        // if(id === 'usuarios-menu'){
+        //     submenu = $('#usuarios-menu ul');
+        // }
+        // if(id === 'relatorios-menu'){
+        //     submenu = $('#relatorios-menu ul');
+        // }
+        // if(id === 'modelos-menu'){
+        //     submenu = $('#modelos-menu ul');
+        // }
+        submenu.closest('li').css('height', "auto");
         submenu.slideToggle("slow");
     });
 
