@@ -24,7 +24,7 @@
             <div class="col-6">
                 <form action="{{route('users.role.store',$user->id)}}" class="d-flex py-4" method="POST">
                     @csrf
-                    <select class="form-control form-control-chosen" name="role_id">
+                    <select class="custom-select" name="role_id">
                         <option value="">Selecione</option>
                         @foreach($roles as $role)
                             <option value="{{$role->id}}">{{$role->nome}}</option>
