@@ -218,3 +218,13 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'total'=> 0
     ];
 });
+
+$factory->define(App\Financial::class, function (Faker $faker) {
+    $tipo = $faker->randomElement(['RECEITA','DESPESA']);
+
+    return [
+        'tipo'=>$tipo,
+        'descricao'=>$faker->text(100),
+        'valor'=>$faker->randomFloat(2, 1, 50000)
+    ];
+});

@@ -13,6 +13,7 @@ use App\Client;
 use App\Sale;
 use App\Installment;
 use App\Payment;
+use App\Financial;
 use Illuminate\Database\Seeder;
 
 class CarregaItensTeste extends Seeder
@@ -303,17 +304,28 @@ class CarregaItensTeste extends Seeder
             'venda_id'=> 2
         ]);
 
-        Payment::create([
+        $payment = Payment::create([
             'data_pagamento'=> '2018-08-29',
             'valor_pago'=> 800.04,
             'venda_id'=> 1
         ]);
 
-        Payment::create([
+        Financial::create([
+            'tipo'=>'RECEITA',
+            'descricao'=>'Pagamento de venda à vista.',
+            'valor'=>$payment->valor_pago
+        ]);
+
+        $payment = Payment::create([
             'data_pagamento'=> '2018-09-28',
             'valor_pago'=> 99.19,
             'venda_id'=> 2
         ]);
 
+        Financial::create([
+            'tipo'=>'RECEITA',
+            'descricao'=>'Parcelas pagas.',
+            'valor'=>$payment->valor_pago
+        ]);
     }
 }

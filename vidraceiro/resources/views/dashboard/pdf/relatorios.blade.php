@@ -223,7 +223,53 @@
     @case('financial')
 
 
-    <p>AQUI É FINANCEIRO</p>
+    <h3>Relatório financeiro</h3>
+    <h4>Movimentações encontradas: {{count($financials->toArray())}}</h4>
+    @php
+        $possui_receitas = $possui_despesas = false;
+        $totalReceitas = $totalDespesas = 0;
+        foreach ($financials->where('tipo','RECEITA') as $receita){
+            $possui_receitas = true;
+            $totalReceitas += $receita->valor;
+        }
+        foreach ($financials->where('tipo','DESPESA') as $despesa){
+            $possui_despesas = true;
+            $totalDespesas += $despesa->valor;
+        }
+    @endphp
+
+    @if($possui_receitas && $possui_despesas)
+        <h4>Total Receitas: {{'R$'.$totalReceitas}}</h4>
+        <h4>Total Despesas: {{'R$'.$totalDespesas}}</h4>
+        <h4>Saldo: {{'R$'.($totalReceitas - $totalDespesas)}}</h4>
+    @elseif($possui_receitas)
+        <h4>Total Receitas: {{'R$'.$totalReceitas}}</h4>
+    @elseif($possui_despesas)
+        <h4>Total Despesas: {{'R$'.$totalDespesas}}</h4>
+    @endif
+
+
+
+    @forelse($financials as $financial)
+
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$financial->id}}</td>
+
+                    <td class="texto">
+                        <b>Tipo:</b> {{$financial->tipo .' |'}}
+                        <b>Descrição:</b> {{$financial->descricao??'Sem descrição!' .' |'}}
+                        <b>Valor:</b> {{'R$'.$financial->valor.' |'}}
+                        <b>Adicionada em:</b> {{date_format(date_create($financial->created_at), 'd/m/Y')}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhuma movimentação encontrada com as características passadas.</p>
+    @endforelse
 
 
     @break

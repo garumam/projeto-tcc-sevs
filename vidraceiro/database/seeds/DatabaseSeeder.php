@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         factory(App\MProduct::class, 20)->create();
 
         factory(App\Budget::class, 20)->create();
-
+        factory(App\Financial::class,20)->create();
         factory(App\Product::class, 40)->create();
         $products = App\Product::whereNotIn('id',[1,2,3])->get();
 
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        $sales = App\Sale::with('budget')->where('tipo_pagamento','A PRAZO')->whereNotIn('id',[1,2,3])->get();
+        $sales = App\Sale::with('budget')->where('tipo_pagamento','A PRAZO')->whereNotIn('id',[1,2])->get();
 
         foreach ($sales as $sale){
 
@@ -62,15 +62,20 @@ class DatabaseSeeder extends Seeder
 
         }
 
-        $sales = App\Sale::with('budget')->where('tipo_pagamento','A VISTA')->whereNotIn('id',[1,2,3])->get();
+        $sales = App\Sale::with('budget')->where('tipo_pagamento','A VISTA')->whereNotIn('id',[1,2])->get();
 
         foreach ($sales as $sale){
 
             $payment = new App\Payment();
-            $payment->create([
+            $payment = $payment->create([
                 'valor_pago'=> $sale->budget->total,
                 'data_pagamento'=>$sale->data_venda,
                 'venda_id'=>$sale->id
+            ]);
+            App\Financial::create([
+                'tipo'=>'RECEITA',
+                'descricao'=>'Pagamento de venda à vista.',
+                'valor'=>$payment->valor_pago
             ]);
         }
 
@@ -88,10 +93,15 @@ class DatabaseSeeder extends Seeder
         $installments = App\Installment::where('status_parcela','PAGO')->whereNotIn('id',[1,2])->get();
         foreach($installments as $installment){
             $payment = new App\Payment();
-            $payment->create([
+            $payment = $payment->create([
                 'valor_pago'=> $installment->valor_parcela,
                 'data_pagamento'=>$installment->data_vencimento,
                 'venda_id'=>$installment->venda_id
+            ]);
+            App\Financial::create([
+                'tipo'=>'RECEITA',
+                'descricao'=>'Parcelas pagas.',
+                'valor'=>$payment->valor_pago
             ]);
         }
 

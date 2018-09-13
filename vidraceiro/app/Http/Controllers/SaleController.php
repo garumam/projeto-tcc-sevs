@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Financial;
 use App\Installment;
 use App\Payment;
 use App\Storage;
@@ -77,12 +78,16 @@ class SaleController extends Controller
         }else{
 
             $payment = new Payment();
-            $payment->create([
+            $payment = $payment->create([
                 'valor_pago'=> $sale->budget->total,
                 'data_pagamento'=>$request->data_venda,
                 'venda_id'=>$sale->id
             ]);
-
+            Financial::create([
+                'tipo'=>'RECEITA',
+                'descricao'=>'Pagamento de venda à vista.',
+                'valor'=>$payment->valor_pago
+            ]);
         }
         $mensagem = '';
         if($request->usar_estoque != null){
@@ -245,10 +250,15 @@ class SaleController extends Controller
             }else{
 
                 $payment = new Payment();
-                $payment->create([
+                $payment = $payment->create([
                     'valor_pago'=> $sale->budget->total,
                     'data_pagamento'=>$request->data_venda,
                     'venda_id'=>$sale->id
+                ]);
+                Financial::create([
+                    'tipo'=>'RECEITA',
+                    'descricao'=>'Pagamento de venda à vista.',
+                    'valor'=>$payment->valor_pago
                 ]);
 
             }
@@ -257,7 +267,14 @@ class SaleController extends Controller
 
             if($request->has('valor_parcela')){
 
+                Financial::create([
+                    'tipo'=>'DESPESA',
+                    'descricao'=>'Venda atualizada de à vista para à prazo.',
+                    'valor'=>$sale->payments()->first()->valor_pago
+                ]);
+
                 $sale->payments()->delete();
+
 
                 for($i = 1; $i <= $request->qtd_parcelas; $i++){
                     $installments = new Installment();
@@ -299,6 +316,13 @@ class SaleController extends Controller
                     }
                     $mensagem = ', materiais em uso retornaram ao estoque!';
                 }
+                if($sale->tipo_pagamento === 'A VISTA'){
+                    Financial::create([
+                        'tipo'=>'DESPESA',
+                        'descricao'=>'Cancelamento de venda à vista.',
+                        'valor'=>$sale->payments()->first()->valor_pago
+                    ]);
+                }
             }
 
             $sale->budget->update(['status'=>'AGUARDANDO']);
@@ -327,16 +351,25 @@ class SaleController extends Controller
         if($request->parcelas !== null){
 
             $installments = Installment::whereIn('id',$request->parcelas)->get();
-
+            $valor = 0;
             foreach ($installments as $installment){
                 $payment = new Payment();
-                $payment->create([
+                $payment = $payment->create([
                     'valor_pago'=>$installment->valor_parcela,
                     'data_pagamento'=>$request->data_pagamento,
                     'venda_id'=>$id
                 ]);
+                $valor += $payment->valor_pago;
                 $installment->update(['status_parcela'=>'PAGO']);
             }
+            if($valor > 0){
+                Financial::create([
+                    'tipo'=>'RECEITA',
+                    'descricao'=>'Parcelas pagas.',
+                    'valor'=>$valor
+                ]);
+            }
+
 
         }else{
             return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');

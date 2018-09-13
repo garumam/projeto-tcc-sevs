@@ -66,7 +66,7 @@ class FinancialController extends Controller
                 'required',
                 Rule::in(['RECEITA', 'DESPESA'])
             ],
-            'descricao' => 'nullable|string|max:255',
+            'descricao' => 'nullable|string|max:100',
             'valor' => 'required|numeric'
         ]);
 
