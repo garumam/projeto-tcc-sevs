@@ -102,12 +102,12 @@
 
                                         @if($editar)
                                             <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
-                                                <button class="btn btn-warning mb-1">Editar</button>
+                                                <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
                                             </a>
                                         @endif
                                         @if($deletar)
                                             <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
-                                                <button class="btn btn-danger mb-1">Deletar</button>
+                                                <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                             </a>
                                         @endif
 

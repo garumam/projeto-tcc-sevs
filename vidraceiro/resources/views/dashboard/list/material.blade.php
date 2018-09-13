@@ -108,10 +108,10 @@
                                                 <td>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
-                                                        <button class="btn btn-warning mb-1">Editar</button>
+                                                        <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
                                                     </a>
                                                     <a class="btn-link" onclick="deletar(this.id,'materials/glass')" id="{{ $glass->id }}">
-                                                        <button class="btn btn-danger mb-1">Deletar</button>
+                                                        <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                                     </a>
                                                 </td>
                                             </tr>

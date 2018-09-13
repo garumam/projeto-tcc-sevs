@@ -60,8 +60,8 @@
                                 {{--</a>--}}
                                 <a class="btn-link" onclick="deletar(this.id,'roles/permission')"
                                    id="{{ $role->id .'/'.$permission->id }}">
-                                    <button class="btn btn-danger mb-1" {{$role->nome === 'admin' ? 'disabled' :'' }}>
-                                        Deletar
+                                    <button class="btn btn-danger mb-1" title="Deletar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </a>
                             </td>

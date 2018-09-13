@@ -45,10 +45,10 @@
                             <td><span class="badge {{$provider->situacao == "ativo" ? 'badge-success' : 'badge-secondary'}}">{{ ucfirst($provider->situacao) }}</span></td>
                             <td>
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
-                                    <button class="btn btn-warning mb-1">Editar</button>
+                                    <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
                                 </a>
                                 <a class="btn-link" onclick="deletar(this.id,'providers')" id="{{ $provider->id }}">
-                                    <button class="btn btn-danger mb-1">Deletar</button>
+                                    <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                 </a>
                             </td>
                         </tr>
