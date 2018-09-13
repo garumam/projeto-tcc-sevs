@@ -36,4 +36,28 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function addRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles()->save(
+                Role::where('nome', '=', $role)->firstOrFail()
+            );
+        }
+        return $this->roles()->save(
+            Role::where('nome', '=', $role->nome)->firstOrFail()
+        );
+    }
+
+    public function removeRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles()->detach(
+                Role::where('nome', '=', $role)->firstOrFail()
+            );
+        }
+        return $this->roles()->detach(
+            Role::where('nome', '=', $role->nome)->firstOrFail()
+        );
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -90,6 +91,27 @@ class UserController extends Controller
     {
         return view('dashboard.modal.delete');
 
+    }
+
+    public function roleshow($id){
+        $title = "Lista de Funções";
+        $user = User::find($id);
+        $roles = Role::all();
+        return view('dashboard.list.user-role',compact('user','roles','title'));
+    }
+
+    public function rolestore(Request $request,$id){
+        $user = User::find($id);
+        $role = Role::find($request->role_id);
+        $user->addRole($role);
+        return redirect()->back()->with('success','Função adicionada no usuario');
+    }
+
+    public function roledestroy($id,$role_id){
+        $user = User::find($id);
+        $role = Role::find($role_id);
+        $user->removeRole($role);
+        return redirect()->back()->with('success','Função removida do usuario');
     }
 
     public function destroy($id)

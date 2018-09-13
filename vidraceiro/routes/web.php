@@ -32,6 +32,13 @@ Route::prefix('users')->group(function () {
     Route::get('/{id}/edit', 'UserController@edit')->name('users.edit');
     Route::patch('/{id}', 'UserController@update')->name('users.update');
     Route::delete('/{id}', 'UserController@destroy')->name('users.destroy');
+
+
+    Route::get('/role/{id}', 'UserController@roleshow')->name('users.role.show');
+    Route::post('/role/{id}', 'UserController@rolestore')->name('users.role.store');
+//    Route::get('/{id}/edit', 'UserController@edit')->name('users.edit');
+//    Route::patch('/{id}', 'UserController@update')->name('users.update');
+    Route::delete('/role/{id}/{role_id}', 'UserController@roledestroy')->name('users.role.destroy');
 });
 
 //rotas dos papeis
