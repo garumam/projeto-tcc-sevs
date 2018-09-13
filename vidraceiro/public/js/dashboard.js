@@ -16,18 +16,19 @@ $(document).ready(function () {
     $('.opensubmenu ul li').each(function () {
         let ativo = $(this).attr("class");
         if (ativo === "active") {
-            let submenu = null;
-            let menuid = $(this).parent().closest('li').attr('id');
-            if(menuid === 'usuarios-menu'){
-                submenu = $('#usuarios-menu ul');
-            }
-            if(menuid === 'relatorios-menu'){
-                submenu = $('#relatorios-menu ul');
-            }
-            if(menuid === 'modelos-menu'){
-                submenu = $('#modelos-menu ul');
-            }
-            $(this).parent().closest('li').css('height', "auto");
+            // let submenu = null;
+            // let menuid = $(this).parent().closest('li').attr('id');
+            let submenu = $(this).parent();
+            // if(menuid === 'usuarios-menu'){
+            //     submenu = $('#usuarios-menu ul');
+            // }
+            // if(menuid === 'relatorios-menu'){
+            //     submenu = $('#relatorios-menu ul');
+            // }
+            // if(menuid === 'modelos-menu'){
+            //     submenu = $('#modelos-menu ul');
+            // }
+            submenu.closest('li').css('height', "auto");
             submenu.slideToggle("slow");
         }
     });
