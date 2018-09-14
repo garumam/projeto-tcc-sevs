@@ -98,6 +98,12 @@ class PdfController extends Controller
                 $nomearquivo = 'ordem_servico.pdf';
 
                 break;
+            case 'client_pdf':
+                $client = Client::find($id);
+                $pdf = PDF::loadView('dashboard.pdf.client', compact('client'));
+                $nomearquivo = 'client.pdf';
+
+                break;
         }
 
         return $pdf->stream($nomearquivo);

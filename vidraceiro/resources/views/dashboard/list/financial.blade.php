@@ -42,7 +42,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="descricao">Descrição</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao">
+                        <input type="text" maxlength="100" class="form-control" id="descricao" name="descricao">
                     </div>
 
                     <div class="form-group col-md-2">

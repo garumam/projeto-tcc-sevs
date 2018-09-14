@@ -73,7 +73,7 @@ Route::prefix('clients')->group(function () {
     Route::get('/', 'ClientController@index')->name('clients.index');
     Route::get('/create', 'ClientController@create')->name('clients.create');
     Route::post('/', 'ClientController@store')->name('clients.store');
-    Route::get('/{user}', 'ClientController@show')->name('clients.show');
+    Route::get('/{id}', 'ClientController@show')->name('clients.show');
     Route::get('/{id}/edit', 'ClientController@edit')->name('clients.edit');
     Route::patch('/{id}', 'ClientController@update')->name('clients.update');
     Route::delete('/{id}', 'ClientController@destroy')->name('clients.destroy');

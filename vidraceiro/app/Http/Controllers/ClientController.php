@@ -76,14 +76,15 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validado);
         }
         $client = new Client();
-        $client = $client->create(array_merge($request->all(),$arraydocnull));
+        $client = $client->create(array_merge($request->all(),$arraydocnull,['status'=>'EM DIA']));
         if ($client)
             return redirect()->back()->with('success', 'Cliente cadastrado com sucesso');
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $client = Client::find($id);
+        return view('dashboard.show.client', compact('client'))->with('title', 'Informações sobre o cliente');
     }
 
     public function edit($id)
