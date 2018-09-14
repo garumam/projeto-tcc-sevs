@@ -102,12 +102,12 @@
 
                                         @if($editar)
                                             <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
-                                                <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                                             </a>
                                         @endif
                                         @if($deletar)
                                             <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
-                                                <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
+                                                <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                             </a>
                                         @endif
 
@@ -188,7 +188,7 @@
                                         <td>{{$faltapagar}}</td>
                                         <td>
                                             <a class="btn-link" href="{{ route('sales.pay',['id'=> $sale->id]) }}">
-                                                <button class="btn btn-success mb-1">Pagar</button>
+                                                <button class="btn btn-success mb-1 card-shadow-1dp d-flex" title="Pagar"><i class="fas fa-dollar-sign" style="font-size: 1.5rem;"></i></button>
                                             </a>
                                         </td>
                                     </tr>

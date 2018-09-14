@@ -52,11 +52,11 @@
                             <td>
                                 @if(!($order->situacao === 'CONCLUIDA') && !($order->situacao === 'CANCELADA'))
                                 <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
-                                    <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                                 </a>
                                 @endif
                                 <a class="btn-link" onclick="deletar(this.id,'orders')" id="{{$order->id}}">
-                                    <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                 </a>
                             </td>
                         </tr>

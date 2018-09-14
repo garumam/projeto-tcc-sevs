@@ -77,7 +77,7 @@
                                 </a>
 
                                 <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
-                                    <button class="btn btn-warning mb-1 card-shadow-1dp" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                                 </a>
 
                                 @if($deletar)

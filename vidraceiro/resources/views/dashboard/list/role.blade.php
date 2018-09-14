@@ -43,17 +43,17 @@
                             <td>{{ $role->descricao }}</td>
                             <td>
                                 <a class="btn-link" href="{{ route('roles.edit',['id' => $role->id]) }}">
-                                    <button class="btn btn-warning mb-1" title="Editar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
-                                        <i class="fas fa-edit"></i>
+                                    <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                        <i class="fas fa-edit pl-1"></i>
                                     </button>
                                 </a>
                                 <a class="btn-link" href="{{ route('roles.permission.show',['id' => $role->id]) }}">
-                                    <button class="btn btn-dark mb-1" title="Permissão" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                    <button class="btn btn-dark mb-1 card-shadow-1dp" title="Permissão" {{$role->nome === 'admin' ? 'disabled' :'' }}>
                                         <i class="fas fa-key"></i>
                                     </button>
                                 </a>
                                 <a class="btn-link" onclick="deletar(this.id,'roles')" id="{{ $role->id }}">
-                                    <button class="btn btn-danger mb-1" title="Deletar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </a>

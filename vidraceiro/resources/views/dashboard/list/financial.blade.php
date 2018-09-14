@@ -114,7 +114,7 @@
                                         @endif
                                         <td>
                                             <a class="btn-link" onclick="deletar(this.id,'financial')" id="{{ $financial->id }}">
-                                                <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
+                                                <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                             </a>
                                         </td>
 
