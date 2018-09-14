@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Component::class, 65)->create();
         $this->atualizaTotal();
 
-        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
+        $budgets = App\Budget::whereIn('status',['APROVADO','FINALIZADO'])->whereNotIn('id',[1,2,3])->get();
 
         foreach ($budgets as $budget){
             factory(App\Sale::class)->create(['orcamento_id' => $budget->id]);

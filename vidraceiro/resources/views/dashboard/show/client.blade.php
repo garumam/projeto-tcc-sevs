@@ -101,24 +101,28 @@
                     </div>
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
-                            @forelse($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
+                            @php $possuiParcelasPendentes = false;@endphp
+                            @foreach($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
                                 @php
-                                    $installments = null;
+                                    $installments = [];
                                     $sale = $budget->sale()->first();
                                     if($sale){
                                         $installments = $sale->installments()->where('status_parcela','ABERTO')->get();
                                     }
+
                                 @endphp
                                 @foreach($installments as $installment)
                                     <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{'  '}}
                                     <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{'  '}}
                                     <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
                                     <hr>
+                                    @php $possuiParcelasPendentes = true; @endphp
                                 @endforeach
 
-                            @empty
-                                Este cliente não comprou nada!
-                            @endforelse
+                            @endforeach
+                            @if(!$possuiParcelasPendentes)
+                                Este cliente não possui parcelas pendentes!
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -132,9 +136,10 @@
                     </div>
                     <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                         <div class="card-body">
-                            @forelse($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
+                            @php $possuiPagamento = false; @endphp
+                            @foreach($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
                                 @php
-                                    $payments = null;
+                                    $payments = [];
                                     $sale = $budget->sale()->first();
                                     if($sale){
                                         $payments = $sale->payments()->get();
@@ -145,11 +150,13 @@
                                     <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{'  '}}
                                     <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
                                     <hr>
+                                    @php $possuiPagamento = true; @endphp
                                 @endforeach
 
-                            @empty
-                                Este cliente não comprou nada!
-                            @endforelse
+                            @endforeach
+                            @if(!$possuiPagamento)
+                                Este cliente não possui pagamentos!
+                            @endif
                         </div>
                     </div>
                 </div>
