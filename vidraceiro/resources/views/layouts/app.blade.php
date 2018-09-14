@@ -216,7 +216,7 @@
                                 <a class="nav-link dropdown-toggle minhaconta" href="https://example.com"
                                    id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <p>{{ Auth::user()->name }}</p>
-                                    <small class="admin">{{ Auth::user()->getRole()->nome ?? '' }}</small>
+                                    <small class="badge badge-primary admin">{{ Auth::user()->getRole()->nome ?? '' }}</small>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
