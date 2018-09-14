@@ -287,9 +287,8 @@ body {
 .admin {
     margin-left: 1rem;
     font-size: .8rem;
-    font-weight: 500;
     text-transform: capitalize;
-    /*background: #4264FB;*/
+    font-weight: 500 !important
 }
 
 #painel {

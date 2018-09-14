@@ -63,13 +63,13 @@ body {
     margin: 1rem;
     padding: 1.5rem 1rem;
     font-size: 16px;
-    font-weight: 400;
     overflow: hidden;
     z-index: 1;
     position: relative;
     background: rgb(255, 255, 255);
     border-radius: .3rem;
     box-sizing: border-box;
+    font-weight: 600;
 }
 
 .title {
@@ -79,8 +79,8 @@ body {
     line-height: 2;
 }
 
-.form-control,label{
-    font-weight: 500;
+#formulario label ,#formulario ::placeholder{
+    font-weight: 600;
 }
 
 /* shadow */

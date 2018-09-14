@@ -13,7 +13,7 @@
             <label for="email">{{ __('E-Mail') }}</label>
             <input type="email" id="email"
                    class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                   value="{{ old('email') }}" placeholder="Email address" required>
+                   value="{{ old('email') }}" placeholder="Email" required>
             @if($errors->has('email'))
                 <span class="badge badge-danger mt-3">{{ $errors->first('email') }}</span>
             @endif
