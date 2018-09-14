@@ -216,7 +216,7 @@
                                 <a class="nav-link dropdown-toggle minhaconta" href="https://example.com"
                                    id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <p>{{ Auth::user()->name }}</p>
-                                    <small class="admin">Admin</small>
+                                    <small class="admin">{{ Auth::user()->getRole()->nome ?? '' }}</small>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -228,7 +228,7 @@
                                           style="display: none;">
                                         @csrf
                                     </form>
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    {{--<a class="dropdown-item" href="#">Action</a>--}}
                                 </div>
                             </li>
                         </ul>

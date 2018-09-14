@@ -162,7 +162,10 @@ body {
 .dropdown-item {
     font-weight: 500;
 }
-
+.dropdown-item.active, .dropdown-item:active {
+    color: #191919;
+    background-color: #eff3f6;
+}
 .navbar-shadow {
     box-shadow: 0 3px 8px 0 rgba(23, 24, 32, 0.1);
 }
@@ -179,7 +182,8 @@ body {
     padding-right: .5rem;
     padding-left: .5rem;
 }
-.navbar-expand-md .navbar-nav{
+
+.navbar-expand-md .navbar-nav {
     justify-content: flex-end;
 }
 
@@ -188,7 +192,7 @@ body {
     font-weight: 600;
 }
 
-.imagem-usuario{
+.imagem-usuario {
     width: 58px;
     height: 60px;
     margin-right: 1rem;
@@ -263,14 +267,17 @@ body {
 .sidebar .nav a:hover {
     background: rgba(255, 255, 255, 0.23);
 }
-.submenu{
+
+.submenu {
     position: relative;
     display: none;
 }
-.submenu li a{
+
+.submenu li a {
     padding: .4rem 0 .4rem 1.5rem !important;
     height: inherit !important;
 }
+
 /* fim sidebar*/
 
 .minhaconta {
@@ -280,7 +287,9 @@ body {
 .admin {
     padding: 0;
     margin-left: .6rem;
-    font-size: .7rem;
+    font-size: .8rem;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 
 #painel {
@@ -358,9 +367,11 @@ body {
 .thumbnail {
     border: 5px solid #0acf97;
 }
-.page-link, .page-link:hover{
+
+.page-link, .page-link:hover {
     color: #4264FB;
 }
+
 .page-item.active .page-link {
     background-color: #4264FB;
     border-color: #4264FB;
@@ -506,18 +517,18 @@ td {
 }
 
 /*fixando tamanho do select com plugin chosen*/
-.chosen-drop .chosen-results{
-    max-height: 150px!important;
+.chosen-drop .chosen-results {
+    max-height: 150px !important;
 }
 
 /*Classe para colocar o asterisco nos campos obrigatorios*/
 .obrigatorio:after {
-    content:" *";
+    content: " *";
     color: red;
 }
 
 .info-importante:before {
-    content:" *";
+    content: " *";
     color: red;
 }
 

@@ -76,4 +76,8 @@ class User extends Authenticatable
     {
         return $this->existsRole('admin');
     }
+
+    public function getRole(){
+        return $this->roles()->first();
+    }
 }
