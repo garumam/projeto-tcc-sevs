@@ -19,12 +19,6 @@ class CarregaItens extends Seeder
     public function run()
     {
 
-        $userAdmin = new User;
-        $userAdmin->name = 'admin';
-        $userAdmin->email = 'admin@admin.com';
-        $userAdmin->setPasswordAttribute('admin');
-        $userAdmin->save();
-
         Category::create([
             'nome' => 'Box Diversos',
             'tipo' => 'produto',

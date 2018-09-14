@@ -1,6 +1,7 @@
 <?php
 
 use App\Role;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class RoleSeeds extends Seeder
@@ -17,6 +18,13 @@ class RoleSeeds extends Seeder
                 'nome' => 'admin',
                 'descricao' => 'Administrador'
             ]);
+            $userAdmin = new User;
+            $userAdmin->name = 'admin';
+            $userAdmin->email = 'admin@admin.com';
+            $userAdmin->setPasswordAttribute('admin');
+            $userAdmin->save();
+
+            $userAdmin->roles()->attach($admin->id);
         }
         if (!Role::where('nome', '=', 'funcionario')->count()) {
             $admin = Role::create([
