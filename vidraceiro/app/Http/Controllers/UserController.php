@@ -17,14 +17,12 @@ class UserController extends Controller
 
     public function index()
     {
-//        if (Auth::user()->can('usuario_listar')){
-//            dd('sim');
-//        }else{
-//            dd('nao');
-//        }
-        $users = User::all();
-        return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
-
+        if (Auth::user()->can('usuario_listar',User::class)) {
+            $users = User::all();
+            return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
+        } else {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa pagina');
+        }
     }
 
     public function create()
@@ -99,27 +97,30 @@ class UserController extends Controller
 
     }
 
-    public function roleshow($id){
+    public function roleshow($id)
+    {
         $title = "Lista de Funções";
         $user = User::find($id);
         $roles = Role::all();
-        return view('dashboard.list.user-role',compact('user','roles','title'));
+        return view('dashboard.list.user-role', compact('user', 'roles', 'title'));
     }
 
-    public function rolestore(Request $request,$id){
+    public function rolestore(Request $request, $id)
+    {
         $user = User::find($id);
         $role = Role::find($request->role_id);
-        if ($user->addRole($role)){
-            return redirect()->back()->with('success','Função adicionada no usuario');
+        if ($user->addRole($role)) {
+            return redirect()->back()->with('success', 'Função adicionada no usuario');
         }
-        return redirect()->back()->with('error','Função ja foi adicionada ou não existe essa função');
+        return redirect()->back()->with('error', 'Função ja foi adicionada ou não existe essa função');
     }
 
-    public function roledestroy($id,$role_id){
+    public function roledestroy($id, $role_id)
+    {
         $user = User::find($id);
         $role = Role::find($role_id);
         $user->removeRole($role);
-        return redirect()->back()->with('success','Função removida do usuario');
+        return redirect()->back()->with('success', 'Função removida do usuario');
     }
 
     public function destroy($id)

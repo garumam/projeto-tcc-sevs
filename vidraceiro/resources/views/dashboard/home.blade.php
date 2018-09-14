@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        @if(session('error'))
+            <div class="alerta p-0">
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            </div>
+        @endif
+    </div>
     <div class="col-12 col-sm-6 col-md-6 col-lg-4">
         <div class="card-material">
             <div class="widget">
