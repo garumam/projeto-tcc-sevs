@@ -70,14 +70,18 @@
                                     @php $editar = false; @endphp
                                 @endif
 
+                                <a class="btn-link" href="{{ route('budgets.show',['id'=> $budget->id]) }}">
+                                    <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                </a>
+
                                 @if($editar)
                                     <a class="btn-link" href="{{ route('budgets.edit',['id'=> $budget->id]) }}">
-                                        <button class="btn btn-warning mb-1" title="Editar"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-warning mb-1 card-shadow-1dp" title="Editar"><i class="fas fa-edit"></i></button>
                                     </a>
                                 @endif
                                 @if($deletar)
                                     <a class="btn-link" onclick="deletar(this.id,'budgets/budget')" id="{{ $budget->id }}">
-                                        <button class="btn btn-danger mb-1" title="Deletar"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                                     </a>
                                 @endif
 

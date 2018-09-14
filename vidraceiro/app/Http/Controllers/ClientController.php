@@ -84,7 +84,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
-        return view('dashboard.show.client', compact('client'))->with('title', 'Informações sobre o cliente');
+        return view('dashboard.show.client', compact('client'))->with('title', 'Informações do cliente');
     }
 
     public function edit($id)

@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
                 <a class="btn btn-primary btn-custom" target="_blank"
-                   href="{{route('pdf.show',['tipo'=>'client_pdf','id'=>$client->id])}}">Gerar PDF</a>
+                   href="{{route('pdf.show',['tipo'=>'budget','id'=>$budget->id])}}">Gerar PDF</a>
             </div>
 
             <div id="accordion">
@@ -15,16 +15,22 @@
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Dados pessoais
+                                Detalhes do orçamento
                             </button>
                         </h5>
                     </div>
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Nome: </b> {{$client->nome}}
+                            <b>Nome do cliente: </b> {{$budget->client()->first()->nome or ' Anônimo'}}
                             <hr>
-                            <b>{{$client->cpf !== null?'Cpf:':'Cnpj:' }} </b><label id="{{$client->cpf !== null?'cpf':'cnpj'}}"> {{$client->cpf or $client->cnpj}}</label>
+                            <b>Nome do orçamento: </b> {{$budget->nome or 'Não cadastrado!'}}
+                            <hr>
+                            <b>Data: </b> {{$budget->data !== null?date_format(date_create($budget->data), 'd/m/Y'):'Não cadastrada!'}}
+                            <hr>
+                            <b>Margem de lucro: </b> {{$budget->margem_lucro.'%'}}
+                            <hr>
+                            <b>Total: </b> R${{$budget->total or ''}}
                         </div>
                     </div>
                 </div>
@@ -38,11 +44,7 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Telefone: </b><label id="{{$client->telefone !== null?'telefone':''}}"> {{$client->telefone or 'não cadastrado!'}}</label>
-                            <hr>
-                            <b>Celular: </b><label id="{{$client->celular !== null?'celular':''}}"> {{$client->celular or 'não cadastrado!'}}</label>
-                            <hr>
-                            <b>Email: </b> {{$client->email or 'não cadastrado!'}}
+                            <b>Telefone: </b><label id="{{$budget->telefone !== null?'telefone':''}}"> {{$budget->telefone or 'não cadastrado!'}}</label>
                         </div>
                     </div>
                 </div>
@@ -56,17 +58,17 @@
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Endereço: </b> {{$client->endereco or 'não cadastrado!'}}
+                            <b>Endereço: </b> {{$budget->endereco or 'não cadastrado!'}}
                             <hr>
-                            <b>Bairro: </b> {{$client->bairro or 'não cadastrado!'}}
+                            <b>Bairro: </b> {{$budget->bairro or 'não cadastrado!'}}
                             <hr>
-                            <b>Cidade: </b> {{$client->cidade or 'não cadastrado!'}}
+                            <b>Cidade: </b> {{$budget->cidade or 'não cadastrado!'}}
                             <hr>
-                            <b>Uf: </b> {{$client->uf or 'não cadastrado!'}}
+                            <b>Uf: </b> {{$budget->uf or 'não cadastrado!'}}
                             <hr>
-                            <b>Cep: </b><label id="{{$client->cep !== null?'cep':''}}"> {{$client->cep or 'não cadastrado!'}}</label>
+                            <b>Cep: </b><label id="{{$budget->cep !== null?'cep':''}}"> {{$budget->cep or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Complemento: </b> {{$client->complemento or 'não cadastrado!'}}
+                            <b>Complemento: </b> {{$budget->complemento or 'não cadastrado!'}}
                         </div>
                     </div>
                 </div>
@@ -74,19 +76,25 @@
                     <div class="card-header" id="headingFour">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                Orçamentos
+                                Produtos
                             </button>
                         </h5>
                     </div>
                     <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                         <div class="card-body">
-                            @forelse($client->budgets()->get() as $budget)
-                                <b>Nome: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-                                <b>Status: </b> {{$budget->status or 'não cadastrado!'}}{{' | '}}
-                                <b>Total: </b> R${{$budget->total or ''}}
+                            @forelse($budget->products()->get() as $product)
+                                <b>Id: </b> {{$product->id}}{{' | '}}
+                                <b>Nome: </b> {{$product->mproduct()->first()->nome or 'não cadastrado!'}}{{' | '}}
+                                <b>Descrição: </b> {{$product->mproduct()->first()->descricao or 'não cadastrado!'}}{{' | '}}
+                                <b>Linha: </b> {{$product->mproduct()->first()->category()->first()->nome or 'não cadastrado!'}}{{' | '}}
+                                <b>Largura: </b> {{$product->largura or 'não cadastrado!'}}{{' | '}}
+                                <b>Altura: </b> {{$product->altura or 'não cadastrado!'}}{{' | '}}
+                                <b>Qtd: </b> {{$product->qtd or 'não cadastrado!'}}{{' | '}}
+                                <b>Localização: </b> {{$product->localizacao or 'não cadastrado!'}}{{' | '}}
+                                <b>Mão de obra: </b> R${{$product->valor_mao_obra or ''}}
                                 <hr>
                             @empty
-                                Este cliente não tem orçamentos!
+                                Nenhum produto neste orçamento!
                             @endforelse
                         </div>
                     </div>
@@ -95,38 +103,45 @@
                     <div class="card-header" id="headingFive">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                Parcelas pendentes
+                                Materiais
                             </button>
                         </h5>
                     </div>
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
-                            @php $possuiParcelasPendentes = false;@endphp
-                            @foreach($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
-                                @php
-                                    $installments = [];
-                                    $sale = $budget->sale()->first();
-                                    if($sale){
-                                        $installments = $sale->installments()->where('status_parcela','ABERTO')->get();
-                                    }
-
-                                @endphp
-                                @foreach($installments as $installment)
-                                    <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-                                    <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
-                                    <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
-                                    <hr>
-                                    @php $possuiParcelasPendentes = true; @endphp
-                                @endforeach
-
-                            @endforeach
-                            @if(!$possuiParcelasPendentes)
-                                Este cliente não possui parcelas pendentes!
-                            @endif
+                            @forelse($budget->products()->get() as $product)
+                                <p><b>Id do produto: </b> {{$product->id}}{{' | '}}
+                                <b>Nome do produto: </b> {{$product->mproduct()->first()->nome or 'não cadastrado!'}}</p>
+                                <hr>
+                                <p><b>Vidros: </b>
+                                @forelse($product->glasses()->get() as $glass)
+                                    {{$glass->nome.' '. $glass->tipo .' | '}}
+                                @empty
+                                    Nenhum vidro!
+                                @endforelse
+                                </p>
+                                <p><b>Alumínios: </b>
+                                    @forelse($product->aluminums()->get() as $aluminum)
+                                        {{$aluminum->perfil.' '. $aluminum->descricao .' qtd:'.$aluminum->qtd.' | '}}
+                                    @empty
+                                        Nenhum Alumínio!
+                                    @endforelse
+                                </p>
+                                <p><b>Componentes: </b>
+                                    @forelse($product->components()->get() as $component)
+                                        {{$component->nome.' qtd:'.$component->qtd.' | '}}
+                                    @empty
+                                        Nenhum componente!
+                                    @endforelse
+                                </p>
+                                <hr>
+                            @empty
+                                Nenhum material neste orçamento!
+                            @endforelse
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                {{--<div class="card">
                     <div class="card-header" id="headingSix">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
@@ -146,8 +161,8 @@
                                     }
                                 @endphp
                                 @foreach($payments as $payment)
-                                    <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-                                    <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}
+                                    <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{'  '}}
+                                    <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{'  '}}
                                     <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
                                     <hr>
                                     @php $possuiPagamento = true; @endphp
@@ -159,7 +174,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </div>
 
         </div>

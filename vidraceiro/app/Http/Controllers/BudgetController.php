@@ -334,9 +334,10 @@ class BudgetController extends Controller
         return redirect()->back()->with('error', "Erro ao adicionar");
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $budget = Budget::find($id);
+        return view('dashboard.show.budget', compact('budget'))->with('title', 'Informações do orçamento');
     }
 
     public function edit($id)
