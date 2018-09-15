@@ -9,7 +9,7 @@
             </div>
         @endif
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalusers}}
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$clients}}
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalcategories}}
@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalproducts}}
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalbudgets}}
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalorders}}
@@ -69,7 +69,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material">
             <div class="widget">
                 <h4 class="titulo">{{$totalmaterials}}

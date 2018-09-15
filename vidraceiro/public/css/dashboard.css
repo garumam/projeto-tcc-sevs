@@ -499,7 +499,7 @@ td {
     z-index: 1;
     position: relative;
     background: rgb(255, 255, 255);
-    border-radius: 1rem;
+    border-radius: .5rem;
     box-sizing: border-box;
     margin-bottom: 1rem;
 }
