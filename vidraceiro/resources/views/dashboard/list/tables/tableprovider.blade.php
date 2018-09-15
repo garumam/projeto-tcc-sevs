@@ -38,6 +38,6 @@
 </table>
 <p class="m-4 text-center"
    style="font-weight: 600;"> {{ ($providers->count() == 0) ? 'Nenhum fornecedor encontrado': ''}}</p>
-{{ $providers->links() }}
+{{ $providers->links('layouts.pagination') }}
 
 

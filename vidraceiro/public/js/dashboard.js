@@ -1019,11 +1019,17 @@ $(document).ready(function () {
 
         // $('#load a').css('color', '#dfecf6');
         // $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/loading.gif" />');
-
-        var numeropaginacao = $(this).text();
+        let numeroleftright = $(this).attr('data-page');
+        let numeropaginacao = $(this).text();
+        let paginacao = 0;
+        if (numeroleftright !== undefined) {
+            paginacao = numeroleftright;
+        } else {
+            paginacao = numeropaginacao;
+        }
         let search = $('#search').val();
         let host = window.location.href;
-        let novaurl = host + '?search=' + search + '&page=' + numeropaginacao;
+        let novaurl = host + '?search=' + search + '&page=' + paginacao;
         ajaxPesquisaLoad(novaurl);
         // window.history.pushState("", "", url);
     });
