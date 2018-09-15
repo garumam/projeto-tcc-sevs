@@ -163,7 +163,7 @@ Route::prefix('providers')->group(function () {
     Route::get('/', 'ProviderController@index')->name('providers.index');
     Route::get('/create', 'ProviderController@create')->name('providers.create');
     Route::post('/', 'ProviderController@store')->name('providers.store');
-    Route::get('/{user}', 'ProviderController@show')->name('providers.show');
+    Route::get('/{id}', 'ProviderController@show')->name('providers.show');
     Route::get('/{id}/edit', 'ProviderController@edit')->name('providers.edit');
     Route::patch('/{id}', 'ProviderController@update')->name('providers.update');
     Route::delete('/{id}', 'ProviderController@destroy')->name('providers.destroy');

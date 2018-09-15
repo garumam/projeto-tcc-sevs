@@ -44,6 +44,9 @@
                             <td>{{ $provider->email }}</td>
                             <td><span class="badge {{$provider->situacao == "ativo" ? 'badge-success' : 'badge-secondary'}}">{{ ucfirst($provider->situacao) }}</span></td>
                             <td>
+                                <a class="btn-link" href="{{ route('providers.show',['id'=> $provider->id]) }}">
+                                    <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                </a>
                                 <a class="btn-link" href="{{ route('providers.edit',['id' => $provider->id]) }}">
                                     <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                                 </a>

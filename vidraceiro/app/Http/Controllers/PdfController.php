@@ -7,6 +7,7 @@ use App\Client;
 use App\Financial;
 use App\Order;
 use App\Company;
+use App\Provider;
 use App\Storage;
 use App\Sale;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -115,6 +116,12 @@ class PdfController extends Controller
                 $sale = Sale::find($id);
                 $pdf = PDF::loadView('dashboard.pdf.sale', compact('sale'));
                 $nomearquivo = 'venda.pdf';
+
+                break;
+            case 'provider_pdf':
+                $provider = Provider::find($id);
+                $pdf = PDF::loadView('dashboard.pdf.provider', compact('provider'));
+                $nomearquivo = 'fornecedor.pdf';
 
                 break;
         }

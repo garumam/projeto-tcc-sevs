@@ -71,9 +71,10 @@ class ProviderController extends Controller
             return redirect()->back()->with('success', 'Fornecedor criado com sucesso');
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $provider = Provider::find($id);
+        return view('dashboard.show.provider', compact('provider'))->with('title', 'Informações do fornecedor');
     }
 
     public function edit($id)
