@@ -366,7 +366,9 @@ body {
 .thumbnail {
     border: 5px solid #0acf97;
 }
-
+.pagination {
+   justify-content: flex-end;
+}
 .page-link, .page-link:hover {
     color: #4264FB;
 }

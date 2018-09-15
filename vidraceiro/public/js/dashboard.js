@@ -952,6 +952,13 @@ $(document).ready(function () {
     //
     // });
 
+
+    // $('#pesquisar').on('keyup',function (e) {
+    //     e.preventDefault();
+    //     ajaxPesquisaLoad();
+    // });
+
+
     $('#telefone').mask('(00) 0000-0000');
     $('.telefone').mask('(00) 0000-0000');
     $('#cep').mask('00000-000');
@@ -1009,3 +1016,16 @@ $(document).ready(function () {
 
 
 });
+
+function ajaxPesquisaLoad(input, url) {
+    console.log(input.value);
+    console.log(url + '=' + input.value);
+    let novaurl = url + '=' + input.value;
+    $.ajax({
+        type: "GET",
+        url: novaurl,
+        success: function (data) {
+            $('#content').html(data)
+        },
+    });
+}

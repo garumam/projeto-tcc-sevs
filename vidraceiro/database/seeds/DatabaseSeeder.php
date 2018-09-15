@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Client::class, 10)->create();
         factory(App\MProduct::class, 20)->create();
-
+        factory(App\Provider::class, 48)->create();
         factory(App\Budget::class, 20)->create();
         factory(App\Financial::class,20)->create();
         factory(App\Product::class, 40)->create();

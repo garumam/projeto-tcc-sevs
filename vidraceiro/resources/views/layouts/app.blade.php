@@ -299,6 +299,11 @@
 
 
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     function deletar(id, nome) {
         if (id != 'vazio') {
             var form = document.getElementById('delete-form');

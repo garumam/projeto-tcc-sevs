@@ -4,24 +4,24 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Client::class, function (Faker $faker) {
     return [
-        'nome'=> $faker->name,
-        'bairro'=> $faker->streetName,
-        'cep'=>str_replace('-','',$faker->postcode),
+        'nome' => $faker->name,
+        'bairro' => $faker->streetName,
+        'cep' => str_replace('-', '', $faker->postcode),
         'cpf' => $faker->unique()->cpf(false),
-        'cidade'=> $faker->city,
-        'complemento'=> $faker->secondaryAddress,
-        'endereco'=> $faker->address,
-        'telefone'=> $faker->numerify('##########'),
-        'celular'=> $faker->numerify('9##########'),
-        'status'=> 'EM DIA',
+        'cidade' => $faker->city,
+        'complemento' => $faker->secondaryAddress,
+        'endereco' => $faker->address,
+        'telefone' => $faker->numerify('##########'),
+        'celular' => $faker->numerify('9##########'),
+        'status' => 'EM DIA',
         'uf' => $faker->stateAbbr
     ];
 });
 
 $factory->define(App\MProduct::class, function (Faker $faker) {
-    $categoria = $faker->numberBetween(1,5);
+    $categoria = $faker->numberBetween(1, 5);
     $folder = null;
-    switch($categoria){
+    switch ($categoria) {
         case 1:
             $folder = '/img/boxdiversos/';
             break;
@@ -49,29 +49,29 @@ $factory->define(App\MProduct::class, function (Faker $faker) {
     }
 
     $max = count($filename);
-    $position = $faker->numberBetween(0,$max-1);
+    $position = $faker->numberBetween(0, $max - 1);
 
     return [
         'nome' => $faker->word,
         'descricao' => $faker->text(50),
-        'imagem' => $folder.$filename[$position],
+        'imagem' => $folder . $filename[$position],
         'categoria_produto_id' => $categoria
     ];
 });
 
 
 $factory->define(App\Budget::class, function (Faker $faker) {
-    $clients = App\Client::whereNotIn('id',[1,2])->get()->toArray();
+    $clients = App\Client::whereNotIn('id', [1, 2])->get()->toArray();
 
     $max = count($clients);
-    $position = $faker->numberBetween(0,$max-1);
+    $position = $faker->numberBetween(0, $max - 1);
 
-    $status = $faker->randomElement(['APROVADO','AGUARDANDO','FINALIZADO']);
+    $status = $faker->randomElement(['APROVADO', 'AGUARDANDO', 'FINALIZADO']);
 
     $id_order = null;
-    if($status === 'APROVADO'){
-        $criarordem = $faker->numberBetween(0,1) === 1? true : false;
-        if($criarordem){
+    if ($status === 'APROVADO') {
+        $criarordem = $faker->numberBetween(0, 1) === 1 ? true : false;
+        if ($criarordem) {
             $order = factory(App\Order::class)->create();
             $id_order = $order->id;
         }
@@ -79,18 +79,18 @@ $factory->define(App\Budget::class, function (Faker $faker) {
 
 
     return [
-        'status'=> $status,
-        'bairro'=> $clients[$position]['bairro'],
-        'cep'=>$clients[$position]['cep'],
-        'cidade'=> $clients[$position]['cidade'],
-        'complemento'=> $clients[$position]['complemento'],
-        'data'=> $faker->date('Y-m-d', 'now'),
-        'margem_lucro'=> $faker->randomFloat(2,0,100),
-        'nome'=> 'orçamento '.$faker->word,
-        'endereco'=> $clients[$position]['endereco'],
-        'telefone'=> $clients[$position]['telefone'],
-        'total'=> 0,
-        'ordem_id'=> $id_order,
+        'status' => $status,
+        'bairro' => $clients[$position]['bairro'],
+        'cep' => $clients[$position]['cep'],
+        'cidade' => $clients[$position]['cidade'],
+        'complemento' => $clients[$position]['complemento'],
+        'data' => $faker->date('Y-m-d', 'now'),
+        'margem_lucro' => $faker->randomFloat(2, 0, 100),
+        'nome' => 'orçamento ' . $faker->word,
+        'endereco' => $clients[$position]['endereco'],
+        'telefone' => $clients[$position]['telefone'],
+        'total' => 0,
+        'ordem_id' => $id_order,
         'uf' => $clients[$position]['uf'],
         'cliente_id' => $clients[$position]['id']
     ];
@@ -98,89 +98,89 @@ $factory->define(App\Budget::class, function (Faker $faker) {
 
 $factory->define(App\Product::class, function (Faker $faker) {
     $mproduct = App\MProduct::all()->toArray();
-    $budget = App\Budget::whereNotIn('id',[1,2,3])->get()->toArray();
+    $budget = App\Budget::whereNotIn('id', [1, 2, 3])->get()->toArray();
     $max_budget = count($budget);
-    $position_budget = $faker->numberBetween(0,$max_budget-1);
+    $position_budget = $faker->numberBetween(0, $max_budget - 1);
     $max_mproduct = count($mproduct);
-    $position_mprod = $faker->numberBetween(0,$max_mproduct-1);
+    $position_mprod = $faker->numberBetween(0, $max_mproduct - 1);
     return [
-        'altura'=> $faker->randomFloat(3,0,10),
-        'largura'=> $faker->randomFloat(3,0,10),
-        'localizacao'=> $faker->randomElement(['Quarto','Banheiro','Sala','Varanda','Entrada da casa']),
-        'm_produto_id'=> $mproduct[$position_mprod]['id'],
-        'budget_id'=> $budget[$position_budget]['id'],
-        'qtd'=> 1,
-        'valor_mao_obra'=> $faker->randomFloat(2,0,1000)
+        'altura' => $faker->randomFloat(3, 0, 10),
+        'largura' => $faker->randomFloat(3, 0, 10),
+        'localizacao' => $faker->randomElement(['Quarto', 'Banheiro', 'Sala', 'Varanda', 'Entrada da casa']),
+        'm_produto_id' => $mproduct[$position_mprod]['id'],
+        'budget_id' => $budget[$position_budget]['id'],
+        'qtd' => 1,
+        'valor_mao_obra' => $faker->randomFloat(2, 0, 1000)
     ];
 });
 
 $factory->define(App\Glass::class, function (Faker $faker) {
-    $mglass = App\Glass::where('is_modelo',1)->get()->toArray();
+    $mglass = App\Glass::where('is_modelo', 1)->get()->toArray();
 
     $max = count($mglass);
-    $position = $faker->numberBetween(0,$max-1);
+    $position = $faker->numberBetween(0, $max - 1);
 
     return [
-        'categoria_vidro_id'=> $mglass[$position]['categoria_vidro_id'],
-        'cor'=> $mglass[$position]['cor'],
-        'espessura'=> $mglass[$position]['espessura'],
-        'is_modelo'=> 0,
-        'nome'=> $mglass[$position]['nome'],
-        'preco'=> $mglass[$position]['preco'],
-        'mglass_id'=> $mglass[$position]['id'],
-        'tipo'=> $mglass[$position]['tipo']
+        'categoria_vidro_id' => $mglass[$position]['categoria_vidro_id'],
+        'cor' => $mglass[$position]['cor'],
+        'espessura' => $mglass[$position]['espessura'],
+        'is_modelo' => 0,
+        'nome' => $mglass[$position]['nome'],
+        'preco' => $mglass[$position]['preco'],
+        'mglass_id' => $mglass[$position]['id'],
+        'tipo' => $mglass[$position]['tipo']
     ];
 });
 
 $factory->define(App\Aluminum::class, function (Faker $faker) {
-    $maluminum = App\Aluminum::where('is_modelo',1)->get()->toArray();
-    $produto = App\Product::whereNotIn('id',[1,2,3])->get()->toArray();
+    $maluminum = App\Aluminum::where('is_modelo', 1)->get()->toArray();
+    $produto = App\Product::whereNotIn('id', [1, 2, 3])->get()->toArray();
 
     $max_product = count($produto);
-    $position_produto = $faker->numberBetween(0,$max_product-1);
+    $position_produto = $faker->numberBetween(0, $max_product - 1);
 
     $max = count($maluminum);
-    $position = $faker->numberBetween(0,$max-1);
+    $position = $faker->numberBetween(0, $max - 1);
 
 
-    $aluminioMedida = $maluminum[$position]['tipo_medida'] === 'largura'? $produto[$position_produto]['largura'] :
-        ($maluminum[$position]['tipo_medida'] === 'altura'?$produto[$position_produto]['altura'] : $maluminum[$position]['medida']);
-    $aluminioPeso = ($maluminum[$position]['peso']/$maluminum[$position]['medida'])*$aluminioMedida;
-    $aluminioPeso = number_format($aluminioPeso, 3, '.','');
+    $aluminioMedida = $maluminum[$position]['tipo_medida'] === 'largura' ? $produto[$position_produto]['largura'] :
+        ($maluminum[$position]['tipo_medida'] === 'altura' ? $produto[$position_produto]['altura'] : $maluminum[$position]['medida']);
+    $aluminioPeso = ($maluminum[$position]['peso'] / $maluminum[$position]['medida']) * $aluminioMedida;
+    $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
 
 
     return [
-        'categoria_aluminio_id'=> $maluminum[$position]['categoria_aluminio_id'],
-        'descricao'=> $maluminum[$position]['descricao'],
-        'is_modelo'=> 0,
-        'medida'=> $aluminioMedida,
-        'perfil'=> $maluminum[$position]['perfil'],
-        'peso'=> $aluminioPeso,
-        'preco'=> $maluminum[$position]['preco'],
-        'qtd'=> $maluminum[$position]['qtd'],
+        'categoria_aluminio_id' => $maluminum[$position]['categoria_aluminio_id'],
+        'descricao' => $maluminum[$position]['descricao'],
+        'is_modelo' => 0,
+        'medida' => $aluminioMedida,
+        'perfil' => $maluminum[$position]['perfil'],
+        'peso' => $aluminioPeso,
+        'preco' => $maluminum[$position]['preco'],
+        'qtd' => $maluminum[$position]['qtd'],
         'product_id' => $produto[$position_produto]['id'],
-        'maluminum_id'=> $maluminum[$position]['id'],
-        'tipo_medida'=> $maluminum[$position]['tipo_medida'],
+        'maluminum_id' => $maluminum[$position]['id'],
+        'tipo_medida' => $maluminum[$position]['tipo_medida'],
     ];
 });
 
 $factory->define(App\Component::class, function (Faker $faker) {
-    $mcomponent = App\Component::where('is_modelo',1)->get()->toArray();
-    $produto = App\Product::whereNotIn('id',[1,2,3])->get()->toArray();
+    $mcomponent = App\Component::where('is_modelo', 1)->get()->toArray();
+    $produto = App\Product::whereNotIn('id', [1, 2, 3])->get()->toArray();
 
     $max_product = count($produto);
-    $position_produto = $faker->numberBetween(0,$max_product-1);
+    $position_produto = $faker->numberBetween(0, $max_product - 1);
 
     $max = count($mcomponent);
-    $position = $faker->numberBetween(0,$max-1);
+    $position = $faker->numberBetween(0, $max - 1);
 
     return [
-        'is_modelo'=> 0,
-        'nome'=> $mcomponent[$position]['nome'],
-        'preco'=> $mcomponent[$position]['preco'],
-        'qtd'=> $mcomponent[$position]['qtd'],
+        'is_modelo' => 0,
+        'nome' => $mcomponent[$position]['nome'],
+        'preco' => $mcomponent[$position]['preco'],
+        'qtd' => $mcomponent[$position]['qtd'],
         'product_id' => $produto[$position_produto]['id'],
-        'mcomponent_id'=> $mcomponent[$position]['id'],
+        'mcomponent_id' => $mcomponent[$position]['id'],
         'categoria_componente_id' => $mcomponent[$position]['categoria_componente_id']
     ];
 });
@@ -188,43 +188,60 @@ $factory->define(App\Component::class, function (Faker $faker) {
 
 $factory->define(App\Sale::class, function (Faker $faker) {
 
-    $tipo_pagamento = $faker->randomElement(['A PRAZO','A VISTA']);
+    $tipo_pagamento = $faker->randomElement(['A PRAZO', 'A VISTA']);
     $qtd_parcelas = null;
 
-    if($tipo_pagamento === 'A PRAZO'){
-        $qtd_parcelas = $faker->numberBetween(2,12);
+    if ($tipo_pagamento === 'A PRAZO') {
+        $qtd_parcelas = $faker->numberBetween(2, 12);
     }
 
 
     return [
-        'tipo_pagamento'=> $tipo_pagamento,
-        'data_venda'=> $faker->date('Y-m-d', 'now'),
-        'qtd_parcelas'=> $qtd_parcelas
+        'tipo_pagamento' => $tipo_pagamento,
+        'data_venda' => $faker->date('Y-m-d', 'now'),
+        'qtd_parcelas' => $qtd_parcelas
     ];
 });
 
 
 $factory->define(App\Order::class, function (Faker $faker) {
     $data_inicial = $faker->date('Y-m-d', 'now');
-    $dias = $faker->numberBetween(5,50);
-    $data_final = date('Y-m-d', strtotime("+$dias days",strtotime($data_inicial)));;
-    $situacao = $faker->randomElement(['ABERTA','ANDAMENTO']);
+    $dias = $faker->numberBetween(5, 50);
+    $data_final = date('Y-m-d', strtotime("+$dias days", strtotime($data_inicial)));;
+    $situacao = $faker->randomElement(['ABERTA', 'ANDAMENTO']);
 
     return [
         'data_final' => $data_final,
         'data_inicial' => $data_inicial,
-        'nome'=> 'order '.$faker->word,
+        'nome' => 'order ' . $faker->word,
         'situacao' => $situacao,
-        'total'=> 0
+        'total' => 0
     ];
 });
 
 $factory->define(App\Financial::class, function (Faker $faker) {
-    $tipo = $faker->randomElement(['RECEITA','DESPESA']);
+    $tipo = $faker->randomElement(['RECEITA', 'DESPESA']);
 
     return [
-        'tipo'=>$tipo,
-        'descricao'=>$faker->text(100),
-        'valor'=>$faker->randomFloat(2, 1, 50000)
+        'tipo' => $tipo,
+        'descricao' => $faker->text(100),
+        'valor' => $faker->randomFloat(2, 1, 50000)
+    ];
+});
+
+$factory->define(App\Provider::class, function (Faker $faker) {
+
+    return [
+        'bairro' => $faker->text(100),
+        'celular' => $faker->randomDigit(10),
+        'cep' => $faker->randomDigit(10),
+        'cidade' => $faker->text(100),
+        'cnpj' => $faker->randomDigit(12),
+        'email' => $faker->text(100),
+        'nome' => $faker->text(25),
+        'endereco' => $faker->text(100),
+        'situacao' => 'ativo',
+        'telefone' => $faker->randomDigit(10),
+        'uf' => $faker->text(10),
     ];
 });

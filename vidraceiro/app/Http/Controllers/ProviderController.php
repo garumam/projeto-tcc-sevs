@@ -47,10 +47,23 @@ class ProviderController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $providers = Provider::all();
-        return view('dashboard.list.provider', compact('providers'))->with('title', 'Fornecedores');
+//        $providers = Provider::paginate(1);
+        $paginate = 10;
+        if ($request->get('paginate')){
+            $paginate = $request->get('paginate');
+        }
+        $providers = Provider::where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()){
+//            return response()->view('dashboard.list.tables.tableprovider',compact('providers'),200);
+            return view('dashboard.list.tables.tableprovider', compact('providers'));
+        }else{
+            return view('dashboard.list.provider', compact('providers'))->with('title', 'Fornecedores');
+        }
+
     }
 
     public function create()
