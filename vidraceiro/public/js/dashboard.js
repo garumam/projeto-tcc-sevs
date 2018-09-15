@@ -1014,10 +1014,35 @@ $(document).ready(function () {
 
     });
 
+    $('body').on('click', '.pagination a', function (e) {
+        e.preventDefault();
+
+        // $('#load a').css('color', '#dfecf6');
+        // $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/loading.gif" />');
+
+        var numeropaginacao = $(this).text();
+        let search = $('#search').val();
+        let host = window.location.href;
+        let novaurl = host + '?search=' + search + '&page=' + numeropaginacao;
+        getFromPagination(novaurl);
+        // window.history.pushState("", "", url);
+    });
+
 
 });
 
-function ajaxPesquisaLoad(input, url) {
+
+function getFromPagination(url) {
+    $.ajax({
+        url: url
+    }).done(function (data) {
+        $('#content').html(data);
+    }).fail(function () {
+        alert('Erro ao carregar');
+    });
+}
+
+function ajaxPesquisaLoad(input = null, url) {
     console.log(input.value);
     console.log(url + '=' + input.value);
     let novaurl = url + '=' + input.value;
@@ -1025,7 +1050,7 @@ function ajaxPesquisaLoad(input, url) {
         type: "GET",
         url: novaurl,
         success: function (data) {
-            $('#content').html(data)
+            $('#content').html(data);
         },
     });
 }
