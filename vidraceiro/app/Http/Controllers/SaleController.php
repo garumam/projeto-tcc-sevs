@@ -191,9 +191,10 @@ class SaleController extends Controller
 
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $sale = Sale::find($id);
+        return view('dashboard.show.sale', compact('sale'))->with('title', 'Informações da venda');
     }
 
     public function edit($id)
