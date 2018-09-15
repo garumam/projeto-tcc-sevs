@@ -66,7 +66,7 @@
                 <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                     <label for="paginate">Mostrar</label>
                     <select id="paginate" name="paginate" class="custom-select"
-                            onchange="ajaxPesquisaLoad(this,'{{url('providers')}}?search='+$('#search').val()+'&paginate')">
+                            onchange="ajaxPesquisaLoad('{{url('providers')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val())">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -75,7 +75,7 @@
                 <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
                     <label for="search">Pesquisar</label>
                     <input type="text" class="form-control"
-                           onkeyup="ajaxPesquisaLoad(this,'{{url('providers?search')}}')"
+                           onkeyup="ajaxPesquisaLoad('{{url('providers')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val())"
                            value="{{ old('search') }}" id="search" name="search" placeholder="Pesquisar">
                 </div>
             </div>

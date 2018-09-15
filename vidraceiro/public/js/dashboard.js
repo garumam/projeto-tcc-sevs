@@ -1024,31 +1024,31 @@ $(document).ready(function () {
         let search = $('#search').val();
         let host = window.location.href;
         let novaurl = host + '?search=' + search + '&page=' + numeropaginacao;
-        getFromPagination(novaurl);
+        ajaxPesquisaLoad(novaurl);
         // window.history.pushState("", "", url);
     });
 
 
 });
 
+//
+// function getFromPagination(url) {
+//     $.ajax({
+//         url: url
+//     }).done(function (data) {
+//         $('#content').html(data);
+//     }).fail(function () {
+//         alert('Erro ao carregar');
+//     });
+// }
 
-function getFromPagination(url) {
-    $.ajax({
-        url: url
-    }).done(function (data) {
-        $('#content').html(data);
-    }).fail(function () {
-        alert('Erro ao carregar');
-    });
-}
-
-function ajaxPesquisaLoad(input = null, url) {
-    console.log(input.value);
-    console.log(url + '=' + input.value);
-    let novaurl = url + '=' + input.value;
+function ajaxPesquisaLoad(url) {
+    // console.log(input.value);
+    console.log(url);
+    // let novaurl = url + '=' + input.value;
     $.ajax({
         type: "GET",
-        url: novaurl,
+        url: url,
         success: function (data) {
             $('#content').html(data);
         },
