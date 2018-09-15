@@ -50,9 +50,10 @@ class OrderController extends Controller
 
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $order = Order::find($id);
+        return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
     }
 
     public function edit($id)

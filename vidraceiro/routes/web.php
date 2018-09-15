@@ -152,7 +152,7 @@ Route::prefix('orders')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index');
     Route::get('/create', 'OrderController@create')->name('orders.create');
     Route::post('/', 'OrderController@store')->name('orders.store');
-    Route::get('/{user}', 'OrderController@show')->name('orders.show');
+    Route::get('/{id}', 'OrderController@show')->name('orders.show');
     Route::get('/{id}/edit', 'OrderController@edit')->name('orders.edit');
     Route::patch('/{id}', 'OrderController@update')->name('orders.update');
     Route::delete('/{id}', 'OrderController@destroy')->name('orders.destroy');

@@ -50,6 +50,9 @@
                             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
                             <td>R${{$order->total}}</td>
                             <td>
+                                <a class="btn-link" href="{{ route('orders.show',['id'=> $order->id]) }}">
+                                    <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                </a>
                                 @if(!($order->situacao === 'CONCLUIDA') && !($order->situacao === 'CANCELADA'))
                                 <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
                                     <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>

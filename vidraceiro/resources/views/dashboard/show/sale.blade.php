@@ -25,7 +25,7 @@
                             @php $tipoPagamento = $sale->tipo_pagamento; @endphp
                             <b>Orçamento: </b> {{$sale->budget()->first()->nome or 'não cadastrado!'}}
                             <hr>
-                            <b>Total: </b> {{$sale->budget()->first()->total or 'não cadastrado!'}}
+                            <b>Total: </b> R${{$sale->budget()->first()->total or ''}}
                             <hr>
                             <b>Tipo de pagamento: </b> {{$tipoPagamento or 'não cadastrado!'}}
                             <hr>
@@ -48,7 +48,7 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
                             @forelse($sale->payments()->get() as $payment)
-                                <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}
+                                <b>Valor pago: </b> R${{$payment->valor_pago or ''}}{{' | '}}
                                 <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
                                 <hr>
                             @empty
