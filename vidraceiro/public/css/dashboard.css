@@ -162,10 +162,12 @@ body {
 .dropdown-item {
     font-weight: 500;
 }
+
 .dropdown-item.active, .dropdown-item:active {
     color: #191919;
     background-color: #eff3f6;
 }
+
 .navbar-shadow {
     box-shadow: 0 3px 8px 0 rgba(23, 24, 32, 0.1);
 }
@@ -366,9 +368,7 @@ body {
 .thumbnail {
     border: 5px solid #0acf97;
 }
-.pagination {
-   justify-content: flex-end;
-}
+
 .page-link, .page-link:hover {
     color: #4264FB;
 }
