@@ -117,9 +117,28 @@ class MaterialController extends Controller
 
     }
 
-    public function show()
+    public function show($type, $id)
     {
-
+        $material = null;
+        $mensagem = '';
+        switch($type) {
+            case 'glass':
+                $material = Glass::find($id);
+                $mensagem = 'vidro';
+                break;
+            case 'aluminum':
+                $material = Aluminum::find($id);
+                $mensagem = 'alumínio';
+                break;
+            case 'component':
+                $material = Component::find($id);
+                $mensagem = 'componente';
+                break;
+            default:
+                return redirect()->back();
+        }
+        return view('dashboard.show.material',
+            compact('material','type'))->with('title', 'Informações do '.$mensagem);
     }
 
     public function edit($type, $id)

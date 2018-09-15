@@ -106,6 +106,9 @@
                                                 <td>R${{ $glass->preco }}</td>
                                                 <td>{{ $glass->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
+                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'glass','id'=> $glass->id]) }}">
+                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                                    </a>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
                                                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
@@ -261,6 +264,9 @@
                                                 <td>R${{ $aluminum->preco }}</td>
                                                 <td>{{ $aluminum->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
+                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'aluminum','id'=> $aluminum->id]) }}">
+                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                                    </a>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'aluminum','id'=> $aluminum->id]) }}">
                                                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
@@ -410,6 +416,9 @@
                                                 <td>{{ $component->qtd }}</td>
                                                 <td>{{ $component->is_modelo ? 'Sim' : 'Não' }}</td>
                                                 <td>
+                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'component','id'=> $component->id]) }}">
+                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                                                    </a>
                                                     <a class="btn-link"
                                                        href="{{ route('materials.edit',['type'=>'component','id'=> $component->id]) }}">
                                                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
