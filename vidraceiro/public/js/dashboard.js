@@ -1016,7 +1016,7 @@ $(document).ready(function () {
 
     $('body').on('click', '.pagination a', function (e) {
         e.preventDefault();
-
+        let idtab = $('.nav-tabs a.active').attr('data-id');
         // $('#load a').css('color', '#dfecf6');
         // $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/loading.gif" />');
         let numeroleftright = $(this).attr('data-page');
@@ -1027,10 +1027,21 @@ $(document).ready(function () {
         } else {
             paginacao = numeropaginacao;
         }
-        let search = $('#search').val();
+        let search = null;
+        let paginate = null;
         let host = window.location.href;
-        let novaurl = host + '?search=' + search + '&page=' + paginacao;
-        ajaxPesquisaLoad(novaurl);
+        let novaurl = null;
+        if (idtab !== undefined) {
+            paginate = $('#paginate' + idtab).val();
+            search = $('#search' + idtab).val();
+            novaurl = host + '?' + idtab + '=1&search=' + search + '&paginate=' + paginate + '&page=' + paginacao;
+            ajaxPesquisaLoad(novaurl, idtab);
+        } else {
+            search = $('#search').val();
+            paginate = $('#paginate').val();
+            novaurl = host + '?search=' + search + '&paginate=' + paginate + '&page=' + paginacao;
+            ajaxPesquisaLoad(novaurl);
+        }
         // window.history.pushState("", "", url);
     });
 
@@ -1048,7 +1059,7 @@ $(document).ready(function () {
 //     });
 // }
 
-function ajaxPesquisaLoad(url) {
+function ajaxPesquisaLoad(url, id = null) {
     // console.log(input.value);
     console.log(url);
     // let novaurl = url + '=' + input.value;
@@ -1056,7 +1067,12 @@ function ajaxPesquisaLoad(url) {
         type: "GET",
         url: url,
         success: function (data) {
-            $('#content').html(data);
-        },
+            if (id !== null) {
+                console.log(id);
+                $('#' + id).html(data);
+            } else {
+                $('#content').html(data);
+            }
+        }
     });
 }

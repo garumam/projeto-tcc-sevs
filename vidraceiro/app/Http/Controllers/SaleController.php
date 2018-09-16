@@ -33,7 +33,12 @@ class SaleController extends Controller
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {
-            return view('dashboard.list.tables.table-sale', compact('sales'));
+            if ($request->has('payment')) {
+                return view('dashboard.list.tables.table-payment', compact('sales'));
+            } else {
+                return view('dashboard.list.tables.table-sale', compact('sales'));
+            }
+
         } else {
             return view('dashboard.list.sale', compact('sales', 'titulotabs'))->with('title', 'Vendas');
         }
