@@ -14,10 +14,20 @@ class FinancialController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $financials = Financial::all();
-        return view('dashboard.list.financial', compact('financials'))->with('title', 'Financeiro');
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $financials = Financial::where('descricao', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-financial', compact('financials'));
+        } else {
+            return view('dashboard.list.financial', compact('financials'))->with('title', 'Financeiro');
+        }
     }
 
     public function store(Request $request)
@@ -29,14 +39,14 @@ class FinancialController extends Controller
 
         $financial = new Financial();
         $financial = $financial->create($request->except('_token'));
-        if ($financial){
+        if ($financial) {
             $mensagem = '';
-            if($financial->tipo === 'RECEITA'){
+            if ($financial->tipo === 'RECEITA') {
                 $mensagem = 'Receita';
-            }else{
+            } else {
                 $mensagem = 'Despesa';
             }
-            return redirect()->back()->with('success', $mensagem.' adicionada com sucesso');
+            return redirect()->back()->with('success', $mensagem . ' adicionada com sucesso');
         }
 
 
@@ -47,13 +57,13 @@ class FinancialController extends Controller
         $financial = Financial::find($id);
         if ($financial) {
             $mensagem = '';
-            if($financial->tipo === 'RECEITA'){
+            if ($financial->tipo === 'RECEITA') {
                 $mensagem = 'Receita';
-            }else{
+            } else {
                 $mensagem = 'Despesa';
             }
             $financial->delete();
-            return redirect()->back()->with('success', $mensagem.' deletada com sucesso');
+            return redirect()->back()->with('success', $mensagem . ' deletada com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar item');
         }

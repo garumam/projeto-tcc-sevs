@@ -15,11 +15,21 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->can('usuario_listar',User::class)) {
-            $users = User::all();
-            return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
+            $paginate = 10;
+            if ($request->get('paginate')) {
+                $paginate = $request->get('paginate');
+            }
+            $users = User::where('name', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+                ->paginate($paginate);
+            if ($request->ajax()) {
+                return view('dashboard.list.tables.table-user', compact('users'));
+            } else {
+                return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
+            }
         } else {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa pagina');
         }

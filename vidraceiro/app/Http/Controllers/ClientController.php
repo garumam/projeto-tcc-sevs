@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class ClientController extends Controller
 {
     protected $states;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -45,11 +46,20 @@ class ClientController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
-
-        return view('dashboard.list.client', compact('clients'))->with('title', 'Clientes');
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $clients = Client::where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-client', compact('clients'));
+        } else {
+            return view('dashboard.list.client', compact('clients'))->with('title', 'Clientes');
+        }
     }
 
     public function create()
@@ -62,21 +72,21 @@ class ClientController extends Controller
     {
         $docvalidation = null;
         $arraydocnull = null;
-        if($request->has('cpf')){
-            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,'.''.'|min:11|max:20'];
+        if ($request->has('cpf')) {
+            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,' . '' . '|min:11|max:20'];
             $arraydocnull = ['cnpj' => null];
-        }elseif($request->has('cnpj')){
-            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,'.''.'|min:14|max:20'];
+        } elseif ($request->has('cnpj')) {
+            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,' . '' . '|min:14|max:20'];
             $arraydocnull = ['cpf' => null];
-        }else{
+        } else {
             $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
         }
-        $validado = $this->rules_client($request->all(),$docvalidation);
+        $validado = $this->rules_client($request->all(), $docvalidation);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
         $client = new Client();
-        $client = $client->create(array_merge($request->all(),$arraydocnull,['status'=>'EM DIA']));
+        $client = $client->create(array_merge($request->all(), $arraydocnull, ['status' => 'EM DIA']));
         if ($client)
             return redirect()->back()->with('success', 'Cliente cadastrado com sucesso');
     }
@@ -91,7 +101,7 @@ class ClientController extends Controller
     {
         $states = $this->states;
         $client = Client::find($id);
-        return view('dashboard.create.client', compact('client','states'))->with('title', 'Atualizar cliente');
+        return view('dashboard.create.client', compact('client', 'states'))->with('title', 'Atualizar cliente');
     }
 
 
@@ -101,29 +111,29 @@ class ClientController extends Controller
 
         $docvalidation = null;
         $arraydocnull = null;
-        if($request->has('cpf')){
-            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,'.$id.'|min:11|max:20'];
+        if ($request->has('cpf')) {
+            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,' . $id . '|min:11|max:20'];
             $arraydocnull = ['cnpj' => null];
-        }elseif($request->has('cnpj')){
-            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,'.$id.'|min:14|max:20'];
+        } elseif ($request->has('cnpj')) {
+            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,' . $id . '|min:14|max:20'];
             $arraydocnull = ['cpf' => null];
-        }else{
+        } else {
             $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
         }
 
-        $validado = $this->rules_client($request->all(),$docvalidation);
+        $validado = $this->rules_client($request->all(), $docvalidation);
 
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
 
-        $client->update(array_merge($request->except('att_budgets'),$arraydocnull));
-        if ($client){
+        $client->update(array_merge($request->except('att_budgets'), $arraydocnull));
+        if ($client) {
             $mensagem = 'Cliente atualizado com sucesso';
-            if($request->att_budgets != null){
+            if ($request->att_budgets != null) {
 
-                foreach($client->budgets as $budget){
-                    $budget->update($request->except('nome','cpf','email','celular','att_budgets'));
+                foreach ($client->budgets as $budget) {
+                    $budget->update($request->except('nome', 'cpf', 'email', 'celular', 'att_budgets'));
                 }
                 $mensagem = 'Cliente e orçamentos atualizados com sucesso';
             }
@@ -158,7 +168,7 @@ class ClientController extends Controller
                 'complemento' => 'nullable|string|max:255',
                 'email' => 'nullable|email|max:255',
                 'celular' => 'nullable|string|min:10|max:20'
-            ],$docarray
+            ], $docarray
 
         ));
 

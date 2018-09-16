@@ -49,7 +49,6 @@ class ProviderController extends Controller
 
     public function index(Request $request)
     {
-//        $providers = Provider::paginate(1);
         $paginate = 10;
         if ($request->get('paginate')){
             $paginate = $request->get('paginate');
@@ -59,7 +58,7 @@ class ProviderController extends Controller
             ->paginate($paginate);
         if ($request->ajax()){
 //            return response()->view('dashboard.list.tables.tableprovider',compact('providers'),200);
-            return view('dashboard.list.tables.tableprovider', compact('providers'));
+            return view('dashboard.list.tables.table-provider', compact('providers'));
         }else{
             return view('dashboard.list.provider', compact('providers'))->with('title', 'Fornecedores');
         }

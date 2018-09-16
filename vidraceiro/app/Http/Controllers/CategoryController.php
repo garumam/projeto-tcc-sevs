@@ -33,10 +33,20 @@ class CategoryController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        return view('dashboard.list.category', compact('categories'))->with('title', 'Categorias');
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $categories = Category::where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-category', compact('categories'));
+        } else {
+            return view('dashboard.list.category', compact('categories'))->with('title', 'Categorias');
+        }
     }
 
     public function create()

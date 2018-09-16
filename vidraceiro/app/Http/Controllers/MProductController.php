@@ -18,13 +18,21 @@ class MProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-//        $products = MProduct::all();
-        $mProducts = MProduct::with('category')->get();
-//        dd($relations);
-//        dd($mProducts);
-        return view('dashboard.list.mproduct', compact('mProducts'))->with('title', 'Produtos');
+//        $mProducts = MProduct::with('category')->get();
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $mProducts = MProduct::with('category')->where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-mproduct', compact('mProducts'));
+        } else {
+            return view('dashboard.list.mproduct', compact('mProducts'))->with('title', 'Produtos');
+        }
     }
 
 

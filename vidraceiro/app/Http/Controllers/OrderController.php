@@ -14,15 +14,25 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
-        return view('dashboard.list.order', compact('orders'))->with('title', 'Ordens de serviço');
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $orders = Order::where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-order', compact('orders'));
+        } else {
+            return view('dashboard.list.order', compact('orders'))->with('title', 'Ordens de serviço');
+        }
     }
 
     public function create()
     {
-        $budgets = Budget::where('status','APROVADO')->where('ordem_id',null)->get();
+        $budgets = Budget::where('status', 'APROVADO')->where('ordem_id', null)->get();
         return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
     }
 
@@ -34,15 +44,15 @@ class OrderController extends Controller
         }
         $order = new Order;
         $order = $order->create($request->except('id_orcamento', '_token'));
-        $budgets = Budget::wherein('id',$request->id_orcamento)->get();
+        $budgets = Budget::wherein('id', $request->id_orcamento)->get();
 
         if ($order) {
             $alterastatus = [];
-            if($request->situacao === 'CONCLUIDA'){
+            if ($request->situacao === 'CONCLUIDA') {
                 $alterastatus = ['status' => 'FINALIZADO'];
             }
-            foreach($budgets as $budget){
-                $budget->update(array_merge(['ordem_id'=>$order->id],$alterastatus));
+            foreach ($budgets as $budget) {
+                $budget->update(array_merge(['ordem_id' => $order->id], $alterastatus));
             }
             return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
         }
@@ -60,7 +70,7 @@ class OrderController extends Controller
     {
         $order = Order::with('budgets')->find($id);
         $arraybudgets = $order->budgets()->get()->toArray();
-        $budgets = Budget::where('status','APROVADO')->wherein('ordem_id',array_merge($arraybudgets,[null]))->get();
+        $budgets = Budget::where('status', 'APROVADO')->wherein('ordem_id', array_merge($arraybudgets, [null]))->get();
         if ($order) {
             $budgetsOrders = $order->budgets()->get();
             return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
@@ -77,24 +87,24 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validado);
         }
         $order = Order::with('budgets')->find($id);
-        foreach($order->budgets as $budget){
-            $budget->update(['ordem_id'=>null]);
+        foreach ($order->budgets as $budget) {
+            $budget->update(['ordem_id' => null]);
         }
-        $budgets = Budget::wherein('id',$request->id_orcamento)->get();
+        $budgets = Budget::wherein('id', $request->id_orcamento)->get();
         if ($order) {
             $order->update($request->except('id_orcamento', '_token'));
             if ($order) {
                 $alterastatus = [];
                 $ordemid = $order->id;
-                if($request->situacao === 'CONCLUIDA'){
+                if ($request->situacao === 'CONCLUIDA') {
                     $alterastatus = ['status' => 'FINALIZADO'];
-                }elseif($request->situacao === 'CANCELADA'){
+                } elseif ($request->situacao === 'CANCELADA') {
                     $alterastatus = ['status' => 'APROVADO'];
                     $ordemid = null;
                 }
 
-                foreach($budgets as $budget){
-                    $budget->update(array_merge(['ordem_id'=>$ordemid],$alterastatus));
+                foreach ($budgets as $budget) {
+                    $budget->update(array_merge(['ordem_id' => $ordemid], $alterastatus));
                 }
                 return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
             }
@@ -105,8 +115,8 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::with('budgets')->find($id);
-        foreach($order->budgets as $budget){
-            $budget->update(['ordem_id'=>null]);
+        foreach ($order->budgets as $budget) {
+            $budget->update(['ordem_id' => null]);
         }
         if ($order) {
             $order->delete();
