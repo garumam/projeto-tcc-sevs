@@ -20,34 +20,63 @@ class MaterialController extends Controller
         $this->middleware('auth');
 
         $this->espessuraAlum = [
-            ' '=>'Selecione uma espessura(opcional)',
-            '8'=>'Linha Temperado 8mm',
-            '10'=>'Linha Temperado 10mm',
-            '25'=>'Linha Suprema 25mm',
-            '33'=>'Linha Gold 33mm'
+            ' ' => 'Selecione uma espessura(opcional)',
+            '8' => 'Linha Temperado 8mm',
+            '10' => 'Linha Temperado 10mm',
+            '25' => 'Linha Suprema 25mm',
+            '33' => 'Linha Gold 33mm'
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $aluminums = Aluminum::where('is_modelo',1)->get();
-        $glasses = Glass::where('is_modelo',1)->get();
-        $components = Component::where('is_modelo',1)->get();
-        $titulotabs = ['Vidros','Aluminios','Componentes'];
-        return view('dashboard.list.material', compact('titulotabs', 'aluminums', 'glasses', 'components'))->with('title', 'Materiais');
+//        $aluminums = Aluminum::where('is_modelo', 1)->get();
+//        $glasses = Glass::where('is_modelo', 1)->get();
+//        $components = Component::where('is_modelo', 1)->get();
+
+        $titulotabs = ['Vidros', 'Aluminios', 'Componentes'];
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $glasses = Glass::where('is_modelo', 1)->where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+
+        $aluminums = Aluminum::where('is_modelo', 1)->where('perfil', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+
+        $components = Component::where('is_modelo', 1)->where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+
+        if ($request->ajax()) {
+            if ($request->has('vidros')) {
+                return view('dashboard.list.tables.table-glass', compact('glasses'));
+            }
+            if ($request->has('aluminios')) {
+                return view('dashboard.list.tables.table-aluminum', compact('aluminums'));
+            }
+            if ($request->has('componentes')) {
+                return view('dashboard.list.tables.table-component', compact('components'));
+            }
+        } else {
+            return view('dashboard.list.material', compact('titulotabs', 'aluminums', 'glasses', 'components'))->with('title', 'Materiais');
+        }
     }
 
     public function create($type)
     {
         $providers = Provider::all();
         $espessuras = $this->espessuraAlum;
-        switch($type){
+        switch ($type) {
             case 'glass':
-                $categories = Category::where('tipo','vidro')->get();
+                $categories = Category::where('tipo', 'vidro')->get();
                 $nome = 'vidro';
                 break;
             case 'aluminum':
-                $categories = Category::where('tipo','aluminio')->get();
+                $categories = Category::where('tipo', 'aluminio')->get();
                 $nome = 'alumínio';
                 break;
             case 'component':
@@ -58,13 +87,13 @@ class MaterialController extends Controller
             default:
                 return redirect()->back();
         }
-        return view('dashboard.create.material',compact('type','categories', 'providers','espessuras'))->with('title','Criar '.$nome);
+        return view('dashboard.create.material', compact('type', 'categories', 'providers', 'espessuras'))->with('title', 'Criar ' . $nome);
     }
 
     public function store(Request $request, $type)
     {
 
-        switch($type){
+        switch ($type) {
             case 'glass':
                 $validado = $this->rules_materiais($request->all(), $type);
                 $material = new Glass;
@@ -88,25 +117,25 @@ class MaterialController extends Controller
         }
 
         $material = $material->create(array_merge($request->except('providers'), ['is_modelo' => 1]));
-        if(!empty($request->providers)){
-            if(count($request->providers) > 0){
+        if (!empty($request->providers)) {
+            if (count($request->providers) > 0) {
                 $material->providers()->sync($request->providers);
             }
         }
 
 
-        if ($material){
-            if($type === 'glass'){
+        if ($material) {
+            if ($type === 'glass') {
                 Storage::create([
                     'metros_quadrados' => 0,
                     'glass_id' => $material->id
                 ]);
-            }elseif($type === 'aluminum'){
+            } elseif ($type === 'aluminum') {
                 Storage::create([
                     'qtd' => 0,
                     'aluminum_id' => $material->id
                 ]);
-            }elseif($type === 'component'){
+            } elseif ($type === 'component') {
                 Storage::create([
                     'qtd' => 0,
                     'component_id' => $material->id
@@ -121,7 +150,7 @@ class MaterialController extends Controller
     {
         $material = null;
         $mensagem = '';
-        switch($type) {
+        switch ($type) {
             case 'glass':
                 $material = Glass::find($id);
                 $mensagem = 'vidro';
@@ -138,22 +167,22 @@ class MaterialController extends Controller
                 return redirect()->back();
         }
         return view('dashboard.show.material',
-            compact('material','type'))->with('title', 'Informações do '.$mensagem);
+            compact('material', 'type'))->with('title', 'Informações do ' . $mensagem);
     }
 
     public function edit($type, $id)
     {
         $providers = Provider::all();
         $espessuras = $this->espessuraAlum;
-        switch($type){
+        switch ($type) {
             case 'glass':
                 $material = Glass::with('providers')->find($id);
-                $categories = Category::where('tipo','vidro')->get();
+                $categories = Category::where('tipo', 'vidro')->get();
                 $nome = 'vidro';
                 break;
             case 'aluminum':
                 $material = Aluminum::with('providers')->find($id);
-                $categories = Category::where('tipo','aluminio')->get();
+                $categories = Category::where('tipo', 'aluminio')->get();
                 $nome = 'alumínio';
                 break;
             case 'component':
@@ -166,14 +195,14 @@ class MaterialController extends Controller
                 return redirect()->back();
         }
 
-        return view('dashboard.create.material',compact('type','material','categories', 'providers', 'espessuras'))->with('title','Atualizar '.$nome);
+        return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras'))->with('title', 'Atualizar ' . $nome);
     }
 
 
     public function update(Request $request, $type, $id)
     {
 
-        switch($type){
+        switch ($type) {
             case 'glass':
                 $validado = $this->rules_materiais($request->all(), $type);
                 $material = Glass::find($id);
@@ -195,7 +224,7 @@ class MaterialController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $material->update($request->except('_token','providers'));
+        $material->update($request->except('_token', 'providers'));
 
         $material->providers()->sync($request->providers);
 
@@ -207,7 +236,7 @@ class MaterialController extends Controller
 
     public function rules_materiais(array $data, $type)
     {
-        switch($type){
+        switch ($type) {
             case 'glass':
                 $validator = Validator::make($data, [
                     'nome' => 'required|string|max:255',
@@ -245,7 +274,7 @@ class MaterialController extends Controller
 
     public function destroy($type, $id)
     {
-        switch($type){
+        switch ($type) {
             case 'glass':
                 $material = Glass::find($id);
                 $tipoNome = 'Vidro';

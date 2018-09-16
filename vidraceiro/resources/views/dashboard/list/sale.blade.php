@@ -9,14 +9,14 @@
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
                             <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="sales"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
                             <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="payment"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
@@ -54,9 +54,9 @@
 
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
-                            <label for="paginatesales">Mostrar</label>
-                            <select id="paginatesales" name="paginate" class="custom-select"
-                                    onchange="ajaxPesquisaLoad('{{url('sales')}}?search='+$('#searchsales').val()+'&paginate='+$('#paginatesales').val(),'sales')">
+                            <label for="paginatevendas">Mostrar</label>
+                            <select id="paginatevendas" name="paginate" class="custom-select"
+                                    onchange="ajaxPesquisaLoad('{{url('sales')}}?search='+$('#searchvendas').val()+'&paginate='+$('#paginatevendas').val(),'vendas')">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -65,12 +65,12 @@
                         <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
                             <label for="search">Pesquisar</label>
                             <input type="text" class="form-control"
-                                   onkeyup="ajaxPesquisaLoad('{{url('sales')}}?search='+$('#searchsales').val()+'&paginate='+$('#paginatesales').val(),'sales')"
-                                   value="{{ old('search') }}" id="searchsales" name="search" placeholder="Pesquisar" data-id="sales">
+                                   onkeyup="ajaxPesquisaLoad('{{url('sales')}}?search='+$('#searchvendas').val()+'&paginate='+$('#paginatevendas').val(),'vendas')"
+                                   value="{{ old('search') }}" id="searchvendas" name="search" placeholder="Pesquisar">
                         </div>
                     </div>
 
-                    <div class="table-responsive text-dark p-2" id="sales">
+                    <div class="table-responsive text-dark p-2" id="vendas">
                         @include('dashboard.list.tables.table-sale')
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem
                             serviço em andando ou que está com pagamento pendente!</p>
@@ -83,9 +83,9 @@
 
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
-                            <label for="paginatepayment">Mostrar</label>
-                            <select id="paginatepayment" name="paginate" class="custom-select"
-                                    onchange="ajaxPesquisaLoad('{{url('sales')}}?payment=1&search='+$('#searchpayment').val()+'&paginate='+$('#paginatepayment').val(),'payment')">
+                            <label for="paginatepagamentos">Mostrar</label>
+                            <select id="paginatepagamentos" name="paginate" class="custom-select"
+                                    onchange="ajaxPesquisaLoad('{{url('sales')}}?pagamentos=1&search='+$('#searchpagamentos').val()+'&paginate='+$('#paginatepagamentos').val(),'pagamentos')">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -94,12 +94,12 @@
                         <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
                             <label for="search">Pesquisar</label>
                             <input type="text" class="form-control"
-                                   onkeyup="ajaxPesquisaLoad('{{url('sales')}}?payment=1&search='+$('#searchpayment').val()+'&paginate='+$('#paginatepayment').val(),'payment')"
-                                   value="{{ old('search') }}" id="searchpayment" name="search" placeholder="Pesquisar" data-id="payment">
+                                   onkeyup="ajaxPesquisaLoad('{{url('sales')}}?pagamentos=1&search='+$('#searchpagamentos').val()+'&paginate='+$('#paginatepagamentos').val(),'pagamentos')"
+                                   value="{{ old('search') }}" id="searchpagamentos" name="search" placeholder="Pesquisar">
                         </div>
                     </div>
 
-                    <div class="table-responsive text-dark p-2" id="payment">
+                    <div class="table-responsive text-dark p-2" id="pagamentos">
                         @include('dashboard.list.tables.table-payment')
                     </div>
 

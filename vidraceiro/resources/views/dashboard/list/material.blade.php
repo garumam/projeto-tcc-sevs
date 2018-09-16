@@ -10,12 +10,14 @@
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
                             <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
                             <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
@@ -37,273 +39,98 @@
                 <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="topo">
+                                <h4 class="titulo">{{$titulotabs[0]}}</h4>
+                            </div>
 
-                        <div class="form-row">
-
-                            <div class="form-group col-12">
-                                <div class="topo">
-                                    <h4 class="titulo">{{$titulotabs[0]}}</h4>
+                            @if(session('success'))
+                                <div class="alerta">
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
                                 </div>
-
-                                @if(session('success'))
-                                    <div class="alerta">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
+                            @elseif(session('error'))
+                                <div class="alerta">
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
                                     </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
+                                </div>
+                            @endif
 
-                                <div class="table-responsive text-dark p-2">
-                                    @include('layouts.htmltablesearch')
-                                    <table class="table table-hover search-table" style="margin: 6px 0px 6px 0px;">
-                                        <thead>
-                                        <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Categoria</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Preço m²</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Modelo</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO VIDRO-->
-
-                                        {{--<!--INICIO HEAD DO ALUMINIO-->--}}
-                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Perfil</th>--}}
-                                        {{--<th class="noborder" scope="col">Medida</th>--}}
-                                        {{--<th class="noborder" scope="col">Peso</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO ALUMINIO-->--}}
-
-                                        {{--<!--INICIO HEAD DO COMPONENTE-->--}}
-                                        {{--<tr class="tabela-componente" style="display: none;">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Nome</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço</th>--}}
-                                        {{--<th class="noborder" scope="col">Qtd</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO COMPONENTE-->--}}
-
-                                        </thead>
-                                        <tbody>
-                                        <!--INICIO BODY DO VIDRO-->
-                                        @foreach($glasses as $glass)
-                                            <tr class="tabela-vidro">
-                                                <th scope="row">{{ $glass->id }}</th>
-                                                <td>{{ $glass->nome }}</td>
-                                                <td>{{ $glass->category->nome }}</td>
-                                                <td>R${{ $glass->preco }}</td>
-                                                <td>{{ $glass->is_modelo ? 'Sim' : 'Não' }}</td>
-                                                <td>
-                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'glass','id'=> $glass->id]) }}">
-                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
-                                                    </a>
-                                                    <a class="btn-link"
-                                                       href="{{ route('materials.edit',['type'=>'glass','id'=>$glass->id]) }}">
-                                                        <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
-                                                    </a>
-                                                    <a class="btn-link" onclick="deletar(this.id,'materials/glass')" id="{{ $glass->id }}">
-                                                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <!--FIM BODY DO VIDRO-->
-
-                                        {{--<!--INICIO BODY DO ALUMINIO-->--}}
-                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>xt-201</td>--}}
-                                        {{--<td>6000.0m</td>--}}
-                                        {{--<td>1.6kg</td>--}}
-                                        {{--<td>22.0</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO ALUMINIO-->--}}
-
-                                        {{--<!--INICIO BODY DO COMPONENTE-->--}}
-                                        {{--<tr class="tabela-componente" style="display: none;">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>Roldana</td>--}}
-                                        {{--<td>1.0</td>--}}
-                                        {{--<td>1</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO COMPONENTE-->--}}
-                                        </tbody>
-                                    </table>
-
-                                    @if(!empty($glasses->shift()))
-                                        @include('layouts.htmlpaginationtable')
-                                    @endif
-
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatevidros">Mostrar</label>
+                                    <select id="paginatevidros" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('materials')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="search">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('materials')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')"
+                                           value="{{ old('search') }}" id="searchvidros" name="search" placeholder="Pesquisar">
                                 </div>
                             </div>
 
+                            <div class="table-responsive text-dark p-2" id="vidros">
+                                @include('dashboard.list.tables.table-glass')
+                            </div>
                         </div>
-
-
-
+                    </div>
                 </div>
-
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="topo">
+                                <h4 class="titulo">{{$titulotabs[1]}}</h4>
+                            </div>
 
-                        <div class="form-row">
-
-                            <div class="form-group col-12">
-                                <div class="topo">
-                                    <h4 class="titulo">{{$titulotabs[1]}}</h4>
+                            @if(session('success'))
+                                <div class="alerta">
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
                                 </div>
-
-                                @if(session('success'))
-                                    <div class="alerta">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
+                            @elseif(session('error'))
+                                <div class="alerta">
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
                                     </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
+                                </div>
+                            @endif
 
-                                <div class="table-responsive text-dark p-2">
-                                    <table class="table table-hover search-table">
-                                        <thead>
-                                        {{--<!--INICIO HEAD DO VIDRO-->--}}
-                                        {{--<tr class="tabela-vidro">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Nome</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço m²</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO VIDRO-->--}}
-
-                                        <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Perfil</th>
-                                            <th class="noborder" scope="col">Categoria</th>
-                                            <th class="noborder" scope="col">Medida</th>
-                                            <th class="noborder" scope="col">Peso</th>
-                                            <th class="noborder" scope="col">Preço kg</th>
-                                            <th class="noborder" scope="col">Modelo</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO ALUMINIO-->
-
-                                        {{--<!--INICIO HEAD DO COMPONENTE-->--}}
-                                        {{--<tr class="tabela-componente" style="display: none;">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Nome</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço</th>--}}
-                                        {{--<th class="noborder" scope="col">Qtd</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO COMPONENTE-->--}}
-
-                                        </thead>
-                                        <tbody>
-                                        {{--<!--INICIO BODY DO VIDRO-->--}}
-                                        {{--<tr class="tabela-vidro">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>Vidro temperado 08mm</td>--}}
-                                        {{--<td>100.0</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO VIDRO-->--}}
-
-                                        <!--INICIO BODY DO ALUMINIO-->
-                                        @foreach($aluminums as $aluminum)
-                                            <tr class="tabela-aluminio">
-                                                <th scope="row">{{ $aluminum->id }}</th>
-                                                <td>{{ $aluminum->perfil }}</td>
-                                                <td>{{ $aluminum->category->nome }} {{ $aluminum->espessura ? $aluminum->espessura.'mm' : ''}}</td>
-                                                <td>{{ $aluminum->medida ? $aluminum->medida.'m' : ''}}</td>
-                                                <td>{{ $aluminum->peso }}kg</td>
-                                                <td>R${{ $aluminum->preco }}</td>
-                                                <td>{{ $aluminum->is_modelo ? 'Sim' : 'Não' }}</td>
-                                                <td>
-                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'aluminum','id'=> $aluminum->id]) }}">
-                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
-                                                    </a>
-                                                    <a class="btn-link"
-                                                       href="{{ route('materials.edit',['type'=>'aluminum','id'=> $aluminum->id]) }}">
-                                                        <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
-                                                    </a>
-                                                    <a class="btn-link" onclick="deletar(this.id,'materials/aluminum')" id="{{ $aluminum->id }}">
-                                                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <!--FIM BODY DO ALUMINIO-->
-
-                                        <!--INICIO BODY DO COMPONENTE-->
-                                        {{--<tr class="tabela-componente" style="display: none;">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>Roldana</td>--}}
-                                        {{--<td>1.0</td>--}}
-                                        {{--<td>1</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO COMPONENTE-->--}}
-                                        </tbody>
-                                    </table>
-
-
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatealuminios">Mostrar</label>
+                                    <select id="paginatealuminios" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('materials')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="search">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('materials')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')"
+                                           value="{{ old('search') }}" id="searchaluminios" name="search" placeholder="Pesquisar">
                                 </div>
                             </div>
 
+                            <div class="table-responsive text-dark p-2" id="aluminios">
+                                @include('dashboard.list.tables.table-aluminum')
+                            </div>
                         </div>
+
+                    </div>
 
 
                 </div>
@@ -311,140 +138,54 @@
                 <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="topo">
+                                <h4 class="titulo">{{$titulotabs[2]}}</h4>
+                            </div>
 
-                        <div class="form-row">
-
-                            <div class="form-group col-12">
-                                <div class="topo">
-                                    <h4 class="titulo">{{$titulotabs[2]}}</h4>
+                            @if(session('success'))
+                                <div class="alerta">
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
                                 </div>
-
-                                @if(session('success'))
-                                    <div class="alerta">
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
+                            @elseif(session('error'))
+                                <div class="alerta">
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
                                     </div>
-                                @elseif(session('error'))
-                                    <div class="alerta">
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    </div>
-                                @endif
+                                </div>
+                            @endif
 
-                                <div class="table-responsive text-dark p-2">
-                                    <table class="table table-hover search-table">
-                                        <thead>
-                                        {{--<!--INICIO HEAD DO VIDRO-->--}}
-                                        {{--<tr class="tabela-vidro">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Nome</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço m²</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO VIDRO-->--}}
-
-                                        {{--<!--INICIO HEAD DO ALUMINIO-->--}}
-                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
-                                        {{--<th class="noborder" scope="col">Id</th>--}}
-                                        {{--<th class="noborder" scope="col">Perfil</th>--}}
-                                        {{--<th class="noborder" scope="col">Medida</th>--}}
-                                        {{--<th class="noborder" scope="col">Peso</th>--}}
-                                        {{--<th class="noborder" scope="col">Preço</th>--}}
-                                        {{--<th class="noborder" scope="col">Ação</th>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM HEAD DO ALUMINIO-->--}}
-
-                                        <!--INICIO HEAD DO COMPONENTE-->
-                                        <tr class="tabela-componente">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Nome</th>
-                                            <th class="noborder" scope="col">Categoria</th>
-                                            <th class="noborder" scope="col">Preço</th>
-                                            <th class="noborder" scope="col">Qtd</th>
-                                            <th class="noborder" scope="col">Modelo</th>
-                                            <th class="noborder" scope="col">Ação</th>
-                                        </tr>
-                                        <!--FIM HEAD DO COMPONENTE-->
-
-                                        </thead>
-                                        <tbody>
-                                        {{--<!--INICIO BODY DO VIDRO-->--}}
-                                        {{--<tr class="tabela-vidro">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>Vidro temperado 08mm</td>--}}
-                                        {{--<td>100.0</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO VIDRO-->--}}
-
-                                        {{--<!--INICIO BODY DO ALUMINIO-->--}}
-                                        {{--<tr class="tabela-aluminio" style="display: none;">--}}
-                                        {{--<th scope="row">1</th>--}}
-                                        {{--<td>xt-201</td>--}}
-                                        {{--<td>6000.0m</td>--}}
-                                        {{--<td>1.6kg</td>--}}
-                                        {{--<td>22.0</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a class="btn-link" href="">--}}
-                                        {{--<button class="btn btn-warning mb-1">Edit</button>--}}
-                                        {{--</a>--}}
-                                        {{--<a class="btn-link">--}}
-                                        {{--<button class="btn btn-danger mb-1">Delete</button>--}}
-                                        {{--</a>--}}
-
-                                        {{--</td>--}}
-                                        {{--</tr>--}}
-                                        {{--<!--FIM BODY DO ALUMINIO-->--}}
-
-                                        <!--INICIO BODY DO COMPONENTE-->
-                                        @foreach($components as $component)
-                                            <tr class="tabela-componente">
-                                                <th scope="row">{{ $component->id }}</th>
-                                                <td>{{ $component->nome }}</td>
-                                                <td>{{ $component->category->nome }}</td>
-                                                <td>R${{ $component->preco }}</td>
-                                                <td>{{ $component->qtd }}</td>
-                                                <td>{{ $component->is_modelo ? 'Sim' : 'Não' }}</td>
-                                                <td>
-                                                    <a class="btn-link" href="{{ route('materials.show',['type'=>'component','id'=> $component->id]) }}">
-                                                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
-                                                    </a>
-                                                    <a class="btn-link"
-                                                       href="{{ route('materials.edit',['type'=>'component','id'=> $component->id]) }}">
-                                                        <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
-                                                    </a>
-                                                    <a class="btn-link" onclick="deletar(this.id,'materials/component')" id="{{ $component->id }}">
-                                                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <!--FIM BODY DO COMPONENTE-->
-                                        </tbody>
-                                    </table>
-
-
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatecomponentes">Mostrar</label>
+                                    <select id="paginatecomponentes" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('materials')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="search">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('materials')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')"
+                                           value="{{ old('search') }}" id="searchcomponentes" name="search" placeholder="Pesquisar">
                                 </div>
                             </div>
 
+                            <div class="table-responsive text-dark p-2" id="componentes">
+                                @include('dashboard.list.tables.table-component')
+                            </div>
                         </div>
 
+                    </div>
 
                 </div>
             </div>
             <!--Fim Conteudo de cada tab -->
-
-
         </div>
     </div>
 @endsection
