@@ -16,14 +16,36 @@ class StorageController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $aluminums = Aluminum::where('is_modelo',1)->get();
-        $glasses = Glass::where('is_modelo',1)->get();
-        $components = Component::where('is_modelo',1)->get();
-        $storages = Storage::all();
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $glasses = Glass::where('is_modelo',1)->where('nome', 'like', '%' . $request->get('search') . '%')
+            ->paginate($paginate);
+
+        $aluminums = Aluminum::where('is_modelo',1)->where('perfil', 'like', '%' . $request->get('search') . '%')
+            ->paginate($paginate);
+
+        $components = Component::where('is_modelo',1)->where('nome', 'like', '%' . $request->get('search') . '%')
+            ->paginate($paginate);
+
         $titulotabs = ['Vidros','Aluminios','Componentes'];
-        return view('dashboard.list.storage', compact('titulotabs', 'aluminums', 'glasses', 'components','storages'))->with('title', 'Estoque de materiais');
+
+        if ($request->ajax()) {
+            if ($request->has('vidros')) {
+                return view('dashboard.list.tables.table-storage-glass', compact('glasses'));
+            }
+            if ($request->has('aluminios')) {
+                return view('dashboard.list.tables.table-storage-aluminum', compact('aluminums'));
+            }
+            if ($request->has('componentes')) {
+                return view('dashboard.list.tables.table-storage-component', compact('components'));
+            }
+        } else {
+            return view('dashboard.list.storage', compact('titulotabs', 'aluminums', 'glasses', 'components'))->with('title', 'Estoque de materiais');
+        }
     }
 
     public function update(Request $request,$tab)

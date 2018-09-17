@@ -10,12 +10,14 @@
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
                             <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @else
                             <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
+                               data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
@@ -86,42 +88,32 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-
                             <div class="form-group col-12">
-                                <div class="table-responsive text-dark p-2">
-                                    @include('layouts.htmltablesearch')
-                                    <table class="table table-hover search-table" style="margin: 6px 0 6px 0;">
-                                        <thead>
-                                        <!--INICIO HEAD DO VIDRO-->
-                                        <tr class="tabela-vidro">
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Categoria</th>
-                                            <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">M² em estoque</th>
-                                        </tr>
-                                        <!--FIM HEAD DO VIDRO-->
-                                        </thead>
-                                        <tbody>
-                                        <!--INICIO BODY DO VIDRO-->
-                                        @foreach($glasses as $glass)
-                                            <tr class="tabela-vidro">
-                                                <th scope="row">{{ $glass->id }}</th>
-                                                <td>{{ $glass->nome }}</td>
-                                                <td>{{ $glass->category->nome }}</td>
-                                                <td>{{ $glass->storage->metros_quadrados or '0' }}</td>
-                                            </tr>
-                                        @endforeach
-                                        <!--FIM BODY DO VIDRO-->
 
-                                        </tbody>
-                                    </table>
-
-                                    @if(!empty($glasses->shift()))
-                                        @include('layouts.htmlpaginationtable')
-                                    @endif
-
+                                <div class="form-row formulario pb-0 justify-content-between">
+                                    <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                        <label for="paginatevidros">Mostrar</label>
+                                        <select id="paginatevidros" name="paginate" class="custom-select"
+                                                onchange="ajaxPesquisaLoad('{{url('storage')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                        <label for="search">Pesquisar</label>
+                                        <input type="text" class="form-control"
+                                               onkeyup="ajaxPesquisaLoad('{{url('storage')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')"
+                                               value="{{ old('search') }}" id="searchvidros" name="search" placeholder="Pesquisar">
+                                    </div>
                                 </div>
+
+                                <div class="table-responsive text-dark p-2" id="vidros">
+                                    @include('dashboard.list.tables.table-storage-glass')
+                                </div>
+
                             </div>
+
 
                         </div>
                     </form>
@@ -189,44 +181,37 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-                                <div class="table-responsive text-dark p-2">
-                                    <table class="table table-hover search-table">
-                                        <thead>
+                            <div class="form-group col-12">
 
-
-                                        <!--INICIO HEAD DO ALUMINIO-->
-                                        <tr class="tabela-aluminio">
-                                            <th class="noborder" scope="col">Id</th>
-                                            <th class="noborder" scope="col">Perfil</th>
-                                            <th class="noborder" scope="col">Categoria</th>
-                                            <th class="noborder" scope="col">Qtd em estoque</th>
-                                        </tr>
-                                        <!--FIM HEAD DO ALUMINIO-->
-
-
-                                        </thead>
-                                        <tbody>
-
-                                        <!--INICIO BODY DO ALUMINIO-->
-                                        @foreach($aluminums as $aluminum)
-                                            <tr class="tabela-aluminio">
-                                                <th scope="row">{{ $aluminum->id }}</th>
-                                                <td>{{ $aluminum->perfil }}</td>
-                                                <td>{{ $aluminum->category->nome }} {{ $aluminum->espessura ? $aluminum->espessura.'mm' : ''}}</td>
-                                                <td>{{ $aluminum->storage->qtd or '0' }}</td>
-                                            </tr>
-                                        @endforeach
-                                        <!--FIM BODY DO ALUMINIO-->
-
-                                        </tbody>
-                                    </table>
-
-
+                                <div class="form-row formulario pb-0 justify-content-between">
+                                    <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                        <label for="paginatealuminios">Mostrar</label>
+                                        <select id="paginatealuminios" name="paginate" class="custom-select"
+                                                onchange="ajaxPesquisaLoad('{{url('storage')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                        <label for="search">Pesquisar</label>
+                                        <input type="text" class="form-control"
+                                               onkeyup="ajaxPesquisaLoad('{{url('storage')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')"
+                                               value="{{ old('search') }}" id="searchaluminios" name="search" placeholder="Pesquisar">
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
 
-                    </div>
+                                <div class="table-responsive text-dark p-2" id="aluminios">
+                                    @include('dashboard.list.tables.table-storage-aluminum')
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </form>
+
+                </div>
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
@@ -287,37 +272,32 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-                            <div class="table-responsive text-dark p-2">
-                                <table class="table table-hover search-table">
-                                    <thead>
+                            <div class="form-group col-12">
 
-                                    <!--INICIO HEAD DO COMPONENTE-->
-                                    <tr class="tabela-componente">
-                                        <th class="noborder" scope="col">Id</th>
-                                        <th class="noborder" scope="col">Nome</th>
-                                        <th class="noborder" scope="col">Categoria</th>
-                                        <th class="noborder" scope="col">Qtd em estoque</th>
-                                    </tr>
-                                    <!--FIM HEAD DO COMPONENTE-->
+                                <div class="form-row formulario pb-0 justify-content-between">
+                                    <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                        <label for="paginatecomponentes">Mostrar</label>
+                                        <select id="paginatecomponentes" name="paginate" class="custom-select"
+                                                onchange="ajaxPesquisaLoad('{{url('storage')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                        <label for="search">Pesquisar</label>
+                                        <input type="text" class="form-control"
+                                               onkeyup="ajaxPesquisaLoad('{{url('storage')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')"
+                                               value="{{ old('search') }}" id="searchcomponentes" name="search" placeholder="Pesquisar">
+                                    </div>
+                                </div>
 
-                                    </thead>
-                                    <tbody>
-
-                                    <!--INICIO BODY DO COMPONENTE-->
-                                    @foreach($components as $component)
-                                        <tr class="tabela-componente">
-                                            <th scope="row">{{ $component->id }}</th>
-                                            <td>{{ $component->nome }}</td>
-                                            <td>{{ $component->category->nome }}</td>
-                                            <td>{{ $component->storage->qtd or '0' }}</td>
-                                        </tr>
-                                    @endforeach
-                                    <!--FIM BODY DO COMPONENTE-->
-                                    </tbody>
-                                </table>
-
+                                <div class="table-responsive text-dark p-2" id="componentes">
+                                    @include('dashboard.list.tables.table-storage-component')
+                                </div>
 
                             </div>
+
                         </div>
                     </form>
                 </div>
