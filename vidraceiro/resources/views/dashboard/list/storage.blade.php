@@ -88,9 +88,9 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-                            <div class="form-group col-12">
+                            <div class="form-group col-12 mt-2">
 
-                                <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-row formulario p-0 justify-content-between">
                                     <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                                         <label for="paginatevidros">Mostrar</label>
                                         <select id="paginatevidros" name="paginate" class="custom-select"
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
 
-                                <div class="table-responsive text-dark p-2" id="vidros">
+                                <div class="table-responsive text-dark" id="vidros">
                                     @include('dashboard.list.tables.table-storage-glass')
                                 </div>
 
@@ -181,9 +181,9 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-                            <div class="form-group col-12">
+                            <div class="form-group col-12 mt-2">
 
-                                <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-row formulario p-0 justify-content-between">
                                     <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                                         <label for="paginatealuminios">Mostrar</label>
                                         <select id="paginatealuminios" name="paginate" class="custom-select"
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
 
-                                <div class="table-responsive text-dark p-2" id="aluminios">
+                                <div class="table-responsive text-dark" id="aluminios">
                                     @include('dashboard.list.tables.table-storage-aluminum')
                                 </div>
 
@@ -272,9 +272,9 @@
                                 <button class="btn btn-primary btn-block btn-custom" type="submit">Efetuar</button>
                             </div>
 
-                            <div class="form-group col-12">
+                            <div class="form-group col-12 mt-2">
 
-                                <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-row formulario p-0 justify-content-between">
                                     <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                                         <label for="paginatecomponentes">Mostrar</label>
                                         <select id="paginatecomponentes" name="paginate" class="custom-select"
@@ -292,7 +292,7 @@
                                     </div>
                                 </div>
 
-                                <div class="table-responsive text-dark p-2" id="componentes">
+                                <div class="table-responsive text-dark" id="componentes">
                                     @include('dashboard.list.tables.table-storage-component')
                                 </div>
 
