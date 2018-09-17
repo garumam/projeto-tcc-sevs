@@ -43,7 +43,7 @@
                         <select id="select-orcamento-venda" class="form-control form-control-chosen" name="{{empty($sale)?'orcamento_id':''}}" data-placeholder="Selecie um orçamento" style="display: none;">
                             @if(!empty($sale))
                                 <option value="{{$sale->budget->id}}"
-                                        data-cliente="{{!empty($budget->client)}}"
+                                        data-cliente="{{!empty($sale->budget->client()->first())}}"
                                         data-total="{{$sale->budget->total}}" selected>{{$sale->budget->nome}}{{!empty($sale->budget->client)?', Cliente: '.$sale->budget->client->nome : ', Cliente: Anônimo'}}</option>
                             @else
                                 <option value=""
