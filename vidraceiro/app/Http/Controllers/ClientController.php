@@ -55,6 +55,7 @@ class ClientController extends Controller
         $clients = Client::where('nome', 'like', '%' . $request->get('search') . '%')
             ->orWhere('cpf', 'like', '%' . $request->get('search') . '%')
             ->orWhere('cnpj', 'like', '%' . $request->get('search') . '%')
+            ->orWhere('status', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {

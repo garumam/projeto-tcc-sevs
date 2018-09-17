@@ -21,6 +21,7 @@ class OrderController extends Controller
             $paginate = $request->get('paginate');
         }
         $orders = Order::where('nome', 'like', '%' . $request->get('search') . '%')
+            ->orWhere('situacao', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {

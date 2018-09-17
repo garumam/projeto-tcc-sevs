@@ -61,6 +61,7 @@ class BudgetController extends Controller
             $paginate = $request->get('paginate');
         }
         $budgets = Budget::where('nome', 'like', '%' . $request->get('search') . '%')
+            ->orWhere('status', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {

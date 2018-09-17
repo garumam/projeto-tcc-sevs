@@ -29,7 +29,7 @@ class SaleController extends Controller
         }
         $sales = Sale::with('installments', 'payments', 'budget')->whereHas('budget', function ($q) use ($request) {
             $q->where('nome', 'like', '%' . $request->get('search') . '%');
-        })
+        })->orWhere('tipo_pagamento', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {

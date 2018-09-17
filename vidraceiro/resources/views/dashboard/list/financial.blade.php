@@ -56,7 +56,7 @@
                     @php
                         $receitas = 0.00;
                         $despesas = 0.00;
-                        foreach($financials as $financial){
+                        foreach($allfinancial as $financial){
                             if($financial->tipo === 'RECEITA'){
                                 $receitas += $financial->valor;
                             }else{

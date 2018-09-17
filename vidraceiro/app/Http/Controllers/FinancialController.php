@@ -20,13 +20,15 @@ class FinancialController extends Controller
         if ($request->get('paginate')) {
             $paginate = $request->get('paginate');
         }
+        $allfinancial = Financial::all();
         $financials = Financial::where('descricao', 'like', '%' . $request->get('search') . '%')
+            ->orWhere('tipo', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
         if ($request->ajax()) {
-            return view('dashboard.list.tables.table-financial', compact('financials'));
+            return view('dashboard.list.tables.table-financial', compact('allfinancial','financials'));
         } else {
-            return view('dashboard.list.financial', compact('financials'))->with('title', 'Financeiro');
+            return view('dashboard.list.financial', compact('allfinancial','financials'))->with('title', 'Financeiro');
         }
     }
 
