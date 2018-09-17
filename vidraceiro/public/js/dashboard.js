@@ -1,82 +1,18 @@
 $(document).ready(function () {
 
-    // $('.opensubmenu ul li').each(function () {
-    //     let ativo = $(this).attr("class");
-    //     if (ativo === "active") {
-    //         $('.opensubmenu').css('height', "auto");
-    //         $('.submenu').slideToggle("slow");
-    //     }
-    // });
-    // $('.opensubmenu a').click(function () {
-    //     $('.opensubmenu').css('height', "auto");
-    //     $('.submenu').slideToggle("slow");
-    // });
-
 
     $('.opensubmenu ul li').each(function () {
         let ativo = $(this).attr("class");
         if (ativo === "active") {
-            // let submenu = null;
-            // let menuid = $(this).parent().closest('li').attr('id');
             let submenu = $(this).parent();
-            // if(menuid === 'usuarios-menu'){
-            //     submenu = $('#usuarios-menu ul');
-            // }
-            // if(menuid === 'relatorios-menu'){
-            //     submenu = $('#relatorios-menu ul');
-            // }
-            // if(menuid === 'modelos-menu'){
-            //     submenu = $('#modelos-menu ul');
-            // }
             submenu.closest('li').css('height', "auto");
             submenu.slideToggle("slow");
         }
     });
     $('.opensubmenu').click(function () {
         let submenu = $(this).children('ul');
-        // let id = $(this).parent().attr('id');
-        //
-        // if(id === 'usuarios-menu'){
-        //     submenu = $('#usuarios-menu ul');
-        // }
-        // if(id === 'relatorios-menu'){
-        //     submenu = $('#relatorios-menu ul');
-        // }
-        // if(id === 'modelos-menu'){
-        //     submenu = $('#modelos-menu ul');
-        // }
         submenu.closest('li').css('height', "auto");
         submenu.slideToggle("slow");
-    });
-
-
-    //Adicionar procura nas tabelas e modificando mensagens
-    $('.search-table').each(function () {
-        $('#htmlqtditens_search').remove();
-        $('#htmlqtditens_pagination').remove();
-        $(this).DataTable({
-            language: {
-                search: "Procurar:",
-                lengthMenu: "Mostrar _MENU_ itens",
-                info: "",
-                infoEmpty: "",
-                infoFiltered: "",
-                infoPostFix: "",
-                loadingRecords: "Chargement en cours...",
-                zeroRecords: "Nenhum item encontrado com esses termos!",
-                emptyTable: "Nenhum item cadastrado!",
-                paginate: {
-                    first: "Primeira",
-                    previous: "Anterior",
-                    next: "Próxima",
-                    last: "Última"
-                },
-                aria: {
-                    sortAscending: "",
-                    sortDescending: ""
-                }
-            }
-        });
     });
 
     //Iniciando selects com search dentro
