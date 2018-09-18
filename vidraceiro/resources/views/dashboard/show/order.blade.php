@@ -10,7 +10,7 @@
                     <a class="btn btn-primary btn-custom" target="_blank"
                        href="{{route('pdf.show',['tipo'=>'order','id'=>$order->id])}}">Gerar PDF</a>
                     <a class="btn btn-primary btn-custom" target="_blank"
-                       href="{{route('pdf.show',['tipo'=>'order_comprar_pdf','id'=>$order->id])}}">Gerar pdf de compra</a>
+                       href="{{route('pdf.show',['tipo'=>'order-comprar','id'=>$order->id])}}">Gerar pdf de compra</a>
                 </div>
             </div>
 

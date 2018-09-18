@@ -27,7 +27,7 @@
                     $editar = $deletar = true;
                 @endphp
                 @if(!empty($ordem))
-                    @if($ordem->situacao === 'ANDAMENTO')
+                    @if($ordem->situacao === 'ANDAMENTO' || $ordem->situacao === 'ABERTA')
                         @php $editar = $deletar = false; @endphp
                     @endif
                 @endif
@@ -35,7 +35,7 @@
                 @if(!empty($parcela))
                     @php $editar = $deletar = false; @endphp
                 @endif
-                @if($budget->status === 'FINALIZADO')
+                @if($budget->status !== 'AGUARDANDO')
                     @php $editar = false; @endphp
                 @endif
                 <a class="btn-link" href="{{ route('budgets.show',['id'=> $budget->id]) }}">

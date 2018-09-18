@@ -31,7 +31,7 @@
                     $editar = $deletar = true;
                 @endphp
                 @if(!empty($ordem))
-                    @if($ordem->situacao === 'ANDAMENTO')
+                    @if($ordem->situacao === 'ANDAMENTO' || $ordem->situacao === 'ABERTA')
                         @php $editar = $deletar = false; @endphp
                     @endif
                 @endif

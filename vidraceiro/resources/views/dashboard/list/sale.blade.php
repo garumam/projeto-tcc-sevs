@@ -73,7 +73,8 @@
                     <div class="table-responsive text-dark p-2" id="vendas">
                         @include('dashboard.list.tables.table-sale')
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem
-                            serviço em andando ou que está com pagamento pendente!</p>
+                            serviço em andando ou aberta!</p>
+                        <p class="info-importante mt-1">Não é possível deletar ou editar venda com pagamento pendente!</p>
                         <p class="info-importante">Não é possível editar venda relacionada a orçamento finalizado!</p>
                     </div>
 

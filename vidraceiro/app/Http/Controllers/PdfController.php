@@ -100,25 +100,25 @@ class PdfController extends Controller
                 $nomearquivo = 'ordem_servico.pdf';
 
                 break;
-            case 'order_comprar_pdf':
+            case 'order-comprar':
                 $order = Order::find($id);
-                $pdf = PDF::loadView('dashboard.pdf.order_compra', compact('order'));
+                $pdf = PDF::loadView('dashboard.pdf.order-comprar', compact('order'));
                 $nomearquivo = 'OS_comprar.pdf';
 
                 break;
-            case 'client_pdf':
+            case 'client':
                 $client = Client::find($id);
                 $pdf = PDF::loadView('dashboard.pdf.client', compact('client'));
                 $nomearquivo = 'cliente.pdf';
 
                 break;
-            case 'sale_pdf':
+            case 'sale':
                 $sale = Sale::find($id);
                 $pdf = PDF::loadView('dashboard.pdf.sale', compact('sale'));
                 $nomearquivo = 'venda.pdf';
 
                 break;
-            case 'provider_pdf':
+            case 'provider':
                 $provider = Provider::find($id);
                 $pdf = PDF::loadView('dashboard.pdf.provider', compact('provider'));
                 $nomearquivo = 'fornecedor.pdf';

@@ -45,8 +45,9 @@
             <div class="table-responsive text-dark p-2" id="content">
                 @include('dashboard.list.tables.table-budget')
                 <p class="info-importante">Não é possível deletar ou editar orçamento relacionado a ordem serviço em
-                    andando ou que está com pagamento pendente!</p>
-                <p class="info-importante">Não é possível editar orçamento finalizado!</p>
+                    andando ou aberta!</p>
+                <p class="info-importante mt-1">Não é possível deletar ou editar orçamento com pagamento pendente!</p>
+                <p class="info-importante">Não é possível editar orçamento finalizado e aprovado!</p>
             </div>
         </div>
     </div>
