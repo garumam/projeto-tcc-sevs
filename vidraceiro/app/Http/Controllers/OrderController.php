@@ -70,10 +70,12 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('budgets')->find($id);
-        $arraybudgets = $order->budgets()->get()->toArray();
-        $budgets = Budget::where('status', 'APROVADO')->wherein('ordem_id', array_merge($arraybudgets, [null]))->get();
+
+        $budgets = Budget::where('status', 'APROVADO')->where('ordem_id', null)
+                    ->orWhere('ordem_id', $order->id)->get();
+
         if ($order) {
-            $budgetsOrders = $order->budgets()->get();
+            $budgetsOrders = $order->budgets;
             return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
 
         }

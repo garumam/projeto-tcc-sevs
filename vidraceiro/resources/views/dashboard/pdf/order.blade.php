@@ -85,7 +85,15 @@
 <p>{{$company->endereco .' - '. $company->bairro}}</p>
 <p>{{$company->cidade .' - '. $company->uf}}</p>
 <p>E-mail: {{$company->email}}</p>
-<p>Telefone: {{$company->telefone}}</p>
+@php
+    $telefone = $company->telefone;
+    if($telefone !== null){
+    // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+    $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+    }
+
+@endphp
+<p>Telefone: {{$telefone}}</p>
 <div class="line"></div>
 
 <h3>Detalhes da ordem de serviço</h3>

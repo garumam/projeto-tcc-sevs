@@ -108,7 +108,7 @@ class PdfController extends Controller
                 break;
             case 'client':
                 $client = Client::find($id);
-                $pdf = PDF::loadView('dashboard.pdf.client', compact('client'));
+                $pdf = PDF::loadView('dashboard.pdf.client', compact('client','company'));
                 $nomearquivo = 'cliente.pdf';
 
                 break;

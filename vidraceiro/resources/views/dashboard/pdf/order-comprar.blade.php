@@ -101,7 +101,7 @@
         //$reservasNoEstoque->shift()->pivot->qtd_reservada
     @endphp
     <h2>Orçamento - {{$budget->nome or 'não cadastrado!'}}</h2>
-    <h3>Materiais necessários para realizar o serviço</h3>
+    <h3>Materiais necessários por produto</h3>
 
     @forelse($budget->products()->get() as $product)
         <h4 style="background-color: #e0eafc;">Produto - {{$product->mproduct()->first()->nome}} | unidades: {{$product->qtd}}</h4>
@@ -111,7 +111,7 @@
         @endforeach
         <h4>Alumínios (Valores unitários)</h4>
         @foreach($product->aluminums as $aluminum)
-            <p>{{'* '.$aluminum->perfil.' | qtd: '}}
+            <p>{{'* '.$aluminum->perfil.' | medida: '.$aluminum->medida.' | Qtd de peças de alumínio(6m) que serão utilizadas: '}}
                 @if($aluminum->tipo_medida === 'largura')
                     {{ceil(($aluminum->medida * $aluminum->qtd)/6)}}
                 @elseif($aluminum->tipo_medida === 'altura')

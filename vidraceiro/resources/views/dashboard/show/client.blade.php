@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
                 <a class="btn btn-primary btn-custom" target="_blank"
-                   href="{{route('pdf.show',['tipo'=>'client_pdf','id'=>$client->id])}}">Gerar PDF</a>
+                   href="{{route('pdf.show',['tipo'=>'client','id'=>$client->id])}}">Gerar PDF</a>
             </div>
 
             <div id="accordion">
