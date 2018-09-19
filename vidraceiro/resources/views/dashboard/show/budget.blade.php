@@ -22,7 +22,15 @@
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Nome do cliente: </b> {{$budget->client()->first()->nome or ' Anônimo'}}
+                            @php $client = $budget->client()->first();@endphp
+                            <b>Nome do cliente: </b> {{$client->nome or ' Anônimo'}}
+                            @if(!empty($client))
+                                {{' | '}}
+                                <a class="btn-link ml-2" target="_blank" href="{{ route('clients.show',['id'=> $client->id]) }}">
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                </a>
+                            @endif
+
                             <hr>
                             <b>Nome do orçamento: </b> {{$budget->nome or 'Não cadastrado!'}}
                             <hr>
@@ -141,40 +149,33 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="card">
+                <div class="card">
                     <div class="card-header" id="headingSix">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                Pagamentos realizados
+                                Venda relacionada
                             </button>
                         </h5>
                     </div>
                     <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                         <div class="card-body">
-                            @php $possuiPagamento = false; @endphp
-                            @foreach($client->budgets()->whereIn('status',['FINALIZADO','APROVADO'])->get() as $budget)
-                                @php
-                                    $payments = [];
-                                    $sale = $budget->sale()->first();
-                                    if($sale){
-                                        $payments = $sale->payments()->get();
-                                    }
-                                @endphp
-                                @foreach($payments as $payment)
-                                    <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{'  '}}
-                                    <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{'  '}}
-                                    <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
-                                    <hr>
-                                    @php $possuiPagamento = true; @endphp
-                                @endforeach
-
-                            @endforeach
-                            @if(!$possuiPagamento)
-                                Este cliente não possui pagamentos!
+                            @php $sale = $budget->sale()->first(); @endphp
+                            @if(!empty($sale))
+                                <p>
+                                   <b>Id da venda: </b> {{$sale->id}}{{' | '}}
+                                   <b>Tipo de pagamento: </b> {{$sale->tipo_pagamento}}
+                                   <b>Data da venda: </b> {{date_format(date_create($sale->data_venda), 'd/m/Y')}}{{' | '}}
+                                    <a class="btn-link ml-2" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
+                                        <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                    </a>
+                                </p>
+                                <hr>
+                            @else
+                                Este orçamento ainda não tem relacionamento com uma venda!
                             @endif
                         </div>
                     </div>
-                </div>--}}
+                </div>
             </div>
 
         </div>

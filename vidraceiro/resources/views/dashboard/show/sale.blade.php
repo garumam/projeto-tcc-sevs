@@ -23,7 +23,10 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             @php $tipoPagamento = $sale->tipo_pagamento; @endphp
-                            <b>Orçamento: </b> {{$sale->budget()->first()->nome or 'não cadastrado!'}}
+                            <b>Orçamento: </b> {{$sale->budget()->first()->nome or 'não cadastrado!'}}{{' | '}}
+                            <a class="btn-link ml-2" target="_blank" href="{{ route('budgets.show',['id'=> $sale->budget()->first()->id]) }}">
+                                <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                            </a>
                             <hr>
                             <b>Total: </b> R${{$sale->budget()->first()->total or ''}}
                             <hr>
@@ -69,7 +72,10 @@
                         <div class="card-body">
                             @forelse($sale->installments()->where('status_parcela','ABERTO')->get() as $installment)
                                 <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
-                                <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
+                                <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}{{' | '}}
+                                <a class="btn-link ml-2" target="_blank" href="{{ route('sales.pay',['id'=> $sale->id]) }}">
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                </a>
                                 <hr>
                             @empty
                                 Está venda não possui pagamentos pendentes!

@@ -25,6 +25,8 @@
                             <b>Nome: </b> {{$client->nome}}
                             <hr>
                             <b>{{$client->cpf !== null?'Cpf:':'Cnpj:' }} </b><label id="{{$client->cpf !== null?'cpf':'cnpj'}}"> {{$client->cpf or $client->cnpj}}</label>
+                            <hr>
+                            <b>Situação: </b> {{$client->status}}
                         </div>
                     </div>
                 </div>
@@ -83,7 +85,10 @@
                             @forelse($client->budgets()->get() as $budget)
                                 <b>Nome: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
                                 <b>Status: </b> {{$budget->status or 'não cadastrado!'}}{{' | '}}
-                                <b>Total: </b> R${{$budget->total or ''}}
+                                <b>Total: </b> R${{$budget->total or ''}}{{' | '}}
+                                <a class="btn-link ml-2" target="_blank" href="{{ route('budgets.show',['id'=> $budget->id]) }}">
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                </a>
                                 <hr>
                             @empty
                                 Este cliente não tem orçamentos!
@@ -114,7 +119,10 @@
                                 @foreach($installments as $installment)
                                     <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
                                     <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
-                                    <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
+                                    <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}{{' | '}}
+                                    <a class="btn-link ml-2" target="_blank" href="{{ route('sales.pay',['id'=> $sale->id]) }}">
+                                        <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                    </a>
                                     <hr>
                                     @php $possuiParcelasPendentes = true; @endphp
                                 @endforeach

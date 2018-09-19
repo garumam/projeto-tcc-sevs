@@ -15,7 +15,15 @@
             <th scope="row">{{$client->id}}</th>
             <td>{{$client->nome}}</td>
             <td>{{$client->cpf or $client->cnpj}}</td>
-            <td class="telefone">{{$client->telefone}}</td>
+            @php
+                $telefone = $client->telefone;
+                if($telefone !== null){
+                // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+                $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+                }
+
+            @endphp
+            <td class="telefone">{{$telefone}}</td>
             <td>
                 <span class="badge {{$client->status === 'EM DIA'? 'badge-success' : 'badge-danger'}}">{{$client->status}}</span>
             </td>

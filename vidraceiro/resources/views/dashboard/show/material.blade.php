@@ -75,7 +75,7 @@
                             @forelse($material->providers()->get() as $provider)
                                 <b>Fornecedor: </b> {{$provider->nome or 'não cadastrado!'}}{{' | '}}
                                 <a class="btn-link ml-2" target="_blank" href="{{ route('providers.show',['id'=> $provider->id]) }}">
-                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja mais sobre...</button>
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
                                 </a>
                                 <hr>
                             @empty

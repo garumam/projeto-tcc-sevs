@@ -50,7 +50,10 @@
                             @forelse($order->budgets()->get() as $budget)
                                 <b>Id: </b> {{$budget->id}}{{' | '}}
                                 <b>Nome: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-                                <b>Valor: </b> R${{$budget->total or ''}}
+                                <b>Valor: </b> R${{$budget->total or ''}}{{' | '}}
+                                <a class="btn-link ml-2" target="_blank" href="{{ route('budgets.show',['id'=> $budget->id]) }}">
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                </a>
                                 <hr>
                             @empty
                                 Nenhum orçamento encontrado!

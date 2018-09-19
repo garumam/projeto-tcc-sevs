@@ -372,6 +372,7 @@ class SaleController extends Controller
         if ($request->parcelas !== null) {
 
             $installments = Installment::whereIn('id', $request->parcelas)->get();
+            $sale = $installments[0]->sale()->first();
             $valor = 0;
             foreach ($installments as $installment) {
                 $payment = new Payment();
@@ -391,6 +392,13 @@ class SaleController extends Controller
                 ]);
             }
 
+            $emDia = empty($sale->installments()->where('status_parcela', 'ABERTO')->first());
+
+            if($emDia){
+                $budget = $sale->budget()->first();
+                $client = $budget->client()->first();
+                $client->update(['status' => 'EM DIA']);
+            }
 
         } else {
             return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');
