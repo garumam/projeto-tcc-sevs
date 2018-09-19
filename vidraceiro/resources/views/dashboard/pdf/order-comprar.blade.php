@@ -17,18 +17,8 @@
             height: 2px;
         }
 
-        h2 {
-            background-color: #c4daff;
-            padding: .4rem;
-        }
-
         h3 {
             background-color: #DFEBFF;
-            padding: .4rem;
-        }
-
-        h4 {
-            background-color: #edf1fc;
             padding: .4rem;
         }
 
@@ -89,7 +79,25 @@
     </style>
 </head>
 <body>
-<h1>Ordem de serviço - {{$order->nome or 'não cadastrado!'}}</h1>
+
+<p>{{$company->nome}}</p>
+<p>{{$company->endereco .' - '. $company->bairro}}</p>
+<p>{{$company->cidade .' - '. $company->uf}}</p>
+<p>E-mail: {{$company->email}}</p>
+
+@php
+    $telefone = $company->telefone;
+    if($telefone !== null){
+    // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+    $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+    }
+
+@endphp
+
+<p>Telefone: {{$telefone}}</p>
+<div class="line"></div>
+
+<h3>Ordem de serviço - {{$order->nome or 'não cadastrado!'}}</h3>
 
 
 @php $budgets = $order->budgets()->get();@endphp
@@ -100,18 +108,20 @@
         $reservasNoEstoque = $sale->storages()->get();
         //$reservasNoEstoque->shift()->pivot->qtd_reservada
     @endphp
-    <h2>Orçamento - {{$budget->nome or 'não cadastrado!'}}</h2>
-    <h3>Materiais necessários por produto</h3>
+    <h3>Orçamento - {{$budget->nome or 'não cadastrado!'}}<hr>Materiais necessários por produto</h3>
+
 
     @forelse($budget->products()->get() as $product)
-        <h4 style="background-color: #e0eafc;">Produto - {{$product->mproduct()->first()->nome}} | unidades: {{$product->qtd}}</h4>
+        <h4 style="background-color: #e0eafc; text-align: center;">Produto - {{$product->mproduct()->first()->nome}} | unidades: {{$product->qtd}}</h4>
         <h4>Vidros (Valores unitários)</h4>
-        @foreach($product->glasses as $glass)
-            <p>{{'* '.$glass->nome.' '.$glass->tipo.' | m²: '.($product->largura * $product->altura)}}</p>
-        @endforeach
+        @forelse($product->glasses as $glass)
+            <p style="margin-left: 20px;">{{'* '.$glass->nome.' '.$glass->tipo.' | m²: '.number_format(($product->largura * $product->altura), 3, '.', '')}}</p>
+        @empty
+            <div style="margin-left: 20px;">Nenhum vidro neste produto!</div>
+        @endforelse
         <h4>Alumínios (Valores unitários)</h4>
-        @foreach($product->aluminums as $aluminum)
-            <p>{{'* '.$aluminum->perfil.' | medida: '.$aluminum->medida.' | Qtd de peças de alumínio(6m) que serão utilizadas: '}}
+        @forelse($product->aluminums as $aluminum)
+            <p style="margin-left: 20px;">{{'* '.$aluminum->perfil.' | qtd: '.$aluminum->qtd.' | medida: '.$aluminum->medida.' | Qtd de peças de alumínio(6m) que serão utilizadas: '}}
                 @if($aluminum->tipo_medida === 'largura')
                     {{ceil(($aluminum->medida * $aluminum->qtd)/6)}}
                 @elseif($aluminum->tipo_medida === 'altura')
@@ -119,12 +129,16 @@
                 @elseif($aluminum->tipo_medida === 'mlinear')
                     {{(ceil($aluminum->medida/6))}}
                 @endif</p>
-        @endforeach
+        @empty
+            <div style="margin-left: 20px;">Nenhum alumínio neste produto!</div>
+        @endforelse
         <h4>Componentes (Valores unitários)</h4>
-        @foreach($product->components as $component)
-            <p>{{'* '.$component->nome.' | qtd: '.$component->qtd}}</p>
-        @endforeach
-        <div class="line"></div>
+        @forelse($product->components as $component)
+            <p style="margin-left: 20px;">{{'* '.$component->nome.' | qtd: '.$component->qtd}}</p>
+        @empty
+            <div style="margin-left: 20px;">Nenhum componente neste produto!</div>
+        @endforelse
+        <div class="line" style="margin-top: 20px;"></div>
     @empty
         <div>Nenhum produto cadastrado neste orçamento!</div>
     @endforelse
@@ -133,16 +147,16 @@
     @forelse($reservasNoEstoque as $reserva)
         @if($reserva->glass_id !== null)
             @php $glass = $reserva->glass()->first(); @endphp
-            <p>{{$glass->nome.' '.$glass->tipo.' | reservados: '.$reserva->pivot->qtd_reservada.'m²'}}</p>
+            <p style="margin-left: 20px;">{{$glass->nome.' '.$glass->tipo.' | reservados: '.$reserva->pivot->qtd_reservada.'m²'}}</p>
         @elseif($reserva->aluminum_id !== null)
             @php $aluminum = $reserva->aluminum()->first(); @endphp
-            <p>{{$aluminum->perfil.' '.$aluminum->descricao.' '.$aluminum->espessura.'mm'.' | Quantidade reservada: '.$reserva->pivot->qtd_reservada}}</p>
+            <p style="margin-left: 20px;">{{$aluminum->perfil.' '.$aluminum->descricao.' '.$aluminum->espessura.'mm'.' | Qtd de peças de alumínio(6m) reservadas: '.$reserva->pivot->qtd_reservada}}</p>
         @elseif($reserva->component_id !== null)
             @php $component = $reserva->component()->first(); @endphp
-            <p>{{$component->nome.' | Quantidade reservada: '.$reserva->pivot->qtd_reservada}}</p>
+            <p style="margin-left: 20px;">{{$component->nome.' | Quantidade reservada: '.$reserva->pivot->qtd_reservada}}</p>
         @endif
     @empty
-        <div>Nada reservado no estoque para este orçamento!</div>
+        <div style="margin-left: 20px;">Nada reservado no estoque para este orçamento!</div>
     @endforelse
     <div class="line" style="margin: 20px 0 0 0;"></div>
 @endforeach

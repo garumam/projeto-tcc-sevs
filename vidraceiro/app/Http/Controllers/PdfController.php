@@ -102,7 +102,7 @@ class PdfController extends Controller
                 break;
             case 'order-comprar':
                 $order = Order::find($id);
-                $pdf = PDF::loadView('dashboard.pdf.order-comprar', compact('order'));
+                $pdf = PDF::loadView('dashboard.pdf.order-comprar', compact('order','company'));
                 $nomearquivo = 'OS_comprar.pdf';
 
                 break;
