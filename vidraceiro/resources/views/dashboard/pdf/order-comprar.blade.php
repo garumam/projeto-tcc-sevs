@@ -113,15 +113,16 @@
 
     @forelse($budget->products()->get() as $product)
         <h4 style="background-color: #e0eafc; text-align: center;">Produto - {{$product->mproduct()->first()->nome}} | unidades: {{$product->qtd}}</h4>
-        <h4>Vidros (Valores unitários)</h4>
+        <h4>Vidros</h4>
         @forelse($product->glasses as $glass)
-            <p style="margin-left: 20px;">{{'* '.$glass->nome.' '.$glass->tipo.' | m²: '.number_format(($product->largura * $product->altura), 3, '.', '')}}</p>
+            <p style="margin-left: 20px;">{{'* '.$glass->nome.' '.$glass->tipo.' | m²(unidade): '.number_format(($product->largura * $product->altura), 3, '.', '')
+                                                               .' | m²(total): '.number_format((($product->largura * $product->altura)*$product->qtd), 3, '.', '')}}</p>
         @empty
             <div style="margin-left: 20px;">Nenhum vidro neste produto!</div>
         @endforelse
-        <h4>Alumínios (Valores unitários)</h4>
+        <h4>Alumínios</h4>
         @forelse($product->aluminums as $aluminum)
-            <p style="margin-left: 20px;">{{'* '.$aluminum->perfil.' | qtd: '.$aluminum->qtd.' | medida: '.$aluminum->medida.' | Qtd de peças de alumínio(6m) que serão utilizadas: '}}
+            <p style="margin-left: 20px;">{{'* '.$aluminum->perfil.' | qtd: '.$aluminum->qtd.' | medida(unidade): '.$aluminum->medida.' | medida(total): '.($aluminum->medida * $aluminum->qtd * $product->qtd).' | Qtd de peças de alumínio(6m) que serão utilizadas: '}}
                 @if($aluminum->tipo_medida === 'largura')
                     {{ceil(($aluminum->medida * $aluminum->qtd)/6)}}
                 @elseif($aluminum->tipo_medida === 'altura')
@@ -132,9 +133,9 @@
         @empty
             <div style="margin-left: 20px;">Nenhum alumínio neste produto!</div>
         @endforelse
-        <h4>Componentes (Valores unitários)</h4>
+        <h4>Componentes</h4>
         @forelse($product->components as $component)
-            <p style="margin-left: 20px;">{{'* '.$component->nome.' | qtd: '.$component->qtd}}</p>
+            <p style="margin-left: 20px;">{{'* '.$component->nome.' | qtd: '.$component->qtd.' | qtd total(vezes qtd de produtos): '.$component->qtd * $product->qtd}}</p>
         @empty
             <div style="margin-left: 20px;">Nenhum componente neste produto!</div>
         @endforelse

@@ -113,12 +113,12 @@ class SaleController extends Controller
             $mensagem = ', não havia nenhum material em estoque!';
             foreach ($sale->budget->products()->with('glasses', 'aluminums', 'components')->get() as $product) {
 
-                for ($i = 0; $i < $product->qtd; $i++) {
+                //for ($i = 0; $i < $product->qtd; $i++) {
 
                     foreach ($product->glasses as $glass) {
-                        $m2 = ceil(($product->largura * $product->altura));
+                        $m2 = ceil((($product->largura * $product->altura)*$product->qtd));
                         $glassestoque = Storage::where('glass_id', $glass->mglass_id)->first();
-                        $qtdreservadavenda = $sale->storages()->where('glass_id', $glass->mglass_id)->first();
+                        //$qtdreservadavenda = $sale->storages()->where('glass_id', $glass->mglass_id)->first();
 
                         if ($glassestoque->metros_quadrados > 0) {
                             $qtd_reservada = null;
@@ -130,9 +130,9 @@ class SaleController extends Controller
                                 $resto = $glassestoque->metros_quadrados - $m2;
                             }
 
-                            if (!empty($qtdreservadavenda)) {
+                            /*if (!empty($qtdreservadavenda)) {
                                 $qtd_reservada += $qtdreservadavenda->pivot->qtd_reservada;
-                            }
+                            }*/
 
                             $sale->storages()->sync([$glassestoque->id => ['qtd_reservada' => $qtd_reservada]], false);
 
@@ -145,17 +145,17 @@ class SaleController extends Controller
                     foreach ($product->aluminums as $aluminum) {
                         $aluminumestoque = Storage::where('aluminum_id', $aluminum->maluminum_id)->first();
                         $qtdreservadavenda = $sale->storages()->where('aluminum_id', $aluminum->maluminum_id)->first();
-
+                        $pecas6mQtd = ceil(((($aluminum->medida * $aluminum->qtd)*$product->qtd)/6));
                         if ($aluminumestoque->qtd > 0) {
 
                             $qtd_reservada = null;
                             $resto = 0;
 
-                            if ($aluminumestoque->qtd < $aluminum->qtd) {
+                            if ($aluminumestoque->qtd < $pecas6mQtd) {
                                 $qtd_reservada = $aluminumestoque->qtd;
                             } else {
-                                $qtd_reservada = $aluminum->qtd;
-                                $resto = $aluminumestoque->qtd - $aluminum->qtd;
+                                $qtd_reservada = $pecas6mQtd;
+                                $resto = $aluminumestoque->qtd - $pecas6mQtd;
                             }
 
                             if (!empty($qtdreservadavenda)) {
@@ -172,16 +172,16 @@ class SaleController extends Controller
                     foreach ($product->components as $component) {
                         $componentestoque = Storage::where('component_id', $component->mcomponent_id)->first();
                         $qtdreservadavenda = $sale->storages()->where('component_id', $component->mcomponent_id)->first();
-
+                        $qtdComponent = $component->qtd * $product->qtd;
                         if ($componentestoque->qtd > 0) {
                             $qtd_reservada = null;
                             $resto = 0;
 
-                            if ($componentestoque->qtd < $component->qtd) {
+                            if ($componentestoque->qtd < $qtdComponent) {
                                 $qtd_reservada = $componentestoque->qtd;
                             } else {
-                                $qtd_reservada = $component->qtd;
-                                $resto = $componentestoque->qtd - $component->qtd;
+                                $qtd_reservada = $qtdComponent;
+                                $resto = $componentestoque->qtd - $qtdComponent;
                             }
 
                             if (!empty($qtdreservadavenda)) {
@@ -195,7 +195,7 @@ class SaleController extends Controller
                         }
                     }
 
-                }
+                //} fim for qtd produto
 
             }
 
