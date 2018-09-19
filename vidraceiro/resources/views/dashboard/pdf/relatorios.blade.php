@@ -293,7 +293,21 @@
             $celular="(".substr($celular,0,2).") ".substr($celular,2,-4)." - ".substr($celular,-4);
             }
 
+
+            $campoNome = '';
+            $documento = null;
+            $mask = '';
+            if($client->cpf !== null){
+                $campoNome = 'Cpf:';
+                $documento = $client->cpf;
+                $mask = '###.###.###-##';
+            }else{
+                $campoNome = 'Cnpj:';
+                $documento = $client->cnpj;
+                $mask = '##.###.###/####-##';
+            }
         @endphp
+
         <div class="flex">
             <table class="tabela-relatorio">
                 <tr>
@@ -301,6 +315,7 @@
 
                     <td class="texto">
                         <b>Nome:</b> {{$client->nome .' |'}}
+                        <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask).' |'}}
                         <b>Situação:</b> {{$client->status .' |'}}
                         <b>Telefone:</b> {{$telefone??'Não possui.'}}
                         <b>Celular:</b> {{$celular??'Não possui.'}}

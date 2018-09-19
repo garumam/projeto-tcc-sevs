@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
                 <a class="btn btn-primary btn-custom" target="_blank"
-                   href="{{route('pdf.show',['tipo'=>'provider_pdf','id'=>$provider->id])}}">Gerar PDF</a>
+                   href="{{route('pdf.show',['tipo'=>'provider','id'=>$provider->id])}}">Gerar PDF</a>
             </div>
 
             <div id="accordion">
@@ -26,7 +26,7 @@
                             <hr>
                             <b>Situação: </b> {{$provider->situacao or 'não cadastrado!'}}
                             <hr>
-                            <b>Cnpj: </b><label id="cnpj"> {{$provider->cnpj or 'não cadastrado!'}}</label>
+                            <b>Cnpj: </b> {{ App\Http\Controllers\PdfController::mask($provider->cnpj,'##.###.###/####-##') }}
                         </div>
                     </div>
                 </div>

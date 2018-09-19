@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
                 <a class="btn btn-primary btn-custom" target="_blank"
-                   href="{{route('pdf.show',['tipo'=>'sale_pdf','id'=>$sale->id])}}">Gerar PDF</a>
+                   href="{{route('pdf.show',['tipo'=>'sale','id'=>$sale->id])}}">Gerar PDF</a>
             </div>
 
             <div id="accordion">
@@ -80,6 +80,35 @@
                             @empty
                                 Está venda não possui pagamentos pendentes!
                             @endforelse
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Ordem de serviço associada
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            @php
+                                $order = $sale->budget()->first()->order()->first();
+                            @endphp
+                            @if(!empty($order))
+                                <b>Nome: </b> {{$order->nome or 'Não cadastrado!'}}{{' | '}}
+                                <b>Data inicial: </b> {{date_format(date_create($order->data_inicial), 'd/m/Y')}}{{' | '}}
+                                <b>Data final: </b> {{date_format(date_create($order->data_final), 'd/m/Y')}}{{' | '}}
+                                <b>Situação: </b> {{$order->situacao or ''}}{{' | '}}
+                                <a class="btn-link ml-2" target="_blank" href="{{ route('orders.show',['id'=> $order->id]) }}">
+                                    <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
+                                </a>
+                                <hr>
+                            @else
+                                O orçamento desta venda não está associado a uma ordem de serviço!
+                            @endif
+
                         </div>
                     </div>
                 </div>

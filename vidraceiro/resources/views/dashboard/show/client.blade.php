@@ -24,7 +24,22 @@
                         <div class="card-body">
                             <b>Nome: </b> {{$client->nome}}
                             <hr>
-                            <b>{{$client->cpf !== null?'Cpf:':'Cnpj:' }} </b><label id="{{$client->cpf !== null?'cpf':'cnpj'}}"> {{$client->cpf or $client->cnpj}}</label>
+                            @php
+                                $campoNome = '';
+                                $documento = null;
+                                $mask = '';
+                                if($client->cpf !== null){
+                                    $campoNome = 'Cpf:';
+                                    $documento = $client->cpf;
+                                    $mask = '###.###.###-##';
+                                }else{
+                                    $campoNome = 'Cnpj:';
+                                    $documento = $client->cnpj;
+                                    $mask = '##.###.###/####-##';
+                                }
+
+                            @endphp
+                            <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask)}}
                             <hr>
                             <b>Situação: </b> {{$client->status}}
                         </div>

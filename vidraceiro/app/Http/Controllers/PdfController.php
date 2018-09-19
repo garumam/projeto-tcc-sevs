@@ -114,13 +114,13 @@ class PdfController extends Controller
                 break;
             case 'sale':
                 $sale = Sale::find($id);
-                $pdf = PDF::loadView('dashboard.pdf.sale', compact('sale'));
+                $pdf = PDF::loadView('dashboard.pdf.sale', compact('sale','company'));
                 $nomearquivo = 'venda.pdf';
 
                 break;
             case 'provider':
                 $provider = Provider::find($id);
-                $pdf = PDF::loadView('dashboard.pdf.provider', compact('provider'));
+                $pdf = PDF::loadView('dashboard.pdf.provider', compact('provider','company'));
                 $nomearquivo = 'fornecedor.pdf';
 
                 break;
@@ -366,5 +366,27 @@ class PdfController extends Controller
 
         return $pdf->stream($nomearquivo);
     }
+
+
+    public static function mask($val, $mask)
+    {
+        $maskared = '';
+        $k = 0;
+        for($i = 0; $i<=strlen($mask)-1; $i++)
+        {
+            if($mask[$i] == '#')
+            {
+                if(isset($val[$k]))
+                    $maskared .= $val[$k++];
+            }
+            else
+            {
+                if(isset($mask[$i]))
+                    $maskared .= $mask[$i];
+            }
+        }
+        return $maskared;
+    }
+
 
 }
