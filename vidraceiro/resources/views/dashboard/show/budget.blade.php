@@ -34,6 +34,8 @@
                             <hr>
                             <b>Nome do orçamento: </b> {{$budget->nome or 'Não cadastrado!'}}
                             <hr>
+                            <b>Status: </b> {{$budget->status or 'Não cadastrado!'}}
+                            <hr>
                             <b>Data: </b> {{$budget->data !== null?date_format(date_create($budget->data), 'd/m/Y'):'Não cadastrada!'}}
                             <hr>
                             <b>Margem de lucro: </b> {{$budget->margem_lucro.'%'}}
