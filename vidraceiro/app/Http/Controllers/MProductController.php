@@ -116,7 +116,7 @@ class MProductController extends Controller
         $validado = $this->rules_mproduct_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('mproducts.index'))->withErrors($validado);
         }
 
         $aluminums = Aluminum::where('is_modelo', '1')->get();
@@ -145,7 +145,7 @@ class MProductController extends Controller
         $validado = $this->rules_mproduct_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('mproducts.index'))->withErrors($validado);
         }
 
         switch ($tab) {

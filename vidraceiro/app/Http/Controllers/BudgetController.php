@@ -347,7 +347,7 @@ class BudgetController extends Controller
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('budgets.index'))->withErrors($validado);
         }
 
         $budget = Budget::find($id);
@@ -359,7 +359,7 @@ class BudgetController extends Controller
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('budgets.index'))->withErrors($validado);
         }
 
         $states = $this->states;
@@ -387,7 +387,7 @@ class BudgetController extends Controller
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('budgets.index'))->withErrors($validado);
         }
 
         switch ($tab) {

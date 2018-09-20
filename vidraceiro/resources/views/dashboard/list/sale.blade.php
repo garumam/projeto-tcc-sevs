@@ -45,7 +45,16 @@
                         {{ session('error') }}
                     </div>
                 </div>
-        @endif
+            @else
+                @foreach($errors->all() as $error)
+                    <div class="alerta">
+                        <div class="alert alert-danger m-0">
+                            {{ $error }}
+                        </div>
+                    </div>
+                @endforeach
+
+            @endif
 
         <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">

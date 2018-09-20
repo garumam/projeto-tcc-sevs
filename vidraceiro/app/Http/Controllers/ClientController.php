@@ -99,7 +99,7 @@ class ClientController extends Controller
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('clients.index'))->withErrors($validado);
         }
         $client = Client::find($id);
         return view('dashboard.show.client', compact('client'))->with('title', 'Informações do cliente');
@@ -110,7 +110,7 @@ class ClientController extends Controller
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('clients.index'))->withErrors($validado);
         }
         $states = $this->states;
         $client = Client::find($id);
@@ -123,7 +123,7 @@ class ClientController extends Controller
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('clients.index'))->withErrors($validado);
         }
 
         $client = Client::find($id);

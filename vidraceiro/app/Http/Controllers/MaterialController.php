@@ -173,10 +173,10 @@ class MaterialController extends Controller
         $validado = $this->rules_material_exists(['id'=>$id],$tabela);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('materials.index'))->withErrors($validado);
         }else{
             if($material->is_modelo === 0) {
-                return redirect()->back()->with('error', 'Este material não existe!');
+                return redirect(route('materials.index'))->with('error', 'Este material não existe!');
             }
         }
 
@@ -217,10 +217,10 @@ class MaterialController extends Controller
         $validado = $this->rules_material_exists(['id'=>$id],$tabela);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('materials.index'))->withErrors($validado);
         }else{
             if($material->is_modelo === 0) {
-                return redirect()->back()->with('error', 'Este material não existe!');
+                return redirect(route('materials.index'))->with('error', 'Este material não existe!');
             }
         }
 
@@ -260,10 +260,10 @@ class MaterialController extends Controller
         $validado = $this->rules_material_exists(['id'=>$id],$tabela);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('materials.index'))->withErrors($validado);
         }else{
             if($material->is_modelo === 0) {
-                return redirect()->back()->with('error', 'Este material não existe!');
+                redirect(route('materials.index'))->with('error', 'Este material não existe!');
             }
         }
 

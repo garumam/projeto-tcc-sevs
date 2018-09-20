@@ -89,7 +89,7 @@ class ProviderController extends Controller
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('providers.index'))->withErrors($validado);
         }
         $provider = Provider::find($id);
         return view('dashboard.show.provider', compact('provider'))->with('title', 'Informações do fornecedor');
@@ -100,7 +100,7 @@ class ProviderController extends Controller
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('providers.index'))->withErrors($validado);
         }
 
         $provider = Provider::findOrFail($id);
@@ -114,7 +114,7 @@ class ProviderController extends Controller
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('providers.index'))->withErrors($validado);
         }
 
         $provider = Provider::find($id);

@@ -78,7 +78,7 @@ class CategoryController extends Controller
         $validado = $this->rules_category_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('categories.index'))->withErrors($validado);
         }
 
         $category = Category::findOrFail($id);
@@ -93,7 +93,7 @@ class CategoryController extends Controller
         $validado = $this->rules_category_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('categories.index'))->withErrors($validado);
         }
 
         $validado = $this->rules_category($request->all());

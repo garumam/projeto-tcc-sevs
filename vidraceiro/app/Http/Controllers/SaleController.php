@@ -214,7 +214,7 @@ class SaleController extends Controller
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('sales.index'))->withErrors($validado);
         }
         $sale = Sale::find($id);
         return view('dashboard.show.sale', compact('sale'))->with('title', 'Informações da venda');
@@ -225,7 +225,7 @@ class SaleController extends Controller
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('sales.index'))->withErrors($validado);
         }
         $sale = Sale::find($id);
         return view('dashboard.create.sale', compact('sale'))->with('title', 'Atualizar venda');
@@ -237,7 +237,7 @@ class SaleController extends Controller
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('sales.index'))->withErrors($validado);
         }
 
         $arrayextra = [];
@@ -372,7 +372,7 @@ class SaleController extends Controller
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            redirect(route('sales.index'))->withErrors($validado);
         }
         $sale = Sale::find($id);
 
@@ -386,7 +386,7 @@ class SaleController extends Controller
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('sales.index'))->withErrors($validado);
         }
 
         $installments = null;
@@ -456,7 +456,7 @@ class SaleController extends Controller
             [
                 'id' => 'exists:sales,id'
             ], [
-                'exists' => 'Esta venda não existe!',
+                'exists' => 'Esta venda ou pagamento não existe!',
             ]
 
         );

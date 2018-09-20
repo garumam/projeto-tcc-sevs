@@ -66,7 +66,7 @@ class OrderController extends Controller
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('orders.index'))->withErrors($validado);
         }
 
         $order = Order::find($id);
@@ -78,7 +78,7 @@ class OrderController extends Controller
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('orders.index'))->withErrors($validado);
         }
 
         $order = Order::with('budgets')->find($id);
@@ -100,7 +100,7 @@ class OrderController extends Controller
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('orders.index'))->withErrors($validado);
         }
 
         $validado = $this->rules_order($request->all());

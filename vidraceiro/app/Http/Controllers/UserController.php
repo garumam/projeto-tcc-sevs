@@ -79,7 +79,7 @@ class UserController extends Controller
         $validado = $this->rules_user_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('users.index'))->withErrors($validado);
         }
 
         $user = User::find($id);
@@ -118,7 +118,7 @@ class UserController extends Controller
         $validado = $this->rules_user_exists(['id'=>$id]);
 
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect(route('users.index'))->withErrors($validado);
         }
 
         $title = "Lista de Funções";

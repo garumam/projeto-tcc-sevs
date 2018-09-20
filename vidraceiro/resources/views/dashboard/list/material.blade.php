@@ -57,6 +57,15 @@
                                         {{ session('error') }}
                                     </div>
                                 </div>
+                            @else
+                                @foreach($errors->all() as $error)
+                                    <div class="alerta">
+                                        <div class="alert alert-danger m-0">
+                                            {{ $error }}
+                                        </div>
+                                    </div>
+                                @endforeach
+
                             @endif
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -105,6 +114,15 @@
                                         {{ session('error') }}
                                     </div>
                                 </div>
+                            @else
+                                @foreach($errors->all() as $error)
+                                    <div class="alerta">
+                                        <div class="alert alert-danger m-0">
+                                            {{ $error }}
+                                        </div>
+                                    </div>
+                                @endforeach
+
                             @endif
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -156,6 +174,15 @@
                                         {{ session('error') }}
                                     </div>
                                 </div>
+                            @else
+                                @foreach($errors->all() as $error)
+                                    <div class="alerta">
+                                        <div class="alert alert-danger m-0">
+                                            {{ $error }}
+                                        </div>
+                                    </div>
+                                @endforeach
+
                             @endif
 
                             <div class="form-row formulario pb-0 justify-content-between">
