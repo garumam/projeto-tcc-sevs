@@ -149,50 +149,79 @@ class MaterialController extends Controller
     public function show($type, $id)
     {
         $material = null;
-        $mensagem = '';
+        $mensagem = $tabela = '';
         switch ($type) {
             case 'glass':
                 $material = Glass::find($id);
                 $mensagem = 'vidro';
+                $tabela = 'glasses';
                 break;
             case 'aluminum':
                 $material = Aluminum::find($id);
                 $mensagem = 'alumínio';
+                $tabela = 'aluminums';
                 break;
             case 'component':
                 $material = Component::find($id);
                 $mensagem = 'componente';
+                $tabela = 'components';
                 break;
             default:
                 return redirect()->back();
         }
+
+        $validado = $this->rules_material_exists(['id'=>$id],$tabela);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }else{
+            if($material->is_modelo === 0) {
+                return redirect()->back()->with('error', 'Este material não existe!');
+            }
+        }
+
         return view('dashboard.show.material',
             compact('material', 'type'))->with('title', 'Informações do ' . $mensagem);
     }
 
     public function edit($type, $id)
     {
+
         $providers = Provider::all();
         $espessuras = $this->espessuraAlum;
+        $tabela = '';
         switch ($type) {
             case 'glass':
                 $material = Glass::with('providers')->find($id);
                 $categories = Category::where('tipo', 'vidro')->get();
                 $nome = 'vidro';
+                $tabela = 'glasses';
                 break;
             case 'aluminum':
                 $material = Aluminum::with('providers')->find($id);
                 $categories = Category::where('tipo', 'aluminio')->get();
                 $nome = 'alumínio';
+                $tabela = 'aluminums';
                 break;
             case 'component':
                 $material = Component::with('providers')->find($id);
                 //$categories = Category::where('tipo','componente')->get();
                 $categories = Category::all();
                 $nome = 'componente';
+                $tabela = 'components';
                 break;
             default:
                 return redirect()->back();
+        }
+
+        $validado = $this->rules_material_exists(['id'=>$id],$tabela);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }else{
+            if($material->is_modelo === 0) {
+                return redirect()->back()->with('error', 'Este material não existe!');
+            }
         }
 
         return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras'))->with('title', 'Atualizar ' . $nome);
@@ -201,22 +230,25 @@ class MaterialController extends Controller
 
     public function update(Request $request, $type, $id)
     {
-
+        $tabela = '';
         switch ($type) {
             case 'glass':
                 $validado = $this->rules_materiais($request->all(), $type);
                 $material = Glass::find($id);
                 $nome = 'Vidro';
+                $tabela = 'glasses';
                 break;
             case 'aluminum':
                 $validado = $this->rules_materiais($request->all(), $type);
                 $material = Aluminum::find($id);
                 $nome = 'Alumínio';
+                $tabela = 'aluminums';
                 break;
             case 'component':
                 $validado = $this->rules_materiais($request->all(), $type);
                 $material = Component::find($id);
                 $nome = 'Componente';
+                $tabela = 'components';
                 break;
             default:
                 return redirect()->back();
@@ -224,6 +256,18 @@ class MaterialController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
+
+        $validado = $this->rules_material_exists(['id'=>$id],$tabela);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }else{
+            if($material->is_modelo === 0) {
+                return redirect()->back()->with('error', 'Este material não existe!');
+            }
+        }
+
+
         $material->update($request->except('_token', 'providers'));
 
         $material->providers()->sync($request->providers);
@@ -272,6 +316,22 @@ class MaterialController extends Controller
         return $validator;
     }
 
+    public function rules_material_exists(array $data, $tabela)
+    {
+
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:'.$tabela.',id'
+            ], [
+                'exists' => 'Este material não existe!',
+            ]
+
+        );
+
+        return $validator;
+    }
+
     public function destroy($type, $id)
     {
         switch ($type) {
@@ -296,6 +356,7 @@ class MaterialController extends Controller
             return redirect()->back()->with('error', "Erro ao deletar $tipoNome");
         }
     }
+
 
 
 }

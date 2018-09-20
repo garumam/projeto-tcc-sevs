@@ -63,12 +63,24 @@ class OrderController extends Controller
 
     public function show($id)
     {
+        $validado = $this->rules_order_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $order = Order::find($id);
         return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
     }
 
     public function edit($id)
     {
+        $validado = $this->rules_order_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $order = Order::with('budgets')->find($id);
 
         $budgets = Budget::where('status', 'APROVADO')->where('ordem_id', null)
@@ -85,6 +97,12 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_order_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -139,6 +157,21 @@ class OrderController extends Controller
             'situacao' => 'required',
             'id_orcamento' => 'required|array'
         ]);
+
+        return $validator;
+    }
+
+    public function rules_order_exists(array $data)
+    {
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:orders,id'
+            ], [
+                'exists' => 'Esta OS não existe!',
+            ]
+
+        );
 
         return $validator;
     }

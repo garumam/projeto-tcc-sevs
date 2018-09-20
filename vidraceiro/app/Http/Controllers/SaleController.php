@@ -211,12 +211,22 @@ class SaleController extends Controller
 
     public function show($id)
     {
+        $validado = $this->rules_sale_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $sale = Sale::find($id);
         return view('dashboard.show.sale', compact('sale'))->with('title', 'Informações da venda');
     }
 
     public function edit($id)
     {
+        $validado = $this->rules_sale_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $sale = Sale::find($id);
         return view('dashboard.create.sale', compact('sale'))->with('title', 'Atualizar venda');
     }
@@ -224,6 +234,11 @@ class SaleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_sale_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
 
         $arrayextra = [];
         if ($request->tipo_pagamento === 'A PRAZO') {
@@ -354,7 +369,11 @@ class SaleController extends Controller
 
     public function pay($id)
     {
+        $validado = $this->rules_sale_exists(['id'=>$id]);
 
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $sale = Sale::find($id);
 
         if ($sale)
@@ -363,6 +382,12 @@ class SaleController extends Controller
 
     public function payupdate(Request $request, $id)
     {
+
+        $validado = $this->rules_sale_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
 
         $installments = null;
 
@@ -419,6 +444,21 @@ class SaleController extends Controller
                 ],
                 $extra
             )
+        );
+
+        return $validator;
+    }
+
+    public function rules_sale_exists(array $data)
+    {
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:sales,id'
+            ], [
+                'exists' => 'Esta venda não existe!',
+            ]
+
         );
 
         return $validator;

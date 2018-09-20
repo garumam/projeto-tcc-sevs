@@ -96,12 +96,22 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        $validado = $this->rules_client_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $client = Client::find($id);
         return view('dashboard.show.client', compact('client'))->with('title', 'Informações do cliente');
     }
 
     public function edit($id)
     {
+        $validado = $this->rules_client_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $states = $this->states;
         $client = Client::find($id);
         return view('dashboard.create.client', compact('client', 'states'))->with('title', 'Atualizar cliente');
@@ -110,6 +120,12 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_client_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $client = Client::find($id);
 
         $docvalidation = null;
@@ -174,6 +190,20 @@ class ClientController extends Controller
             ], $docarray
 
         ));
+
+        return $validator;
+    }
+    public function rules_client_exists(array $data)
+    {
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:clients,id'
+            ], [
+                'exists' => 'Este cliente não existe!',
+            ]
+
+        );
 
         return $validator;
     }

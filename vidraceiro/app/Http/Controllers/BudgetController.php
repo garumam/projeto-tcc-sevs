@@ -344,12 +344,24 @@ class BudgetController extends Controller
 
     public function show($id)
     {
+        $validado = $this->rules_budget_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $budget = Budget::find($id);
         return view('dashboard.show.budget', compact('budget'))->with('title', 'Informações do orçamento');
     }
 
     public function edit($id)
     {
+        $validado = $this->rules_budget_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $states = $this->states;
         $aluminums = Aluminum::where('is_modelo', '1')->get();
         $glasses = Glass::where('is_modelo', '1')->get();
@@ -372,8 +384,15 @@ class BudgetController extends Controller
 
     public function update(Request $request, $tab, $id)
     {
+        $validado = $this->rules_budget_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         switch ($tab) {
             case '1': //tab orçamento
+
                 $validado = $this->rules_budget($request->all());
 
                 if ($validado->fails()) {
@@ -725,13 +744,30 @@ class BudgetController extends Controller
     public function rules_budget_product_edit(array $data)
     {
         $validator = Validator::make($data, [
-            'produtoid' => 'required|integer',
+            'produtoid' => 'required|integer|exists:products,id',
             'largura' => 'required|string|max:255',
             'altura' => 'required|string|max:255',
             'qtd' => 'required|integer',
             'localizacao' => 'nullable|string|max:255',
             'valor_mao_obra' => 'nullable|numeric'
+        ], [
+            'exists' => 'Este produto não existe!',
         ]);
+
+        return $validator;
+    }
+
+    public function rules_budget_exists(array $data)
+    {
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:budgets,id'
+            ], [
+                'exists' => 'Este orçamento não existe!',
+            ]
+
+        );
 
         return $validator;
     }

@@ -75,6 +75,12 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        $validado = $this->rules_category_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $category = Category::findOrFail($id);
         $types = $this->types;
         $group_images = $this->group_images;
@@ -84,6 +90,12 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_category_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $validado = $this->rules_category($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -115,6 +127,18 @@ class CategoryController extends Controller
             'grupo_imagem' => 'required|string|max:255'
         ]);
 
+        return $validator;
+    }
+
+    public function rules_category_exists(array $data)
+    {
+        $validator = Validator::make($data,
+            [
+                'id' => 'exists:categories,id'
+            ], [
+                'exists' => 'Esta categoria não existe!',
+            ]
+        );
         return $validator;
     }
 

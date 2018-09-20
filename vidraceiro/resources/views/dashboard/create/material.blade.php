@@ -28,6 +28,12 @@
                                 {{ $error }}
                             </div>
                         @endforeach
+                        @if(session('error'))
+                             <div class="alert alert-danger">
+                                    {{ session('error') }}
+                             </div>
+                        @endif
+
                     </div>
 
                     @if($type == 'glass')

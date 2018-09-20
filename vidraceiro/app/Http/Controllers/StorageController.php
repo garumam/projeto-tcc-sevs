@@ -56,6 +56,8 @@ class StorageController extends Controller
                 $validado = Validator::make($request->all(), [
                     'storage_vidro_id' => 'required|integer|exists:storages,id',
                     'm2' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
                 ]);
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
@@ -84,6 +86,8 @@ class StorageController extends Controller
                 $validado = Validator::make($request->all(), [
                     'storage_aluminio_id' => 'required|integer|exists:storages,id',
                     'qtd' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
                 ]);
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
@@ -112,6 +116,8 @@ class StorageController extends Controller
                 $validado = Validator::make($request->all(), [
                     'storage_componente_id' => 'required|integer|exists:storages,id',
                     'qtd' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
                 ]);
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);

@@ -8,6 +8,22 @@
                 <h4 class="titulo">{{$title}}</h4>
             </div>
 
+            <div class="form-group col-12 m-0 p-0">
+
+                @if(session('error'))
+                    <div class="alert alert-danger m-0">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger m-0">
+                        {{ $error }}
+                    </div>
+                @endforeach
+
+            </div>
+
             <div id="accordion">
                 <div class="card">
                     <div class="card-header" id="headingOne">

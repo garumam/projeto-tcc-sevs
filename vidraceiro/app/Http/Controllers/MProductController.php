@@ -113,6 +113,12 @@ class MProductController extends Controller
 
     public function edit($id)
     {
+        $validado = $this->rules_mproduct_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $aluminums = Aluminum::where('is_modelo', '1')->get();
         $glasses = Glass::where('is_modelo', '1')->get();
         $components = Component::where('is_modelo', '1')->get();
@@ -135,7 +141,13 @@ class MProductController extends Controller
 
     public function update(Request $request, $id, $tab)
     {
-//        var_dump($request->all());
+
+        $validado = $this->rules_mproduct_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         switch ($tab) {
             case '1':
 
@@ -193,7 +205,7 @@ class MProductController extends Controller
             'nome' => 'required|string|max:255',
             'imagem' => 'required|string|max:255',
             'descricao' => 'nullable|string|max:255',
-            'categoria_produto_id' => 'required|integer'
+            'categoria_produto_id' => 'required|integer|exists:categories,id'
         ]);
 
         return $validator;
@@ -202,9 +214,26 @@ class MProductController extends Controller
     public function rules_mproduct_material(array $data)
     {
         $validator = Validator::make($data, [
-            'm_produto_id' => 'required|integer',
+            'm_produto_id' => 'required|integer|exists:m_products,id',
             'id_vidro_' => 'nullable|array'
+        ], [
+            'exists' => 'Este modelo de produto não existe!',
         ]);
+
+        return $validator;
+    }
+
+    public function rules_mproduct_exists(array $data)
+    {
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:m_products,id'
+            ], [
+                'exists' => 'Este modelo de produto não existe!',
+            ]
+
+        );
 
         return $validator;
     }

@@ -20,6 +20,14 @@
                         {{ session('error') }}
                     </div>
                 </div>
+            @else
+                @foreach($errors->all() as $error)
+                    <div class="alerta">
+                        <div class="alert alert-danger m-0">
+                            {{ $error }}
+                        </div>
+                    </div>
+                @endforeach
             @endif
             <div class="col-6">
                 <form action="{{route('users.role.store',$user->id)}}" class="d-flex py-4" method="POST">

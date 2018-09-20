@@ -76,6 +76,12 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $validado = $this->rules_user_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $user = User::find($id);
         return view('dashboard.create.user', compact('user'))->with('title', 'Atualizar usuario');
     }
@@ -83,7 +89,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $validado = $this->rules_update_users($request->all());
+        $validado = $this->rules_update_users(array_merge($request->all(),['id'=>$id]));
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
@@ -109,6 +115,12 @@ class UserController extends Controller
 
     public function roleshow($id)
     {
+        $validado = $this->rules_user_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $title = "Lista de Funções";
         $user = User::find($id);
         $roles = Role::all();
@@ -160,12 +172,27 @@ class UserController extends Controller
     public function rules_update_users(array $data)
     {
         $validator = Validator::make($data, [
+            'id' => 'exists:users,id',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|',
             'password' => 'required|string|min:6',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'exists' => 'Não existe este usuário!',
         ]);
 
+        return $validator;
+    }
+
+    public function rules_user_exists(array $data)
+    {
+        $validator = Validator::make($data,
+            [
+                'id' => 'exists:users,id'
+            ], [
+                'exists' => 'Não existe este usuário!',
+            ]
+        );
         return $validator;
     }
 }

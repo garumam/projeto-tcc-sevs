@@ -10,6 +10,16 @@
                         type="button">Efetuar pagamento</button>
             </div>
 
+            <div class="form-group col-12 m-0 p-0">
+
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger m-0">
+                        {{ $error }}
+                    </div>
+                @endforeach
+
+            </div>
+
             <form class="formulario" method="POST" role="form"
                   action="{{route('sales.payupdate',['id'=> $sale->id])}}">
                 @if(!empty($sale))

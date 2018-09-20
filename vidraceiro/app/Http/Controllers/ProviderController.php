@@ -86,12 +86,23 @@ class ProviderController extends Controller
 
     public function show($id)
     {
+        $validado = $this->rules_provider_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
         $provider = Provider::find($id);
         return view('dashboard.show.provider', compact('provider'))->with('title', 'Informações do fornecedor');
     }
 
     public function edit($id)
     {
+        $validado = $this->rules_provider_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $provider = Provider::findOrFail($id);
         $states = $this->states;
         return view('dashboard.create.provider',compact('provider','states'))->with('title', 'Atualizar fornecedor');
@@ -100,6 +111,12 @@ class ProviderController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validado = $this->rules_provider_exists(['id'=>$id]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $provider = Provider::find($id);
 
         $validado = $this->rules_provider($request->all());
@@ -137,6 +154,18 @@ class ProviderController extends Controller
             'uf' => 'nullable|string|max:255'
         ]);
 
+        return $validator;
+    }
+
+    public function rules_provider_exists(array $data)
+    {
+        $validator = Validator::make($data,
+            [
+                'id' => 'exists:providers,id'
+            ], [
+                'exists' => 'Não existe este fornecedor!',
+            ]
+        );
         return $validator;
     }
 }
