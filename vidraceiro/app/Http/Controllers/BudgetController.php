@@ -132,10 +132,8 @@ class BudgetController extends Controller
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                    $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                        ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                    $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                    $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+                    $aluminioMedida = $aluminioPeso = 0;
+                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
                     Aluminum::create([
                         'perfil' => $aluminio->perfil,
@@ -198,10 +196,9 @@ class BudgetController extends Controller
 
                 foreach ($product->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                    $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                        ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                    $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                    $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+
+                    $aluminioMedida = $aluminioPeso = 0;
+                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
                     $aluminio->update([
                         'medida' => $aluminioMedida,
@@ -270,10 +267,9 @@ class BudgetController extends Controller
 
                             if ($aluminio->is_modelo == 1) {
                                 //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                                $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                                    ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                                $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                                $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+
+                                $aluminioMedida = $aluminioPeso = 0;
+                                $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
@@ -416,10 +412,9 @@ class BudgetController extends Controller
 
                 foreach ($mproduct->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                    $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                        ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                    $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                    $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+
+                    $aluminioMedida = $aluminioPeso = 0;
+                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
                     Aluminum::create([
                         'perfil' => $aluminio->perfil,
@@ -465,10 +460,9 @@ class BudgetController extends Controller
 
                 foreach ($product->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                    $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                        ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                    $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                    $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+
+                    $aluminioMedida = $aluminioPeso = 0;
+                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
                     $aluminio->update([
                         'medida' => $aluminioMedida,
@@ -535,10 +529,10 @@ class BudgetController extends Controller
 
                             if ($aluminio->is_modelo == 1) {
                                 //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                                $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-                                    ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-                                $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-                                $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+
+                                $aluminioMedida = $aluminioPeso = 0;
+                                $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+
                                 Aluminum::create([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
@@ -687,6 +681,15 @@ class BudgetController extends Controller
         return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
 
     }
+
+    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
+    public function calcularMedidaPesoAluminio(&$aluminioMedida,&$aluminioPeso,$aluminio,$product){
+        $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
+            ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
+        $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
+        $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
+    }
+
 
     public function rules_budget(array $data)
     {
