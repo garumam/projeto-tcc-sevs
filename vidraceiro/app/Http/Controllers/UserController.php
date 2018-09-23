@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        if (Auth::user()->can('usuario_listar',User::class)) {
+        if (Auth::user()->can('usuario_listar', User::class)) {
             $paginate = 10;
             if ($request->get('paginate')) {
                 $paginate = $request->get('paginate');
@@ -76,7 +76,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $validado = $this->rules_user_exists(['id'=>$id]);
+        $validado = $this->rules_user_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return redirect(route('users.index'))->withErrors($validado);
@@ -89,7 +89,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $validado = $this->rules_update_users(array_merge($request->all(),['id'=>$id]));
+        $validado = $this->rules_update_users(array_merge($request->all(), ['id' => $id]));
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
@@ -113,9 +113,9 @@ class UserController extends Controller
 
     }
 
-    public function roleshow($id)
+    public function roleshow(Request $request, $id)
     {
-        $validado = $this->rules_user_exists(['id'=>$id]);
+        $validado = $this->rules_user_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return redirect(route('users.index'))->withErrors($validado);
@@ -124,7 +124,25 @@ class UserController extends Controller
         $title = "Lista de Funções";
         $user = User::find($id);
         $roles = Role::all();
-        return view('dashboard.list.user-role', compact('user', 'roles', 'title'));
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $rolesusuario = Role::with('users')
+            ->whereHas('users', function ($q) use ($id) {
+                $q->where('user_id', '=', $id);
+            })
+            ->where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+//        dd($role);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-user-role', compact('user', 'rolesusuario'));
+        } else {
+            return view('dashboard.list.user-role', compact('user', 'roles', 'title', 'rolesusuario'));
+        }
+
+
     }
 
     public function rolestore(Request $request, $id)
