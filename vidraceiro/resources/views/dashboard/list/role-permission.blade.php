@@ -31,7 +31,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-lg-5 mb-4">
+                <div class="col-12 col-lg-3 mb-4">
                     <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
                 </div>
             </form>
