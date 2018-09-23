@@ -79,12 +79,27 @@ class RoleController extends Controller
         return redirect()->back()->with('success', 'Função deletada com sucesso');
     }
 
-    public function permissionshow($id)
+    public function permissionshow(Request $request, $id)
     {
         $title = "Lista de Permissões";
         $role = Role::find($id);
         $permissions = Permission::all();
-        return view('dashboard.list.role-permission', compact('role', 'permissions', 'title'));
+        $paginate = 10;
+        if ($request->get('paginate')) {
+            $paginate = $request->get('paginate');
+        }
+        $permissionsroles = Permission::with('roles')
+            ->whereHas('roles', function ($q) use ($id) {
+                $q->where('role_id', '=', $id);
+            })
+            ->where('nome', 'like', '%' . $request->get('search') . '%')
+//            ->orderBy($request->get('field'), $request->get('sort'))
+            ->paginate($paginate);
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-role-permission', compact('role', 'permissionsroles'));
+        } else {
+            return view('dashboard.list.role-permission', compact('role', 'permissions', 'title', 'permissionsroles'));
+        }
     }
 
     public function permissionstore(Request $request, $id)
