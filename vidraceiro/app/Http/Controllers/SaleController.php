@@ -31,7 +31,7 @@ class SaleController extends Controller
         $salesWithInstallments = Sale::with('installments', 'payments', 'budget')
             ->where('tipo_pagamento','A PRAZO')->whereHas('budget', function ($q) use ($request) {
                 $q->where('nome', 'like', '%' . $request->get('search') . '%');
-            })->whereHas('installments', function ($q) use ($request) {
+            })->whereHas('installments', function ($q){
                 $q->where('status_parcela', 'ABERTO');
             })->paginate($paginate);
 
