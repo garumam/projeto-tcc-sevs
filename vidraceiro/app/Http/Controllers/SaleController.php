@@ -27,20 +27,29 @@ class SaleController extends Controller
         if ($request->get('paginate')) {
             $paginate = $request->get('paginate');
         }
+
+        $salesWithInstallments = Sale::with('installments', 'payments', 'budget')
+            ->where('tipo_pagamento','A PRAZO')->whereHas('budget', function ($q) use ($request) {
+                $q->where('nome', 'like', '%' . $request->get('search') . '%');
+            })->whereHas('installments', function ($q) use ($request) {
+                $q->where('status_parcela', 'ABERTO');
+            })->paginate($paginate);
+
         $sales = Sale::with('installments', 'payments', 'budget')->whereHas('budget', function ($q) use ($request) {
             $q->where('nome', 'like', '%' . $request->get('search') . '%');
         })->orWhere('tipo_pagamento', 'like', '%' . $request->get('search') . '%')
 //            ->orderBy($request->get('field'), $request->get('sort'))
             ->paginate($paginate);
+
         if ($request->ajax()) {
             if ($request->has('pagamentos')) {
-                return view('dashboard.list.tables.table-payment', compact('sales'));
+                return view('dashboard.list.tables.table-payment', compact('salesWithInstallments'));
             } else {
                 return view('dashboard.list.tables.table-sale', compact('sales'));
             }
 
         } else {
-            return view('dashboard.list.sale', compact('sales', 'titulotabs'))->with('title', 'Vendas');
+            return view('dashboard.list.sale', compact('sales','salesWithInstallments', 'titulotabs'))->with('title', 'Vendas');
         }
     }
 
