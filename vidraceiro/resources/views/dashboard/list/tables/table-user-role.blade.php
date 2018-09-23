@@ -31,7 +31,7 @@
     </tbody>
 </table>
 <p class="m-4 text-center"
-   style="font-weight: 600;"> {{ ($rolesusuario->count() == 0) ? 'Nenhum usuario encontrado': ''}}</p>
+   style="font-weight: 600;"> {{ ($rolesusuario->count() == 0) ? 'Nenhuma função encontrada': ''}}</p>
 {{ $rolesusuario->links('layouts.pagination') }}
 
 
