@@ -5,7 +5,7 @@
           aria-label="{{ __('Register') }}">
         @csrf
         <div class="text-center mb-4">
-            <img class="" src="img/bootstrap-solid.svg" alt="" width="72" height="72">
+            <img class="" src="img/vidraceiro-solid.svg" alt="" width="72" height="72">
             <!-- <h1 class="title">Vidraceiro</h1> -->
         </div>
         <h1 class="title">{{ __('Register') }}</h1>

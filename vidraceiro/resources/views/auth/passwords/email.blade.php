@@ -6,7 +6,7 @@
           aria-label="{{ __('Reset Password') }}">
         @csrf
         <div class="text-center mb-3">
-            <img class="" src="{{ asset('img/bootstrap-solid.svg') }}" alt="" width="72" height="72">
+            <img class="" src="{{ asset('img/vidraceiro-solid.svg') }}" alt="" width="72" height="72">
             <!-- <h1 class="title">Vidraceiro</h1> -->
         </div>
         <h1 class="title">{{ __('Reset Password') }}</h1>
