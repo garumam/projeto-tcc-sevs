@@ -61,9 +61,9 @@ class Provider extends Model
         $provider = self::find($id);
         if($provider){
             return $provider->delete();
-        }else{
-            return false;
         }
+
+        return false;
 
     }
 
