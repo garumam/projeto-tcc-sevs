@@ -32,4 +32,44 @@ class Provider extends Model
             'componente_id'
         );
     }
+
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('nome', 'like', '%' . $search . '%')
+            ->orWhere('situacao', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+    public function createProvider(array $input){
+
+        return self::create($input);
+
+    }
+
+    public function updateProvider(array $input,$id){
+
+        $provider = self::find($id);
+
+        return $provider->update($input);
+
+    }
+
+    public function deleteProvider($id){
+
+        $provider = self::find($id);
+        if($provider){
+            return $provider->delete();
+        }else{
+            return false;
+        }
+
+    }
+
+    public function findProviderById($id){
+
+        return self::find($id);
+
+    }
 }

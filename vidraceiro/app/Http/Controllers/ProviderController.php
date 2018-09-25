@@ -10,10 +10,13 @@ class ProviderController extends Controller
 {
 
     protected $states;
+    protected $provider = null;
 
-    public function __construct()
+    public function __construct(Provider $provider)
     {
         $this->middleware('auth');
+
+        $this->provider = $provider;
 
         $this->states = array(
             ' ' => 'Selecione...',
@@ -49,16 +52,10 @@ class ProviderController extends Controller
 
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')){
-            $paginate = $request->get('paginate');
-        }
-        $providers = Provider::where('nome', 'like', '%' . $request->get('search') . '%')
-            ->orWhere('situacao', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+
+        $providers = $this->provider->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()){
-//            return response()->view('dashboard.list.tables.tableprovider',compact('providers'),200);
             return view('dashboard.list.tables.table-provider', compact('providers'));
         }else{
             return view('dashboard.list.provider', compact('providers'))->with('title', 'Fornecedores');
@@ -75,11 +72,11 @@ class ProviderController extends Controller
     public function store(Request $request)
     {
         $validado = $this->rules_provider($request->all());
-        if ($validado->fails()) {
+        if ($validado->fails())
             return redirect()->back()->withErrors($validado);
-        }
-        $provider = new Provider();
-        $provider = $provider->create($request->all());
+
+
+        $provider = $this->provider->createProvider($request->all());
         if($provider)
             return redirect()->back()->with('success', 'Fornecedor criado com sucesso');
     }
@@ -88,22 +85,26 @@ class ProviderController extends Controller
     {
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
-        if ($validado->fails()) {
+        if ($validado->fails())
             return redirect(route('providers.index'))->withErrors($validado);
-        }
-        $provider = Provider::find($id);
-        return view('dashboard.show.provider', compact('provider'))->with('title', 'Informações do fornecedor');
+
+
+        $provider = $this->provider->findProviderById($id);
+
+        if($provider)
+            return view('dashboard.show.provider', compact('provider'))->with('title', 'Informações do fornecedor');
     }
 
     public function edit($id)
     {
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
-        if ($validado->fails()) {
+        if ($validado->fails())
             return redirect(route('providers.index'))->withErrors($validado);
-        }
 
-        $provider = Provider::findOrFail($id);
+
+        $provider = $this->provider->findProviderById($id);
+
         $states = $this->states;
         return view('dashboard.create.provider',compact('provider','states'))->with('title', 'Atualizar fornecedor');
     }
@@ -113,30 +114,30 @@ class ProviderController extends Controller
     {
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
-        if ($validado->fails()) {
+        if ($validado->fails())
             return redirect(route('providers.index'))->withErrors($validado);
-        }
 
-        $provider = Provider::find($id);
 
         $validado = $this->rules_provider($request->all());
-        if ($validado->fails()) {
+
+        if ($validado->fails())
             return redirect()->back()->withErrors($validado);
-        }
-        $provider->update($request->except(['_token']));
+
+
+        $provider = $this->provider->updateProvider($request->all(),$id);
+
         if ($provider)
             return redirect()->back()->with('success', 'Fornecedor atualizado com sucesso');
     }
 
     public function destroy($id)
     {
-        $provider = Provider::find($id);
-        if ($provider) {
-            $provider->delete();
+        $provider = $this->provider->deleteProvider($id);
+        if ($provider)
             return redirect()->back()->with('success', 'Fornecedor deletado com sucesso');
-        } else {
-            return redirect()->back()->with('error', 'Erro ao deletar fornecedor');
-        }
+
+        return redirect()->back()->with('error', 'Erro ao deletar fornecedor');
+
     }
 
     public function rules_provider(array $data)
@@ -168,4 +169,5 @@ class ProviderController extends Controller
         );
         return $validator;
     }
+
 }
