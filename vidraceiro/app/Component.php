@@ -14,15 +14,6 @@ class Component extends Model
         return $this->belongsTo(Category::class, 'categoria_componente_id');
     }
 
-    /*public function products()
-    {
-        return $this->belongsToMany(
-            Product::class,
-            'product_component',
-            'componente_id',
-            'produto_id'
-        );
-    }*/
 
     public function product()
     {
@@ -56,6 +47,28 @@ class Component extends Model
             Storage::class,
             'component_id'
         );
+    }
+
+    public static function createComponent(array $input){
+        return self::create($input);
+    }
+
+    public static function getAllComponentsOrAllModels($is_modelo = 0){
+
+        return self::where('is_modelo', $is_modelo)->get();
+
+    }
+
+    public static function getComponentsWhereIn(array $ids){
+
+        return self::wherein('id', $ids)->get();
+
+    }
+
+    public static function deleteComponentOnListWhereNotIn($component,array $ids){
+
+        return $component->whereNotIn('id', $ids)->delete();
+
     }
 
 }

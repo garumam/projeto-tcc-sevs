@@ -53,9 +53,10 @@ class ClientController extends Controller
 
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-client', compact('clients'));
-        } else {
-            return view('dashboard.list.client', compact('clients'))->with('title', 'Clientes');
         }
+
+        return view('dashboard.list.client', compact('clients'))->with('title', 'Clientes');
+
     }
 
     public function create()
@@ -128,13 +129,13 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validado);
 
         $this->client = $this->client->findClientById($id);
-        $client = $this->client->updateClient(array_merge($request->except('att_budgets'), $docnull));
+        $client = $this->client->updateClient(array_merge($request->all(), $docnull));
 
         if ($client) {
             $mensagem = 'Cliente atualizado com sucesso';
             if ($request->att_budgets != null) {
 
-                $budgetsUpdated = $this->client->updateClientBudgets($request->except('nome', 'cpf', 'email', 'celular', 'att_budgets'));
+                $budgetsUpdated = $this->client->updateClientBudgets($request->except('nome'));
 
                 if($budgetsUpdated)
                     $mensagem = 'Cliente e orçamentos atualizados com sucesso';

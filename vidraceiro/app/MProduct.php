@@ -41,4 +41,16 @@ class MProduct extends Model
             'componente_id'
         );
     }
+
+    public static function getAllMProducts(){
+
+        return self::all();
+
+    }
+
+    public static function findMProductWithRelationsById($id){
+
+        return self::with('glasses', 'aluminums', 'components')->find($id);
+
+    }
 }

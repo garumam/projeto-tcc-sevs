@@ -6,7 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'nome',
+        'cpf',
+        'cnpj',
+        'telefone',
+        'celular',
+        'email',
+        'cep',
+        'endereco',
+        'bairro',
+        'uf',
+        'cidade',
+        'complemento',
+        'status'
+    ];
 
     public function budgets(){
         return $this->hasMany(Budget::class,'cliente_id');
@@ -49,6 +63,12 @@ class Client extends Model
     public function findClientById($id){
 
         return self::find($id);
+
+    }
+
+    public static function getAllClients(){
+
+        return self::all();
 
     }
 

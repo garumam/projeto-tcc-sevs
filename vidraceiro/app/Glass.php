@@ -14,15 +14,6 @@ class Glass extends Model
         return $this->belongsTo(Category::class, 'categoria_vidro_id');
     }
 
-    /*public function products()
-    {
-        return $this->belongsToMany(
-            Product::class,
-            'product_glass',
-            'vidro_id',
-            'produto_id'
-        );
-    }*/
 
     public function product()
     {
@@ -59,4 +50,25 @@ class Glass extends Model
         );
     }
 
+    public static function createGlass(array $input){
+        return self::create($input);
+    }
+
+    public static function getAllGlassesOrAllModels($is_modelo = 0){
+
+        return self::where('is_modelo', $is_modelo)->get();
+
+    }
+
+    public static function getGlassesWhereIn(array $ids){
+
+        return self::wherein('id', $ids)->get();
+
+    }
+
+    public static function deleteGlassOnListWhereNotIn($glasses,array $ids){
+
+        return $glasses->whereNotIn('id', $ids)->delete();
+
+    }
 }

@@ -27,4 +27,10 @@ class Category extends Model
     {
         return $this->hasMany(Component::class, 'categoria_componente_id');
     }
+
+    public static function getAllCategoriesByType($type){
+
+        return self::where('tipo', $type)->get();
+
+    }
 }

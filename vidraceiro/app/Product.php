@@ -7,36 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'largura',
+        'altura',
+        'qtd',
+        'localizacao',
+        'valor_mao_obra',
+        'm_produto_id',
+        'budget_id'
+    ];
 
     public function mproduct(){
         return $this->belongsTo(MProduct::class, 'm_produto_id');
     }
-
-    /*public function glasses(){
-        return $this->belongsToMany(
-            Glass::class,
-            'product_glass',
-            'produto_id',
-            'vidro_id'
-        );
-    }
-    public function aluminums(){
-        return $this->belongsToMany(
-            Aluminum::class,
-            'product_aluminum',
-            'produto_id',
-            'aluminio_id'
-        );
-    }
-    public function components(){
-        return $this->belongsToMany(
-            Component::class,
-            'product_component',
-            'produto_id',
-            'componente_id'
-        );
-    }*/
 
     public function glasses(){
         return $this->hasMany(
@@ -64,13 +47,34 @@ class Product extends Model
         );
     }
 
+    public function createProduct(array $input){
 
-    /*public function budgets(){
-        return $this->belongsToMany(
-            Budget::class,
-            'budget_product',
-            'produto_id',
-            'orcamento_id'
-        );
-    }*/
+        return self::create($input);
+
+    }
+
+    public function updateProduct(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteProduct(){
+
+        return self::delete();
+
+    }
+
+    public function findProductById($id){
+
+        return self::find($id);
+
+    }
+
+    public static function findProductsWithRelations(array $ids){
+
+        return self::with('budget','glasses', 'aluminums', 'components')->wherein('id', $ids)->get();
+
+    }
+
 }

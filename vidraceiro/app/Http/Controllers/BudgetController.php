@@ -17,10 +17,12 @@ use Illuminate\Support\Facades\Validator;
 class BudgetController extends Controller
 {
     protected $states;
-
-    public function __construct()
+    protected $budget;
+    public function __construct(Budget $budget)
     {
         $this->middleware('auth');
+
+        $this->budget = $budget;
         $this->states = $states = array(
             ' ' => 'Selecione...',
             'AC' => 'Acre',
@@ -56,32 +58,27 @@ class BudgetController extends Controller
     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO COMENTARIO NAS POSIÇÕES QUE PRECISA ALTERAR
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $budgets = Budget::where('nome', 'like', '%' . $request->get('search') . '%')
-            ->orWhere('status', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+        $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-budget', compact('budgets'));
-        } else {
-            return view('dashboard.list.budget', compact('budgets'))->with('title', 'Orçamentos');
         }
+
+        return view('dashboard.list.budget', compact('budgets'))->with('title', 'Orçamentos');
+
     }
 
     public function create()
     {
         $states = $this->states;
-        $aluminums = Aluminum::where('is_modelo', '1')->get();
-        $glasses = Glass::where('is_modelo', '1')->get();
-        $components = Component::where('is_modelo', '1')->get();
-        $categories = Category::where('tipo', 'produto')->get();
-        $mproducts = MProduct::all();
-        $clients = Client::all();
+        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
+        $glasses = Glass::getAllGlassesOrAllModels(1);
+        $components = Component::getAllComponentsOrAllModels(1);
+        $categories = Category::getAllCategoriesByType('produto');
+        $mproducts = MProduct::getAllMProducts();
+        $clients = Client::getAllClients();
+
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
-        //dd($mproducts);
+
         return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients'))->with('title', 'Novo Orçamento');
     }
 
@@ -90,13 +87,13 @@ class BudgetController extends Controller
         switch ($tab) {
             case '1': //tab orçamento
                 $validado = $this->rules_budget($request->all());
-                if ($validado->fails()) {
+                if ($validado->fails())
                     return redirect()->back()->withErrors($validado);
-                }
-                $budgetcriado = new Budget;
 
-                $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
-                $budgetcriado = $budgetcriado->create(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0]));
+                $margemlucro = $request->margem_lucro ?? 100;
+
+                $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0]));
+
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')
                         ->with(compact('budgetcriado'));
@@ -105,18 +102,19 @@ class BudgetController extends Controller
                 $validado = $this->rules_budget_product_add($request->all());
 
                 if ($validado->fails()) {
-                    $budgetcriado = Budget::find($request->budget_id);
+                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
                     $products = $budgetcriado->products;
+
                     return redirect()->back()->withErrors($validado)
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
                 }
                 $product = new Product();
-                $product = $product->create($request->all());
-                $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
+                $product = $product->createProduct($request->all());
+                $mproduct = MProduct::findMProductWithRelationsById($product->m_produto_id);
 
-                foreach ($mproduct->glasses()->get() as $vidro) {
-                    Glass::create([
+                foreach ($mproduct->glasses as $vidro) {
+                    Glass::createGlass([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -130,12 +128,13 @@ class BudgetController extends Controller
 
                 }
 
-                foreach ($mproduct->aluminums()->get() as $aluminio) {
+                foreach ($mproduct->aluminums as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
                     $aluminioMedida = $aluminioPeso = 0;
-                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
-                    Aluminum::create([
+                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+
+                    Aluminum::createAluminum([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminioMedida,
@@ -152,8 +151,8 @@ class BudgetController extends Controller
 
                 }
 
-                foreach ($mproduct->components()->get() as $componente) {
-                    Component::create([
+                foreach ($mproduct->components as $componente) {
+                    Component::createComponent([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
@@ -167,11 +166,11 @@ class BudgetController extends Controller
                 }
 
                 if ($product) {
-                    $budgetcriado = Budget::find($request->budget_id);
-                    //$budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal(null, $budgetcriado)) {
+                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
+
+                    if ($budgetcriado && $budgetcriado->updateBudgetTotal()) {
                         $products = $budgetcriado->products;
-                        //$budgetcriado = Budget::find($request->budgetid);
+
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
                             ->with(compact('budgetcriado'))
                             ->with(compact('products'));
@@ -184,30 +183,32 @@ class BudgetController extends Controller
                 $validado = $this->rules_budget_product_edit($request->all());
 
                 if ($validado->fails()) {
-                    $budgetcriado = Budget::find($request->budget_id);
+                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
                     $products = $budgetcriado->products;
                     return redirect()->back()->withErrors($validado)
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
                 }
 
-                $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid']));
+                $product = new Product();
+                $product = $product->findProductById($request->produtoid);
+                $product->updateProduct($request->all());
 
                 foreach ($product->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
 
+                    $aluminioModelo = $aluminio->findAluminumById($aluminio->maluminum_id);
                     $aluminioMedida = $aluminioPeso = 0;
-                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminioModelo,$product);
 
-                    $aluminio->update([
+                    $aluminio->updateAluminum([
                         'medida' => $aluminioMedida,
                         'peso' => $aluminioPeso
                     ]);
                 }
 
-                $budgetcriado = Budget::find($request->budget_id);
-                if ($product && self::atualizaTotal(null, $budgetcriado)) {
+                $budgetcriado = $this->budget->findBudgetById($request->budget_id);
+                if ($product && $budgetcriado->updateBudgetTotal()) {
                     $products = $budgetcriado->products;
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
                         ->with(compact('budgetcriado'))
@@ -215,7 +216,7 @@ class BudgetController extends Controller
                 }
                 break;
             case '4': //tab material
-                $budgetcriado = Budget::with('products')->find($request->budget_id);
+                $budgetcriado = $this->budget->findBudgetById($request->budget_id);
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
@@ -227,15 +228,15 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $glassesAll = Glass::wherein('id', $request->$glass)->get();
-                        $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
+                        $glassesAll = Glass::getGlassesWhereIn($request->$glass);
+                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,$request->$glass);
 
                         foreach ($request->$glass as $id) {
 
                             $vidro = $glassesAll->where('id', $id)->shift();
 
                             if ($vidro->is_modelo == 1) {
-                                Glass::create([
+                                Glass::createGlass([
                                     'nome' => $vidro->nome,
                                     'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
@@ -252,14 +253,14 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $vidrosProduto->delete();
+                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,[]);
 
                     }
 
                     if ($request->has($aluminum)) {
 
-                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum)->get();
-                        $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
+                        $aluminumsAll = Aluminum::getAluminumsWhereIn($request->$aluminum);
+                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,$request->$aluminum);
 
                         foreach ($request->$aluminum as $id) {
 
@@ -269,9 +270,9 @@ class BudgetController extends Controller
                                 //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
 
                                 $aluminioMedida = $aluminioPeso = 0;
-                                $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+                                $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
-                                Aluminum::create([
+                                Aluminum::createAluminum([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
                                     'medida' => $aluminioMedida,
@@ -290,14 +291,14 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $aluminiosProduto->delete();
+                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,[]);
 
                     }
 
 
                     if ($request->has($component)) {
-                        $componentsAll = Component::wherein('id', $request->$component)->get();
-                        $componentesProduto->whereNotIn('id', $request->$component)->delete();
+                        $componentsAll = Component::getComponentsWhereIn($request->$component);
+                        Component::deleteComponentOnListWhereNotIn($componentesProduto,$request->$component);
 
                         foreach ($request->$component as $id) {
 
@@ -305,7 +306,7 @@ class BudgetController extends Controller
 
                             if ($componente->is_modelo == 1) {
 
-                                Component::create([
+                                Component::createComponent([
                                     'nome' => $componente->nome,
                                     'qtd' => $componente->qtd,
                                     'preco' => $componente->preco,
@@ -320,14 +321,14 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $componentesProduto->delete();
+                        Component::deleteComponentOnListWhereNotIn($componentesProduto,[]);
 
                     }
 
                 }
 
-                if ($budgetcriado && self::atualizaTotal(null, $budgetcriado)) {
-                    $budgetcriado = Budget::with('products')->find($request->budget_id);
+                if ($budgetcriado && $budgetcriado->updateBudgetTotal()) {
+
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
@@ -350,7 +351,7 @@ class BudgetController extends Controller
             return redirect(route('budgets.index'))->withErrors($validado);
         }
 
-        $budget = Budget::find($id);
+        $budget = $this->budget->findBudgetById($id);
         return view('dashboard.show.budget', compact('budget'))->with('title', 'Informações do orçamento');
     }
 
@@ -363,21 +364,22 @@ class BudgetController extends Controller
         }
 
         $states = $this->states;
-        $aluminums = Aluminum::where('is_modelo', '1')->get();
-        $glasses = Glass::where('is_modelo', '1')->get();
-        $components = Component::where('is_modelo', '1')->get();
-        $categories = Category::where('tipo', 'produto')->get();
-        $mproducts = MProduct::all();
-        $clients = Client::all();
+        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
+        $glasses = Glass::getAllGlassesOrAllModels(1);
+        $components = Component::getAllComponentsOrAllModels(1);
+        $categories = Category::getAllCategoriesByType('produto');
+        $mproducts = MProduct::getAllMProducts();
+        $clients = Client::getAllClients();
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
 
-        $budgetedit = Budget::with('products')->find($id);
+        $budgetedit = $this->budget->findBudgetById($id);
+
         if ($budgetedit) {
-            $products = $budgetedit->products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
+            $products = $budgetedit->getBudgetProductsWithRelations();
 
             return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'products', 'budgetedit', 'clients'))->with('title', 'Atualizar Orçamento');
         }
-        return redirect('products')->with('error', 'Erro ao buscar produto');
+        return redirect('budgets')->with('error', 'Erro ao buscar orçamento');
 
     }
 
@@ -398,10 +400,12 @@ class BudgetController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $budgetcriado = Budget::find($id);
-                $margemlucro = $request->margem_lucro === null ? 100 : $request->margem_lucro;
-                $budgetcriado->update(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
-                if ($budgetcriado && self::atualizaTotal(null, $budgetcriado))
+                $budgetcriado = $this->budget->findBudgetById($id);
+
+                $margemlucro = $request->margem_lucro ?? 100;
+
+                $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
+                if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
@@ -410,12 +414,13 @@ class BudgetController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $product = new Product();
-                $product = $product->create(array_merge($request->all(), ['budget_id' => $id]));
-                $mproduct = MProduct::with('glasses', 'aluminums', 'components')->find($product->m_produto_id);
 
-                foreach ($mproduct->glasses()->get() as $vidro) {
-                    Glass::create([
+                $product = new Product();
+                $product = $product->createProduct(array_merge($request->all(), ['budget_id' => $id]));
+                $mproduct = MProduct::findMProductWithRelationsById($product->m_produto_id);
+
+                foreach ($mproduct->glasses as $vidro) {
+                    Glass::createGlass([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -429,13 +434,13 @@ class BudgetController extends Controller
 
                 }
 
-                foreach ($mproduct->aluminums()->get() as $aluminio) {
+                foreach ($mproduct->aluminums as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
 
                     $aluminioMedida = $aluminioPeso = 0;
-                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
-                    Aluminum::create([
+                    Aluminum::createAluminum([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminioMedida,
@@ -450,8 +455,8 @@ class BudgetController extends Controller
                     ]);
                 }
 
-                foreach ($mproduct->components()->get() as $componente) {
-                    Component::create([
+                foreach ($mproduct->components as $componente) {
+                    Component::createComponent([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
@@ -462,9 +467,9 @@ class BudgetController extends Controller
                     ]);
                 }
                 if ($product) {
-                    $budgetcriado = Budget::find($id);
-                    //$budgetcriado->products()->attach($product->id);
-                    if ($budgetcriado && self::atualizaTotal(null, $budgetcriado))
+                    $budgetcriado = $this->budget->findBudgetById($id);
+
+                    if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                         return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
                 }
                 break;
@@ -474,27 +479,31 @@ class BudgetController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $product = Product::find($request->produtoid);
-                $product->update($request->except(['produtoid']));
+
+                $product = new Product();
+                $product = $product->findProductById($request->produtoid);
+                $product->updateProduct($request->all());
 
                 foreach ($product->aluminums()->get() as $aluminio) {
                     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
 
+                    $aluminioModelo = $aluminio->findAluminumById($aluminio->maluminum_id);
                     $aluminioMedida = $aluminioPeso = 0;
-                    $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminioModelo,$product);
 
-                    $aluminio->update([
+
+                    $aluminio->updateAluminum([
                         'medida' => $aluminioMedida,
                         'peso' => $aluminioPeso
                     ]);
                 }
-
-                if ($product && self::atualizaTotal($id, null))
+                $budgetcriado = $this->budget->findBudgetById($id);
+                if ($product && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso');
 
                 break;
             case '4': //tab material
-                $budgetcriado = Budget::with('products')->find($id);
+                $budgetcriado = $this->budget->findBudgetById($id);
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
@@ -506,8 +515,8 @@ class BudgetController extends Controller
                     $componentesProduto = $product->components();
 
                     if ($request->has($glass)) {
-                        $glassesAll = Glass::wherein('id', $request->$glass)->get();
-                        $vidrosProduto->whereNotIn('id', $request->$glass)->delete();
+                        $glassesAll = Glass::getGlassesWhereIn($request->$glass);
+                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,$request->$glass);
 
                         foreach ($request->$glass as $id) {
 
@@ -515,7 +524,7 @@ class BudgetController extends Controller
 
                             if ($vidro->is_modelo == 1) {
 
-                                Glass::create([
+                                Glass::createGlass([
                                     'nome' => $vidro->nome,
                                     'cor' => $vidro->cor,
                                     'tipo' => $vidro->tipo,
@@ -533,14 +542,14 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $vidrosProduto->delete();
+                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,[]);
 
                     }
 
                     if ($request->has($aluminum)) {
 
-                        $aluminumsAll = Aluminum::wherein('id', $request->$aluminum)->get();
-                        $aluminiosProduto->whereNotIn('id', $request->$aluminum)->delete();
+                        $aluminumsAll = Aluminum::getAluminumsWhereIn($request->$aluminum);
+                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,$request->$aluminum);
 
                         foreach ($request->$aluminum as $id) {
 
@@ -550,9 +559,9 @@ class BudgetController extends Controller
                                 //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
 
                                 $aluminioMedida = $aluminioPeso = 0;
-                                $this->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
+                                $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
 
-                                Aluminum::create([
+                                Aluminum::createAluminum([
                                     'perfil' => $aluminio->perfil,
                                     'descricao' => $aluminio->descricao,
                                     'medida' => $aluminioMedida,
@@ -571,14 +580,14 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $aluminiosProduto->delete();
+                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,[]);
 
                     }
 
 
                     if ($request->has($component)) {
-                        $componentsAll = Component::wherein('id', $request->$component)->get();
-                        $componentesProduto->whereNotIn('id', $request->$component)->delete();
+                        $componentsAll = Component::getComponentsWhereIn($request->$component);
+                        Component::deleteComponentOnListWhereNotIn($componentesProduto,$request->$component);
 
                         foreach ($request->$component as $id) {
 
@@ -586,7 +595,7 @@ class BudgetController extends Controller
 
                             if ($componente->is_modelo == 1) {
 
-                                Component::create([
+                                Component::createComponent([
                                     'nome' => $componente->nome,
                                     'qtd' => $componente->qtd,
                                     'preco' => $componente->preco,
@@ -601,11 +610,12 @@ class BudgetController extends Controller
 
                     } else {
 
-                        $componentesProduto->delete();
+                        Component::deleteComponentOnListWhereNotIn($componentesProduto,[]);
 
                     }
                 }
-                if ($products && self::atualizaTotal(null, $budgetcriado))
+                $budgetcriado = $this->budget->findBudgetById($id);
+                if ($products && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
                 break;
             case '5': //tab total
@@ -620,28 +630,28 @@ class BudgetController extends Controller
     public function destroy($del, $id)
     {
         if ($del == 'budget') {
-            $budget = Budget::find($id);
+            $budget = $this->budget->findBudgetById($id);
             if ($budget) {
                 foreach ($budget->products as $product) {
-                    $product->delete();
+                    $product->deleteProduct();
                 }
-                $budget->delete();
+                $this->budget->deleteBudget($budget->id);
                 return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
             } else {
                 return redirect()->back()->with('error', 'Erro ao deletar orçamento');
             }
         } else {
 
-            $product = Product::with('glasses', 'aluminums', 'components')->find($id);
+            $product = Product::findProductsWithRelations([$id]);
+            $product = $product->shift();
 
             if ($product) {
-                $product->glasses()->delete();
-                $product->aluminums()->delete();
-                $product->components()->delete();
                 $budgetcriado = $product->budget;
-                $product->delete();
+
+                $product->deleteProduct();
+
                 $voltar = redirect()->back();
-                if (self::atualizaTotal(null, $budgetcriado)) {
+                if ($budgetcriado->updateBudgetTotal()) {
                     if (strpos($voltar->getTargetUrl(), 'create')) {
                         return redirect()->back()->with('success', 'Produto deletado com sucesso')
                             ->with(compact('budgetcriado'));
@@ -657,57 +667,13 @@ class BudgetController extends Controller
     }
 
 
-    public function atualizaTotal($budgetid, $budget)
-    {
-
-        if ($budgetid === null) {
-            $budgetcriado = $budget;
-        } else {
-            $budgetcriado = Budget::with('products')->find($budgetid);
-        }
-
-        $productsids = array();
-        foreach ($budgetcriado->products as $product) {
-            $productsids[] = $product->id;
-        }
-        $products = Product::with('glasses', 'aluminums', 'components')->wherein('id', $productsids)->get();
-
-        $valorTotalDeProdutos = 0.0;
-        foreach ($products as $product) {
-            $resultVidro = 0.0;
-            $m2 = $product['altura'] * $product['largura'] * $product['qtd'];
-            $resultVidro += $m2 * $product->glasses()->sum('preco');
-
-            $resultAluminio = 0.0;
-            foreach ($product->aluminums()->get() as $aluminum) {
-                //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
-                $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
-            }
-
-            $resultComponente = 0.0;
-            foreach ($product->components()->get() as $component) {
-                $resultComponente += $component['preco'] * $component['qtd'];
-            }
-
-            $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);
-
-        }
-
-        $valorTotalDeProdutos *= (1 + $budgetcriado['margem_lucro'] / 100);
-
-        $valorTotalDeProdutos = number_format($valorTotalDeProdutos, 2, '.', '');
-
-        return $budgetcriado->update(['total' => $valorTotalDeProdutos]);
-
-    }
-
-    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
+    /*//FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
     public function calcularMedidaPesoAluminio(&$aluminioMedida,&$aluminioPeso,$aluminio,$product){
         $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
             ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
         $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
         $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
-    }
+    }*/
 
 
     public function rules_budget(array $data)
