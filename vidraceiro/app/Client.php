@@ -72,6 +72,29 @@ class Client extends Model
 
     }
 
+    public function getBudgetsWithSale(){
+
+        return $this->budgets()->with('sale')->get();
+
+    }
+
+    public function updateStatus(){
+        $emDia = false;
+        $budgets = $this->getBudgetsWithSale();
+
+        foreach ($budgets as $budget){
+            if(!empty($budget->sale)){
+                $emDia = !($budget->sale->havePendingInstallment());
+                if(!$emDia)
+                    break;
+            }
+        }
+
+        if($emDia){
+            $this->updateClient(['status' => 'EM DIA']);
+        }
+    }
+
     public function updateClientBudgets(array $input){
         $budgetUpdated = false;
         foreach (self::budgets()->get() as $budget) {

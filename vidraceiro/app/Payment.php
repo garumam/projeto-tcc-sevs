@@ -11,4 +11,14 @@ class Payment extends Model
     public function sale(){
         return $this->belongsTo(Sale::class, 'venda_id');
     }
+
+    public static function createPayment(array $input){
+
+        return self::create($input);
+
+    }
+
+    public function deletePayment(){
+        return self::delete();
+    }
 }

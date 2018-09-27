@@ -11,4 +11,10 @@ class Financial extends Model
         'descricao',
         'valor'
     ];
+
+    public static function createFinancial(array $input){
+
+        return self::create($input);
+
+    }
 }

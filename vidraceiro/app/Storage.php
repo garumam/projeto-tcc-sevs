@@ -40,4 +40,16 @@ class Storage extends Model
             'venda_id'
         )->withPivot('qtd_reservada');
     }
+
+
+    public function updateStorage($column,$value){
+
+        return self::update([$column => $value]);
+
+    }
+
+
+    public static function getFirstStorageWhere($column, $value){
+        return self::where($column,$value)->first();
+    }
 }

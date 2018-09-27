@@ -614,7 +614,7 @@ class BudgetController extends Controller
 
                     }
                 }
-                $budgetcriado = $this->budget->findBudgetById($id);
+
                 if ($products && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
                 break;

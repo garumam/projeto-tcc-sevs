@@ -27,7 +27,8 @@
 
                 @php
                     $ordem = $sale->budget->order()->first();
-                    $parcela = $sale->installments()->where('status_parcela','ABERTO')->first();
+                    /*$parcelaPaga = $sale->installments()->where('status_parcela','PAGO')->first();
+                    $parcelaAberta = $sale->installments()->where('status_parcela','ABERTO')->first();*/
                     $editar = $deletar = true;
                 @endphp
                 @if(!empty($ordem))
@@ -36,13 +37,13 @@
                     @endif
                 @endif
 
-                @if(!empty($parcela))
-                    @php $editar = $deletar = false; @endphp
-                @endif
-
                 @if($sale->budget->status === 'FINALIZADO')
                     @php $editar = false; @endphp
                 @endif
+
+                {{--@if(!empty($parcelaAberta) && !empty($parcelaPaga))
+                    @php $deletar = false; @endphp
+                @endif--}}
 
                 <a class="btn-link" href="{{ route('sales.show',['id'=> $sale->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>

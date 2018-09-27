@@ -82,6 +82,12 @@ class Budget extends Model
 
     }
 
+    public static function getBudgetsWhereStatusWaiting(){
+
+        return self::where('status', 'AGUARDANDO')->get();
+
+    }
+
     public function getBudgetProductsWithRelations(){
 
         return self::products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
