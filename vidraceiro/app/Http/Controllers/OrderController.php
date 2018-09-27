@@ -9,21 +9,18 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function __construct()
+    protected $order;
+    public function __construct(Order $order)
     {
         $this->middleware('auth');
+
+        $this->order = $order;
     }
 
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $orders = Order::where('nome', 'like', '%' . $request->get('search') . '%')
-            ->orWhere('situacao', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+        $orders = $this->order->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-order', compact('orders'));
         } else {
@@ -33,7 +30,7 @@ class OrderController extends Controller
 
     public function create()
     {
-        $budgets = Budget::where('status', 'APROVADO')->where('ordem_id', null)->get();
+        $budgets = Budget::getBudgetsWhereStatusApproved(null);
         return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
     }
 
@@ -43,19 +40,19 @@ class OrderController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $order = new Order;
-        $order = $order->create($request->except('id_orcamento', '_token'));
-        $budgets = Budget::wherein('id', $request->id_orcamento)->get();
 
-        if ($order) {
-            $alterastatus = [];
-            if ($request->situacao === 'CONCLUIDA') {
-                $alterastatus = ['status' => 'FINALIZADO'];
+        $order = $this->order->createOrder($request->all());
+        $budgets = Budget::getBudgetsWhereIn($request->id_orcamento);
+
+        if ($order && $budgets) {
+
+            $order->updateBudgetsStatusByOrderSituation($budgets);
+
+            if($order->situacao === 'CONCLUIDA'){
+                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
+            }else{
+                return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
             }
-            foreach ($budgets as $budget) {
-                $budget->update(array_merge(['ordem_id' => $order->id], $alterastatus));
-            }
-            return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
         }
 
 
@@ -69,7 +66,7 @@ class OrderController extends Controller
             return redirect(route('orders.index'))->withErrors($validado);
         }
 
-        $order = Order::find($id);
+        $order = $this->order->findOrderById($id);
         return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
     }
 
@@ -81,10 +78,9 @@ class OrderController extends Controller
             return redirect(route('orders.index'))->withErrors($validado);
         }
 
-        $order = Order::with('budgets')->find($id);
+        $order = $this->order->findOrderById($id);
 
-        $budgets = Budget::where('status', 'APROVADO')->where('ordem_id', null)
-                    ->orWhere('ordem_id', $order->id)->get();
+        $budgets = Budget::getBudgetsWhereStatusApproved($order->id);
 
         if ($order) {
             $budgetsOrders = $order->budgets;
@@ -107,27 +103,25 @@ class OrderController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $order = Order::with('budgets')->find($id);
+
+        $order = $this->order->findOrderById($id);
+
         foreach ($order->budgets as $budget) {
-            $budget->update(['ordem_id' => null]);
+            $budget->updateBudget(['ordem_id' => null]);
         }
-        $budgets = Budget::wherein('id', $request->id_orcamento)->get();
-        if ($order) {
-            $order->update($request->except('id_orcamento', '_token'));
+        $budgets = Budget::getBudgetsWhereIn($request->id_orcamento);
+        if ($budgets) {
+            $order->updateOrder($request->all());
             if ($order) {
-                $alterastatus = [];
-                $ordemid = $order->id;
-                if ($request->situacao === 'CONCLUIDA') {
-                    $alterastatus = ['status' => 'FINALIZADO'];
-                } elseif ($request->situacao === 'CANCELADA') {
-                    $alterastatus = ['status' => 'APROVADO'];
-                    $ordemid = null;
+
+                $order->updateBudgetsStatusByOrderSituation($budgets);
+
+                if($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA'){
+                    return redirect('orders')->with('success', 'Ordem atualizada com sucesso');
+                }else{
+                    return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
                 }
 
-                foreach ($budgets as $budget) {
-                    $budget->update(array_merge(['ordem_id' => $ordemid], $alterastatus));
-                }
-                return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
             }
         }
         return redirect('orders')->with('error', 'Erro ao atualizar ordem de serviço');
@@ -135,12 +129,12 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $order = Order::with('budgets')->find($id);
+        $order = $this->order->findOrderById($id);
         foreach ($order->budgets as $budget) {
-            $budget->update(['ordem_id' => null]);
+            $budget->updateBudget(['ordem_id' => null]);
         }
         if ($order) {
-            $order->delete();
+            $order->deleteOrder();
             return redirect()->back()->with('success', 'Ordem de serviço deletado com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar ordem de serviço');

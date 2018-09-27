@@ -88,6 +88,23 @@ class Budget extends Model
 
     }
 
+    public static function getBudgetsWhereStatusApproved($order_id){
+
+        $budgetQuery = self::where('status', 'APROVADO')->where('ordem_id', null);
+
+        if($order_id !== null){
+            $budgetQuery = $budgetQuery->orWhere('ordem_id', $order_id);
+        }
+        return $budgetQuery->get();
+
+    }
+
+    public static function getBudgetsWhereIn(array $ids){
+
+        return self::whereIn('id', $ids)->get();
+
+    }
+
     public function getBudgetProductsWithRelations(){
 
         return self::products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
