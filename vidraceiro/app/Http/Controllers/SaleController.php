@@ -76,126 +76,19 @@ class SaleController extends Controller
 
         if ($request->has('valor_parcela')) {
 
-            for ($i = 1; $i <= $request->qtd_parcelas; $i++) {
-                $dias = $i * 30;
-                $datavencimento = date('Y-m-d', strtotime("+$dias days", strtotime($request->data_venda)));
-                Installment::createInstallment([
-                    'valor_parcela' => $request->valor_parcela,
-                    'status_parcela' => 'ABERTO',
-                    'data_vencimento' => $datavencimento,
-                    'venda_id' => $sale->id
-                ]);
-            }
-
-
-
-            $budget = $sale->budget;
-            $client = new Client();
-            $client = $client->findClientById($budget->cliente_id);
-            $client->updateClient(['status' => 'DEVENDO']);
-
+            $sale->createSaleInstallments($request);
 
         } else {
 
-            $payment = Payment::createPayment([
-                'valor_pago' => $sale->budget->total,
-                'data_pagamento' => $request->data_venda,
-                'venda_id' => $sale->id
-            ]);
-            Financial::createFinancial([
-                'tipo' => 'RECEITA',
-                'descricao' => 'Pagamento de venda à vista.',
-                'valor' => $payment->valor_pago
-            ]);
+            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
+
         }
         $mensagem = '';
         if ($request->usar_estoque != null) {
 
-            $mensagem = ', não havia nenhum material em estoque!';
-
-            foreach ($sale->budget->getBudgetProductsWithRelations() as $product) {
-
-                foreach ($product->glasses as $glass) {
-                    $m2 = ceil((($product->largura * $product->altura)*$product->qtd));
-                    $glassestoque = Storage::getFirstStorageWhere('glass_id', $glass->mglass_id);
-
-                    if ($glassestoque->metros_quadrados > 0) {
-                        $qtd_reservada = null;
-                        $resto = 0;
-                        if ($glassestoque->metros_quadrados < $m2) {
-                            $qtd_reservada = $glassestoque->metros_quadrados;
-                        } else {
-                            $qtd_reservada = $m2;
-                            $resto = $glassestoque->metros_quadrados - $m2;
-                        }
-
-                        $sale->attachStorageAndReservedQuantity($glassestoque->id,$qtd_reservada);
-
-
-                        $glassestoque->updateStorage('metros_quadrados',$resto);
-                        $mensagem = ', estoque atualizado!';
-
-                    }
-                }
-
-                foreach ($product->aluminums as $aluminum) {
-                    $aluminumestoque = Storage::getFirstStorageWhere('aluminum_id', $aluminum->maluminum_id);
-                    $qtdreservadavenda = $sale->getStorageSalePivot('aluminum_id',$aluminum->maluminum_id);
-                    $pecas6mQtd = ceil(((($aluminum->medida * $aluminum->qtd)*$product->qtd)/6));
-                    if ($aluminumestoque->qtd > 0) {
-
-                        $qtd_reservada = null;
-                        $resto = 0;
-
-                        if ($aluminumestoque->qtd < $pecas6mQtd) {
-                            $qtd_reservada = $aluminumestoque->qtd;
-                        } else {
-                            $qtd_reservada = $pecas6mQtd;
-                            $resto = $aluminumestoque->qtd - $pecas6mQtd;
-                        }
-
-                        if (!empty($qtdreservadavenda)) {
-                            $qtd_reservada += $qtdreservadavenda->pivot->qtd_reservada;
-                        }
-                        $sale->attachStorageAndReservedQuantity($aluminumestoque->id,$qtd_reservada);
-
-                        $aluminumestoque->updateStorage('qtd',$resto);
-                        $mensagem = ', estoque atualizado!';
-
-                    }
-                }
-
-                foreach ($product->components as $component) {
-                    $componentestoque = Storage::getFirstStorageWhere('component_id', $component->mcomponent_id);
-                    $qtdreservadavenda = $sale->getStorageSalePivot('component_id', $component->mcomponent_id);
-                    $qtdComponent = $component->qtd * $product->qtd;
-                    if ($componentestoque->qtd > 0) {
-                        $qtd_reservada = null;
-                        $resto = 0;
-
-                        if ($componentestoque->qtd < $qtdComponent) {
-                            $qtd_reservada = $componentestoque->qtd;
-                        } else {
-                            $qtd_reservada = $qtdComponent;
-                            $resto = $componentestoque->qtd - $qtdComponent;
-                        }
-
-                        if (!empty($qtdreservadavenda)) {
-                            $qtd_reservada += $qtdreservadavenda->pivot->qtd_reservada;
-                        }
-                        $sale->attachStorageAndReservedQuantity($componentestoque->id,$qtd_reservada);
-
-                        $componentestoque->updateStorage('qtd',$resto);
-                        $mensagem = ', estoque atualizado!';
-
-                    }
-                }
-
-
-            }
+            $mensagem = $sale->useStorage();
 
         }
-
 
         if ($sale) {
             $sale->budget->updateBudget(['status' => 'APROVADO']);
@@ -264,29 +157,11 @@ class SaleController extends Controller
 
             if ($request->has('valor_parcela')) {
 
-                for ($i = 1; $i <= $request->qtd_parcelas; $i++) {
-                    $dias = $i * 30;
-                    $datavencimento = date('Y-m-d', strtotime("+$dias days", strtotime($request->data_venda)));
-                    Installment::createInstallment([
-                        'valor_parcela' => $request->valor_parcela,
-                        'status_parcela' => 'ABERTO',
-                        'data_vencimento' => $datavencimento,
-                        'venda_id' => $sale->id
-                    ]);
-                }
+                $sale->createSaleInstallments($request);
 
             } else {
 
-                $payment = Payment::createPayment([
-                    'valor_pago' => $sale->budget->total,
-                    'data_pagamento' => $request->data_venda,
-                    'venda_id' => $sale->id
-                ]);
-                Financial::createFinancial([
-                    'tipo' => 'RECEITA',
-                    'descricao' => 'Pagamento de venda à vista.',
-                    'valor' => $payment->valor_pago
-                ]);
+                $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
 
             }
 
@@ -302,17 +177,7 @@ class SaleController extends Controller
 
                 $payment->deletePayment();
 
-
-                for ($i = 1; $i <= $request->qtd_parcelas; $i++) {
-                    $dias = $i * 30;
-                    $datavencimento = date('Y-m-d', strtotime("+$dias days", strtotime($request->data_venda)));
-                    Installment::createInstallment([
-                        'valor_parcela' => $request->valor_parcela,
-                        'status_parcela' => 'ABERTO',
-                        'data_vencimento' => $datavencimento,
-                        'venda_id' => $sale->id
-                    ]);
-                }
+                $sale->createSaleInstallments($request);
 
             }
 
@@ -405,23 +270,12 @@ class SaleController extends Controller
             $installments = Installment::getInstallmentsWherein($request->parcelas);
             $sale = $this->sale->findSaleById($id);
 
-            $valor = 0;
+
             foreach ($installments as $installment) {
 
-                $payment = Payment::createPayment([
-                    'valor_pago' => $installment->valor_parcela,
-                    'data_pagamento' => $request->data_pagamento,
-                    'venda_id' => $id
-                ]);
-                $valor += $payment->valor_pago;
+                $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Parcela paga.');
+
                 $installment->updateInstallment('status_parcela','PAGO');
-            }
-            if ($valor > 0) {
-                Financial::createFinancial([
-                    'tipo' => 'RECEITA',
-                    'descricao' => 'Parcelas pagas.',
-                    'valor' => $valor
-                ]);
             }
 
 
