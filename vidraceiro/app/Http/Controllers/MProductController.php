@@ -13,21 +13,17 @@ use Illuminate\Support\Facades\Validator;
 
 class MProductController extends Controller
 {
-    public function __construct()
+    protected $mproduct;
+    public function __construct(MProduct $mproduct)
     {
         $this->middleware('auth');
+        $this->mproduct = $mproduct;
     }
 
     public function index(Request $request)
     {
-//        $mProducts = MProduct::with('category')->get();
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $mProducts = MProduct::with('category')->where('nome', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+
+        $mProducts = $this->mproduct->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-mproduct', compact('mProducts'));
         } else {
@@ -38,10 +34,10 @@ class MProductController extends Controller
 
     public function create()
     {
-        $categories = Category::where('tipo', 'produto')->get();
-        $aluminums = Aluminum::where('is_modelo', '1')->get();
-        $glasses = Glass::where('is_modelo', '1')->get();
-        $components = Component::where('is_modelo', '1')->get();
+        $categories = Category::getAllCategoriesByType('produto');
+        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
+        $glasses = Glass::getAllGlassesOrAllModels(1);
+        $components = Component::getAllComponentsOrAllModels(1);
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
@@ -49,9 +45,6 @@ class MProductController extends Controller
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
         $titulotabs = ['Produto', 'Material'];
 
-
-//        dd($componentsProduct);
-//        var_dump($boxdiversos,$boxpadrao,$ferragem1000,$ferragem3000);
         return view('dashboard.create.mproduct', compact('titulotabs', 'categories', 'aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada'))->with('title', 'Criar Produto');
 
     }
@@ -75,27 +68,26 @@ class MProductController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $mproductcriado = new MProduct;
-                $mproductcriado = $mproductcriado->create($request->all());
+                $mproductcriado = $this->mproduct->createMProduct($request->all());
                 if ($mproductcriado)
                     return redirect()->back()->with('success', 'Produto criado com sucesso')
                         ->with(compact('mproductcriado'));
                 break;
             case '2':
                 $validado = $this->rules_mproduct_material($request->all());
+
+                $mproductcriado = $this->mproduct->findMProductById($request->m_produto_id);
+
                 if ($validado->fails()) {
-                    $mproductcriado = MProduct::orderBy('created_at', 'desc')->first();
+
                     return redirect()->back()->withErrors($validado)
                         ->with(compact('mproductcriado'));
                 }
-                $mproductcriado = MProduct::find($request->m_produto_id);
+
                 if ($mproductcriado) {
-                    $mproductcriado->glasses()->detach();
-                    $mproductcriado->aluminums()->detach();
-                    $mproductcriado->components()->detach();
-                    $mproductcriado->glasses()->attach($request->id_vidro_);
-                    $mproductcriado->aluminums()->attach($request->id_aluminio_);
-                    $mproductcriado->components()->attach($request->id_componente_);
+
+                    $mproductcriado->syncMaterialsOfMProduct($request->id_vidro_,$request->id_aluminio_,$request->id_componente_);
+
                     if ($mproductcriado)
                         return redirect()->back()->with('success', 'Material adicionado ao produto com sucesso')
                             ->with(compact('mproductcriado'));
@@ -119,20 +111,21 @@ class MProductController extends Controller
             return redirect(route('mproducts.index'))->withErrors($validado);
         }
 
-        $aluminums = Aluminum::where('is_modelo', '1')->get();
-        $glasses = Glass::where('is_modelo', '1')->get();
-        $components = Component::where('is_modelo', '1')->get();
+        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
+        $glasses = Glass::getAllGlassesOrAllModels(1);
+        $components = Component::getAllComponentsOrAllModels(1);
         $boxdiversos = $this->retornaNomes('/img/boxdiversos/');
         $boxpadrao = $this->retornaNomes('/img/boxpadrao/');
         $ferragem1000 = $this->retornaNomes('/img/ferragem1000/');
         $ferragem3000 = $this->retornaNomes('/img/ferragem3000/');
         $kitsacada = $this->retornaNomes('/img/kitsacada/');
-        $categories = Category::where('tipo', 'produto')->get();
-        $mproductedit = MProduct::with('glasses', 'aluminums', 'components')->find($id);
-//        dd($mproductedit);
+        $categories = Category::getAllCategoriesByType('produto');
+        $mproductedit = MProduct::findMProductWithRelationsById($id);
+
         $titulotabs = ['Produto', 'Material'];
         if ($mproductedit) {
-            $categoryEdit = $mproductedit->category()->get();
+            $categoryEdit = $mproductedit->category;
+
             return view('dashboard.create.mproduct', compact('aluminums', 'glasses', 'components', 'boxdiversos', 'boxpadrao', 'ferragem1000', 'ferragem3000', 'kitsacada', 'categories', 'mproductedit', 'categoryEdit', 'aluminumsProduct', 'glassesProduct', 'componentsProduct', 'titulotabs'))->with('title', 'Atualizar produto');
         }
         return redirect('products')->with('error', 'Erro ao buscar produto');
@@ -151,14 +144,14 @@ class MProductController extends Controller
         switch ($tab) {
             case '1':
 
-                $mproductcriado = MProduct::find($id);
+                $mproductcriado = $this->mproduct->findMProductById($id);
 
                 $validado = $this->rules_mproduct($request->all());
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado)
                         ->with(compact('mproductcriado'));
                 }
-                $mproductcriado->update($request->all());
+                $mproductcriado->updateMProduct($request->all());
 
                 if ($mproductcriado) {
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso')
@@ -166,19 +159,16 @@ class MProductController extends Controller
                 }
                 break;
             case '2':
-                $mproductcriado = MProduct::find($id);
+                $mproductcriado = $this->mproduct->findMProductById($id);
                 $validado = $this->rules_mproduct_material($request->all());
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado)
                         ->with(compact('mproductcriado'));
                 }
                 if ($mproductcriado) {
-                    $mproductcriado->glasses()->detach();
-                    $mproductcriado->aluminums()->detach();
-                    $mproductcriado->components()->detach();
-                    $mproductcriado->glasses()->attach($request->id_vidro_);
-                    $mproductcriado->aluminums()->attach($request->id_aluminio_);
-                    $mproductcriado->components()->attach($request->id_componente_);
+
+                    $mproductcriado->syncMaterialsOfMProduct($request->id_vidro_,$request->id_aluminio_,$request->id_componente_);
+
                     if ($mproductcriado)
                         return redirect()->back()->with('success', 'Material atualizado no produto com sucesso')
                             ->with(compact('mproductcriado'));
@@ -190,9 +180,9 @@ class MProductController extends Controller
 
     public function destroy($id)
     {
-        $mproduct = MProduct::find($id);
+        $mproduct = $this->mproduct->findMProductById($id);
         if ($mproduct) {
-            $mproduct->delete();
+            $mproduct->deleteMProduct();
             return redirect()->back()->with('success', 'Modelo de produto deletado com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar modelo de produto');

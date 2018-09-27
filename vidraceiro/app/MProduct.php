@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class MProduct extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'nome',
+        'descricao',
+        'imagem',
+        'categoria_produto_id'
+    ];
 
     public function category(){
         return $this->belongsTo(Category::class,'categoria_produto_id');
@@ -42,6 +47,47 @@ class MProduct extends Model
         );
     }
 
+    public function createMProduct(array $input){
+
+        return self::create($input);
+
+    }
+
+    public function updateMProduct(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteMProduct(){
+
+        return self::delete();
+
+    }
+
+    public function findMProductById($id){
+
+        return self::find($id);
+
+    }
+
+    public function syncMaterialsOfMProduct($glasses, $aluminums, $components){
+
+        $this->glasses()->sync($glasses);
+        $this->aluminums()->sync($aluminums);
+        $this->components()->sync($components);
+
+    }
+
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::with('category')
+            ->where('nome', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
     public static function getAllMProducts(){
 
         return self::all();
@@ -50,7 +96,7 @@ class MProduct extends Model
 
     public static function findMProductWithRelationsById($id){
 
-        return self::with('glasses', 'aluminums', 'components')->find($id);
+        return self::with('glasses', 'aluminums', 'components','category')->find($id);
 
     }
 }

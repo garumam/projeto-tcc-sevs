@@ -72,7 +72,7 @@
                                         required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($categoryEdit)){{ $category->id == $categoryEdit[0]->id ? 'selected' :''}} @endif>{{$category->nome}}</option>
+                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($categoryEdit)){{ $category->id == $categoryEdit->id ? 'selected' :''}} @endif>{{$category->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
