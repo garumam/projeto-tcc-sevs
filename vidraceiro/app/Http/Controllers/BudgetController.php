@@ -111,59 +111,8 @@ class BudgetController extends Controller
                 }
                 $product = new Product();
                 $product = $product->createProduct($request->all());
-                $mproduct = MProduct::findMProductWithRelationsById($product->m_produto_id);
 
-                foreach ($mproduct->glasses as $vidro) {
-                    Glass::createGlass([
-                        'nome' => $vidro->nome,
-                        'cor' => $vidro->cor,
-                        'tipo' => $vidro->tipo,
-                        'espessura' => $vidro->espessura,
-                        'preco' => $vidro->preco,
-                        'product_id' => $product->id,
-                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                        'is_modelo' => 0,
-                        'mglass_id' => $vidro->id
-                    ]);
-
-                }
-
-                foreach ($mproduct->aluminums as $aluminio) {
-                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-                    $aluminioMedida = $aluminioPeso = 0;
-
-                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
-
-                    Aluminum::createAluminum([
-                        'perfil' => $aluminio->perfil,
-                        'descricao' => $aluminio->descricao,
-                        'medida' => $aluminioMedida,
-                        'qtd' => $aluminio->qtd,
-                        'peso' => $aluminioPeso,
-                        'preco' => $aluminio->preco,
-                        'tipo_medida' => $aluminio->tipo_medida,
-                        'is_modelo' => 0,
-                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                        'product_id' => $product->id,
-                        'maluminum_id' => $aluminio->id
-
-                    ]);
-
-                }
-
-                foreach ($mproduct->components as $componente) {
-                    Component::createComponent([
-                        'nome' => $componente->nome,
-                        'qtd' => $componente->qtd,
-                        'preco' => $componente->preco,
-                        'is_modelo' => 0,
-                        'categoria_componente_id' => $componente->categoria_componente_id,
-                        'product_id' => $product->id,
-                        'mcomponent_id' => $componente->id
-
-                    ]);
-
-                }
+                $product->createMaterialsOfMProductToProduct();
 
                 if ($product) {
                     $budgetcriado = $this->budget->findBudgetById($request->budget_id);
@@ -194,18 +143,7 @@ class BudgetController extends Controller
                 $product = $product->findProductById($request->produtoid);
                 $product->updateProduct($request->all());
 
-                foreach ($product->aluminums()->get() as $aluminio) {
-                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-
-                    $aluminioModelo = $aluminio->findAluminumById($aluminio->maluminum_id);
-                    $aluminioMedida = $aluminioPeso = 0;
-                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminioModelo,$product);
-
-                    $aluminio->updateAluminum([
-                        'medida' => $aluminioMedida,
-                        'peso' => $aluminioPeso
-                    ]);
-                }
+                $product->updateAluminunsWithProductMeasure();
 
                 $budgetcriado = $this->budget->findBudgetById($request->budget_id);
                 if ($product && $budgetcriado->updateBudgetTotal()) {
@@ -220,110 +158,8 @@ class BudgetController extends Controller
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
-                    $glass = 'id_vidro_' . $product->id;
-                    $aluminum = 'id_aluminio_' . $product->id;
-                    $component = 'id_componente_' . $product->id;
-                    $vidrosProduto = $product->glasses();
-                    $aluminiosProduto = $product->aluminums();
-                    $componentesProduto = $product->components();
 
-                    if ($request->has($glass)) {
-                        $glassesAll = Glass::getGlassesWhereIn($request->$glass);
-                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,$request->$glass);
-
-                        foreach ($request->$glass as $id) {
-
-                            $vidro = $glassesAll->where('id', $id)->shift();
-
-                            if ($vidro->is_modelo == 1) {
-                                Glass::createGlass([
-                                    'nome' => $vidro->nome,
-                                    'cor' => $vidro->cor,
-                                    'tipo' => $vidro->tipo,
-                                    'espessura' => $vidro->espessura,
-                                    'preco' => $vidro->preco,
-                                    'product_id' => $product->id,
-                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                    'is_modelo' => 0,
-                                    'mglass_id' => $vidro->id
-                                ]);
-
-                            }
-                        }
-
-                    } else {
-
-                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,[]);
-
-                    }
-
-                    if ($request->has($aluminum)) {
-
-                        $aluminumsAll = Aluminum::getAluminumsWhereIn($request->$aluminum);
-                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,$request->$aluminum);
-
-                        foreach ($request->$aluminum as $id) {
-
-                            $aluminio = $aluminumsAll->where('id', $id)->shift();
-
-                            if ($aluminio->is_modelo == 1) {
-                                //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-
-                                $aluminioMedida = $aluminioPeso = 0;
-                                $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
-
-                                Aluminum::createAluminum([
-                                    'perfil' => $aluminio->perfil,
-                                    'descricao' => $aluminio->descricao,
-                                    'medida' => $aluminioMedida,
-                                    'qtd' => $aluminio->qtd,
-                                    'peso' => $aluminioPeso,
-                                    'preco' => $aluminio->preco,
-                                    'tipo_medida' => $aluminio->tipo_medida,
-                                    'is_modelo' => 0,
-                                    'product_id' => $product->id,
-                                    'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                                    'maluminum_id' => $aluminio->id
-                                ]);
-
-                            }
-                        }
-
-                    } else {
-
-                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,[]);
-
-                    }
-
-
-                    if ($request->has($component)) {
-                        $componentsAll = Component::getComponentsWhereIn($request->$component);
-                        Component::deleteComponentOnListWhereNotIn($componentesProduto,$request->$component);
-
-                        foreach ($request->$component as $id) {
-
-                            $componente = $componentsAll->where('id', $id)->shift();
-
-                            if ($componente->is_modelo == 1) {
-
-                                Component::createComponent([
-                                    'nome' => $componente->nome,
-                                    'qtd' => $componente->qtd,
-                                    'preco' => $componente->preco,
-                                    'is_modelo' => 0,
-                                    'product_id' => $product->id,
-                                    'categoria_componente_id' => $componente->categoria_componente_id,
-                                    'mcomponent_id' => $componente->id
-                                ]);
-
-                            }
-                        }
-
-                    } else {
-
-                        Component::deleteComponentOnListWhereNotIn($componentesProduto,[]);
-
-                    }
+                    $product->createMaterialsToProduct($request);
 
                 }
 
@@ -333,10 +169,6 @@ class BudgetController extends Controller
                         ->with(compact('budgetcriado'))
                         ->with(compact('products'));
                 }
-                break;
-            case '5': //tab total
-
-
                 break;
             default:
         }
@@ -417,55 +249,9 @@ class BudgetController extends Controller
 
                 $product = new Product();
                 $product = $product->createProduct(array_merge($request->all(), ['budget_id' => $id]));
-                $mproduct = MProduct::findMProductWithRelationsById($product->m_produto_id);
 
-                foreach ($mproduct->glasses as $vidro) {
-                    Glass::createGlass([
-                        'nome' => $vidro->nome,
-                        'cor' => $vidro->cor,
-                        'tipo' => $vidro->tipo,
-                        'espessura' => $vidro->espessura,
-                        'preco' => $vidro->preco,
-                        'product_id' => $product->id,
-                        'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                        'is_modelo' => 0,
-                        'mglass_id' => $vidro->id
-                    ]);
+                $product->createMaterialsOfMProductToProduct();
 
-                }
-
-                foreach ($mproduct->aluminums as $aluminio) {
-                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-
-                    $aluminioMedida = $aluminioPeso = 0;
-                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
-
-                    Aluminum::createAluminum([
-                        'perfil' => $aluminio->perfil,
-                        'descricao' => $aluminio->descricao,
-                        'medida' => $aluminioMedida,
-                        'qtd' => $aluminio->qtd,
-                        'peso' => $aluminioPeso,
-                        'preco' => $aluminio->preco,
-                        'tipo_medida' => $aluminio->tipo_medida,
-                        'is_modelo' => 0,
-                        'product_id' => $product->id,
-                        'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                        'maluminum_id' => $aluminio->id
-                    ]);
-                }
-
-                foreach ($mproduct->components as $componente) {
-                    Component::createComponent([
-                        'nome' => $componente->nome,
-                        'qtd' => $componente->qtd,
-                        'preco' => $componente->preco,
-                        'is_modelo' => 0,
-                        'product_id' => $product->id,
-                        'categoria_componente_id' => $componente->categoria_componente_id,
-                        'mcomponent_id' => $componente->id
-                    ]);
-                }
                 if ($product) {
                     $budgetcriado = $this->budget->findBudgetById($id);
 
@@ -484,19 +270,8 @@ class BudgetController extends Controller
                 $product = $product->findProductById($request->produtoid);
                 $product->updateProduct($request->all());
 
-                foreach ($product->aluminums()->get() as $aluminio) {
-                    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
+                $product->updateAluminunsWithProductMeasure();
 
-                    $aluminioModelo = $aluminio->findAluminumById($aluminio->maluminum_id);
-                    $aluminioMedida = $aluminioPeso = 0;
-                    $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminioModelo,$product);
-
-
-                    $aluminio->updateAluminum([
-                        'medida' => $aluminioMedida,
-                        'peso' => $aluminioPeso
-                    ]);
-                }
                 $budgetcriado = $this->budget->findBudgetById($id);
                 if ($product && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Produto atualizado com sucesso');
@@ -507,120 +282,13 @@ class BudgetController extends Controller
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
-                    $glass = 'id_vidro_' . $product->id;
-                    $aluminum = 'id_aluminio_' . $product->id;
-                    $component = 'id_componente_' . $product->id;
-                    $vidrosProduto = $product->glasses();
-                    $aluminiosProduto = $product->aluminums();
-                    $componentesProduto = $product->components();
 
-                    if ($request->has($glass)) {
-                        $glassesAll = Glass::getGlassesWhereIn($request->$glass);
-                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,$request->$glass);
+                    $product->createMaterialsToProduct($request);
 
-                        foreach ($request->$glass as $id) {
-
-                            $vidro = $glassesAll->where('id', $id)->shift();
-
-                            if ($vidro->is_modelo == 1) {
-
-                                Glass::createGlass([
-                                    'nome' => $vidro->nome,
-                                    'cor' => $vidro->cor,
-                                    'tipo' => $vidro->tipo,
-                                    'espessura' => $vidro->espessura,
-                                    'preco' => $vidro->preco,
-                                    'categoria_vidro_id' => $vidro->categoria_vidro_id,
-                                    'product_id' => $product->id,
-                                    'is_modelo' => 0,
-                                    'mglass_id' => $vidro->id
-                                ]);
-
-                            }
-                        }
-
-
-                    } else {
-
-                        Glass::deleteGlassOnListWhereNotIn($vidrosProduto,[]);
-
-                    }
-
-                    if ($request->has($aluminum)) {
-
-                        $aluminumsAll = Aluminum::getAluminumsWhereIn($request->$aluminum);
-                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,$request->$aluminum);
-
-                        foreach ($request->$aluminum as $id) {
-
-                            $aluminio = $aluminumsAll->where('id', $id)->shift();
-
-                            if ($aluminio->is_modelo == 1) {
-                                //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-
-                                $aluminioMedida = $aluminioPeso = 0;
-                                $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$product);
-
-                                Aluminum::createAluminum([
-                                    'perfil' => $aluminio->perfil,
-                                    'descricao' => $aluminio->descricao,
-                                    'medida' => $aluminioMedida,
-                                    'qtd' => $aluminio->qtd,
-                                    'peso' => $aluminioPeso,
-                                    'preco' => $aluminio->preco,
-                                    'tipo_medida' => $aluminio->tipo_medida,
-                                    'is_modelo' => 0,
-                                    'product_id' => $product->id,
-                                    'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
-                                    'maluminum_id' => $aluminio->id
-                                ]);
-
-                            }
-                        }
-
-                    } else {
-
-                        Aluminum::deleteAluminumOnListWhereNotIn($aluminiosProduto,[]);
-
-                    }
-
-
-                    if ($request->has($component)) {
-                        $componentsAll = Component::getComponentsWhereIn($request->$component);
-                        Component::deleteComponentOnListWhereNotIn($componentesProduto,$request->$component);
-
-                        foreach ($request->$component as $id) {
-
-                            $componente = $componentsAll->where('id', $id)->shift();
-
-                            if ($componente->is_modelo == 1) {
-
-                                Component::createComponent([
-                                    'nome' => $componente->nome,
-                                    'qtd' => $componente->qtd,
-                                    'preco' => $componente->preco,
-                                    'is_modelo' => 0,
-                                    'product_id' => $product->id,
-                                    'categoria_componente_id' => $componente->categoria_componente_id,
-                                    'mcomponent_id' => $componente->id
-                                ]);
-
-                            }
-                        }
-
-                    } else {
-
-                        Component::deleteComponentOnListWhereNotIn($componentesProduto,[]);
-
-                    }
                 }
 
                 if ($products && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
-                break;
-            case '5': //tab total
-
-
                 break;
             default:
         }
@@ -665,15 +333,6 @@ class BudgetController extends Controller
         }
 
     }
-
-
-    /*//FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO
-    public function calcularMedidaPesoAluminio(&$aluminioMedida,&$aluminioPeso,$aluminio,$product){
-        $aluminioMedida = $aluminio->tipo_medida === 'largura' ? $product->largura :
-            ($aluminio->tipo_medida === 'altura' ? $product->altura : $aluminio->medida);
-        $aluminioPeso = ($aluminio->peso / $aluminio->medida) * $aluminioMedida;
-        $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
-    }*/
 
 
     public function rules_budget(array $data)
