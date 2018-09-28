@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     protected $types, $group_images;
-
-    public function __construct()
+    protected $category;
+    public function __construct(Category $category)
     {
         $this->middleware('auth');
         $this->types = array(
@@ -31,22 +31,20 @@ class CategoryController extends Controller
             'kitsacada' => 'Kit sacada',
             'todasimagens' => 'Todas as imagens'
         );
+
+        $this->category = $category;
     }
 
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $categories = Category::where('nome', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+        $categories = $this->category->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-category', compact('categories'));
-        } else {
-            return view('dashboard.list.category', compact('categories'))->with('title', 'Categorias');
         }
+
+        return view('dashboard.list.category', compact('categories'))->with('title', 'Categorias');
+
     }
 
     public function create()
@@ -62,8 +60,8 @@ class CategoryController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $category = new Category();
-        $category = $category->create($request->all());
+        $category = $this->category->createCategory($request->all());
+
         if ($category)
             return redirect()->back()->with('success', 'Categoria criada com sucesso');
     }
@@ -81,7 +79,7 @@ class CategoryController extends Controller
             return redirect(route('categories.index'))->withErrors($validado);
         }
 
-        $category = Category::findOrFail($id);
+        $category = $this->category->findCategoryById($id);
         $types = $this->types;
         $group_images = $this->group_images;
         return view('dashboard.create.category', compact('category', 'types', 'group_images'))->with('title', 'Atualizar categoria');
@@ -100,9 +98,9 @@ class CategoryController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $category = Category::find($id);
+        $category = $this->category->findCategoryById($id);
         if ($category) {
-            $category->update($request->all());
+            $category->updateCategory($request->all());
             return redirect()->back()->with('success', 'Categoria atualizada com sucesso');
         }
 
@@ -110,9 +108,9 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = $this->category->findCategoryById($id);
         if ($category) {
-            $category->delete();
+            $category->deleteCategory();
             return redirect()->back()->with('success', 'Categoria deletada com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar categoria');
