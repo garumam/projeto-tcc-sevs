@@ -66,7 +66,7 @@
                                 <label for="select-vidro" class="obrigatorio text-dark">Vidros</label>
                                 <select id="select-vidro" class="form-control form-control-chosen" name="storage_vidro_id" data-placeholder="Selecione um vidro" style="display: none;">
                                     <option></option>
-                                    @foreach($glasses as $glass)
+                                    @foreach($allglasses as $glass)
                                         <option value="{{$glass->storage->id}}">{{$glass->nome .' '. $glass->tipo}}</option>
                                     @endforeach
                                 </select>
@@ -159,7 +159,7 @@
                                 <label for="select-aluminio" class="obrigatorio text-dark">Alumínios</label>
                                 <select id="select-aluminio" class="form-control form-control-chosen" name="storage_aluminio_id" data-placeholder="Selecione um aluminio" style="display: none;">
                                     <option></option>
-                                    @foreach($aluminums as $aluminum)
+                                    @foreach($allaluminums as $aluminum)
                                         <option value="{{$aluminum->storage->id}}">{{$aluminum->perfil}}</option>
                                     @endforeach
                                 </select>
@@ -250,7 +250,7 @@
                                 <label for="select-componente" class="obrigatorio text-dark">Componentes</label>
                                 <select id="select-componente" class="form-control form-control-chosen" name="storage_componente_id" data-placeholder="Selecione um componente" style="display: none;">
                                     <option></option>
-                                    @foreach($components as $component)
+                                    @foreach($allcomponents as $component)
                                         <option value="{{$component->storage->id}}">{{$component->nome}}</option>
                                     @endforeach
                                 </select>

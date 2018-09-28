@@ -11,25 +11,30 @@ use Illuminate\Support\Facades\Validator;
 
 class StorageController extends Controller
 {
-    public function __construct()
+    protected $storage;
+    public function __construct(Storage $storage)
     {
         $this->middleware('auth');
+
+        $this->storage = $storage;
     }
 
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $glasses = Glass::where('is_modelo',1)->where('nome', 'like', '%' . $request->get('search') . '%')
-            ->paginate($paginate);
 
-        $aluminums = Aluminum::where('is_modelo',1)->where('perfil', 'like', '%' . $request->get('search') . '%')
-            ->paginate($paginate);
+        $allglasses = Glass::getAllGlassesOrAllModels(1);
+        $allaluminums = Aluminum::getAllAluminumsOrAllModels(1);
+        $allcomponents = Component::getAllComponentsOrAllModels(1);
 
-        $components = Component::where('is_modelo',1)->where('nome', 'like', '%' . $request->get('search') . '%')
-            ->paginate($paginate);
+        $glass = new Glass();
+        $aluminum = new Aluminum();
+        $component = new Component();
+
+        $glasses = $glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
+        $aluminums = $aluminum->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
+        $components = $component->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         $titulotabs = ['Vidros','Aluminios','Componentes'];
 
@@ -44,7 +49,7 @@ class StorageController extends Controller
                 return view('dashboard.list.tables.table-storage-component', compact('components'));
             }
         } else {
-            return view('dashboard.list.storage', compact('titulotabs', 'aluminums', 'glasses', 'components'))->with('title', 'Estoque de materiais');
+            return view('dashboard.list.storage', compact('titulotabs', 'aluminums', 'glasses', 'components','allglasses','allaluminums','allcomponents'))->with('title', 'Estoque de materiais');
         }
     }
 
@@ -62,7 +67,7 @@ class StorageController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $storage = Storage::find($request->storage_vidro_id);
+                $storage = Storage::getFirstStorageWhere('id',$request->storage_vidro_id);
                 $m2 = null;
                 if($request->operacao === 'retirada'){
                     if($request->m2 > $storage->metros_quadrados){
@@ -78,7 +83,7 @@ class StorageController extends Controller
                 }else{
                     return redirect()->back()->with('error', 'Operação não existe!');
                 }
-                $storage->update(['metros_quadrados'=>$m2]);
+                $storage->updateStorage('metros_quadrados',$m2);
                 break;
 
             case 'aluminio':
@@ -92,7 +97,7 @@ class StorageController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $storage = Storage::find($request->storage_aluminio_id);
+                $storage = Storage::getFirstStorageWhere('id',$request->storage_aluminio_id);
                 $qtd = null;
                 if($request->operacao === 'retirada'){
                     if($request->qtd > $storage->qtd){
@@ -108,7 +113,7 @@ class StorageController extends Controller
                 }else{
                     return redirect()->back()->with('error', 'Operação não existe!');
                 }
-                $storage->update(['qtd'=>$qtd]);
+                $storage->updateStorage('qtd',$qtd);
                 break;
 
             case 'componente':
@@ -122,7 +127,7 @@ class StorageController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $storage = Storage::find($request->storage_componente_id);
+                $storage = Storage::getFirstStorageWhere('id',$request->storage_componente_id);
                 $qtd = null;
                 if($request->operacao === 'retirada'){
                     if($request->qtd > $storage->qtd){
@@ -138,7 +143,7 @@ class StorageController extends Controller
                 }else{
                     return redirect()->back()->with('error', 'Operação não existe!');
                 }
-                $storage->update(['qtd'=>$qtd]);
+                $storage->updateStorage('qtd',$qtd);
                 break;
         }
 
