@@ -72,4 +72,8 @@ class Provider extends Model
         return self::find($id);
 
     }
+
+    public static function getAll(){
+        return self::all();
+    }
 }

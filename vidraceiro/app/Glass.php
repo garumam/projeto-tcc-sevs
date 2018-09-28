@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Glass extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'nome',
+        'cor',
+        'tipo',
+        'espessura',
+        'preco',
+        'is_modelo',
+        'mglass_id',
+        'categoria_vidro_id',
+        'product_id'
+    ];
 
     public function category()
     {
@@ -50,8 +60,38 @@ class Glass extends Model
         );
     }
 
-    public static function createGlass(array $input){
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('is_modelo', 1)->where('nome', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+    public function findGlassById($id){
+
+        return self::find($id);
+
+    }
+
+    public function createGlass(array $input){
         return self::create($input);
+    }
+
+    public function updateGlass(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteGlass(){
+
+        return self::delete();
+
+    }
+
+    public function syncProviders($ids){
+        $this->providers()->sync($ids);
     }
 
     public static function getAllGlassesOrAllModels($is_modelo = 0){
@@ -71,4 +111,6 @@ class Glass extends Model
         return $glasses->whereNotIn('id', $ids)->delete();
 
     }
+
+
 }

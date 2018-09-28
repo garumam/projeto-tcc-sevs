@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Component extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'nome',
+        'qtd',
+        'preco',
+        'imagem',
+        'is_modelo',
+        'mcomponent_id',
+        'categoria_componente_id',
+        'product_id'
+    ];
 
     public function category()
     {
@@ -49,8 +58,38 @@ class Component extends Model
         );
     }
 
-    public static function createComponent(array $input){
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('is_modelo', 1)->where('nome', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+    public function findComponentById($id){
+
+        return self::find($id);
+
+    }
+
+    public function createComponent(array $input){
         return self::create($input);
+    }
+
+    public function updateComponent(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteComponent(){
+
+        return self::delete();
+
+    }
+
+    public function syncProviders($ids){
+        $this->providers()->sync($ids);
     }
 
     public static function getAllComponentsOrAllModels($is_modelo = 0){

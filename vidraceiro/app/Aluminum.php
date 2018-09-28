@@ -7,7 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Aluminum extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'perfil',
+        'descricao',
+        'medida',
+        'qtd',
+        'peso',
+        'preco',
+        'tipo_medida',
+        'espessura',
+        'is_modelo',
+        'maluminum_id',
+        'categoria_aluminio_id',
+        'product_id'
+    ];
 
     public function category()
     {
@@ -50,20 +63,24 @@ class Aluminum extends Model
     }
 
 
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('is_modelo', 1)->where('perfil', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+
     public function updateAluminum(array $input){
 
         return self::update($input);
 
     }
 
-    public function deleteAluminum($id){
+    public function deleteAluminum(){
 
-        $aluminum = self::findAluminumById($id);
-        if($aluminum){
-            return $aluminum->delete();
-        }
-
-        return false;
+        return self::delete();
 
     }
 
@@ -74,8 +91,12 @@ class Aluminum extends Model
     }
 
 
-    public static function createAluminum(array $input){
+    public function createAluminum(array $input){
         return self::create($input);
+    }
+
+    public function syncProviders($ids){
+        $this->providers()->sync($ids);
     }
 
     public static function getAllAluminumsOrAllModels($is_modelo = 0){

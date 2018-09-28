@@ -48,6 +48,9 @@ class Storage extends Model
 
     }
 
+    public static function createStorage(array $input){
+        return self::create($input);
+    }
 
     public static function getFirstStorageWhere($column, $value){
         return self::where($column,$value)->first();

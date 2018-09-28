@@ -99,7 +99,8 @@ class Product extends Model
         $mproduct = MProduct::findMProductWithRelationsById($this->m_produto_id);
 
         foreach ($mproduct->glasses as $vidro) {
-            Glass::createGlass([
+
+            $vidro->createGlass([
                 'nome' => $vidro->nome,
                 'cor' => $vidro->cor,
                 'tipo' => $vidro->tipo,
@@ -119,7 +120,7 @@ class Product extends Model
 
             $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$this);
 
-            Aluminum::createAluminum([
+            $aluminio->createAluminum([
                 'perfil' => $aluminio->perfil,
                 'descricao' => $aluminio->descricao,
                 'medida' => $aluminioMedida,
@@ -137,7 +138,7 @@ class Product extends Model
         }
 
         foreach ($mproduct->components as $componente) {
-            Component::createComponent([
+            $componente->createComponent([
                 'nome' => $componente->nome,
                 'qtd' => $componente->qtd,
                 'preco' => $componente->preco,
@@ -171,7 +172,8 @@ class Product extends Model
                 $vidro = $glassesAll->where('id', $id)->shift();
 
                 if ($vidro->is_modelo == 1) {
-                    Glass::createGlass([
+
+                    $vidro->createGlass([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -207,7 +209,7 @@ class Product extends Model
                     $aluminioMedida = $aluminioPeso = 0;
                     $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$this);
 
-                    Aluminum::createAluminum([
+                    $aluminio->createAluminum([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminioMedida,
@@ -241,7 +243,7 @@ class Product extends Model
 
                 if ($componente->is_modelo == 1) {
 
-                    Component::createComponent([
+                    $componente->createComponent([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
