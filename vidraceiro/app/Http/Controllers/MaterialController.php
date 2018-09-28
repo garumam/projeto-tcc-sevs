@@ -122,24 +122,10 @@ class MaterialController extends Controller
 
 
         if ($material) {
-            if ($type === 'glass') {
-                Storage::createStorage([
-                    'metros_quadrados' => 0,
-                    'glass_id' => $material->id
-                ]);
-            } elseif ($type === 'aluminum') {
-                Storage::createStorage([
-                    'qtd' => 0,
-                    'aluminum_id' => $material->id
-                ]);
-            } elseif ($type === 'component') {
-                Storage::createStorage([
-                    'qtd' => 0,
-                    'component_id' => $material->id
-                ]);
-            }
             return redirect()->back()->with('success', "$nome criado com sucesso");
         }
+
+        return redirect()->back()->with('error', "Erro ao criar material");
 
     }
 

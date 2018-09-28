@@ -73,7 +73,16 @@ class Component extends Model
     }
 
     public function createComponent(array $input){
-        return self::create($input);
+        $component = self::create($input);
+
+        if($component->is_modelo === 1){
+            Storage::createStorage([
+                'qtd' => 0,
+                'component_id' => $component->id
+            ]);
+        }
+
+        return $component;
     }
 
     public function updateComponent(array $input){

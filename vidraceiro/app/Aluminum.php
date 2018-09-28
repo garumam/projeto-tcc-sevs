@@ -92,7 +92,17 @@ class Aluminum extends Model
 
 
     public function createAluminum(array $input){
-        return self::create($input);
+
+        $aluminum = self::create($input);
+
+        if($aluminum->is_modelo === 1){
+            Storage::createStorage([
+                'qtd' => 0,
+                'aluminum_id' => $aluminum->id
+            ]);
+        }
+
+        return $aluminum;
     }
 
     public function syncProviders($ids){

@@ -75,7 +75,16 @@ class Glass extends Model
     }
 
     public function createGlass(array $input){
-        return self::create($input);
+        $glass = self::create($input);
+
+        if($glass->is_modelo === 1){
+            Storage::createStorage([
+                'metros_quadrados' => 0,
+                'glass_id' => $glass->id
+            ]);
+        }
+
+        return $glass;
     }
 
     public function updateGlass(array $input){
