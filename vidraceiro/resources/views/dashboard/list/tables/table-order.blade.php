@@ -31,7 +31,7 @@
                     </a>
                 @endif
                 @if($order->situacao !== 'ANDAMENTO')
-                    <a class="btn-link" onclick="deletar(this.id,'orders')" id="{{$order->id}}">
+                    <a class="btn-link" onclick="deletar(event,this.id,'orders')" id="{{$order->id}}">
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                     </a>
                 @endif

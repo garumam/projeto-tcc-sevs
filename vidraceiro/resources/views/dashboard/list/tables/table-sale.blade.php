@@ -54,7 +54,7 @@
                     </a>
                 @endif
                 @if($deletar)
-                    <a class="btn-link" onclick="deletar(this.id,'sales')" id="{{ $sale->id }}">
+                    <a class="btn-link" onclick="deletar(event,this.id,'sales')" id="{{ $sale->id }}">
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                     </a>
                 @endif

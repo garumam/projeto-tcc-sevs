@@ -48,7 +48,7 @@
                     {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
-                        <a class="btn-link bt-budget-deletar-produto" onclick="deletar(this.id,'budgets/product')" id="vazio" style="display: none;">
+                        <a class="btn-link bt-budget-deletar-produto" onclick="deletar(event,this.id,'budgets/product')" id="vazio" style="display: none;">
                             <button class="btn btn-danger">Deletar</button>
                         </a>
                         <button id="bt-budget-visible" class="btn btn-primary btn-custom" type="submit">

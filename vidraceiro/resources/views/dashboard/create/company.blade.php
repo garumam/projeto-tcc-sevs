@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}} </h4>
                 @if($company)
-                    <button id="{{$company->id}}" onclick="deletar(this.id,'companies')"
+                    <button id="{{$company->id}}" onclick="deletar(event,this.id,'companies')"
                             class="btn btn-danger ml-auto mr-3" type="button">Deletar
                     </button>
                 @endif

@@ -24,7 +24,7 @@
                         <i class="fas fa-key"></i>
                     </button>
                 </a>
-                <a class="btn-link {{$role->nome === 'admin' ? 'disabled' :'' }}" onclick="deletar(this.id,'roles')" id="{{ $role->id }}">
+                <a class="btn-link {{$role->nome === 'admin' ? 'disabled' :'' }}" onclick="deletar(event,this.id,'roles')" id="{{ $role->id }}">
                     <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
                         <i class="fas fa-trash-alt"></i>
                     </button>

@@ -301,11 +301,11 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    function deletar(id, nome) {
+    function deletar(e,id, nome) {
         if (id != 'vazio') {
             var form = document.getElementById('delete-form');
             form.action = "/" + nome + "/" + id;
-            event.preventDefault();
+            e.preventDefault();
             form.submit();
         }
     }

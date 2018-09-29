@@ -27,7 +27,7 @@
                 <td style="color:#dc3545;">R${{ $financial->valor }}</td>
             @endif
             <td>
-                <a class="btn-link" onclick="deletar(this.id,'financial')" id="{{ $financial->id }}">
+                <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
                     <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
                     </button>
                 </a>

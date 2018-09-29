@@ -188,7 +188,8 @@ class SaleController extends Controller
         $budget = $sale->budget;
         $client = new Client();
         $client = $client->findClientById($budget->cliente_id);
-        $client->updateStatus();
+        if($client)
+            $client->updateStatus();
 
         if ($sale) {
             return redirect()->back()->with('success', 'Venda atualizada com sucesso');
@@ -230,7 +231,8 @@ class SaleController extends Controller
 
             $client = new Client();
             $client = $client->findClientById($budget->cliente_id);
-            $client->updateStatus();
+            if($client)
+                $client->updateStatus();
 
             return redirect()->back()->with('success', 'Venda deletada com sucesso' . $mensagem);
         } else {
