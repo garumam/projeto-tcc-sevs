@@ -102,4 +102,25 @@ class Client extends Model
         }
         return $budgetUpdated;
     }
+
+    public static function filterClients($request){
+
+        $status = $request->status;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $clients = new Client();
+
+        if(strtotime($data_inicial) < strtotime($data_final)){
+            $clients = self::whereBetween('created_at', [$data_inicial,$data_final]);
+        }
+
+        if($status === 'TODOS'){
+            $clients = $clients->get();
+        }else{
+            $clients = $clients->where('status',$status)->get();
+        }
+
+        return $clients;
+
+    }
 }

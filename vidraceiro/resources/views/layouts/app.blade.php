@@ -304,7 +304,11 @@
     function deletar(e,id, nome) {
         if (id != 'vazio') {
             var form = document.getElementById('delete-form');
-            form.action = "/" + nome + "/" + id;
+            if(nome === 'companies'){
+                form.action = "/" + nome;
+            }else{
+                form.action = "/" + nome + "/" + id;
+            }
             e.preventDefault();
             form.submit();
         }

@@ -7,7 +7,7 @@
             <div class="topo">
                 <h4 class="titulo">{{$title}} </h4>
                 @if($company)
-                    <button id="{{$company->id}}" onclick="deletar(event,this.id,'companies')"
+                    <button  onclick="deletar(event,null,'companies')"
                             class="btn btn-danger ml-auto mr-3" type="button">Deletar
                     </button>
                 @endif
@@ -16,7 +16,7 @@
             </div>
 
             <form class="formulario" method="POST" role="form"
-                  action="{{($company) ?  route('companies.update',['id'=>$company->id]) :  route('companies.store')}}">
+                  action="{{($company) ?  route('companies.update') : route('companies.store')}}">
                 @if($company)
                     <input type="hidden" name="_method" value="PATCH">
                 @endif

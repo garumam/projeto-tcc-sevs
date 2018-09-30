@@ -111,6 +111,41 @@ class Budget extends Model
 
     }
 
+    public static function filterBudgets($request){
+
+        $budgets = new Budget();
+        $status = $request->status;
+        $totalde = $request->total_de;
+        $totalate = $request->total_ate;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $totalentrou = $dataentrou = false;
+        if($totalde < $totalate){
+            $totalentrou = true;
+        }
+        if(strtotime($data_inicial) < strtotime($data_final)){
+            $dataentrou = true;
+        }
+
+        if($totalentrou || $dataentrou){
+            $budgets =  self::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
+                if($dataentrou){
+                    $query->whereBetween('data', [$data_inicial,$data_final]);
+                }
+
+                if($totalentrou){
+                    $query->whereBetween('total', [$totalde,$totalate]);
+                }
+            });
+        }
+
+        if($status === 'TODOS'){
+            $budgets = $budgets->get();
+        }else{
+            $budgets = $budgets->where('status',$status)->get();
+        }
+        return $budgets;
+    }
 
     public function updateBudgetTotal()
     {

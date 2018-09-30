@@ -66,4 +66,43 @@ class Order extends Model
             $budget->updateBudget(array_merge(['ordem_id' => $ordemid], $budgetStatus));
         }
     }
+
+    public static function filterOrders($request){
+
+        $situacao = $request->status;
+        $orders = new Order();
+        $totalde = $request->total_de;
+        $totalate = $request->total_ate;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $totalentrou = $dataentrou = false;
+        if($totalde < $totalate){
+            $totalentrou = true;
+        }
+
+        if(strtotime($data_inicial) < strtotime($data_final)){
+
+            $dataentrou = true;
+        }
+
+        if($totalentrou || $dataentrou){
+
+            $orders =  self::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
+                if($dataentrou){
+                    $query->whereBetween('data_inicial', [$data_inicial,$data_final]);
+                }
+
+                if($totalentrou){
+                    $query->whereBetween('total', [$totalde,$totalate]);
+                }
+            });
+        }
+
+        if($situacao === 'TODOS'){
+            $orders = $orders->get();
+        }else{
+            $orders = $orders->where('situacao',$situacao)->get();
+        }
+        return $orders;
+    }
 }

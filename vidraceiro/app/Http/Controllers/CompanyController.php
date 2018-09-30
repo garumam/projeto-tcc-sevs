@@ -8,14 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
-    public function __construct()
+    protected $company;
+
+    public function __construct(Company $company)
     {
         $this->middleware('auth');
+        $this->company = $company;
     }
 
     public function index()
     {
-        $company = Company::take(1)->first();
+        $company = $this->company->getCompany();
 
         $states = array(
             ' ' => 'Selecione...',
@@ -61,8 +64,8 @@ class CompanyController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $company = new Company;
-        $company = $company->create($request->all());
+
+        $company = $this->company->createFinancial($request->all());
         if ($company)
             return redirect()->back()->with('success', 'Dados da empresa criados com sucesso');
     }
@@ -78,23 +81,28 @@ class CompanyController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $company = Company::find($id);
         $validado = $this->rules_company($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $company->update($request->all());
-        if ($company)
+
+        $company = $this->company->getCompany();
+
+        if ($company){
+            $company->updateFinancial($request->all());
+
             return redirect()->back()->with('success', 'Dados da empresa atualizados com sucesso');
+        }
+
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        $company = Company::find($id);
+        $company = $this->company->getCompany();
         if ($company) {
-            $company->delete();
+            $company->deleteFinancial();
             return redirect()->back()->with('success', 'Dados da empresa deletados com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar dados');

@@ -9,27 +9,24 @@ use App\Financial;
 
 class FinancialController extends Controller
 {
-    public function __construct()
+    protected $financial;
+
+    public function __construct(Financial $financial)
     {
         $this->middleware('auth');
+        $this->financial = $financial;
     }
 
     public function index(Request $request)
     {
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $allfinancial = Financial::all();
-        $financials = Financial::where('descricao', 'like', '%' . $request->get('search') . '%')
-            ->orWhere('tipo', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
-        if ($request->ajax()) {
+        $allfinancial = Financial::getAll();
+        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if ($request->ajax())
             return view('dashboard.list.tables.table-financial', compact('allfinancial','financials'));
-        } else {
-            return view('dashboard.list.financial', compact('allfinancial','financials'))->with('title', 'Financeiro');
-        }
+
+
+        return view('dashboard.list.financial', compact('allfinancial','financials'))->with('title', 'Financeiro');
+
     }
 
     public function store(Request $request)
@@ -39,8 +36,7 @@ class FinancialController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $financial = new Financial();
-        $financial = $financial->create($request->except('_token'));
+        $financial = Financial::createFinancial($request->all());
         if ($financial) {
             $mensagem = '';
             if ($financial->tipo === 'RECEITA') {
@@ -56,7 +52,7 @@ class FinancialController extends Controller
 
     public function destroy($id)
     {
-        $financial = Financial::find($id);
+        $financial = $this->financial->findFinancialById($id);
         if ($financial) {
             $mensagem = '';
             if ($financial->tipo === 'RECEITA') {
@@ -64,7 +60,7 @@ class FinancialController extends Controller
             } else {
                 $mensagem = 'Despesa';
             }
-            $financial->delete();
+            $financial->deleteFinancial();
             return redirect()->back()->with('success', $mensagem . ' deletada com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar item');
