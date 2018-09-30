@@ -17,8 +17,12 @@ class Company extends Model
         'telefone'
     ];
 
-    public function getCompany(){
+    public function getFirstCompany(){
         return self::take(1)->first();
+    }
+
+    public function findCompanyById($id){
+        return self::find($id);
     }
 
     public function createFinancial(array $input){

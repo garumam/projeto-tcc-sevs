@@ -18,7 +18,7 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $company = $this->company->getCompany();
+        $company = $this->company->getFirstCompany();
 
         $states = array(
             ' ' => 'Selecione...',
@@ -81,14 +81,14 @@ class CompanyController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $validado = $this->rules_company($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
 
-        $company = $this->company->getCompany();
+        $company = $this->company->findCompanyById($id);
 
         if ($company){
             $company->updateFinancial($request->all());
@@ -98,9 +98,9 @@ class CompanyController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-        $company = $this->company->getCompany();
+        $company = $this->company->findCompanyById($id);
         if ($company) {
             $company->deleteFinancial();
             return redirect()->back()->with('success', 'Dados da empresa deletados com sucesso');

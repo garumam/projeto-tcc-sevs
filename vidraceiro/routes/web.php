@@ -176,8 +176,8 @@ Route::prefix('companies')->group(function () {
     Route::post('/', 'CompanyController@store')->name('companies.store');
     Route::get('/{user}', 'CompanyController@show')->name('companies.show');
     Route::get('/{id}/edit', 'CompanyController@edit')->name('companies.edit');
-    Route::patch('/', 'CompanyController@update')->name('companies.update');
-    Route::delete('/', 'CompanyController@destroy')->name('companies.destroy');
+    Route::patch('/{id}', 'CompanyController@update')->name('companies.update');
+    Route::delete('/{id}', 'CompanyController@destroy')->name('companies.destroy');
 });
 
 //rotas da financeiro
