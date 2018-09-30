@@ -8,16 +8,20 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+
+    protected $role;
+    public function __construct(Role $role)
+    {
+        $this->middleware('auth');
+        $this->role = $role;
+    }
+
     public function index(Request $request)
     {
         $title = "Lista de Funções";
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $roles = Role::where('nome', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+
+        $roles = $this->role->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-role', compact('roles'));
         } else {
@@ -33,13 +37,13 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        Role::create($request->all());
+        $this->role->createRole($request->all());
         return redirect()->back()->with('success', 'Função criada com sucesso');
     }
 
     public function edit($id)
     {
-        $role = Role::find($id) ?? null;
+        $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
                 return redirect()->route('roles.index')->with('error', 'Não pode alterar função de administrador');
@@ -53,7 +57,7 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $role = Role::find($id) ?? null;
+        $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
                 return redirect()->route('roles.index')->with('error', 'Não pode alterar função de administrador');
@@ -61,13 +65,13 @@ class RoleController extends Controller
         } else {
             return redirect()->route('roles.index')->with('error', 'Não existe essa função');
         }
-        $role->update($request->all());
+        $role->updateRole($request->all());
         return redirect()->back()->with('success', 'Função atualizada com sucesso');
     }
 
     public function destroy($id)
     {
-        $role = Role::find($id) ?? null;
+        $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
                 return redirect()->route('roles.index')->with('error', 'Não pode deletar função de administrador');
@@ -75,26 +79,18 @@ class RoleController extends Controller
         } else {
             return redirect()->route('roles.index')->with('error', 'Não existe essa função');
         }
-        $role->delete();
+        $role->deleteRole();
         return redirect()->back()->with('success', 'Função deletada com sucesso');
     }
 
     public function permissionshow(Request $request, $id)
     {
         $title = "Lista de Permissões";
-        $role = Role::find($id);
-        $permissions = Permission::all();
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $permissionsroles = Permission::with('roles')
-            ->whereHas('roles', function ($q) use ($id) {
-                $q->where('role_id', '=', $id);
-            })
-            ->where('nome', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
+        $role = $this->role->findRoleById($id);
+        $permissions = Permission::getAll();
+
+        $permissionsroles = Permission::getPermissionsByRoleIdWithSearchAndPagination($id,$request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-role-permission', compact('role', 'permissionsroles'));
         } else {
@@ -104,8 +100,10 @@ class RoleController extends Controller
 
     public function permissionstore(Request $request, $id)
     {
-        $role = Role::find($id);
-        $permission = Permission::find($request->permission_id);
+        $role = $this->role->findRoleById($id);
+        $permission = new Permission();
+        $permission = $permission->findPermissionById($request->permission_id);
+
         if ($role->addPermission($permission)) {
             return redirect()->back()->with('success', 'Permissão adicionada com sucesso');
         }
@@ -114,8 +112,9 @@ class RoleController extends Controller
 
     public function permissiondestroy($id, $permission_id)
     {
-        $role = Role::find($id);
-        $permission = Permission::find($permission_id);
+        $role = $this->role->findRoleById($id);
+        $permission = new Permission();
+        $permission = $permission->findPermissionById($permission_id);
         $role->removePermission($permission);
         return redirect()->back()->with('success', 'Permissão removida com sucesso');
     }

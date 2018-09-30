@@ -10,21 +10,19 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $user;
+    public function __construct(User $user)
     {
         $this->middleware('auth');
+        $this->user = $user;
     }
 
     public function index(Request $request)
     {
         if (Auth::user()->can('usuario_listar', User::class)) {
-            $paginate = 10;
-            if ($request->get('paginate')) {
-                $paginate = $request->get('paginate');
-            }
-            $users = User::where('name', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-                ->paginate($paginate);
+
+            $users = $this->user->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+
             if ($request->ajax()) {
                 return view('dashboard.list.tables.table-user', compact('users'));
             } else {
@@ -47,7 +45,7 @@ class UserController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
-        $user = new User;
+        $user = $this->user;
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = $request->file('image');
             $destino = 'img/users/';
@@ -59,9 +57,9 @@ class UserController extends Controller
 //            $user->save();
             $resq = $request->except('image');
             $resq['image'] = $destino . $image->getClientOriginalName();
-            $user = $user->create($resq);
+            $user = $user->createUser($resq);
         } else {
-            $user = $user->create($request->except('image'));
+            $user = $user->createUser($request->except('image'));
         }
         if ($user)
             return redirect()->back()->with('success', 'Usuario criado com sucesso');
@@ -70,7 +68,7 @@ class UserController extends Controller
 
     public function show($user)
     {
-        $users = User::findOrFail($user);
+        $users = $this->user->findUserById($user);
         return view('dashboard.list.user', compact('users'))->with('title', 'Listar usuarios');
     }
 
@@ -82,13 +80,13 @@ class UserController extends Controller
             return redirect(route('users.index'))->withErrors($validado);
         }
 
-        $user = User::find($id);
+        $user = $this->user->findUserById($id);
         return view('dashboard.create.user', compact('user'))->with('title', 'Atualizar usuario');
     }
 
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = $this->user->findUserById($id);
         $validado = $this->rules_update_users(array_merge($request->all(), ['id' => $id]));
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -100,7 +98,7 @@ class UserController extends Controller
             $image->move($destino, $image->getClientOriginalName());
             $resq['image'] = $destino . $image->getClientOriginalName();
         }
-        $user->update($resq);
+        $user->updateUser($resq);
         if ($user)
             return redirect()->back()->with('success', 'Usuario atualizado com sucesso');
 
@@ -122,20 +120,11 @@ class UserController extends Controller
         }
 
         $title = "Lista de Funções";
-        $user = User::find($id);
-        $roles = Role::all();
-        $paginate = 10;
-        if ($request->get('paginate')) {
-            $paginate = $request->get('paginate');
-        }
-        $rolesusuario = Role::with('users')
-            ->whereHas('users', function ($q) use ($id) {
-                $q->where('user_id', '=', $id);
-            })
-            ->where('nome', 'like', '%' . $request->get('search') . '%')
-//            ->orderBy($request->get('field'), $request->get('sort'))
-            ->paginate($paginate);
-//        dd($role);
+        $user = $this->user->findUserById($id);
+        $roles = Role::getAll();
+
+        $rolesusuario = Role::getRoleByUserIdWithSearchAndPagination($id,$request->get('search'),$request->get('paginate'));
+
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-user-role', compact('user', 'rolesusuario'));
         } else {
@@ -147,8 +136,9 @@ class UserController extends Controller
 
     public function rolestore(Request $request, $id)
     {
-        $user = User::find($id);
-        $role = Role::find($request->role_id);
+        $user = $this->user->findUserById($id);
+        $role = new Role();
+        $role = $role->findRoleById($request->role_id);
         if ($user->addRole($role)) {
             return redirect()->back()->with('success', 'Função adicionada no usuario');
         }
@@ -157,17 +147,18 @@ class UserController extends Controller
 
     public function roledestroy($id, $role_id)
     {
-        $user = User::find($id);
-        $role = Role::find($role_id);
+        $user = $this->user->findUserById($id);
+        $role = new Role();
+        $role = $role->findRoleById($role_id);
         $user->removeRole($role);
         return redirect()->back()->with('success', 'Função removida do usuario');
     }
 
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = $this->user->findUserById($id);
         if ($user) {
-            $user->delete();
+            $user->deleteUser();
             return redirect()->back()->with('success', 'Usuario deletado com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar usuario');

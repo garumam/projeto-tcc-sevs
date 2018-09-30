@@ -80,4 +80,37 @@ class User extends Authenticatable
     public function getRole(){
         return $this->roles()->first();
     }
+
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('name', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+    public function findUserById($id){
+
+        return self::find($id);
+
+    }
+
+    public function createUser(array $input){
+
+        return self::create($input);
+
+    }
+
+    public function updateUser(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteUser(){
+
+        return self::delete();
+
+    }
+
 }

@@ -30,4 +30,55 @@ class Role extends Model
     {
         return $this->permissions()->detach($permission);
     }
+
+    public function getWithSearchAndPagination($search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::where('nome', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+    }
+
+    public function findRoleById($id){
+
+        return self::find($id);
+
+    }
+
+    public function createRole(array $input){
+
+        return self::create($input);
+
+    }
+
+    public function updateRole(array $input){
+
+        return self::update($input);
+
+    }
+
+    public function deleteRole(){
+
+        return self::delete();
+
+    }
+
+    public static function getAll(){
+
+        return self::all();
+
+    }
+
+    public static function getRoleByUserIdWithSearchAndPagination($id, $search, $paginate){
+
+        $paginate = $paginate ?? 10;
+
+        return self::with('users')
+            ->whereHas('users', function ($q) use ($id) {
+                $q->where('user_id', '=', $id);
+            })
+            ->where('nome', 'like', '%' . $search . '%')
+            ->paginate($paginate);
+
+    }
 }
