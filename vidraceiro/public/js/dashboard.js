@@ -425,8 +425,20 @@ $(document).ready(function () {
                         let tipo_medida = selectaluminio.find('option:selected').data('tipomedida');
                         let largura = produto.data('largura');
                         let altura = produto.data('altura');
-                        let aluminioMedida = tipo_medida === 'largura' ? largura :
-                            (tipo_medida === 'altura' ? altura : (largura * 2 + altura * 2));
+                        let aluminioMedida = 0;
+
+                        switch(tipo_medida){
+                            case 'largura':
+                                aluminioMedida = largura;
+                                break;
+                            case 'altura':
+                                aluminioMedida = altura;
+                                break;
+                            case 'mlinear':
+                                aluminioMedida = (largura * 2 + altura * 2);
+                                break;
+                        }
+
                         let aluminioPeso = (peso / medida) * aluminioMedida;
                         aluminioPeso = parseFloat(aluminioPeso).toFixed(3);
                         medida = aluminioMedida;

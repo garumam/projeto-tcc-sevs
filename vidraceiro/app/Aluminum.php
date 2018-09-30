@@ -130,8 +130,19 @@ class Aluminum extends Model
 
     //medida do M LINEAR FOI GERADA ASSIM: ($product->largura * 2)+($product->altura * 2)
     public function calcularMedidaPesoAluminio(&$aluminioMedida,&$aluminioPeso,$aluminum,$product){
-        $aluminioMedida = $aluminum->tipo_medida === 'largura' ? $product->largura :
-            ($aluminum->tipo_medida === 'altura' ? $product->altura : ($product->largura * 2)+($product->altura * 2));
+        $aluminioMedida = 0;
+        switch($aluminum->tipo_medida){
+            case 'largura':
+                $aluminioMedida = $product->largura;
+                break;
+            case 'altura':
+                $aluminioMedida = $product->altura;
+                break;
+            case 'mlinear':
+                $aluminioMedida = ($product->largura * 2)+($product->altura * 2);
+                break;
+        }
+
         $aluminioPeso = ($aluminum->peso / $aluminum->medida) * $aluminioMedida;
         $aluminioPeso = number_format($aluminioPeso, 3, '.', '');
     }

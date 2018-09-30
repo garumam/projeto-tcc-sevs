@@ -27,10 +27,18 @@ class RoleSeeds extends Seeder
             $userAdmin->roles()->attach($admin->id);
         }
         if (!Role::where('nome', '=', 'funcionario')->count()) {
-            $admin = Role::create([
+            $funcionario = Role::create([
                 'nome' => 'funcionario',
                 'descricao' => 'Funcionario'
             ]);
+
+            $userAdmin = new User;
+            $userAdmin->name = 'funcionário';
+            $userAdmin->email = 'funcionario@funcionario.com';
+            $userAdmin->setPasswordAttribute('funcionario');
+            $userAdmin->save();
+
+            $userAdmin->roles()->attach($funcionario->id);
         }
     }
 }
