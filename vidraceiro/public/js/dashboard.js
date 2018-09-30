@@ -421,12 +421,12 @@ $(document).ready(function () {
                     let peso = selectaluminio.find('option:selected').data('peso');
                     let produto = $('#select-produto-material option:selected');
                     if (produto.data('largura') !== undefined) {
-                        //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO DOS ALUMINIOS
+                        //MEDIDA M LINEAR GERADA ASSIM (largura * 2 + altura * 2)
                         let tipo_medida = selectaluminio.find('option:selected').data('tipomedida');
                         let largura = produto.data('largura');
                         let altura = produto.data('altura');
                         let aluminioMedida = tipo_medida === 'largura' ? largura :
-                            (tipo_medida === 'altura' ? altura : medida);
+                            (tipo_medida === 'altura' ? altura : (largura * 2 + altura * 2));
                         let aluminioPeso = (peso / medida) * aluminioMedida;
                         aluminioPeso = parseFloat(aluminioPeso).toFixed(3);
                         medida = aluminioMedida;

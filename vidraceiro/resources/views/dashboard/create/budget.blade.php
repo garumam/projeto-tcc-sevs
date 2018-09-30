@@ -357,7 +357,7 @@
                                                     data-localizacao="{{$product->localizacao}}"
                                                     data-valor_mao_obra="{{$product->valor_mao_obra}}"
                                                     value="{{$product->id}}"
-                                            >{{$product->mproduct->nome}}</option>
+                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
 
                                         @endforeach
                                     @endif
@@ -372,7 +372,7 @@
                                                     data-localizacao="{{$product->localizacao}}"
                                                     data-valor_mao_obra="{{$product->valor_mao_obra}}"
                                                     value="{{$product->id}}"
-                                            >{{$product->mproduct->nome}}</option>
+                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
 
                                         @endforeach
                                     @endif
@@ -471,7 +471,7 @@
                                             <option data-image="{{$product->mproduct->imagem}}"
                                                     data-largura="{{$product->largura}}"
                                                     data-altura="{{$product->altura}}"
-                                                    value="{{$product->id}}">{{$product->mproduct->nome}}</option>
+                                                    value="{{$product->id}}">{{$product->mproduct->nome ." | M²: ".number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
 
                                         @endforeach
                                     @endif
@@ -482,7 +482,7 @@
                                             <option data-image="{{$product->mproduct->imagem}}"
                                                     data-largura="{{$product->largura}}"
                                                     data-altura="{{$product->altura}}"
-                                                    value="{{$product->id}}">{{$product->mproduct->nome}}</option>
+                                                    value="{{$product->id}}">{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
 
                                         @endforeach
                                     @endif
