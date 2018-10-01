@@ -19,28 +19,35 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        if (Auth::user()->can('usuario_listar', User::class)) {
+        if (!Auth::user()->can('usuario_listar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
-            $users = $this->user->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        $users = $this->user->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
-            if ($request->ajax()) {
-                return view('dashboard.list.tables.table-user', compact('users'));
-            } else {
-                return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
-            }
+        if ($request->ajax()) {
+            return view('dashboard.list.tables.table-user', compact('users'));
         } else {
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa pagina');
+            return view('dashboard.list.user', compact('users'))->with('title', 'Usuarios');
         }
     }
 
     public function create()
     {
+        if (!Auth::user()->can('usuario_adicionar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         return view('dashboard.create.user')->with('title', 'Criar usuario');
 
     }
 
     public function store(Request $request)
     {
+        if (!Auth::user()->can('usuario_adicionar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_users($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -68,12 +75,20 @@ class UserController extends Controller
 
     public function show($user)
     {
+        if (!Auth::user()->can('usuario_listar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $users = $this->user->findUserById($user);
         return view('dashboard.list.user', compact('users'))->with('title', 'Listar usuarios');
     }
 
     public function edit($id)
     {
+        if (!Auth::user()->can('usuario_atualizar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_user_exists(['id' => $id]);
 
         if ($validado->fails()) {
@@ -86,6 +101,10 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!Auth::user()->can('usuario_atualizar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $user = $this->user->findUserById($id);
         $validado = $this->rules_update_users(array_merge($request->all(), ['id' => $id]));
         if ($validado->fails()) {
@@ -113,6 +132,13 @@ class UserController extends Controller
 
     public function roleshow(Request $request, $id)
     {
+        if (!Auth::user()->can('usuario_listar', User::class) || $id == 1) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+        if (!Auth::user()->can('usuario_atualizar', User::class)) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_user_exists(['id' => $id]);
 
         if ($validado->fails()) {
@@ -136,6 +162,10 @@ class UserController extends Controller
 
     public function rolestore(Request $request, $id)
     {
+        if (!Auth::user()->can('usuario_atualizar', User::class) || $id == 1) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $user = $this->user->findUserById($id);
         $role = new Role();
         $role = $role->findRoleById($request->role_id);
@@ -147,6 +177,10 @@ class UserController extends Controller
 
     public function roledestroy($id, $role_id)
     {
+        if (!Auth::user()->can('usuario_atualizar', User::class) || $id == 1) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $user = $this->user->findUserById($id);
         $role = new Role();
         $role = $role->findRoleById($role_id);
@@ -156,6 +190,10 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        if (!Auth::user()->can('usuario_deletar', User::class) || $id == 1) {
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $user = $this->user->findUserById($id);
         if ($user) {
             $user->deleteUser();

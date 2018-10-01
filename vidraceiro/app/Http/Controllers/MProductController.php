@@ -8,6 +8,7 @@ use App\Component;
 use App\Glass;
 use App\MProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +23,9 @@ class MProductController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('modelo_listar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $mProducts = $this->mproduct->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
         if ($request->ajax()) {
@@ -34,6 +38,10 @@ class MProductController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('modelo_adicionar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $categories = Category::getAllCategoriesByType('produto');
         $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
         $glasses = Glass::getAllGlassesOrAllModels(1);
@@ -61,6 +69,9 @@ class MProductController extends Controller
 
     public function store(Request $request, $tab)
     {
+        if(!Auth::user()->can('modelo_adicionar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         switch ($tab) {
             case '1':
@@ -105,6 +116,10 @@ class MProductController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('modelo_atualizar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_mproduct_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -134,6 +149,9 @@ class MProductController extends Controller
 
     public function update(Request $request, $id, $tab)
     {
+        if(!Auth::user()->can('modelo_atualizar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $validado = $this->rules_mproduct_exists(['id'=>$id]);
 
@@ -180,6 +198,10 @@ class MProductController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('modelo_deletar', MProduct::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $mproduct = $this->mproduct->findMProductById($id);
         if ($mproduct) {
             $mproduct->deleteMProduct();

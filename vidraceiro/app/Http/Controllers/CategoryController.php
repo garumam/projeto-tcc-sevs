@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -37,6 +38,10 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('modelo_listar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $categories = $this->category->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         if ($request->ajax()) {
@@ -49,6 +54,10 @@ class CategoryController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('modelo_adicionar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $types = $this->types;
         $group_images = $this->group_images;
         return view('dashboard.create.category', compact('types', 'group_images'))->with('title', 'Adicionar Categoria');
@@ -56,6 +65,10 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('modelo_adicionar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_category($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -73,6 +86,10 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('modelo_atualizar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_category_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -88,6 +105,10 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('modelo_atualizar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_category_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -108,6 +129,10 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('modelo_deletar', Category::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $category = $this->category->findCategoryById($id);
         if ($category) {
             $category->deleteCategory();

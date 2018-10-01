@@ -13,6 +13,7 @@ use App\Glass;
 use App\Category;
 use App\Client;
 use phpDocumentor\Reflection\Types\Array_;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BudgetController extends Controller
@@ -30,6 +31,10 @@ class BudgetController extends Controller
     //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO COMENTARIO NAS POSIÇÕES QUE PRECISA ALTERAR
     public function index(Request $request)
     {
+        if(!Auth::user()->can('orcamento_listar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-budget', compact('budgets'));
@@ -41,6 +46,10 @@ class BudgetController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $states = $this->states;
         $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
         $glasses = Glass::getAllGlassesOrAllModels(1);
@@ -56,6 +65,10 @@ class BudgetController extends Controller
 
     public function store(Request $request, $tab)
     {
+        if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         switch ($tab) {
             case '1': //tab orçamento
                 $validado = $this->rules_budget($request->all());
@@ -149,6 +162,10 @@ class BudgetController extends Controller
 
     public function show($id)
     {
+        if(!Auth::user()->can('orcamento_listar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -161,6 +178,10 @@ class BudgetController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -190,6 +211,10 @@ class BudgetController extends Controller
 
     public function update(Request $request, $tab, $id)
     {
+        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_budget_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -269,6 +294,10 @@ class BudgetController extends Controller
 
     public function destroy($del, $id)
     {
+        if(!Auth::user()->can('orcamento_deletar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
             if ($budget) {

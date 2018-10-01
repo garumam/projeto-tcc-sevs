@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use App\Financial;
 
 class FinancialController extends Controller
@@ -19,6 +20,10 @@ class FinancialController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('financeiro_listar', Financial::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $allfinancial = Financial::getAll();
         $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
         if ($request->ajax())
@@ -31,6 +36,10 @@ class FinancialController extends Controller
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('financeiro_adicionar', Financial::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_financial($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -52,6 +61,10 @@ class FinancialController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('financeiro_deletar', Financial::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $financial = $this->financial->findFinancialById($id);
         if ($financial) {
             $mensagem = '';

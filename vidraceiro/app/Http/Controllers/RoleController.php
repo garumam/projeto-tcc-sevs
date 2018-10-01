@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -18,6 +20,10 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('funcao_listar', Role::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $title = "Lista de Funções";
 
         $roles = $this->role->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
@@ -31,18 +37,36 @@ class RoleController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('funcao_adicionar', Role::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $title = "Adicionar Função";
         return view('dashboard.create.role', compact('title'));
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('funcao_adicionar', Role::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
+        $validado = $this->rules_role_exists(['nome' => $request->nome]);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
         $this->role->createRole($request->all());
         return redirect()->back()->with('success', 'Função criada com sucesso');
     }
 
     public function edit($id)
     {
+        if(!Auth::user()->can('funcao_atualizar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
@@ -57,6 +81,10 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('funcao_atualizar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
@@ -71,6 +99,10 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('funcao_deletar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $role = $this->role->findRoleById($id) ?? null;
         if ($role) {
             if ($role->nome === 'admin') {
@@ -85,6 +117,13 @@ class RoleController extends Controller
 
     public function permissionshow(Request $request, $id)
     {
+        if(!Auth::user()->can('funcao_listar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+        if(!Auth::user()->can('funcao_atualizar', Role::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $title = "Lista de Permissões";
         $role = $this->role->findRoleById($id);
         $permissions = Permission::getAll();
@@ -100,6 +139,10 @@ class RoleController extends Controller
 
     public function permissionstore(Request $request, $id)
     {
+        if(!Auth::user()->can('funcao_atualizar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $role = $this->role->findRoleById($id);
         $permission = new Permission();
         $permission = $permission->findPermissionById($request->permission_id);
@@ -112,10 +155,24 @@ class RoleController extends Controller
 
     public function permissiondestroy($id, $permission_id)
     {
+        if(!Auth::user()->can('funcao_atualizar', Role::class) || $id == 1){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $role = $this->role->findRoleById($id);
         $permission = new Permission();
         $permission = $permission->findPermissionById($permission_id);
         $role->removePermission($permission);
         return redirect()->back()->with('success', 'Permissão removida com sucesso');
+    }
+
+    public function rules_role_exists(array $data)
+    {
+        $validator = Validator::make($data,
+            [
+                'nome' => 'unique:roles'
+            ]
+        );
+        return $validator;
     }
 }

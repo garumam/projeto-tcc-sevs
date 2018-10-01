@@ -21,7 +21,7 @@
                 {{--</a>--}}
                 <a class="btn-link" onclick="deletar(event,this.id,'users/role')"
                    id="{{ $user->id .'/'.$role->id }}">
-                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar" {{$role->nome === 'admin' ? 'disabled' :'' }}>
+                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </a>

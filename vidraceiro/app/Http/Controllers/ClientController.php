@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Uf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
@@ -21,6 +22,10 @@ class ClientController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('cliente_listar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $clients = $this->client->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         if ($request->ajax()) {
@@ -33,12 +38,20 @@ class ClientController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('cliente_adicionar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $states = $this->states;
         return view('dashboard.create.client', compact('states'))->with('title', 'Novo cliente');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('cliente_adicionar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $docvalidation = null;
         $docnull = null;
 
@@ -57,6 +70,10 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        if(!Auth::user()->can('cliente_listar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -70,6 +87,10 @@ class ClientController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('cliente_atualizar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -85,6 +106,10 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('cliente_atualizar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_client_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -120,6 +145,10 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('cliente_deletar', Client::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $client = $this->client->deleteClient($id);
         if ($client)
             return redirect()->back()->with('success', 'Cliente deletado com sucesso');

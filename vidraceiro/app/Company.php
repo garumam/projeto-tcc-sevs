@@ -17,7 +17,7 @@ class Company extends Model
         'telefone'
     ];
 
-    public function getFirstCompany(){
+    public function getCompany(){
         return self::take(1)->first();
     }
 

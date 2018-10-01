@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Sale;
 use App\Client;
 use App\Budget;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -23,6 +24,10 @@ class SaleController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('venda_listar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $titulotabs = ['Vendas', 'Pagamentos'];
 
         $salesWithInstallments =  $this->sale->getSaleInstallmentsWithSearchAndPagination($request->get('search'),$request->get('paginate'));
@@ -44,12 +49,20 @@ class SaleController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('venda_adicionar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $budgets = Budget::getBudgetsWhereStatusWaiting();
         return view('dashboard.create.sale', compact('budgets'))->with('title', 'Nova venda');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('venda_adicionar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $arrayextra = null;
         if ($request->tipo_pagamento === 'A PRAZO') {
 
@@ -99,6 +112,10 @@ class SaleController extends Controller
 
     public function show($id)
     {
+        if(!Auth::user()->can('venda_listar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -110,6 +127,10 @@ class SaleController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('venda_atualizar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -122,6 +143,10 @@ class SaleController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('venda_atualizar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -199,6 +224,10 @@ class SaleController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('venda_deletar', Sale::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $sale = $this->sale->findSaleById($id);
         if ($sale) {
             $mensagem = '';
@@ -242,6 +271,10 @@ class SaleController extends Controller
 
     public function pay($id)
     {
+        if(!Auth::user()->can('pagamento_atualizar', Payment::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_sale_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -255,6 +288,9 @@ class SaleController extends Controller
 
     public function payupdate(Request $request, $id)
     {
+        if(!Auth::user()->can('pagamento_atualizar', Payment::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $validado = $this->rules_sale_exists(['id'=>$id]);
 

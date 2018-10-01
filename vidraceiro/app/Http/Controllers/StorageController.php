@@ -7,6 +7,7 @@ use App\Aluminum;
 use App\Glass;
 use App\Component;
 use App\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class StorageController extends Controller
@@ -21,6 +22,9 @@ class StorageController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('estoque_listar', Storage::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $allglasses = Glass::getAllGlassesOrAllModels(1);
         $allaluminums = Aluminum::getAllAluminumsOrAllModels(1);
@@ -55,6 +59,10 @@ class StorageController extends Controller
 
     public function update(Request $request,$tab)
     {
+        if(!Auth::user()->can('estoque_atualizar', Storage::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         switch($tab){
             case 'vidro':
 

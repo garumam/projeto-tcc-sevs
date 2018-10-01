@@ -12,6 +12,7 @@ use App\Storage;
 use App\Sale;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
 {
@@ -24,6 +25,11 @@ class PdfController extends Controller
     {
         switch($tipo){
             case 'budgets':
+
+                if(!Auth::user()->can('orcamento_relatorio', Budget::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $status = [
                     'TODOS'=>'Todos',
                     'AGUARDANDO'=>'Aguardando',
@@ -35,6 +41,11 @@ class PdfController extends Controller
 
                 break;
             case 'orders':
+
+                if(!Auth::user()->can('os_relatorio', Order::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $status = [
                     'TODOS'=>'Todos',
                     'ABERTA'=>'Aberta',
@@ -46,6 +57,11 @@ class PdfController extends Controller
 
                 break;
             case 'storage':
+
+                if(!Auth::user()->can('estoque_relatorio', Storage::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $materials = [
                     'TODOS'=>'Todos',
                     'glass_id'=>'Vidro',
@@ -56,6 +72,11 @@ class PdfController extends Controller
 
                 break;
             case 'financial':
+
+                if(!Auth::user()->can('financeiro_relatorio', Financial::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $tipos = [
                     'TODOS'=>'Todos',
                     'RECEITA'=>'Receitas',
@@ -65,6 +86,11 @@ class PdfController extends Controller
 
                 break;
             case 'clients':
+
+                if(!Auth::user()->can('cliente_relatorio', Client::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $status = [
                     'TODOS'=>'Todos',
                     'EM DIA'=>'Em dia',
@@ -143,6 +169,10 @@ class PdfController extends Controller
         switch($tipo){
             case 'budgets':
 
+                if(!Auth::user()->can('orcamento_relatorio', Budget::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $budgets = Budget::filterBudgets($request);
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('budgets','tipo'));
@@ -151,6 +181,10 @@ class PdfController extends Controller
                 break;
             case 'orders':
 
+                if(!Auth::user()->can('os_relatorio', Order::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $orders = Order::filterOrders($request);
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('orders','tipo'));
@@ -158,6 +192,10 @@ class PdfController extends Controller
 
                 break;
             case 'storage':
+
+                if(!Auth::user()->can('estoque_relatorio', Storage::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
 
                 $glasses = null;
                 $aluminums = null;
@@ -171,6 +209,10 @@ class PdfController extends Controller
                 break;
             case 'financial':
 
+                if(!Auth::user()->can('financeiro_relatorio', Financial::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
                 $financials = Financial::filterFinancial($request);
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('financials','tipo'));
@@ -178,6 +220,10 @@ class PdfController extends Controller
 
                 break;
             case 'clients':
+
+                if(!Auth::user()->can('cliente_relatorio', Client::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
 
                 $clients = Client::filterClients($request);
 

@@ -17,11 +17,11 @@
                 <a class="btn-link" href="{{ route('users.edit',['id' => $user->id]) }}">
                     <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                 </a>
-                <a class="btn-link" href="{{ route('users.role.show',['id' => $user->id]) }}">
-                    <button class="btn btn-dark mb-1 card-shadow-1dp" title="Função"><i class="fas fa-id-card"></i></button>
+                <a class="btn-link {{$user->id === 1 ? 'disabled' :'' }}" href="{{ route('users.role.show',['id' => $user->id]) }}">
+                    <button class="btn btn-dark mb-1 card-shadow-1dp" title="Função" {{$user->id === 1 ? 'disabled' :'' }}><i class="fas fa-id-card"></i></button>
                 </a>
-                <a class="btn-link @if(!empty($user->roles[0])) {{$user->roles[0]->nome === 'admin' ? 'disabled' :'' }} @endif" onclick="deletar(event,this.id,'users')" id="{{ $user->id }}">
-                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar" @if(!empty($user->roles[0])){{$user->roles[0]->nome === 'admin' ? 'disabled' :'' }}@endif><i class="fas fa-trash-alt"></i></button>
+                <a class="btn-link {{$user->id === 1 ? 'disabled' :'' }}" onclick="deletar(event,this.id,'users')" id="{{ $user->id }}">
+                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar" {{$user->id === 1 ? 'disabled' :'' }}><i class="fas fa-trash-alt"></i></button>
                 </a>
             </td>
         </tr>

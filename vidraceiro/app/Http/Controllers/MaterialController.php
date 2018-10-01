@@ -9,6 +9,7 @@ use App\Glass;
 use App\Provider;
 use App\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
@@ -34,6 +35,10 @@ class MaterialController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('modelo_listar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $titulotabs = ['Vidros', 'Aluminios', 'Componentes'];
 
         $glasses = $this->glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
@@ -59,6 +64,10 @@ class MaterialController extends Controller
 
     public function create($type)
     {
+        if(!Auth::user()->can('modelo_adicionar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $providers = Provider::getAll();
         $espessuras = $this->espessuraAlum;
         switch ($type) {
@@ -82,6 +91,10 @@ class MaterialController extends Controller
 
     public function store(Request $request, $type)
     {
+        if(!Auth::user()->can('modelo_adicionar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_materiais($request->all(), $type);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -131,6 +144,10 @@ class MaterialController extends Controller
 
     public function show($type, $id)
     {
+        if(!Auth::user()->can('modelo_listar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $material = null;
         $mensagem = $tabela = '';
         switch ($type) {
@@ -169,6 +186,9 @@ class MaterialController extends Controller
 
     public function edit($type, $id)
     {
+        if(!Auth::user()->can('modelo_atualizar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $providers = Provider::getAll();
         $espessuras = $this->espessuraAlum;
@@ -212,6 +232,10 @@ class MaterialController extends Controller
 
     public function update(Request $request, $type, $id)
     {
+        if(!Auth::user()->can('modelo_atualizar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_materiais($request->all(), $type);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -286,6 +310,10 @@ class MaterialController extends Controller
 
     public function destroy($type, $id)
     {
+        if(!Auth::user()->can('modelo_deletar', [Glass::class,Aluminum::class,Component::class])){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         switch ($type) {
             case 'glass':
                 $material = $this->glass->findGlassById($id);

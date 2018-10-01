@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Uf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -19,6 +20,10 @@ class CompanyController extends Controller
 
     public function index()
     {
+        if(!Auth::user()->can('empresa_atualizar', Company::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $company = $this->company->getFirstCompany();
 
         $states = Uf::getUfs();
@@ -27,11 +32,19 @@ class CompanyController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('empresa_atualizar', Company::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         return view('dashboard.create.company')->with('title', 'Dados da Empresa');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('empresa_atualizar', Company::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_company($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -55,6 +68,10 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('empresa_atualizar', Company::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_company($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -72,6 +89,10 @@ class CompanyController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('empresa_deletar', Company::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $company = $this->company->findCompanyById($id);
         if ($company) {
             $company->deleteFinancial();

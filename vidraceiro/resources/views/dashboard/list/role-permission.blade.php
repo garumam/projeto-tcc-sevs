@@ -27,7 +27,7 @@
                     <select class="custom-select" name="permission_id">
                         <option value="">Selecione</option>
                         @foreach($permissions as $permission)
-                            <option value="{{$permission->id}}">{{$permission->nome}}</option>
+                            <option value="{{$permission->id}}">{{$permission->descricao}}</option>
                         @endforeach
                     </select>
                 </div>

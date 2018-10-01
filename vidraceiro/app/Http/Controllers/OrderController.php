@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Budget;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -19,6 +20,10 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('os_listar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $orders = $this->order->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         if ($request->ajax()) {
@@ -30,12 +35,20 @@ class OrderController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('os_adicionar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $budgets = Budget::getBudgetsWhereStatusApproved(null);
         return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('os_adicionar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -60,6 +73,10 @@ class OrderController extends Controller
 
     public function show($id)
     {
+        if(!Auth::user()->can('os_listar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -72,6 +89,10 @@ class OrderController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('os_atualizar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -93,6 +114,10 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('os_atualizar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_order_exists(['id'=>$id]);
 
         if ($validado->fails()) {
@@ -129,6 +154,10 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('os_deletar', Order::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $order = $this->order->findOrderById($id);
         foreach ($order->budgets as $budget) {
             $budget->updateBudget(['ordem_id' => null]);

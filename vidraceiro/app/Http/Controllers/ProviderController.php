@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Provider;
 use App\Uf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProviderController extends Controller
@@ -24,6 +25,9 @@ class ProviderController extends Controller
 
     public function index(Request $request)
     {
+        if(!Auth::user()->can('fornecedor_listar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
 
         $providers = $this->provider->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
@@ -37,12 +41,20 @@ class ProviderController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->can('fornecedor_adicionar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $states = $this->states;
         return view('dashboard.create.provider', compact('states'))->with('title','Criar fornecedor');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::user()->can('fornecedor_adicionar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_provider($request->all());
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
@@ -55,6 +67,10 @@ class ProviderController extends Controller
 
     public function show($id)
     {
+        if(!Auth::user()->can('fornecedor_listar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -69,6 +85,10 @@ class ProviderController extends Controller
 
     public function edit($id)
     {
+        if(!Auth::user()->can('fornecedor_atualizar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -84,6 +104,10 @@ class ProviderController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('fornecedor_atualizar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $validado = $this->rules_provider_exists(['id'=>$id]);
 
         if ($validado->fails())
@@ -104,6 +128,10 @@ class ProviderController extends Controller
 
     public function destroy($id)
     {
+        if(!Auth::user()->can('fornecedor_deletar', Provider::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
         $provider = $this->provider->deleteProvider($id);
         if ($provider)
             return redirect()->back()->with('success', 'Fornecedor deletado com sucesso');
