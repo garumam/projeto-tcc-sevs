@@ -525,6 +525,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label>Produto: {{$product->mproduct->nome}}
                                                 M²: {{$product['altura']*$product['largura']}}
+                                                | M Linear: {{($product['altura'] * 2) + ($product['largura'] * 2)}}
                                                 Qtd: {{$product['qtd']}}</label>
                                         @endforeach
 
@@ -581,7 +582,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->aluminums as $aluminum)
-                                                <label>Perfil:{{$aluminum->perfil .' '. $aluminum->descricao .' Qtd: '.$aluminum->qtd}}</label>
+                                                <label>Perfil:{{$aluminum->perfil .' '. $aluminum->descricao .' | Qtd: '.$aluminum->qtd . ' | Preço kg: R$ '.$aluminum->preco}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
@@ -600,7 +601,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->components as $component)
-                                                <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' Preço:R$ '.$component->preco}}</label>
+                                                <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' | Preço: R$ '.$component->preco}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
