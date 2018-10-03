@@ -48,7 +48,8 @@
                     {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
-                        <a class="btn-link bt-budget-deletar-produto" onclick="deletar(event,this.id,'budgets/product')" id="vazio" style="display: none;">
+                        <a class="btn-link bt-budget-deletar-produto" onclick="deletar(event,this.id,'budgets/product')"
+                           id="vazio" style="display: none;">
                             <button class="btn btn-danger">Deletar</button>
                         </a>
                         <button id="bt-budget-visible" class="btn btn-primary btn-custom" type="submit">
@@ -95,21 +96,22 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                            <label for="select-cliente">Cliente</label>
-                            <select id="select-cliente" class="form-control form-control-chosen" name="cliente_id" data-placeholder="Selecie um cliente(opcional)" style="display: none;">
-                                <option value="">Nada selecionado</option>
-                                @foreach ($clients as $client)
-                                    <option value="{{$client->id}}"
-                                            data-endereco="{{$client->endereco}}"
-                                            data-cep="{{$client->cep}}"
-                                            data-bairro="{{$client->bairro}}"
-                                            data-cidade="{{$client->cidade}}"
-                                            data-uf="{{$client->uf}}"
-                                            data-complemento="{{$client->complemento}}"
-                                            data-telefone="{{$client->telefone}}"
-                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome}}@if($client->cpf !== null){{', cpf: '.$client->cpf}}@else {{', cnpj: '.$client->cnpj}} @endif</option>
-                                @endforeach
-                            </select>
+                                <label for="select-cliente">Cliente</label>
+                                <select id="select-cliente" class="form-control form-control-chosen" name="cliente_id"
+                                        data-placeholder="Selecie um cliente(opcional)" style="display: none;">
+                                    <option value="">Nada selecionado</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{$client->id}}"
+                                                data-endereco="{{$client->endereco}}"
+                                                data-cep="{{$client->cep}}"
+                                                data-bairro="{{$client->bairro}}"
+                                                data-cidade="{{$client->cidade}}"
+                                                data-uf="{{$client->uf}}"
+                                                data-complemento="{{$client->complemento}}"
+                                                data-telefone="{{$client->telefone}}"
+                                        @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome}}@if($client->cpf !== null){{', cpf: '.$client->cpf}}@else {{', cnpj: '.$client->cnpj}} @endif</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group col-md-4">
@@ -217,7 +219,7 @@
 
                                 @foreach($errors->all() as $error)
                                     <div class="alert alert-danger">
-                                         {{ $error }}
+                                        {{ $error }}
                                     </div>
                                 @endforeach
                             </div>
@@ -288,7 +290,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra">Valor da mão de obra</label>
-                                <input type="number" step=".01" class="form-control" id="valor_mao_obra" name="valor_mao_obra"
+                                <input type="number" step=".01" class="form-control" id="valor_mao_obra"
+                                       name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
@@ -331,9 +334,9 @@
                                     </div>
                                 @endif
                                 @foreach($errors->all() as $error)
-                                     <div class="alert alert-danger">
-                                          {{ $error }}
-                                     </div>
+                                    <div class="alert alert-danger">
+                                        {{ $error }}
+                                    </div>
                                 @endforeach
                             </div>
 
@@ -357,7 +360,7 @@
                                                     data-localizacao="{{$product->localizacao}}"
                                                     data-valor_mao_obra="{{$product->valor_mao_obra}}"
                                                     value="{{$product->id}}"
-                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
+                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '' ) .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
 
                                         @endforeach
                                     @endif
@@ -372,7 +375,7 @@
                                                     data-localizacao="{{$product->localizacao}}"
                                                     data-valor_mao_obra="{{$product->valor_mao_obra}}"
                                                     value="{{$product->id}}"
-                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
+                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '' ) .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
 
                                         @endforeach
                                     @endif
@@ -413,7 +416,8 @@
 
                             <div class="form-group col-md-4">
                                 <label for="valor_mao_obra-edit">Valor da mão de obra</label>
-                                <input type="number" step=".01" class="form-control" id="valor_mao_obra-edit" name="valor_mao_obra"
+                                <input type="number" step=".01" class="form-control" id="valor_mao_obra-edit"
+                                       name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
                             @if(empty($budgetedit))
@@ -471,7 +475,7 @@
                                             <option data-image="{{$product->mproduct->imagem}}"
                                                     data-largura="{{$product->largura}}"
                                                     data-altura="{{$product->altura}}"
-                                                    value="{{$product->id}}">{{$product->mproduct->nome ." | M²: ".number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
+                                                    value="{{$product->id}}">{{$product->mproduct->nome ." | M²: ".number_format(($product->altura*$product->largura), 3, '.', '') .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
 
                                         @endforeach
                                     @endif
@@ -482,7 +486,7 @@
                                             <option data-image="{{$product->mproduct->imagem}}"
                                                     data-largura="{{$product->largura}}"
                                                     data-altura="{{$product->altura}}"
-                                                    value="{{$product->id}}">{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '')}}</option>
+                                                    value="{{$product->id}}">{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '') .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
 
                                         @endforeach
                                     @endif
