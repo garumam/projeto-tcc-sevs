@@ -561,7 +561,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->glasses as $glass)
-                                                <label>Nome:{{$glass->nome .' '. $glass->tipo .' Preço: R$'. $glass->preco}}</label>
+                                                <label>Nome: {{$glass->nome .' '. $glass->tipo .' Preço: R$'. $glass->preco}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
@@ -582,7 +582,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->aluminums as $aluminum)
-                                                <label>Perfil:{{$aluminum->perfil .' '. $aluminum->descricao .' | Qtd: '.$aluminum->qtd . ' | Preço kg: R$ '.$aluminum->preco}}</label>
+                                                <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Qtd: '.$aluminum->qtd . ' | Preço kg: R$ '.$aluminum->preco}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
@@ -601,7 +601,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->components as $component)
-                                                <label>Nome:{{$component->nome.' Qtd: '.$component->qtd .' | Preço: R$ '.$component->preco}}</label>
+                                                <label>Nome: {{$component->nome.' Qtd: '.$component->qtd .' | Preço: R$ '.$component->preco}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
