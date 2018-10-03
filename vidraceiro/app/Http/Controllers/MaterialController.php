@@ -275,7 +275,7 @@ class MaterialController extends Controller
             return redirect(route('materials.index'))->withErrors($validado);
         }else{
             if($material->is_modelo === 0) {
-                redirect(route('materials.index'))->with('error', 'Este material não existe!');
+                return redirect(route('materials.index'))->with('error', 'Este material não existe!');
             }
         }
 

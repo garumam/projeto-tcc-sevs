@@ -333,7 +333,7 @@ $(document).ready(function () {
     }
 
     $('tbody').on('click', '.deletar-material-tabela', function (e) {
-        alert(e.target.id);
+        //alert(e.target.id);
         $('#' + e.target.id).remove();
         $('.' + e.target.id).remove();
     });
@@ -419,6 +419,7 @@ $(document).ready(function () {
                     idinput = $('.id-material-aluminio').attr('value');
                     let medida = selectaluminio.find('option:selected').data('medida');
                     let peso = selectaluminio.find('option:selected').data('peso');
+                    let qtdaluminio = selectaluminio.find('option:selected').data('qtd');
                     let produto = $('#select-produto-material option:selected');
                     if (produto.data('largura') !== undefined) {
                         //MEDIDA M LINEAR GERADA ASSIM (largura * 2 + altura * 2)
@@ -459,6 +460,7 @@ $(document).ready(function () {
                             '<td>' + medida + 'M' + '</td>' +
                             '<td>' + peso + 'Kg' + '</td>' +
                             '<td>' + 'R$' + precoaluminio + '</td>' +
+                            '<td>' + qtdaluminio + '</td>' +
                             '<td>' +
                             "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                             "</td>" +
@@ -478,6 +480,7 @@ $(document).ready(function () {
                             '<td>' + medida + 'M' + '</td>' +
                             '<td>' + peso + 'Kg' + '</td>' +
                             '<td>' + 'R$' + precoaluminio + '</td>' +
+                            '<td>' + qtdaluminio + '</td>' +
                             '<td>' +
                             "<button id=" + criaId + " class='deletar-material-tabela btn btn-danger mb-1' type='button'>Delete</button>" +
                             "</td>" +

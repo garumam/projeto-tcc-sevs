@@ -54,6 +54,7 @@
                 <option data-medida="{{$aluminum->medida}}"
                         data-peso="{{$aluminum->peso}}"
                         data-preco="{{$aluminum->preco}}"
+                        data-qtd="{{$aluminum->qtd}}"
                         data-tipomedida="{{$aluminum->tipo_medida}}"
                         value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
             @endforeach
@@ -100,7 +101,8 @@
                     <th class="noborder" scope="col">Perfil</th>
                     <th class="noborder" scope="col">Medida</th>
                     <th class="noborder" scope="col">Peso</th>
-                    <th class="noborder" scope="col">Preço</th>
+                    <th class="noborder" scope="col">Preço kg</th>
+                    <th class="noborder" scope="col">Qtd</th>
                     <th class="noborder" scope="col">Ação</th>
                 </tr>
                 <!--FIM HEAD DO ALUMINIO-->
@@ -126,7 +128,7 @@
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->glasses : $mproductedit->glasses as $glassP)
                         <tr id="linha-vidro-{{$glassP->id}}">
                             <th scope="row">{{$glassP->id}}</th>
-                            <td>{{$glassP->nome}}</td>
+                            <td>{{$glassP->nome.' '.$glassP->tipo}}</td>
                             <td>R${{$glassP->preco}}</td>
                             <td>
                                 <button id="linha-vidro-{{$glassP->id}}"
@@ -162,9 +164,15 @@
                             <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
                                 <th scope="row">{{$glassP->id}}</th>
-                                <td>{{$glassP->nome}}</td>
+                                <td>{{$glassP->nome.' '.$glassP->tipo}}</td>
                                 <td>R${{$glassP->preco}}</td>
                                 <td>
+
+                                    <a class="btn-link"
+                                       href="{{ route('budgets.materials.edit',['type'=>'glass','id'=> $glassP->id]) }}">
+                                        <button class="btn btn-warning mb-1" title="Editar" type="button">Editar</button>
+                                    </a>
+
                                     <button id="linha-vidro-{{$glassP->id}}"
                                             class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                     </button>
@@ -188,7 +196,9 @@
                             <td>{{$aluminumP->medida.'M'}}</td>
                             <td>{{$aluminumP->peso.'Kg'}}</td>
                             <td>{{'R$'.$aluminumP->preco}}</td>
+                            <td>{{$aluminumP->qtd}}</td>
                             <td>
+
                                 <button id="linha-aluminio-{{$aluminumP->id}}-{{$contador++}}"
                                         class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                 </button>
@@ -227,7 +237,14 @@
                                 <td>{{$aluminumP->medida.'M'}}</td>
                                 <td>{{$aluminumP->peso.'Kg'}}</td>
                                 <td>{{'R$'.$aluminumP->preco}}</td>
+                                <td>{{$aluminumP->qtd}}</td>
                                 <td>
+
+                                    <a class="btn-link"
+                                       href="{{ route('budgets.materials.edit',['type'=>'aluminum','id'=> $aluminumP->id]) }}">
+                                        <button class="btn btn-warning mb-1" title="Editar" type="button">Editar</button>
+                                    </a>
+
                                     <button id="linha-aluminio-{{$aluminumP->id}}"
                                             class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                     </button>
@@ -287,6 +304,12 @@
                                 <td>{{$componentP->preco}}</td>
                                 <td>{{$componentP->qtd}}</td>
                                 <td>
+
+                                    <a class="btn-link"
+                                       href="{{ route('budgets.materials.edit',['type'=>'component','id'=> $componentP->id]) }}">
+                                        <button class="btn btn-warning mb-1" title="Editar" type="button">Editar</button>
+                                    </a>
+
                                     <button id="linha-componente-{{$componentP->id}}"
                                             class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete
                                     </button>

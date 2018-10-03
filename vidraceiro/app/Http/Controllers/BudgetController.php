@@ -336,6 +336,147 @@ class BudgetController extends Controller
     }
 
 
+    public function editMaterial($type,$id)
+    {
+        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
+        switch ($type) {
+            case 'glass':
+                $glass = new Glass();
+                $material = $glass->findGlassById($id);
+
+                $nome = 'vidro';
+                $tabela = 'glasses';
+                break;
+            case 'aluminum':
+                $aluminum = new Aluminum();
+                $material = $aluminum->findAluminumById($id);
+
+                $nome = 'alumínio';
+                $tabela = 'aluminums';
+                break;
+            case 'component':
+                $component = new Component();
+                $material = $component->findComponentById($id);
+
+                $nome = 'componente';
+                $tabela = 'components';
+                break;
+            default:
+                return redirect()->back();
+        }
+
+        $validado = $this->rules_budget_material_exists(['id'=>$id],$tabela);
+
+        if ($validado->fails()) {
+            return redirect(route('budgets.index'))->withErrors($validado);
+        }else{
+            if($material->is_modelo === 1) {
+                return redirect(route('budgets.index'))->with('error', 'Este material não existe!');
+            }
+        }
+
+
+        if ($material) {
+
+            return view('dashboard.create.budget-material', compact('type', 'material'))->with('title', 'Atualizar ' . $nome);
+        }
+        return redirect('budgets')->with('error', 'Erro ao editar material');
+
+    }
+
+    public function updateMaterial(Request $request, $type,$id)
+    {
+        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
+            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
+        $validado = $this->rules_budget_materiais($request->all(), $type);
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
+        }
+
+        $tabela = '';
+        switch ($type) {
+            case 'glass':
+
+                $glass = new Glass();
+                $material = $glass->findGlassById($id);
+                $nome = 'Vidro';
+                $tabela = 'glasses';
+
+                break;
+            case 'aluminum':
+
+                $aluminum = new Aluminum();
+                $material = $aluminum->findAluminumById($id);
+                $nome = 'Alumínio';
+                $tabela = 'aluminums';
+
+                break;
+            case 'component':
+
+                $component = new Component();
+                $material = $component->findComponentById($id);
+                $nome = 'Componente';
+                $tabela = 'components';
+
+                break;
+            default:
+                return redirect()->back();
+        }
+
+
+        $validado = $this->rules_budget_material_exists(['id'=>$id],$tabela);
+
+        if ($validado->fails()) {
+            return redirect(route('budgets.index'))->withErrors($validado);
+        }else{
+            if($material->is_modelo === 1) {
+                return redirect(route('budgets.index'))->with('error', 'Este material não existe!');
+            }
+        }
+
+        switch ($type) {
+            case 'glass':
+
+                $material->updateGlass($request->all());
+
+                break;
+            case 'aluminum':
+
+                $material->updateAluminum($request->all());
+
+                break;
+            case 'component':
+
+                $material->updateComponent($request->all());
+
+                break;
+            default:
+                return redirect()->back();
+        }
+
+        if ($material){
+
+            $product = $material->product;
+            $budget = $product->findProductById($product->id)->budget;
+
+            if($budget && $budget->updateBudgetTotal()){
+
+                return redirect(route('budgets.edit',['id'=>$budget->id]))->with('success', "$nome atualizado com sucesso");
+            }
+
+
+        }
+
+        return redirect(route('budgets.index'))->with('error', 'Erro!');
+
+    }
+
+
     public function rules_budget(array $data)
     {
         $validator = Validator::make($data, [
@@ -394,6 +535,43 @@ class BudgetController extends Controller
             ]
 
         );
+
+        return $validator;
+    }
+
+    public function rules_budget_material_exists(array $data, $tabela)
+    {
+
+        $validator = Validator::make($data,
+
+            [
+                'id' => 'exists:'.$tabela.',id'
+            ], [
+                'exists' => 'Este material não existe!',
+            ]
+
+        );
+
+        return $validator;
+    }
+
+    public function rules_budget_materiais(array $data, $type)
+    {
+        switch ($type) {
+            case 'glass':
+                $validator = Validator::make($data, [
+                    'preco' => 'nullable|numeric'
+                ]);
+                break;
+            case 'component':
+            case 'aluminum':
+                $validator = Validator::make($data, [
+                    'qtd' => 'required|integer',
+                    'preco' => 'nullable|numeric'
+                ]);
+                break;
+
+        }
 
         return $validator;
     }
