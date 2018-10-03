@@ -531,11 +531,11 @@
 
                                         @if(!empty($budgetedit))
                                             <label><b>Valor do orçamento sem lucro:
-                                                    R$ {{ $budgetedit['total']/(1+$budgetedit['margem_lucro']/100) }}</b></label>
+                                                    R$ {{ number_format($budgetedit['total']/(1+$budgetedit['margem_lucro']/100),2,'.','') }}</b></label>
                                             <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
                                         @elseif(Session::get('budgetcriado'))
                                             <label><b>Valor do orçamento sem lucro:
-                                                    R$ {{ Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100) }}</b></label>
+                                                    R$ {{ number_format(Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100),2,'.','')}}</b></label>
                                             <label><b>Valor do orçamento:
                                                     R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
                                         @endif
