@@ -561,7 +561,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->glasses as $glass)
-                                                <label>Nome: {{$glass->nome .' '. $glass->tipo .' | Preço(m²): R$'. $glass->preco}}{{' | Preço total: R$'.number_format(($product->largura * $product->altura * $glass->preco),2,'.','')}}</label>
+                                                <label>Nome: {{$glass->nome .' '. $glass->tipo .' | Preço(m²): R$'. $glass->preco}}{{' | Preço total: R$'.number_format((($product->largura * $product->altura) * $glass->preco),2,'.','')}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
