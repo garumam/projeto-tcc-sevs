@@ -582,7 +582,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->aluminums as $aluminum)
-                                                <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Peso: '.$aluminum->peso.' | Qtd: '.$aluminum->qtd . ' | Preço(kg): R$ '.$aluminum->preco.' | Preço total: R$'.number_format(($aluminum->preco * $aluminum->peso),2,'.','')}}</label>
+                                                <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Peso: '.$aluminum->peso.' | Qtd: '.$aluminum->qtd . ' | Preço(kg): R$ '.$aluminum->preco.' | Preço total: R$'.number_format((($aluminum->preco * $aluminum->peso) * $aluminum->qtd),2,'.','')}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
