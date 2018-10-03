@@ -524,7 +524,7 @@
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label>Produto: {{$product->mproduct->nome}}
-                                                M²: {{$product['altura']*$product['largura']}}
+                                                M²: {{ number_format($product['altura']*$product['largura'],2)}}
                                                 | M Linear: {{($product['altura'] * 2) + ($product['largura'] * 2)}}
                                                 Qtd: {{$product['qtd']}}</label>
                                         @endforeach
