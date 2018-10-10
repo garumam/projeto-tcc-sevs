@@ -25,19 +25,19 @@ class Company extends Model
         return self::find($id);
     }
 
-    public function createFinancial(array $input){
+    public function createCompany(array $input){
 
         return self::create($input);
 
     }
 
-    public function updateFinancial(array $input){
+    public function updateCompany(array $input){
 
         return self::update($input);
 
     }
 
-    public function deleteFinancial(){
+    public function deleteCompany(){
 
         return self::delete();
 

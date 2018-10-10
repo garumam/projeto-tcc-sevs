@@ -24,7 +24,7 @@ class CompanyController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $company = $this->company->getFirstCompany();
+        $company = $this->company->getCompany();
 
         $states = Uf::getUfs();
         return view('dashboard.create.company', compact('company', 'states'))->with('title', 'Dados da Empresa');
@@ -50,7 +50,7 @@ class CompanyController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $company = $this->company->createFinancial($request->all());
+        $company = $this->company->createCompany($request->all());
         if ($company)
             return redirect()->back()->with('success', 'Dados da empresa criados com sucesso');
     }
@@ -80,7 +80,7 @@ class CompanyController extends Controller
         $company = $this->company->findCompanyById($id);
 
         if ($company){
-            $company->updateFinancial($request->all());
+            $company->updateCompany($request->all());
 
             return redirect()->back()->with('success', 'Dados da empresa atualizados com sucesso');
         }
@@ -95,7 +95,7 @@ class CompanyController extends Controller
 
         $company = $this->company->findCompanyById($id);
         if ($company) {
-            $company->deleteFinancial();
+            $company->deleteCompany();
             return redirect()->back()->with('success', 'Dados da empresa deletados com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar dados');
