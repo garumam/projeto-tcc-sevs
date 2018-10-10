@@ -524,18 +524,18 @@
                                     <div class="card-text">
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label>Produto: {{$product->mproduct->nome}}
-                                                M²: {{$product['altura']*$product['largura']}}
+                                                M²: {{ number_format($product['altura']*$product['largura'],2)}}
                                                 | M Linear: {{($product['altura'] * 2) + ($product['largura'] * 2)}}
                                                 Qtd: {{$product['qtd']}}</label>
                                         @endforeach
 
                                         @if(!empty($budgetedit))
                                             <label><b>Valor do orçamento sem lucro:
-                                                    R$ {{ $budgetedit['total']/(1+$budgetedit['margem_lucro']/100) }}</b></label>
+                                                    R$ {{ number_format($budgetedit['total']/(1+$budgetedit['margem_lucro']/100),2,'.','') }}</b></label>
                                             <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
                                         @elseif(Session::get('budgetcriado'))
                                             <label><b>Valor do orçamento sem lucro:
-                                                    R$ {{ Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100) }}</b></label>
+                                                    R$ {{ number_format(Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100),2,'.','')}}</b></label>
                                             <label><b>Valor do orçamento:
                                                     R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
                                         @endif
@@ -561,7 +561,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->glasses as $glass)
-                                                <label>Nome: {{$glass->nome .' '. $glass->tipo .' | Preço(m²): R$'. $glass->preco}}{{' | Preço total: R$'.number_format(($product->largura * $product->altura * $glass->preco),2,'.','')}}</label>
+                                                <label>Nome: {{$glass->nome .' '. $glass->tipo .' | Preço(m²): R$'. $glass->preco}}{{' | Preço total: R$'.number_format((($product->largura * $product->altura) * $glass->preco),2,'.','')}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
@@ -582,7 +582,7 @@
                                         @foreach(!empty($products) ? $products : Session::get('products') as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->aluminums as $aluminum)
-                                                <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Peso: '.$aluminum->peso.' | Qtd: '.$aluminum->qtd . ' | Preço(kg): R$ '.$aluminum->preco.' | Preço total: R$'.number_format(($aluminum->preco * $aluminum->peso),2,'.','')}}</label>
+                                                <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Peso: '.$aluminum->peso.' | Qtd: '.$aluminum->qtd . ' | Preço(kg): R$ '.$aluminum->preco.' | Preço total: R$'.number_format((($aluminum->preco * $aluminum->peso) * $aluminum->qtd),2,'.','')}}</label>
                                             @endforeach
                                         @endforeach
                                     </div>
