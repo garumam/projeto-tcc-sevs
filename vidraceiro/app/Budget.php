@@ -65,14 +65,9 @@ class Budget extends Model
 
     }
 
-    public function deleteBudget($id){
+    public function deleteBudget(){
 
-        $client = self::findBudgetById($id);
-        if($client){
-            return $client->delete();
-        }
-
-        return false;
+        return self::delete();
 
     }
 

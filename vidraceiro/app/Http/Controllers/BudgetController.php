@@ -304,7 +304,7 @@ class BudgetController extends Controller
                 foreach ($budget->products as $product) {
                     $product->deleteProduct();
                 }
-                $this->budget->deleteBudget($budget->id);
+                $budget->deleteBudget();
                 return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
             } else {
                 return redirect()->back()->with('error', 'Erro ao deletar orçamento');
