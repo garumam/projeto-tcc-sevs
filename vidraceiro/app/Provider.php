@@ -48,22 +48,15 @@ class Provider extends Model
 
     }
 
-    public function updateProvider(array $input,$id){
+    public function updateProvider(array $input){
 
-        $provider = self::find($id);
-
-        return $provider->update($input);
+        return self::update($input);
 
     }
 
-    public function deleteProvider($id){
+    public function deleteProvider(){
 
-        $provider = self::find($id);
-        if($provider){
-            return $provider->delete();
-        }
-
-        return false;
+        return self::delete();
 
     }
 

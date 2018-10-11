@@ -120,7 +120,8 @@ class ProviderController extends Controller
             return redirect()->back()->withErrors($validado);
 
 
-        $provider = $this->provider->updateProvider($request->all(),$id);
+        $provider = $this->provider->findProviderById($id);
+        $provider = $provider->updateProvider($request->all());
 
         if ($provider)
             return redirect()->back()->with('success', 'Fornecedor atualizado com sucesso');
@@ -131,8 +132,8 @@ class ProviderController extends Controller
         if(!Auth::user()->can('fornecedor_deletar', Provider::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
-
-        $provider = $this->provider->deleteProvider($id);
+        $provider = $this->provider->findProviderById($id);
+        $provider = $provider->deleteProvider();
         if ($provider)
             return redirect()->back()->with('success', 'Fornecedor deletado com sucesso');
 
