@@ -48,7 +48,7 @@ class UserController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_users($request->all());
+        $validado = $this->rules_users($request->all(),'');
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
@@ -105,11 +105,19 @@ class UserController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $user = $this->user->findUserById($id);
-        $validado = $this->rules_update_users(array_merge($request->all(), ['id' => $id]));
+        $validado = $this->rules_user_exists(['id' => $id]);
+
+        if ($validado->fails()) {
+            return redirect(route('users.index'))->withErrors($validado);
+        }
+
+        $validado = $this->rules_users($request->all(),$id);
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
+
+        $user = $this->user->findUserById($id);
+
         $resq = $request->except(['_token', 'image']);
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = $request->file('image');
@@ -204,28 +212,13 @@ class UserController extends Controller
 
     }
 
-    public function rules_users(array $data)
+    public function rules_users(array $data, $ignoreId)
     {
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$ignoreId,
             'password' => 'required|string|min:6',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        return $validator;
-    }
-
-    public function rules_update_users(array $data)
-    {
-        $validator = Validator::make($data, [
-            'id' => 'exists:users,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|',
-            'password' => 'required|string|min:6',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'exists' => 'Não existe este usuário!',
         ]);
 
         return $validator;
