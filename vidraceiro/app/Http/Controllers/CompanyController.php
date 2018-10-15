@@ -30,14 +30,6 @@ class CompanyController extends Controller
         return view('dashboard.create.company', compact('company', 'states'))->with('title', 'Dados da Empresa');
     }
 
-    public function create()
-    {
-        if(!Auth::user()->can('empresa_atualizar', Company::class)){
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-        }
-
-        return view('dashboard.create.company')->with('title', 'Dados da Empresa');
-    }
 
     public function store(Request $request)
     {
@@ -53,16 +45,6 @@ class CompanyController extends Controller
         $company = $this->company->createCompany($request->all());
         if ($company)
             return redirect()->back()->with('success', 'Dados da empresa criados com sucesso');
-    }
-
-    public function show()
-    {
-
-    }
-
-    public function edit()
-    {
-
     }
 
 
