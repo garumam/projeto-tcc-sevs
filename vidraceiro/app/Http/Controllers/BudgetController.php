@@ -84,7 +84,7 @@ class BudgetController extends Controller
                         ->with(compact('budgetcriado'));
                 break;
             case '2': //tab adicionar
-                $validado = $this->rules_budget_product_add($request->all());
+                $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
                     $budgetcriado = $this->budget->findBudgetById($request->budget_id);
@@ -114,7 +114,11 @@ class BudgetController extends Controller
                 break;
             case '3': //tab editar
 
-                $validado = $this->rules_budget_product_edit($request->all());
+                $validado = $this->rules_budget_product_exists(['produtoid'=>$request->get('produtoid')]);
+
+                if(!$validado->fails()){
+                    $validado = $this->rules_budget_product($request->all(),[]);
+                }
 
                 if ($validado->fails()) {
                     $budgetcriado = $this->budget->findBudgetById($request->budget_id);
@@ -238,7 +242,7 @@ class BudgetController extends Controller
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
                 break;
             case '2': //tab adicionar
-                $validado = $this->rules_budget_product_add($request->all());
+                $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
@@ -257,7 +261,11 @@ class BudgetController extends Controller
                 }
                 break;
             case '3': //tab editar
-                $validado = $this->rules_budget_product_edit($request->all());
+                $validado = $this->rules_budget_product_exists(['produtoid'=>$request->get('produtoid')]);
+
+                if(!$validado->fails()){
+                    $validado = $this->rules_budget_product($request->all(),[]);
+                }
 
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
@@ -494,29 +502,26 @@ class BudgetController extends Controller
         return $validator;
     }
 
-    public function rules_budget_product_add(array $data)
+    public function rules_budget_product(array $data, array $mproductValidation)
     {
-        $validator = Validator::make($data, [
-            'm_produto_id' => 'required|integer',
-            'largura' => 'required|string|max:255',
-            'altura' => 'required|string|max:255',
-            'qtd' => 'required|integer',
-            'localizacao' => 'nullable|string|max:255',
-            'valor_mao_obra' => 'nullable|numeric'
-        ]);
+        $validator = Validator::make($data, array_merge(
+            $mproductValidation,
+            [
+                'largura' => 'required|string|max:255',
+                'altura' => 'required|string|max:255',
+                'qtd' => 'required|integer',
+                'localizacao' => 'nullable|string|max:255',
+                'valor_mao_obra' => 'nullable|numeric'
+            ]
+        ));
 
         return $validator;
     }
 
-    public function rules_budget_product_edit(array $data)
+    public function rules_budget_product_exists(array $data)
     {
         $validator = Validator::make($data, [
-            'produtoid' => 'required|integer|exists:products,id',
-            'largura' => 'required|string|max:255',
-            'altura' => 'required|string|max:255',
-            'qtd' => 'required|integer',
-            'localizacao' => 'nullable|string|max:255',
-            'valor_mao_obra' => 'nullable|numeric'
+            'produtoid' => 'required|integer|exists:products,id'
         ], [
             'exists' => 'Este produto não existe!',
         ]);
