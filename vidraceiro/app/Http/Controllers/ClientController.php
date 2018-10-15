@@ -148,11 +148,12 @@ class ClientController extends Controller
         if(!Auth::user()->can('cliente_deletar', Client::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
+        $client = $this->client->findClientById($id);
 
-        $client = $this->client->deleteClient($id);
-        if ($client)
+        if ($client){
+            $client->deleteClient();
             return redirect()->back()->with('success', 'Cliente deletado com sucesso');
-
+        }
 
         return redirect()->back()->with('error', 'Erro ao deletar cliente');
     }

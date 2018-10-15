@@ -49,14 +49,9 @@ class Client extends Model
 
     }
 
-    public function deleteClient($id){
+    public function deleteClient(){
 
-        $client = self::findClientById($id);
-        if($client){
-            return $client->delete();
-        }
-
-        return false;
+        return self::delete();
 
     }
 
