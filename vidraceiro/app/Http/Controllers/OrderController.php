@@ -159,10 +159,11 @@ class OrderController extends Controller
         }
 
         $order = $this->order->findOrderById($id);
-        foreach ($order->budgets as $budget) {
-            $budget->updateBudget(['ordem_id' => null]);
-        }
+
         if ($order) {
+            foreach ($order->budgets as $budget) {
+                $budget->updateBudget(['ordem_id' => null]);
+            }
             $order->deleteOrder();
             return redirect()->back()->with('success', 'Ordem de serviço deletado com sucesso');
         } else {
