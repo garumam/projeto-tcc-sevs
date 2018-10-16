@@ -41,11 +41,14 @@ class MaterialController extends Controller
 
         $titulotabs = ['Vidros', 'Aluminios', 'Componentes'];
 
-        $glasses = $this->glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if($request->has('vidros') || !$request->ajax())
+            $glasses = $this->glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
-        $aluminums = $this->aluminum->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if($request->has('aluminios') || !$request->ajax())
+            $aluminums = $this->aluminum->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
-        $components = $this->component->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if($request->has('componentes') || !$request->ajax())
+            $components = $this->component->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         if ($request->ajax()) {
             if ($request->has('vidros')) {
