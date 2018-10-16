@@ -133,9 +133,11 @@ class ProviderController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
         $provider = $this->provider->findProviderById($id);
-        $provider = $provider->deleteProvider();
-        if ($provider)
+
+        if ($provider){
+            $provider->deleteProvider();
             return redirect()->back()->with('success', 'Fornecedor deletado com sucesso');
+        }
 
         return redirect()->back()->with('error', 'Erro ao deletar fornecedor');
 
