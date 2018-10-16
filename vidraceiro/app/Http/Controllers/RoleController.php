@@ -51,7 +51,7 @@ class RoleController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_role_exists(['nome' => $request->nome]);
+        $validado = $this->rules_role_unique(['nome' => $request->nome]);
 
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
@@ -83,6 +83,12 @@ class RoleController extends Controller
     {
         if(!Auth::user()->can('funcao_atualizar', Role::class) || $id == 1){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
+        $validado = $this->rules_role_unique(['nome' => $request->nome],$id);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado);
         }
 
         $role = $this->role->findRoleById($id) ?? null;
@@ -124,8 +130,12 @@ class RoleController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
+
         $title = "Lista de Permissões";
         $role = $this->role->findRoleById($id);
+        if(!$role)
+            return redirect()->route('roles.index')->with('error', 'Não existe essa função');
+
         $permissions = Permission::getAll();
 
         $permissionsroles = Permission::getPermissionsByRoleIdWithSearchAndPagination($id,$request->get('search'),$request->get('paginate'));
@@ -166,13 +176,14 @@ class RoleController extends Controller
         return redirect()->back()->with('success', 'Permissão removida com sucesso');
     }
 
-    public function rules_role_exists(array $data)
+    public function rules_role_unique(array $data,$ignoreId = '')
     {
         $validator = Validator::make($data,
             [
-                'nome' => 'unique:roles'
+                'nome' => 'unique:roles,nome,'.$ignoreId
             ]
         );
         return $validator;
     }
+
 }
