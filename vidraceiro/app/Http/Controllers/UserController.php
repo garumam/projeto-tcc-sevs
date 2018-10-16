@@ -73,16 +73,6 @@ class UserController extends Controller
 
     }
 
-    public function show($user)
-    {
-        if (!Auth::user()->can('usuario_listar', User::class)) {
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-        }
-
-        $users = $this->user->findUserById($user);
-        return view('dashboard.list.user', compact('users'))->with('title', 'Listar usuarios');
-    }
-
     public function edit($id)
     {
         if (!Auth::user()->can('usuario_atualizar', User::class)) {
@@ -174,6 +164,12 @@ class UserController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
+        $validado = $this->rules_user_exists(['id' => $id]);
+
+        if ($validado->fails()) {
+            return redirect(route('users.index'))->withErrors($validado);
+        }
+
         $user = $this->user->findUserById($id);
         $role = new Role();
         $role = $role->findRoleById($request->role_id);
@@ -187,6 +183,12 @@ class UserController extends Controller
     {
         if (!Auth::user()->can('usuario_atualizar', User::class) || $id == 1) {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        }
+
+        $validado = $this->rules_user_exists(['id' => $id]);
+
+        if ($validado->fails()) {
+            return redirect(route('users.index'))->withErrors($validado);
         }
 
         $user = $this->user->findUserById($id);
