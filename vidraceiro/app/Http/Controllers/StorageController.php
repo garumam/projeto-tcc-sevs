@@ -26,19 +26,26 @@ class StorageController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $allglasses = Glass::getAllGlassesOrAllModels(1);
-        $allaluminums = Aluminum::getAllAluminumsOrAllModels(1);
-        $allcomponents = Component::getAllComponentsOrAllModels(1);
+        if(!$request->ajax()){
+            $allglasses = Glass::getAllGlassesOrAllModels(1);
+            $allaluminums = Aluminum::getAllAluminumsOrAllModels(1);
+            $allcomponents = Component::getAllComponentsOrAllModels(1);
+        }
 
-        $glass = new Glass();
-        $aluminum = new Aluminum();
-        $component = new Component();
+        if($request->has('vidros') || !$request->ajax()){
+            $glass = new Glass();
+            $glasses = $glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        }
 
-        $glasses = $glass->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if($request->has('aluminios') || !$request->ajax()){
+            $aluminum = new Aluminum();
+            $aluminums = $aluminum->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        }
 
-        $aluminums = $aluminum->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
-
-        $components = $component->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        if($request->has('componentes') || !$request->ajax()){
+            $component = new Component();
+            $components = $component->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        }
 
         $titulotabs = ['Vidros','Aluminios','Componentes'];
 
@@ -66,12 +73,8 @@ class StorageController extends Controller
         switch($tab){
             case 'vidro':
 
-                $validado = Validator::make($request->all(), [
-                    'storage_vidro_id' => 'required|integer|exists:storages,id',
-                    'm2' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
+                $validado = $this->rules_storage($request->all(),$tab);
+
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
@@ -96,12 +99,7 @@ class StorageController extends Controller
 
             case 'aluminio':
 
-                $validado = Validator::make($request->all(), [
-                    'storage_aluminio_id' => 'required|integer|exists:storages,id',
-                    'qtd' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
+                $validado = $this->rules_storage($request->all(),$tab);
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
@@ -126,12 +124,7 @@ class StorageController extends Controller
 
             case 'componente':
 
-                $validado = Validator::make($request->all(), [
-                    'storage_componente_id' => 'required|integer|exists:storages,id',
-                    'qtd' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
+                $validado = $this->rules_storage($request->all(),$tab);
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
@@ -158,5 +151,37 @@ class StorageController extends Controller
 
         if ($storage)
             return redirect()->back()->with('success', "Operação realizada com sucesso");
+    }
+
+    public function rules_storage(array $data, $type)
+    {
+        switch ($type) {
+            case 'vidro':
+                $validator = Validator::make($data, [
+                    'storage_vidro_id' => 'required|integer|exists:storages,id',
+                    'm2' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
+                ]);
+                break;
+            case 'aluminio':
+                $validator = Validator::make($data, [
+                    'storage_aluminio_id' => 'required|integer|exists:storages,id',
+                    'qtd' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
+                ]);
+                break;
+            case 'componente':
+                $validator = Validator::make($data, [
+                    'storage_componente_id' => 'required|integer|exists:storages,id',
+                    'qtd' => 'required|integer'
+                ], [
+                    'exists' => 'Material não registrado no estoque!',
+                ]);
+                break;
+        }
+
+        return $validator;
     }
 }

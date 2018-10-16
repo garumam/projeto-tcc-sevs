@@ -13,7 +13,7 @@
     @foreach($glasses as $glass)
         <tr class="tabela-vidro">
             <th scope="row">{{ $glass->id }}</th>
-            <td>{{ $glass->nome }}</td>
+            <td>{{ $glass->nome.' '. $glass->tipo}}</td>
             <td>{{ $glass->category->nome }}</td>
             <td>{{ $glass->storage->metros_quadrados or '0' }}</td>
         </tr>

@@ -15,7 +15,7 @@
     @foreach($glasses as $glass)
         <tr class="tabela-vidro">
             <th scope="row">{{ $glass->id }}</th>
-            <td>{{ $glass->nome }}</td>
+            <td>{{ $glass->nome.' '.$glass->tipo}}</td>
             <td>{{ $glass->category->nome }}</td>
             <td>R${{ $glass->preco }}</td>
             <td>{{ $glass->is_modelo ? 'Sim' : 'Não' }}</td>
