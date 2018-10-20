@@ -194,7 +194,7 @@ class BudgetController extends Controller
 
         $budgetedit = $this->budget->findBudgetById($id);
 
-        if($budgetedit->ordem_id !== null && $budgetedit->status !== 'AGUARDANDO'){
+        if($budgetedit->status !== 'AGUARDANDO'){
             return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
         }
 
@@ -313,10 +313,13 @@ class BudgetController extends Controller
 
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
+            if($budget->status !== 'AGUARDANDO'){
+                return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser deletado!');
+            }
             if ($budget) {
-                foreach ($budget->products as $product) {
+                /*foreach ($budget->products as $product) {
                     $product->deleteProduct();
-                }
+                }*/
                 $budget->deleteBudget();
                 return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
             } else {

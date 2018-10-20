@@ -31,6 +31,7 @@ class CreateBudgetsTable extends Migration
             $table->integer('cliente_id')->nullable()->unsigned();
             $table->foreign('ordem_id')->references('id')->on('orders');
             $table->foreign('cliente_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
         /*
