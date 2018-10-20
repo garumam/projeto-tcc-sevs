@@ -345,8 +345,13 @@ class SaleController extends Controller
             return redirect(route('sales.index'))->withErrors($validado);
         }
 
-        $installments = null;
         $sale = $this->sale->findSaleById($id);
+
+        if($sale->tipo_pagamento === 'A VISTA' || !$sale->havePendingInstallment()){
+            return redirect()->back()->with('error', 'Esta venda já está paga!');
+        }
+
+        $installments = null;
 
         if ($request->data_pagamento === null) {
             return redirect()->back()->with('error', 'Selecione a data do pagamento!');
