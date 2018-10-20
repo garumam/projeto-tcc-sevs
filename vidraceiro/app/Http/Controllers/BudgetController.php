@@ -69,6 +69,15 @@ class BudgetController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
+        if($request->has('budget_id')){
+
+            $budgetcriado = $this->budget->findBudgetById($request->budget_id);
+
+            if($budgetcriado->status !== 'AGUARDANDO'){
+                return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
+            }
+        }
+
         switch ($tab) {
             case '1': //tab orçamento
                 $validado = $this->rules_budget($request->all());
@@ -230,6 +239,12 @@ class BudgetController extends Controller
             return redirect(route('budgets.index'))->withErrors($validado);
         }
 
+        $budgetcriado = $this->budget->findBudgetById($id);
+
+        if($budgetcriado->status !== 'AGUARDANDO'){
+            return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
+        }
+
         switch ($tab) {
             case '1': //tab orçamento
 
@@ -238,7 +253,6 @@ class BudgetController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado);
                 }
-                $budgetcriado = $this->budget->findBudgetById($id);
 
                 $margemlucro = $request->margem_lucro ?? 100;
 
@@ -288,7 +302,7 @@ class BudgetController extends Controller
 
                 break;
             case '4': //tab material
-                $budgetcriado = $this->budget->findBudgetById($id);
+
                 $products = $budgetcriado->products;
 
                 foreach ($products as $product) {
@@ -317,9 +331,7 @@ class BudgetController extends Controller
                 return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser deletado!');
             }
             if ($budget) {
-                /*foreach ($budget->products as $product) {
-                    $product->deleteProduct();
-                }*/
+
                 $budget->deleteBudget();
                 return redirect()->back()->with('success', 'Orçamento deletado com sucesso');
             } else {
@@ -332,6 +344,10 @@ class BudgetController extends Controller
 
             if ($product) {
                 $budgetcriado = $product->budget;
+
+                if($budgetcriado->status !== 'AGUARDANDO'){
+                    return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
+                }
 
                 $product->deleteProduct();
 
