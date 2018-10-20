@@ -82,7 +82,7 @@
                     <div id="qtd_parcelas" class="form-group col-md-4" @if(!empty($sale)) style="{{$sale->tipo_pagamento == 'A VISTA'? 'display: none':''}}"@else style="display: none;" @endif>
                         <label for="qtd_parc">Quantidade de parcelas</label>
                         <select id="qtd_parc" class="custom-select" @if(!empty($sale))name="{{$sale->tipo_pagamento == 'A PRAZO'? 'qtd_parcelas':''}}"@endif>
-                            @for($i = 2; $i <= 12;$i++)
+                            @for($i = 1; $i <= 12;$i++)
                             <option value="{{$i}}"
                                     @if(!empty($sale)) {{$sale->qtd_parcelas == $i? 'selected':''}}@endif>{{$i}}</option>
                             @endfor

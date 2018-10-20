@@ -192,6 +192,12 @@ class BudgetController extends Controller
             return redirect(route('budgets.index'))->withErrors($validado);
         }
 
+        $budgetedit = $this->budget->findBudgetById($id);
+
+        if($budgetedit->ordem_id !== null && $budgetedit->status !== 'AGUARDANDO'){
+            return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
+        }
+
         $states = $this->states;
         $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
         $glasses = Glass::getAllGlassesOrAllModels(1);
@@ -201,7 +207,6 @@ class BudgetController extends Controller
         $clients = Client::getAllClients();
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
 
-        $budgetedit = $this->budget->findBudgetById($id);
 
         if ($budgetedit) {
             $products = $budgetedit->getBudgetProductsWithRelations();

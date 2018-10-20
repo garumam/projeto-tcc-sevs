@@ -94,7 +94,7 @@ class SaleController extends Controller
 
         } else {
 
-            //$sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
+            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
 
         }
         $mensagem = '';
