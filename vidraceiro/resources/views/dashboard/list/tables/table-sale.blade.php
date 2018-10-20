@@ -25,7 +25,7 @@
             <td>{{$valorpago}}</td>
             <td>
 
-                @php
+                {{--@php
                     $ordem = $sale->budget->order()->first();
                     $parcelaPaga = $sale->installments()->where('status_parcela','PAGO')->first();
                     $parcelaAberta = $sale->installments()->where('status_parcela','ABERTO')->first();
@@ -43,21 +43,21 @@
 
                 @if(!empty($parcelaAberta) && !empty($parcelaPaga))
                     @php $editar = false; $deletar = false; @endphp
-                @endif
+                @endif--}}
 
                 <a class="btn-link" href="{{ route('sales.show',['id'=> $sale->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                 </a>
-                @if($editar)
+                {{--@if($editar)--}}
                     <a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                     </a>
-                @endif
-                @if($deletar)
+                {{--@endif
+                @if($deletar)--}}
                     <a class="btn-link" onclick="deletar(event,this.id,'sales')" id="{{ $sale->id }}">
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
                     </a>
-                @endif
+                {{--@endif--}}
             </td>
         </tr>
     @endforeach

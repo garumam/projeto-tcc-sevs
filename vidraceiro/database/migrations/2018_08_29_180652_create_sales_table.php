@@ -18,8 +18,9 @@ class CreateSalesTable extends Migration
             $table->string('tipo_pagamento');
             $table->integer('qtd_parcelas')->nullable();
             $table->string('data_venda');
-            $table->integer('orcamento_id')->unsigned();
+            $table->integer('orcamento_id')->unique()->unsigned();
             $table->foreign('orcamento_id')->references('id')->on('budgets')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

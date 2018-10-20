@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'tipo_pagamento',
         'qtd_parcelas',
@@ -99,6 +102,12 @@ class Sale extends Model
 
     }
 
+    public function havePayments(){
+
+        return !empty($this->payments()->first());
+
+    }
+
     public function attachStorageAndReservedQuantity($storageId,$reserved){
         return $this->storages()->sync([$storageId => ['qtd_reservada' => $reserved]], false);
     }
@@ -122,12 +131,15 @@ class Sale extends Model
         return self::with('installments', 'payments', 'budget')
             ->whereHas('budget', function ($q) use ($search) {
                 $q->where('nome', 'like', '%' . $search . '%');
+                $q->orWhereHas('client',function ($c) use ($search){
+                    $c->where('nome', 'like', '%' . $search . '%');
+                });
             })->orWhere('tipo_pagamento', 'like', '%' . $search . '%')
             ->paginate($paginate);
     }
 
     public function getSaleInstallmentsWithSearchAndPagination($search, $paginate){
-
+        //ESTE METODO NÃO ESTÁ MAIS SENDO UTILIZADO POR ENQUANTO
         $paginate = $paginate ?? 10;
 
         return self::with('installments', 'payments', 'budget')

@@ -4,6 +4,7 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Orçamento</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cliente</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Pagamento</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor da venda</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Falta pagar</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
@@ -11,7 +12,7 @@
     </thead>
     <tbody>
 
-    @foreach($salesWithInstallments as $sale)
+    @foreach($sales as $sale)
 
         @php $valorpago = 0; @endphp
         @foreach($sale->payments as $payment)
@@ -21,7 +22,8 @@
         <tr>
             <th scope="row">{{$sale->id}}</th>
             <td>{{$sale->budget->nome}}</td>
-            <td>{{$sale->budget->client->nome}}</td>
+            <td>{{$sale->budget->client->nome or 'Anônimo'}}</td>
+            <td><span class="badge {{$sale->tipo_pagamento === 'A VISTA'? 'badge-secondary':'badge-warning'}}">{{$sale->tipo_pagamento}}</span></td>
             <td>{{$sale->budget->total}}</td>
             <td>{{$faltapagar}}</td>
             <td>
@@ -37,7 +39,7 @@
     </tbody>
 </table>
 <p class="m-4 text-center"
-   style="font-weight: 600;"> {{ ($salesWithInstallments->count() == 0) ? 'Nenhum resultado encontrado': ''}}</p>
-{{ $salesWithInstallments->links('layouts.pagination') }}
+   style="font-weight: 600;"> {{ ($sales->count() == 0) ? 'Nenhum resultado encontrado': ''}}</p>
+{{ $sales->links('layouts.pagination') }}
 
 

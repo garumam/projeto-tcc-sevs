@@ -99,6 +99,22 @@
 
 <h3>Dados do cliente</h3>
 <p>Nome: {{$client->nome}}</p>
+@php
+    $campoNome = '';
+    $documento = null;
+    $mask = '';
+    if($client->cpf !== null){
+        $campoNome = 'Cpf:';
+        $documento = $client->cpf;
+        $mask = '###.###.###-##';
+    }else{
+        $campoNome = 'Cnpj:';
+        $documento = $client->cnpj;
+        $mask = '##.###.###/####-##';
+    }
+
+@endphp
+<p>{{$campoNome.' '}} {{App\Http\Controllers\PdfController::mask($documento,$mask)}}</p>
 <p>Endereço: {{$client->endereco .' - '. $client->bairro}}</p>
 <p>Uf: {{$client->uf}}</p>
 <p>Cep: {{$client->cep}}</p>

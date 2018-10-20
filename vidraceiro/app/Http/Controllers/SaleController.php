@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Financial;
 use App\Installment;
+use App\Order;
 use App\Payment;
 use App\Storage;
 use Illuminate\Http\Request;
@@ -30,13 +31,13 @@ class SaleController extends Controller
 
         $titulotabs = ['Vendas', 'Pagamentos'];
 
-        $salesWithInstallments =  $this->sale->getSaleInstallmentsWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        //$salesWithInstallments =  $this->sale->getSaleInstallmentsWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         $sales = $this->sale->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
 
         if ($request->ajax()) {
             if ($request->has('pagamentos')) {
-                return view('dashboard.list.tables.table-payment', compact('salesWithInstallments'));
+                return view('dashboard.list.tables.table-payment', compact('sales'));
             } else {
                 return view('dashboard.list.tables.table-sale', compact('sales'));
             }
@@ -93,7 +94,7 @@ class SaleController extends Controller
 
         } else {
 
-            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
+            //$sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
 
         }
         $mensagem = '';
@@ -136,8 +137,16 @@ class SaleController extends Controller
         if ($validado->fails()) {
             return redirect(route('sales.index'))->withErrors($validado);
         }
+
         $sale = $this->sale->findSaleById($id);
-        return view('dashboard.create.sale', compact('sale'))->with('title', 'Atualizar venda');
+
+        if($sale->budget->ordem_id !== null || $sale->havePayments()){
+            return redirect(route('sales.index'))->with('error','Esta venda não pode ser editada!');
+        }
+
+        $budgets = Budget::getBudgetsWhereStatusWaiting();
+
+        return view('dashboard.create.sale', compact('sale','budgets'))->with('title', 'Atualizar venda');
     }
 
 
@@ -153,12 +162,21 @@ class SaleController extends Controller
             return redirect(route('sales.index'))->withErrors($validado);
         }
 
+        $sale = $this->sale->findSaleById($id);
+
         $arrayextra = [];
         if ($request->tipo_pagamento === 'A PRAZO') {
 
             $arrayextra = [
+                'orcamento_id' => 'required|integer|unique:sales,orcamento_id,'.$sale->id,
                 'valor_parcela' => 'required|numeric',
                 'qtd_parcelas' => 'required|integer'
+            ];
+
+        }else {
+
+            $arrayextra = [
+                'orcamento_id' => 'required|integer|unique:sales,orcamento_id,'.$sale->id
             ];
 
         }
@@ -168,7 +186,9 @@ class SaleController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $sale = $this->sale->findSaleById($id);
+        if($request->orcamento_id != $sale->budget->id){
+            $sale->budget->updateBudget(['status'=>'AGUARDANDO']);
+        }
 
         if ($sale->tipo_pagamento === 'A PRAZO') {
 
@@ -186,21 +206,21 @@ class SaleController extends Controller
 
             } else {
 
-                $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
+                //$sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
 
             }
 
         } else {
 
             if ($request->has('valor_parcela')) {
-                $payment = $sale->getSalePayment();
+                /*$payment = $sale->getSalePayment();
                 Financial::createFinancial([
                     'tipo' => 'DESPESA',
                     'descricao' => 'Venda atualizada de à vista para à prazo.',
                     'valor' => $payment->valor_pago
                 ]);
 
-                $payment->deletePayment();
+                $payment->deletePayment();*/
 
                 $sale->createSaleInstallments($request);
 
@@ -230,6 +250,32 @@ class SaleController extends Controller
 
         $sale = $this->sale->findSaleById($id);
         if ($sale) {
+
+            if($sale->budget->ordem_id !== null){
+                $order = new Order();
+                $order = $order->findOrderById($sale->budget->ordem_id);
+                if($order->situacao === 'ABERTA' || $order->situacao === 'ANDAMENTO'){
+                    return redirect(route('sales.index'))->with('error','Esta venda não pode ser deletada!');
+                }
+
+                if(!$sale->havePayments() || $sale->havePendingInstallment()){
+                    return redirect(route('sales.index'))->with('error','Esta venda não pode ser deletada!');
+                }
+
+                if($order->situacao === 'CONCLUIDA'){
+                    //SOFT DELETE
+                    $sale->deleteSale();
+                    return redirect()->back()->with('success', 'Venda deletada com sucesso');
+                }
+            }else{
+
+                if($sale->havePayments()){
+                    return redirect(route('sales.index'))->with('error','Esta venda não pode ser deletada!');
+                }
+
+            }
+
+
             $mensagem = '';
             if ($sale->budget->status === 'APROVADO') {
                 foreach ($sale->storages as $storage) {
@@ -242,21 +288,22 @@ class SaleController extends Controller
                     }
                     $mensagem = ', materiais em uso retornaram ao estoque!';
                 }
-                if ($sale->tipo_pagamento === 'A VISTA') {
+                /*if ($sale->tipo_pagamento === 'A VISTA') {
                     $payment = $sale->getSalePayment();
                     Financial::createFinancial([
                         'tipo' => 'DESPESA',
                         'descricao' => 'Cancelamento de venda à vista.',
                         'valor' => $payment->valor_pago
                     ]);
-                }
+                }*/
+            }
+            if($sale->budget->status !== 'FINALIZADO'){
+                $sale->budget->updateBudget(['status' => 'AGUARDANDO','ordem_id'=>null]);
             }
 
-            $sale->budget->updateBudget(['status' => 'AGUARDANDO']);
-
             $budget = $sale->budget;
-
-            $sale->deleteSale();
+            // força deletar do banco
+            $sale->forceDelete();
 
             $client = new Client();
             $client = $client->findClientById($budget->cliente_id);
@@ -299,36 +346,46 @@ class SaleController extends Controller
         }
 
         $installments = null;
+        $sale = $this->sale->findSaleById($id);
 
         if ($request->data_pagamento === null) {
             return redirect()->back()->with('error', 'Selecione a data do pagamento!');
         }
-        if ($request->parcelas !== null) {
+        if($sale->tipo_pagamento === 'A PRAZO'){
+            if ($request->parcelas !== null) {
 
-            $installments = Installment::getInstallmentsWherein($request->parcelas);
-            $sale = $this->sale->findSaleById($id);
+                $installments = Installment::getInstallmentsWherein($request->parcelas);
 
 
-            foreach ($installments as $installment) {
 
-                $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Parcela paga.');
+                foreach ($installments as $installment) {
 
-                $installment->updateInstallment('status_parcela','PAGO');
+                    $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Pagamento de parcela de venda a prazo.');
+
+                    $installment->updateInstallment('status_parcela','PAGO');
+                }
+
+
+                $budget = $sale->budget;
+                $client = new Client();
+                $client = $client->findClientById($budget->cliente_id);
+                $client->updateStatus();
+
+
+            } else {
+                return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');
             }
-
-
-            $budget = $sale->budget;
-            $client = new Client();
-            $client = $client->findClientById($budget->cliente_id);
-            $client->updateStatus();
-
-
-        } else {
-            return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');
+        }else{
+            if($request->pagar !== null){
+                $payment = $sale->createSalePayment($request->data_pagamento,$sale->budget->total,'Pagamento de venda à vista.');
+            }else{
+                return redirect()->back()->with('error', 'Marque antes de efetuar o pagamento!');
+            }
         }
 
 
-        if ($installments)
+
+        if ($installments || $payment)
             return redirect()->back()->with('success', 'Pagamento efetuado com sucesso');
     }
 

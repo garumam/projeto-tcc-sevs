@@ -14,7 +14,22 @@
         <tr>
             <th scope="row">{{$client->id}}</th>
             <td>{{$client->nome}}</td>
-            <td>{{$client->cpf or $client->cnpj}}</td>
+            @php
+                $campoNome = '';
+                $documento = null;
+                $mask = '';
+                if($client->cpf !== null){
+                    $campoNome = 'Cpf:';
+                    $documento = $client->cpf;
+                    $mask = '###.###.###-##';
+                }else{
+                    $campoNome = 'Cnpj:';
+                    $documento = $client->cnpj;
+                    $mask = '##.###.###/####-##';
+                }
+
+            @endphp
+            <td>{{App\Http\Controllers\PdfController::mask($documento,$mask)}}</td>
             @php
                 $telefone = $client->telefone;
                 if($telefone !== null){

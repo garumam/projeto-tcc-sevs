@@ -83,8 +83,7 @@
                         @include('dashboard.list.tables.table-sale')
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem
                             serviço em andando ou aberta!</p>
-                        <p class="info-importante mt-1">Não é possível deletar ou editar venda com pagamento pendente!</p>
-                        <p class="info-importante">Não é possível editar venda relacionada a orçamento finalizado!</p>
+                        <p class="info-importante mt-1">Não é possível deletar ou editar venda que tenha recebido pagamento, apenas será liberado para exclusão após a ordem de serviço ser concluída e não haja pagamento pendente!</p>
                     </div>
 
                 </div>
