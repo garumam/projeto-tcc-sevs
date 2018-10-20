@@ -471,6 +471,13 @@ class BudgetController extends Controller
             }
         }
 
+        $product = $material->product;
+        $budget = $product->findProductById($product->id)->budget;
+
+        if($budget->status !== 'AGUARDANDO'){
+            return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
+        }
+
         switch ($type) {
             case 'glass':
 
@@ -492,9 +499,6 @@ class BudgetController extends Controller
         }
 
         if ($material){
-
-            $product = $material->product;
-            $budget = $product->findProductById($product->id)->budget;
 
             if($budget && $budget->updateBudgetTotal()){
 
