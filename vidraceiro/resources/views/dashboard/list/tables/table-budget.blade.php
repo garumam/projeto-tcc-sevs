@@ -53,6 +53,9 @@
                                     class="fas fa-trash-alt"></i></button>
                     </a>
                 @endif
+                <a class="btn-link" onclick="{{ route('budgets.create',['id'=> $budget->id]) }}" id="{{ $budget->id }}">
+                    <button class="btn btn-success mb-1 card-shadow-1dp" title="Copiar e adicionar um novo orçamento"><i class="fas fa-copy"></i></button>
+                </a>
             </td>
         </tr>
     @endforeach
