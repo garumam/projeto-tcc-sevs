@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->double('total')->nullable();
             $table->string('data_final')->nullable();
             $table->string('situacao')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

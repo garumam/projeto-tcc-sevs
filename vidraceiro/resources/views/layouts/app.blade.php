@@ -283,6 +283,11 @@
     <input type="hidden" name="_method" value="DELETE">
 </form>
 
+<form id="update-form" action="#" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" name="_method" value="PATCH">
+</form>
+
 {{--<script src="{{ asset('js/jquery.min.js') }}" defer></script>--}}
 
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
@@ -305,6 +310,14 @@
         if (id != 'vazio') {
             var form = document.getElementById('delete-form');
             form.action = "/" + nome + "/" + id;
+            e.preventDefault();
+            form.submit();
+        }
+    }
+    function atualizar(e,id,situacao) {
+        if (id != 'vazio') {
+            var form = document.getElementById('update-form');
+            form.action = "/orders/" + id + "/" + situacao;
             e.preventDefault();
             form.submit();
         }

@@ -101,18 +101,19 @@ class OrderController extends Controller
 
         $order = $this->order->findOrderById($id);
 
+        if($order->situacao !== 'ABERTA')
+            return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
+
+
         $budgets = Budget::getBudgetsWhereStatusApproved($order->id);
 
-        if ($order) {
-            $budgetsOrders = $order->budgets;
-            return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
+        $budgetsOrders = $order->budgets;
+        return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
 
-        }
-        return redirect('orders')->with('error', 'Ordem não encontrada');
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $situacao = null)
     {
         if(!Auth::user()->can('os_atualizar', Order::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
@@ -124,18 +125,38 @@ class OrderController extends Controller
             return redirect(route('orders.index'))->withErrors($validado);
         }
 
+        $order = $this->order->findOrderById($id);
+
+        if($order->situacao === 'ANDAMENTO'){
+            $budgets = $order->budgets;
+            if($situacao === 'CONCLUIDA'){
+                $order->updateOrder(['situacao'=>$situacao]);
+
+                $order->updateBudgetsStatusByOrderSituation($budgets);
+
+            }else if($situacao === 'CANCELADA'){
+                $order->updateOrder(['situacao'=>$situacao]);
+
+                $order->updateBudgetsStatusByOrderSituation($budgets);
+            }
+
+            return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
+        }
+
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
 
-        $order = $this->order->findOrderById($id);
-
-        foreach ($order->budgets as $budget) {
-            $budget->updateBudget(['ordem_id' => null]);
+        if($order->situacao !== 'ABERTA'){
+            return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
         }
+
         $budgets = Budget::getBudgetsWhereIn($request->id_orcamento);
         if ($budgets) {
+            foreach ($order->budgets as $budget) {
+                $budget->updateBudget(['ordem_id' => null]);
+            }
             $order->updateOrder($request->all());
             if ($order) {
 
@@ -160,10 +181,8 @@ class OrderController extends Controller
 
         $order = $this->order->findOrderById($id);
 
-        if ($order) {
-            foreach ($order->budgets as $budget) {
-                $budget->updateBudget(['ordem_id' => null]);
-            }
+        if ($order && ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA')) {
+
             $order->deleteOrder();
             return redirect()->back()->with('success', 'Ordem de serviço deletado com sucesso');
         } else {

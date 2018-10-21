@@ -25,14 +25,23 @@
                 <a class="btn-link" href="{{ route('orders.show',['id'=> $order->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                 </a>
-                @if(!($order->situacao === 'CONCLUIDA') && !($order->situacao === 'CANCELADA'))
+                @if($order->situacao === 'ABERTA')
                     <a class="btn-link" href="{{ route('orders.edit',['id'=> $order->id]) }}">
                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                     </a>
                 @endif
-                @if($order->situacao !== 'ANDAMENTO')
+                @if($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA')
                     <a class="btn-link" onclick="deletar(event,this.id,'orders')" id="{{$order->id}}">
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
+                    </a>
+                @endif
+
+                @if($order->situacao === 'ANDAMENTO')
+                    <a class="btn-link" onclick="atualizar(event,this.id,'CONCLUIDA')" id="{{$order->id}}">
+                        <button class="btn btn-primary mb-1 card-shadow-1dp" title="Concluir"><i class="fas fa-calendar-check"></i></button>
+                    </a>
+                    <a class="btn-link" onclick="atualizar(event,this.id,'CANCELADA')" id="{{$order->id}}">
+                        <button class="btn btn-dark mb-1 card-shadow-1dp" title="Cancelar"><i class="fas fa-calendar-times"></i></button>
                     </a>
                 @endif
             </td>
