@@ -66,6 +66,7 @@ class Order extends Model
         foreach ($budgets as $budget) {
             $budget->updateBudget(array_merge(['ordem_id' => $ordemid], $budgetStatus));
         }
+
     }
 
     public static function filterOrders($request){

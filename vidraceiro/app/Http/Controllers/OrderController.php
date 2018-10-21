@@ -152,11 +152,14 @@ class OrderController extends Controller
             return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
         }
 
+        foreach ($order->budgets as $budget) {
+            $budget->updateBudget(['ordem_id' => null]);
+        }
+
         $budgets = Budget::getBudgetsWhereIn($request->id_orcamento);
+
         if ($budgets) {
-            foreach ($order->budgets as $budget) {
-                $budget->updateBudget(['ordem_id' => null]);
-            }
+
             $order->updateOrder($request->all());
             if ($order) {
 
