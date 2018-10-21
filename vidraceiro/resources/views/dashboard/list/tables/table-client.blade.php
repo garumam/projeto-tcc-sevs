@@ -43,7 +43,7 @@
                 <span class="badge {{$client->status === 'EM DIA'? 'badge-success' : 'badge-danger'}}">{{$client->status}}</span>
             </td>
             <td>
-                @php
+                {{--@php
                     $editar = $deletar = true;
                     $ordem = null;
                     foreach($client->budgets as $budget){
@@ -62,7 +62,7 @@
                             break;
                         }
                     }
-                @endphp
+                @endphp--}}
                 <a class="btn-link" href="{{ route('clients.show',['id'=> $client->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                 </a>
@@ -72,7 +72,7 @@
                                 class="fas fa-edit pl-1"></i></button>
                 </a>
 
-                @if($deletar)
+                @if($client->status === 'EM DIA' && !$client->haveBudgetApproved())
                     <a class="btn-link" onclick="deletar(event,this.id,'clients')" id="{{ $client->id }}">
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i
                                     class="fas fa-trash-alt"></i></button>

@@ -53,8 +53,9 @@
 
             <div class="table-responsive text-dark p-2" id="content">
                 @include('dashboard.list.tables.table-client')
-                <p class="info-importante">Não é possível deletar cliente relacionado a ordem serviço em andando ou que
-                    está com pagamento pendente!</p>
+            </div>
+            <div class="text-dark p-2">
+                <p class="info-importante">Não é possível deletar cliente que está devendo ou que possui orçamentos aprovados!</p>
             </div>
         </div>
     </div>

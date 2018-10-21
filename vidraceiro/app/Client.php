@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Client extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'nome',
         'cpf',
@@ -88,6 +90,10 @@ class Client extends Model
         if($emDia){
             $this->updateClient(['status' => 'EM DIA']);
         }
+    }
+
+    public function haveBudgetApproved(){
+        return !empty($this->budgets()->where('status','APROVADO')->first());
     }
 
     public function updateClientBudgets(array $input){

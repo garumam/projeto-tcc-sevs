@@ -28,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->string('cidade')->nullable();
             $table->string('complemento')->nullable();
             $table->string('status');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

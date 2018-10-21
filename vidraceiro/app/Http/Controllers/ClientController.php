@@ -150,12 +150,12 @@ class ClientController extends Controller
         }
         $client = $this->client->findClientById($id);
 
-        if ($client){
+        if ($client && $client->status === 'EM DIA' && !$client->haveBudgetApproved()){
             $client->deleteClient();
             return redirect()->back()->with('success', 'Cliente deletado com sucesso');
         }
 
-        return redirect()->back()->with('error', 'Erro ao deletar cliente');
+        return redirect()->back()->with('error', 'Este cliente não pode ser deletado pois possui pendências');
     }
 
     public function rules_client(array $data, $docarray)
