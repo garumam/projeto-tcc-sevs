@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('nome');
             $table->string('tipo');
             $table->string('grupo_imagem');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

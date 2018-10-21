@@ -20,6 +20,7 @@ class CreateMProductsTable extends Migration
             $table->string('imagem');
             $table->integer('categoria_produto_id')->unsigned();
             $table->foreign('categoria_produto_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
 

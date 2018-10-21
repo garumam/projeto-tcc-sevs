@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Component extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = [
         'nome',
@@ -20,7 +21,7 @@ class Component extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categoria_componente_id');
+        return $this->belongsTo(Category::class, 'categoria_componente_id')->withTrashed();
     }
 
 
@@ -115,7 +116,7 @@ class Component extends Model
 
     public static function deleteComponentOnListWhereNotIn($component,array $ids){
 
-        return $component->whereNotIn('id', $ids)->delete();
+        return $component->whereNotIn('id', $ids)->forceDelete();
 
     }
 

@@ -84,7 +84,10 @@ class OrderController extends Controller
         }
 
         $order = $this->order->findOrderById($id);
-        return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
+        if($order)
+            return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
+
+        return redirect(route('orders.index'))->with('error', 'Esta O.S. não existe');
     }
 
     public function edit($id)

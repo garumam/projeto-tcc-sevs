@@ -29,6 +29,7 @@ class CreateAluminumsTable extends Migration
             $table->integer('product_id')->nullable()->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('categoria_aluminio_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
 

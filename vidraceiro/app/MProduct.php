@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class MProduct extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = [
         'nome',
@@ -15,7 +16,7 @@ class MProduct extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(Category::class,'categoria_produto_id');
+        return $this->belongsTo(Category::class,'categoria_produto_id')->withTrashed();
     }
 
     public function products(){

@@ -18,7 +18,7 @@ class Product extends Model
     ];
 
     public function mproduct(){
-        return $this->belongsTo(MProduct::class, 'm_produto_id');
+        return $this->belongsTo(MProduct::class, 'm_produto_id')->withTrashed();
     }
 
     public function glasses(){

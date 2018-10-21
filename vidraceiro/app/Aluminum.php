@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Aluminum extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = [
         'perfil',
@@ -24,7 +25,7 @@ class Aluminum extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categoria_aluminio_id');
+        return $this->belongsTo(Category::class, 'categoria_aluminio_id')->withTrashed();
     }
 
 
@@ -124,7 +125,7 @@ class Aluminum extends Model
 
     public static function deleteAluminumOnListWhereNotIn($aluminum,array $ids){
 
-        return $aluminum->whereNotIn('id', $ids)->delete();
+        return $aluminum->whereNotIn('id', $ids)->forceDelete();
 
     }
 

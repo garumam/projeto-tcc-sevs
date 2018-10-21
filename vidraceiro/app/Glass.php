@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Glass extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = [
         'nome',
@@ -21,7 +22,7 @@ class Glass extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categoria_vidro_id');
+        return $this->belongsTo(Category::class, 'categoria_vidro_id')->withTrashed();
     }
 
 
@@ -117,7 +118,7 @@ class Glass extends Model
 
     public static function deleteGlassOnListWhereNotIn($glasses,array $ids){
 
-        return $glasses->whereNotIn('id', $ids)->delete();
+        return $glasses->whereNotIn('id', $ids)->forceDelete();
 
     }
 

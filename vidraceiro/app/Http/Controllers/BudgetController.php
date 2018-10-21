@@ -28,7 +28,6 @@ class BudgetController extends Controller
         $this->states = Uf::getUfs();
     }
 
-    //FALTA GERAR A MEDIDA PARA TIPO M LINEAR PORTÃO COMENTARIO NAS POSIÇÕES QUE PRECISA ALTERAR
     public function index(Request $request)
     {
         if(!Auth::user()->can('orcamento_listar', Budget::class)){
