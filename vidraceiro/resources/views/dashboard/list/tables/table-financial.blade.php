@@ -6,6 +6,8 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Tipo</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Descrição</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Data</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Usuário</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
     </tr>
 
@@ -26,7 +28,24 @@
             @else
                 <td style="color:#dc3545;">R${{ $financial->valor }}</td>
             @endif
+            @php $payment = $financial->payment()->first(); $user = $financial->user()->first(); @endphp
+            @if(!empty($payment))
+                @php $sale = $payment->sale()->first(); @endphp
+                <td>{{ date_format(date_create($payment->data_pagamento), 'd/m/Y') }}</td>
+            @else
+                <td>{{ date_format(date_create($financial->create_at), 'd/m/Y') }}</td>
+            @endif
+            @if(!empty($user))
+                <td>{{ $user->name }}</td>
+            @else
+                <td>Excluído</td>
+            @endif
             <td>
+                @if(!empty($sale))
+                    <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
+                        <button class="btn btn-light mb-1 card-shadow-1dp" type="button" title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
+                    </a>
+                @endif
                 <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
                     <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
                     </button>

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Financial;
+
 use App\Installment;
-use App\Order;
 use App\Payment;
-use App\Storage;
 use Illuminate\Http\Request;
 use App\Sale;
 use App\Client;
@@ -14,13 +12,17 @@ use App\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+
 class SaleController extends Controller
 {
     protected $sale;
+
     public function __construct(Sale $sale)
     {
+
         $this->middleware('auth');
         $this->sale = $sale;
+
     }
 
     public function index(Request $request)
@@ -94,7 +96,7 @@ class SaleController extends Controller
 
         } else {
 
-            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.');
+            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.',Auth::user()->id);
 
         }
         $mensagem = '';
@@ -365,7 +367,7 @@ class SaleController extends Controller
 
                 foreach ($installments as $installment) {
 
-                    $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Pagamento de parcela de venda a prazo.');
+                    $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Pagamento de parcela de venda a prazo.',Auth::user()->id);
 
                     $installment->updateInstallment('status_parcela','PAGO');
                 }
@@ -382,7 +384,7 @@ class SaleController extends Controller
             }
         }else{
             if($request->pagar !== null){
-                $payment = $sale->createSalePayment($request->data_pagamento,$sale->budget->total,'Pagamento de venda à vista.');
+                $payment = $sale->createSalePayment($request->data_pagamento,$sale->budget->total,'Pagamento de venda à vista.',Auth::user()->id);
             }else{
                 return redirect()->back()->with('error', 'Marque antes de efetuar o pagamento!');
             }

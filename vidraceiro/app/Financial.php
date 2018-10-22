@@ -3,14 +3,26 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Financial extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'tipo',
         'descricao',
-        'valor'
+        'valor',
+        'pagamento_id',
+        'usuario_id'
     ];
+
+    public function payment(){
+        return $this->belongsTo(Payment::class, 'pagamento_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
 
     public function getWithSearchAndPagination($search, $paginate){
 
@@ -18,6 +30,9 @@ class Financial extends Model
 
         return self::where('descricao', 'like', '%' . $search . '%')
             ->orWhere('tipo', 'like', '%' . $search . '%')
+            ->orWhereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            })
             ->paginate($paginate);
     }
 

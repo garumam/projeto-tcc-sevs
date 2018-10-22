@@ -80,16 +80,19 @@ class Sale extends Model
 
     }
 
-    public function createSalePayment($date,$value,$message){
+    public function createSalePayment($date,$value,$message,$user_id){
         $payment = Payment::createPayment([
             'valor_pago' => $value,
             'data_pagamento' => $date,
             'venda_id' => $this->id
         ]);
+
         Financial::createFinancial([
             'tipo' => 'RECEITA',
             'descricao' => $message,
-            'valor' => $payment->valor_pago
+            'valor' => $payment->valor_pago,
+            'pagamento_id' => $payment->id,
+            'usuario_id'=> $user_id
         ]);
         return $payment;
     }

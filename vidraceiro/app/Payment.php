@@ -12,6 +12,10 @@ class Payment extends Model
         return $this->belongsTo(Sale::class, 'venda_id');
     }
 
+    public function financial(){
+        return $this->hasOne(Financial::class, 'pagamento_id');
+    }
+
     public static function createPayment(array $input){
 
         return self::create($input);

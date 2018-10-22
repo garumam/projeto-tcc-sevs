@@ -18,6 +18,11 @@ class CreateFinancialsTable extends Migration
             $table->string('tipo');
             $table->string('descricao')->nullable();
             $table->double('valor');
+            $table->integer('usuario_id')->nullable()->unsigned();
+            $table->foreign('usuario_id')->references('id')->on('users');
+            $table->integer('pagamento_id')->nullable()->unsigned();
+            $table->foreign('pagamento_id')->references('id')->on('payments');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
