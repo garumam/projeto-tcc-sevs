@@ -25,7 +25,8 @@ class FinancialController extends Controller
         }
 
         $allfinancial = Financial::getAll();
-        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),$request->get('period'));
+
         if ($request->ajax())
             return view('dashboard.list.tables.table-financial', compact('allfinancial','financials'));
 

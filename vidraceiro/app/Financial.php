@@ -24,16 +24,45 @@ class Financial extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $period){
 
         $paginate = $paginate ?? 10;
+        $period = $period ?? 'hoje';
 
-        return self::where('descricao', 'like', '%' . $search . '%')
-            ->orWhere('tipo', 'like', '%' . $search . '%')
-            ->orWhereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            })
-            ->paginate($paginate);
+        $data_inicial = $data_final = date_format(date_create(today()), 'Y-m-d');
+
+        switch ($period){
+            case 'hoje':
+                break;
+            case 'semana':
+
+                $data_inicial = date('Y-m-d', strtotime("-6 days", strtotime($data_inicial)));
+
+                break;
+            case 'mes':
+
+                $data_inicial = date('Y-m-d', strtotime("-29 days", strtotime($data_inicial)));
+
+                break;
+        }
+
+        $queryBuilder = self::where(function ($c) use ($data_inicial,$data_final){
+                $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                    $q->where('data_pagamento','<=',$data_final);
+                    $q->where('data_pagamento','>=',$data_inicial);
+                })->orWhereDoesntHave('payment', function($q) use($data_inicial,$data_final){
+                    $q->whereDate('created_at','<=',$data_final)->where('created_at','>=',$data_inicial);
+                });
+            })->where(function ($c) use ($search) {
+                $c->where('descricao', 'like', '%' . $search . '%')
+                    ->orWhere('tipo', 'like', '%' . $search . '%')
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function findFinancialById($id){

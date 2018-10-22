@@ -84,16 +84,25 @@
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                             <label for="paginate">Mostrar</label>
                             <select id="paginate" name="paginate" class="custom-select"
-                                    onchange="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val())">
+                                    onchange="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val()+'&period='+$('#period').val())">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
                             </select>
                         </div>
+                        <div class="form-group col-12 col-sm-4 col-md-4 col-lg-2">
+                            <label for="period">Período</label>
+                            <select id="period" name="period" class="custom-select"
+                                    onchange="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val()+'&period='+$('#period').val())">
+                                <option value="hoje">Hoje</option>
+                                <option value="semana">Últimos 7 dias</option>
+                                <option value="mes">Últimos 30 dias</option>
+                            </select>
+                        </div>
                         <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
                             <label for="search">Pesquisar</label>
                             <input type="text" class="form-control"
-                                   onkeyup="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val())"
+                                   onkeyup="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val()+'&period='+$('#period').val())"
                                    value="{{ old('search') }}" id="search" name="search" placeholder="Pesquisar">
                         </div>
                     </div>
