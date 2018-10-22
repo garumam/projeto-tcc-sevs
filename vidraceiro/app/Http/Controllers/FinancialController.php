@@ -45,7 +45,7 @@ class FinancialController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $financial = Financial::createFinancial($request->all());
+        $financial = Financial::createFinancial(array_merge($request->all(),['usuario_id' => Auth::user()->id]));
         if ($financial) {
             $mensagem = '';
             if ($financial->tipo === 'RECEITA') {
