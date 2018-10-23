@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group col-md-12 mt-3 mb-2">
                             <label>Saldo: </label>
-                            <label>R${{$saldo}}</label>
+                            <label style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</label>
                         </div>
                     </div>
 

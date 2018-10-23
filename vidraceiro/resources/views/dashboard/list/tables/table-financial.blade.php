@@ -37,10 +37,10 @@
                 <td>{{ date_format(date_create($financial->create_at), 'd/m/Y') }}</td>
             @endif
             @if(!empty($user))
-                <td>{{ $user->name }}</td>
+                <td><span class="badge badge-primary">{{ $user->name }}</span></td>
                 @php $user = null; @endphp
             @else
-                <td>Excluído</td>
+                <td><span class="badge badge-dark">Excluído</span></td>
             @endif
             <td>
                 @if(!empty($sale))
