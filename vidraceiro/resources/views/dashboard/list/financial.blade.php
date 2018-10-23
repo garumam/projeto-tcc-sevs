@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="form-row col-12 m-0 formulario pb-0 justify-content-between">
+                    <div class="form-row col-12 m-0 formulario px-0 justify-content-between">
                         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-2">
                             <label for="paginate">Mostrar</label>
                             <select id="paginate" name="paginate" class="custom-select"
