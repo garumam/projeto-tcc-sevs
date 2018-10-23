@@ -428,7 +428,7 @@ $(document).ready(function () {
                         let altura = produto.data('altura');
                         let aluminioMedida = 0;
 
-                        switch(tipo_medida){
+                        switch (tipo_medida) {
                             case 'largura':
                                 aluminioMedida = largura;
                                 break;
@@ -980,6 +980,7 @@ $(document).ready(function () {
         }
         let search = null;
         let paginate = null;
+        let period = null;
         let host = window.location.href;
         let novaurl = null;
         if (idtab !== undefined) {
@@ -990,7 +991,8 @@ $(document).ready(function () {
         } else {
             search = $('#search').val();
             paginate = $('#paginate').val();
-            novaurl = host + '?search=' + search + '&paginate=' + paginate + '&page=' + paginacao;
+            period = $('#period').val();
+            novaurl = host + '?search=' + search + '&paginate=' + paginate + '&period=' + period + '&page=' + paginacao;
             ajaxPesquisaLoad(novaurl);
         }
         // window.history.pushState("", "", url);
