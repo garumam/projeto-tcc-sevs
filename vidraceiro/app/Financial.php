@@ -24,7 +24,7 @@ class Financial extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $period){
+    public function getWithSearchAndPagination($search, $paginate, $period, &$financialsByPeriod){
 
         $paginate = $paginate ?? 10;
         $period = $period ?? 'hoje';
@@ -84,6 +84,7 @@ class Financial extends Model
                     });
             });
 
+        $financialsByPeriod = $queryBuilder->get();
 
         return $queryBuilder->paginate($paginate);
     }

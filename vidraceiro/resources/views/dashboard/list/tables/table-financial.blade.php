@@ -1,3 +1,30 @@
+@php
+    $receitas = 0.00;
+    $despesas = 0.00;
+    foreach($financialsByPeriod as $financial){
+        if($financial->tipo === 'RECEITA'){
+            $receitas += $financial->valor;
+        }else{
+            $despesas += $financial->valor;
+        }
+    }
+    $saldo = $receitas - $despesas;
+@endphp
+<div class="form-group col-md-12 mb-2 mt-1 border">
+    <div class="form-group col-md-12 border-bottom mt-2 mb-2">
+        <label style="color:#28a745;">Total Receitas por busca: </label>
+        <label style="color:#28a745;">R${{$receitas}} </label>
+    </div>
+    <div class="form-group col-md-12 border-bottom mt-2 mb-2">
+        <label style="color:#dc3545;">Total Despesas por busca: </label>
+        <label style="color:#dc3545;">R${{$despesas}}</label>
+    </div>
+    <div class="form-group col-md-12 mt-3 mb-2">
+        <label>Saldo por busca: </label>
+        <label style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</label>
+    </div>
+</div>
+
 <table class="table table-hover">
     <thead>
 

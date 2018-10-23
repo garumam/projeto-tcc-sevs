@@ -23,15 +23,16 @@ class FinancialController extends Controller
         if(!Auth::user()->can('financeiro_listar', Financial::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
-
+        $financialsByPeriod = null;
         $allfinancial = Financial::getAll();
-        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),$request->get('period'));
+        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),$request->get('period'),$financialsByPeriod);
+
 
         if ($request->ajax())
-            return view('dashboard.list.tables.table-financial', compact('allfinancial','financials'));
+            return view('dashboard.list.tables.table-financial', compact('financialsByPeriod','financials'));
 
 
-        return view('dashboard.list.financial', compact('allfinancial','financials'))->with('title', 'Financeiro');
+        return view('dashboard.list.financial', compact('financialsByPeriod','allfinancial','financials'))->with('title', 'Financeiro');
 
     }
 
