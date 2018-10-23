@@ -51,21 +51,10 @@ class Financial extends Model
                 $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
                     $q->whereDate('data_pagamento','<=',$data_final);
                     $q->whereDate('data_pagamento','>=',$data_inicial);
-                });
-                $c->orWhere(function ($q) use ($data_inicial,$data_final){
-                    $q->whereNull('pagamento_id');
+                })->orWhereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
                     $q->whereDate('created_at','<=',$data_final);
                     $q->whereDate('created_at','>=',$data_inicial);
                 });
-
-                    /*->doesntHave('payment', 'or', function($q) use ($data_inicial,$data_final){
-                        $q->where('created_at','<=',$data_final);
-                        $q->where('created_at','>=',$data_inicial);
-                    });*/
-                /*$c->whereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
-                    $q->Where('created_at','<=',$data_final);
-                    $q->where('created_at','>=',$data_inicial);
-                });*/
 
             })->where(function ($c) use ($search) {
                 $c->where('descricao', 'like', '%' . $search . '%')
@@ -75,7 +64,7 @@ class Financial extends Model
                     });
             });
 
-        //dd($queryBuilder->toSql());
+
         return $queryBuilder->paginate($paginate);
     }
 
