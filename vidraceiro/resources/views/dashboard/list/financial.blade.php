@@ -97,6 +97,9 @@
                                 <option value="hoje" selected>Hoje</option>
                                 <option value="semana">Últimos 7 dias</option>
                                 <option value="mes">Últimos 30 dias</option>
+                                <option value="semestre">Últimos 180 dias</option>
+                                <option value="anual">Últimos 360 dias</option>
+                                <option value="tudo">Todos</option>
                             </select>
                         </div>
                         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">

@@ -44,19 +44,39 @@ class Financial extends Model
                 $data_inicial = date('Y-m-d', strtotime("-29 days", strtotime($data_inicial)));
 
                 break;
+            case 'semestre':
+
+                $data_inicial = date('Y-m-d', strtotime("-179 days", strtotime($data_inicial)));
+
+                break;
+            case 'anual':
+
+                $data_inicial = date('Y-m-d', strtotime("-359 days", strtotime($data_inicial)));
+
+                break;
+            case 'tudo':
+
+                $data_inicial = $data_final = null;
+
+                break;
         }
 
-        $queryBuilder = self::where(function ($c) use ($data_inicial,$data_final){
 
-                $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                    $q->whereDate('data_pagamento','<=',$data_final);
-                    $q->whereDate('data_pagamento','>=',$data_inicial);
-                })->orWhereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
-                    $q->whereDate('created_at','<=',$data_final);
-                    $q->whereDate('created_at','>=',$data_inicial);
-                });
+        $queryBuilder = self::when($data_inicial, function ($query) use ($data_inicial, $data_final) {
 
-            })->where(function ($c) use ($search) {
+                    return $query-> where(function ($c) use ($data_inicial,$data_final){
+
+                        $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                            $q->whereDate('data_pagamento','<=',$data_final);
+                            $q->whereDate('data_pagamento','>=',$data_inicial);
+                        })->orWhereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
+                            $q->whereDate('created_at','<=',$data_final);
+                            $q->whereDate('created_at','>=',$data_inicial);
+                        });
+
+                    });
+            })
+            ->where(function ($c) use ($search) {
                 $c->where('descricao', 'like', '%' . $search . '%')
                     ->orWhere('tipo', 'like', '%' . $search . '%')
                     ->orWhereHas('user', function ($q) use ($search) {
