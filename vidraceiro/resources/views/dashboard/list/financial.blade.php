@@ -94,7 +94,7 @@
                             <label for="period">Período</label>
                             <select id="period" name="period" class="custom-select"
                                     onchange="ajaxPesquisaLoad('{{url('financial')}}?search='+$('#search').val()+'&paginate='+$('#paginate').val()+'&period='+$('#period').val())">
-                                <option value="hoje">Hoje</option>
+                                <option value="hoje" selected>Hoje</option>
                                 <option value="semana">Últimos 7 dias</option>
                                 <option value="mes">Últimos 30 dias</option>
                             </select>

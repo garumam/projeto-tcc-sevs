@@ -47,12 +47,26 @@ class Financial extends Model
         }
 
         $queryBuilder = self::where(function ($c) use ($data_inicial,$data_final){
+
                 $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                    $q->where('data_pagamento','<=',$data_final);
-                    $q->where('data_pagamento','>=',$data_inicial);
-                })->orWhereDoesntHave('payment', function($q) use($data_inicial,$data_final){
-                    $q->whereDate('created_at','<=',$data_final)->where('created_at','>=',$data_inicial);
+                    $q->whereDate('data_pagamento','<=',$data_final);
+                    $q->whereDate('data_pagamento','>=',$data_inicial);
                 });
+                $c->orWhere(function ($q) use ($data_inicial,$data_final){
+                    $q->whereNull('pagamento_id');
+                    $q->whereDate('created_at','<=',$data_final);
+                    $q->whereDate('created_at','>=',$data_inicial);
+                });
+
+                    /*->doesntHave('payment', 'or', function($q) use ($data_inicial,$data_final){
+                        $q->where('created_at','<=',$data_final);
+                        $q->where('created_at','>=',$data_inicial);
+                    });*/
+                /*$c->whereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
+                    $q->Where('created_at','<=',$data_final);
+                    $q->where('created_at','>=',$data_inicial);
+                });*/
+
             })->where(function ($c) use ($search) {
                 $c->where('descricao', 'like', '%' . $search . '%')
                     ->orWhere('tipo', 'like', '%' . $search . '%')
@@ -61,7 +75,7 @@ class Financial extends Model
                     });
             });
 
-
+        //dd($queryBuilder->toSql());
         return $queryBuilder->paginate($paginate);
     }
 

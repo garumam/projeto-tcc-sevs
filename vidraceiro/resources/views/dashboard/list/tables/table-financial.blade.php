@@ -32,11 +32,13 @@
             @if(!empty($payment))
                 @php $sale = $payment->sale()->first(); @endphp
                 <td>{{ date_format(date_create($payment->data_pagamento), 'd/m/Y') }}</td>
+                @php $payment = null; @endphp
             @else
                 <td>{{ date_format(date_create($financial->create_at), 'd/m/Y') }}</td>
             @endif
             @if(!empty($user))
                 <td>{{ $user->name }}</td>
+                @php $user = null; @endphp
             @else
                 <td>Excluído</td>
             @endif
@@ -45,6 +47,7 @@
                     <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" type="button" title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
                     </a>
+                    @php $sale = null; @endphp
                 @endif
                 <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
                     <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>

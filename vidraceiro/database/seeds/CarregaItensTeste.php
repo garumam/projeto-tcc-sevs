@@ -305,7 +305,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         $payment = Payment::create([
-            'data_pagamento'=> '2018-08-29',
+            'data_pagamento'=> '2018-09-29',
             'valor_pago'=> 800.04,
             'venda_id'=> 1
         ]);
@@ -313,11 +313,13 @@ class CarregaItensTeste extends Seeder
         Financial::create([
             'tipo'=>'RECEITA',
             'descricao'=>'Pagamento de venda à vista.',
-            'valor'=>$payment->valor_pago
+            'valor'=>$payment->valor_pago,
+            'pagamento_id'=> $payment->id,
+            'usuario_id'=> 1
         ]);
 
         $payment = Payment::create([
-            'data_pagamento'=> '2018-09-28',
+            'data_pagamento'=> '2018-10-18',
             'valor_pago'=> 99.19,
             'venda_id'=> 2
         ]);
@@ -325,7 +327,9 @@ class CarregaItensTeste extends Seeder
         Financial::create([
             'tipo'=>'RECEITA',
             'descricao'=>'Parcelas pagas.',
-            'valor'=>$payment->valor_pago
+            'valor'=>$payment->valor_pago,
+            'pagamento_id'=> $payment->id,
+            'usuario_id'=> 1
         ]);
     }
 }

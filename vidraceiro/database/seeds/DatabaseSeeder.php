@@ -77,7 +77,9 @@ class DatabaseSeeder extends Seeder
             App\Financial::create([
                 'tipo'=>'RECEITA',
                 'descricao'=>'Pagamento de venda à vista.',
-                'valor'=>$payment->valor_pago
+                'valor'=>$payment->valor_pago,
+                'pagamento_id'=> $payment->id,
+                'usuario_id'=> 1
             ]);
         }
 
@@ -103,7 +105,9 @@ class DatabaseSeeder extends Seeder
             App\Financial::create([
                 'tipo'=>'RECEITA',
                 'descricao'=>'Parcelas pagas.',
-                'valor'=>$payment->valor_pago
+                'valor'=>$payment->valor_pago,
+                'pagamento_id'=> $payment->id,
+                'usuario_id'=> 1
             ]);
         }
 

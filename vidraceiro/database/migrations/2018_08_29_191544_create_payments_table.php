@@ -16,7 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->double('valor_pago');
-            $table->string('data_pagamento');
+            $table->date('data_pagamento');
             $table->integer('venda_id')->unsigned();
             $table->foreign('venda_id')->references('id')->on('sales')->onDelete('cascade');
             $table->timestamps();
