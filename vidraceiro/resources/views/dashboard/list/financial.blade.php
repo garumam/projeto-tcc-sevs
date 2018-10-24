@@ -65,19 +65,15 @@
                         }
                         $saldo = $receitas - $despesas;
                     @endphp
-                    <div class="form-group col-md-12 mb-2 mt-4 border">
-                        <div class="form-group col-md-12 border-bottom mt-2 mb-2">
-                            <label style="color:#28a745;">Total Receitas: </label>
-                            <label style="color:#28a745;">R${{$receitas}} </label>
-                        </div>
-                        <div class="form-group col-md-12 border-bottom mt-2 mb-2">
-                            <label style="color:#dc3545;">Total Despesas: </label>
-                            <label style="color:#dc3545;">R${{$despesas}}</label>
-                        </div>
-                        <div class="form-group col-md-12 mt-3 mb-2">
-                            <label>Saldo: </label>
-                            <label style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</label>
-                        </div>
+
+                    <div class="form-group col-md-12 mt-2 mb-2">
+                        <ul class="list-group">
+                            <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
+                            <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
+                            <li class="list-group-item" style="color:#191919;">Saldo:
+                                <span style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</span>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="form-row col-12 m-0 formulario px-0 justify-content-between">
@@ -113,7 +109,7 @@
                     <div class="table-responsive text-dark p-2" id="content">
                         @include('dashboard.list.tables.table-financial')
                     </div>
-                    
+
                 </div>
             </form>
 

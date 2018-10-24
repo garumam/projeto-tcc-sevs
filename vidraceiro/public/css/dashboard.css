@@ -86,6 +86,10 @@ body {
     text-decoration: none !important;
 }
 
+.list-group-item {
+   font-weight: 500;
+}
+
 /* auxiliar */
 
 .cor-texto {
