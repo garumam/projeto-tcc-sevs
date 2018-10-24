@@ -81,14 +81,18 @@ class CarregaItens extends Seeder
 
         Category::create([
             'nome' => 'Linha Temperado',
-            'tipo' => 'vidro',
-            'grupo_imagem' => 'todasimagens'
+            'tipo' => 'vidro'
         ]);
 
         Category::create([
             'nome' => 'Linha Suprema',
-            'tipo' => 'vidro',
-            'grupo_imagem' => 'todasimagens'
+            'tipo' => 'vidro'
+        ]);
+
+        Category::create([
+            'nome' => 'Peças',
+            'tipo' => 'componente',
+            'grupo_imagem' => 'componentes'
         ]);
 
         MProduct::create([
@@ -954,7 +958,7 @@ class CarregaItens extends Seeder
             'preco' => 1.0,
             'imagem' => null,
             'is_modelo' => 1,
-            'categoria_componente_id' => 8
+            'categoria_componente_id' => 13
         ]);
 
         $glassesModel = Glass::where('is_modelo',1)->get();

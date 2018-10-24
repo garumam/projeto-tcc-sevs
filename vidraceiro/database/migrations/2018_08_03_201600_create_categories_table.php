@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('tipo');
-            $table->string('grupo_imagem');
+            $table->string('grupo_imagem')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

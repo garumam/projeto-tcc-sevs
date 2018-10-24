@@ -197,7 +197,7 @@
                                         required>
                                     <option value="" selected>Selecione uma categoria</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($material)){{ $category->id == $material->categoria_aluminio_id ? 'selected' :''}} @endif>{{$category->nome}}</option>
+                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($material)){{ $category->id == $material->categoria_componente_id ? 'selected' :''}} @endif>{{$category->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
