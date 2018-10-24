@@ -68,6 +68,7 @@
 
                     <div class="form-group col-md-12 mt-2 mb-2">
                         <ul class="list-group">
+                            <li class="list-group-item active" style="background-color: #4264FB;">Total geral</li>
                             <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
                             <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
                             <li class="list-group-item" style="color:#191919;">Saldo:
@@ -75,7 +76,6 @@
                             </li>
                         </ul>
                     </div>
-
                     <div class="form-row col-12 m-0 formulario px-0 justify-content-between">
                         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-2">
                             <label for="paginate">Mostrar</label>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive text-dark p-2" id="content">
+                    <div class="table-responsive text-dark p-1" id="content">
                         @include('dashboard.list.tables.table-financial')
                     </div>
 

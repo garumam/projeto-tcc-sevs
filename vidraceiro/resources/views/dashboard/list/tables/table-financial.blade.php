@@ -13,8 +13,9 @@
 
 <div class="form-group p-0 col-md-12 mb-4">
     <ul class="list-group">
-        <li class="list-group-item" style="color:#28a745;">Total Receitas por busca: R${{$receitas}}</li>
-        <li class="list-group-item" style="color:#dc3545;">Total Despesas por busca: R${{$despesas}}</li>
+        <li class="list-group-item active" style="background-color: #4264FB;">Total por busca</li>
+        <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
+        <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
         <li class="list-group-item" style="color:#191919;">Saldo:
             <span style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</span>
         </li>
@@ -24,7 +25,6 @@
 
 <table class="table table-hover">
     <thead>
-
     <tr class="tabela-vidro">
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Tipo</th>
