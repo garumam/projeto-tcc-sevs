@@ -69,7 +69,9 @@ class Financial extends Model
                         $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
                             $q->whereDate('data_pagamento','<=',$data_final);
                             $q->whereDate('data_pagamento','>=',$data_inicial);
-                        })->orWhereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
+                        })
+                        ->orWhere(function ($q) use ($data_inicial,$data_final){
+                            $q->whereNull('pagamento_id');
                             $q->whereDate('created_at','<=',$data_final);
                             $q->whereDate('created_at','>=',$data_inicial);
                         });
@@ -83,7 +85,20 @@ class Financial extends Model
                         $q->where('name', 'like', '%' . $search . '%');
                     });
             });
+        /*dd(self::when($data_inicial, function ($query) use ($data_inicial, $data_final) {
 
+            return $query-> where(function ($c) use ($data_inicial,$data_final){
+
+                $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                    $q->whereDate('data_pagamento','<=',$data_final);
+                    $q->whereDate('data_pagamento','>=',$data_inicial);
+                })->orWhereDoesntHave('payment',function ($q) use ($data_inicial,$data_final){
+                    $q->whereDate('created_at','<=',$data_final);
+                    $q->whereDate('created_at','>=',$data_inicial);
+                });
+
+            });
+        })->get() );*/
         $financialsByPeriod = $queryBuilder->get();
 
         return $queryBuilder->paginate($paginate);
