@@ -43,7 +43,7 @@ class BudgetController extends Controller
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
         if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
@@ -58,8 +58,13 @@ class BudgetController extends Controller
         $clients = Client::getAllClients();
 
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
+        $budgetid = $request->id ?? null;
+        $budgetedit = null;
+        if ($budgetid != null){
+            $budgetedit = Budget::find($budgetid);
+        }
 
-        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients'))->with('title', 'Novo Orçamento');
+        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients','budgetedit'))->with('title', 'Novo Orçamento');
     }
 
     public function store(Request $request, $tab)
