@@ -38,32 +38,33 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="select-categoria" class="obrigatorio">Tipo</label>
-                        <select id="select-categoria" name="tipo" class="custom-select" required>
+                        <label for="select-tipo-categoria" class="obrigatorio">Tipo</label>
+                        <select id="select-tipo-categoria" name="tipo" class="custom-select" required>
                             @foreach($types as $value => $name)
                                 <option value="{{$value}}"
                                 @if(!empty($category)){{ $category->tipo == $value ? 'selected' :''}} @endif>{{$name}}</option>
-                                {{--<option value="0">Produto</option>--}}
-                                {{--<option value="1">Vidro</option>--}}
-                                {{--<option value="2">Aluminio</option>--}}
-                                {{--<option value="3">Componente</option>--}}
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="select-categoria" class="obrigatorio">Grupo de imagens</label>
-                        <select id="select-categoria" name="grupo_imagem" class="custom-select" required>
-                            @foreach($group_images as $value => $name)
-                                <option value="{{$value}}"
-                                @if(!empty($category)){{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
-                                {{--<option value="1">Box diversos</option>--}}
-                                {{--<option value="2">Box padrão</option>--}}
-                                {{--<option value="3">Ferragem 1000</option>--}}
-                                {{--<option value="4">Ferragem 3000</option>--}}
-                                {{--<option value="5">Kit sacada</option>--}}
-                                {{--<option value="6">Todas as imagens</option>--}}
-                            @endforeach
+                    <div id="select-image-group" class="form-group col-md-4">
+                        <label for="selectimagegroup" class="obrigatorio">Grupo de imagens</label>
+                        <select id="selectimagegroup" name="grupo_imagem" class="custom-select" required>
+                                <option id="option-vazia">Selecione..</option>
+                                @foreach($group_images_produto as $value => $name)
+                                    <option class="produtocategoria" value="{{$value}}"
+                                    @if(!empty($category)) {{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
+                                @endforeach
+
+                                @foreach($group_images_aluminio as $value => $name)
+                                    <option class="aluminiocategoria" value="{{$value}}"
+                                    @if(!empty($category)) {{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
+                                @endforeach
+
+                                @foreach($group_images_componente as $value => $name)
+                                    <option class="componentecategoria" value="{{$value}}"
+                                    @if(!empty($category)) {{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>
+                                @endforeach
                         </select>
                     </div>
 

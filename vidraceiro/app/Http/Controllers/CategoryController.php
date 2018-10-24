@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    protected $types, $group_images;
+    protected $types, $group_images_produto,$group_images_aluminio,$group_images_componente;
     protected $category;
     public function __construct(Category $category)
     {
@@ -23,16 +23,23 @@ class CategoryController extends Controller
 
         );
 
-        $this->group_images = array(
-            '' => 'Selecione..',
+        $this->group_images_produto = array(
             'boxdiversos' => 'Box diversos',
             'boxpadrao' => 'Box padrão',
             'ferragem1000' => 'Ferragem 1000',
             'ferragem3000' => 'Ferragem 3000',
             'kitsacada' => 'Kit sacada',
+            'todasimagens' => 'Todas as imagens'
+        );
+
+        $this->group_images_aluminio = array(
             'portaeportoes' => 'Porta e Portões',
             'suprema' => 'Suprema',
             'temperado8mm' => 'Temperado 8mm',
+            'todasimagens' => 'Todas as imagens'
+        );
+
+        $this->group_images_componente = array(
             'componentes' => 'Componentes',
             'todasimagens' => 'Todas as imagens'
         );
@@ -63,8 +70,11 @@ class CategoryController extends Controller
         }
 
         $types = $this->types;
-        $group_images = $this->group_images;
-        return view('dashboard.create.category', compact('types', 'group_images'))->with('title', 'Adicionar Categoria');
+
+        $group_images_produto = $this->group_images_produto;
+        $group_images_aluminio = $this->group_images_aluminio;
+        $group_images_componente = $this->group_images_componente;
+        return view('dashboard.create.category', compact('types', 'group_images_produto', 'group_images_aluminio', 'group_images_componente'))->with('title', 'Adicionar Categoria');
     }
 
     public function store(Request $request)
@@ -102,8 +112,10 @@ class CategoryController extends Controller
 
         $category = $this->category->findCategoryById($id);
         $types = $this->types;
-        $group_images = $this->group_images;
-        return view('dashboard.create.category', compact('category', 'types', 'group_images'))->with('title', 'Atualizar categoria');
+        $group_images_produto = $this->group_images_produto;
+        $group_images_aluminio = $this->group_images_aluminio;
+        $group_images_componente = $this->group_images_componente;
+        return view('dashboard.create.category', compact('category', 'types', 'group_images_produto', 'group_images_aluminio', 'group_images_componente'))->with('title', 'Atualizar categoria');
     }
 
 

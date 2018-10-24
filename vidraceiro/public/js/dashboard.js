@@ -168,6 +168,52 @@ $(document).ready(function () {
     });
     $('#select-categoria').trigger('change');
 
+    let contadorTipoCategoria = 0;
+    $('#select-tipo-categoria').change(function () {
+        let valueSelected = $('#select-tipo-categoria option:selected').val();
+        if(contadorTipoCategoria > 0){
+            $('#option-vazia').prop('selected', true);
+        }
+        contadorTipoCategoria++;
+
+        $('#select-image-group').attr('required', true).css("display", "block");
+
+        $('.produtocategoria').each(function () {
+            $(this).css("display", "none");
+        });
+
+        $('.aluminiocategoria').each(function () {
+            $(this).css("display", "none");
+        });
+
+        $('.componentecategoria').each(function () {
+            $(this).css("display", "none");
+        });
+
+        switch(valueSelected){
+            case 'produto':
+                $('.produtocategoria').each(function () {
+                    $(this).css("display", "block");
+                });
+                break;
+            case 'vidro':
+                $('#select-image-group').attr('required', false).css("display", "none");
+                break;
+            case 'aluminio':
+                $('.aluminiocategoria').each(function () {
+                    $(this).css("display", "block");
+                });
+                break;
+            case 'componente':
+                $('.componentecategoria').each(function () {
+                    $(this).css("display", "block");
+                });
+                break;
+        }
+
+    });
+    $('#select-tipo-categoria').trigger('change');
+
     $('#bt-material').attr("href", '/materials/glass/create');
 
     $('#bt-user-visible').click(function () {
