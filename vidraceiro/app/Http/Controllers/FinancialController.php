@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Installment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -23,16 +24,34 @@ class FinancialController extends Controller
         if(!Auth::user()->can('financeiro_listar', Financial::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
-        $financialsByPeriod = null;
-        $allfinancial = Financial::getAll();
-        $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),$request->get('period'),$financialsByPeriod);
+
+        $titulotabs = ['Caixa', 'Receber'];
+
+        if(!$request->ajax()){
+            $allfinancial = Financial::getAll();
+        }
+
+        if($request->has('caixa') || !$request->ajax()){
+            $financialsByPeriod = null;
+            $financials = $this->financial->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),$request->get('period'),$financialsByPeriod);
+        }
+
+        if($request->has('receber') || !$request->ajax()){
+            $allInstallments = null;
+            $installments = Installment::getPendingInstallmentsWithSearchAndPagination($request->get('search'),$request->get('paginate'),$allInstallments);
+        }
+
+        if ($request->ajax()){
+            if($request->has('caixa'))
+                return view('dashboard.list.tables.table-financial', compact('financialsByPeriod','financials'));
+
+            if($request->has('receber'))
+                return view('dashboard.list.tables.table-installments', compact('installments'));
+        }
 
 
-        if ($request->ajax())
-            return view('dashboard.list.tables.table-financial', compact('financialsByPeriod','financials'));
 
-
-        return view('dashboard.list.financial', compact('financialsByPeriod','allfinancial','financials'))->with('title', 'Financeiro');
+        return view('dashboard.list.financial', compact('allInstallments','installments','financialsByPeriod','allfinancial','financials','titulotabs'))->with('title', 'Financeiro');
 
     }
 

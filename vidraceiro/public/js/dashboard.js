@@ -986,7 +986,8 @@ $(document).ready(function () {
         if (idtab !== undefined) {
             paginate = $('#paginate' + idtab).val();
             search = $('#search' + idtab).val();
-            novaurl = host + '?' + idtab + '=1&search=' + search + '&paginate=' + paginate + '&page=' + paginacao;
+            period = $('#period').val();
+            novaurl = host + '?' + idtab + '=1&search=' + search + '&paginate=' + paginate + '&period=' + period + '&page=' + paginacao;
             ajaxPesquisaLoad(novaurl, idtab);
         } else {
             search = $('#search').val();

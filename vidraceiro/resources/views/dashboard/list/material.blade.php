@@ -79,10 +79,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
-                                    <label for="search">Pesquisar</label>
+                                    <label for="searchvidros">Pesquisar</label>
                                     <input type="text" class="form-control"
                                            onkeyup="ajaxPesquisaLoad('{{url('materials')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')"
-                                           value="{{ old('search') }}" id="searchvidros" name="search" placeholder="Pesquisar">
+                                           value="{{ old('searchvidros') }}" id="searchvidros" name="search" placeholder="Pesquisar">
                                 </div>
                             </div>
 

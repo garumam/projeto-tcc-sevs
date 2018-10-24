@@ -27,4 +27,22 @@ class Installment extends Model
     public static function getInstallmentsWherein(array $ids){
         return self::whereIn('id', $ids)->get();
     }
+
+    public static function getPendingInstallmentsWithSearchAndPagination($search,$paginate,&$notPaginateInstallments){
+
+        $paginate = $paginate ?? 10;
+
+        $queryBuilder = self::where('status_parcela', 'ABERTO')
+            ->whereHas('sale',function ($s) use ($search){
+                $s->whereHas('budget',function ($b) use ($search){
+                    $b->whereHas('client',function ($c) use ($search){
+                        $c->where('nome','like', '%' . $search . '%');
+                    });
+                });
+            });
+
+        $notPaginateInstallments = $queryBuilder->get();
+
+        return $queryBuilder->paginate($paginate);
+    }
 }
