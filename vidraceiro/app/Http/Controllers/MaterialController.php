@@ -10,6 +10,7 @@ use App\Provider;
 use App\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
@@ -79,6 +80,9 @@ class MaterialController extends Controller
                 $nome = 'vidro';
                 break;
             case 'aluminum':
+                $portaeportoes = $this->retornaNomes('/img/portaeportoes/');
+                $suprema = $this->retornaNomes('/img/suprema/');
+                $temperado8mm = $this->retornaNomes('/img/temperado8mm/');
                 $categories = Category::getAllCategoriesByType('aluminio');
                 $nome = 'alumínio';
                 break;
@@ -89,7 +93,7 @@ class MaterialController extends Controller
             default:
                 return redirect()->back();
         }
-        return view('dashboard.create.material', compact('type', 'categories', 'providers', 'espessuras'))->with('title', 'Criar ' . $nome);
+        return view('dashboard.create.material', compact('type', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm'))->with('title', 'Criar ' . $nome);
     }
 
     public function store(Request $request, $type)
@@ -204,6 +208,9 @@ class MaterialController extends Controller
                 $tabela = 'glasses';
                 break;
             case 'aluminum':
+                $portaeportoes = $this->retornaNomes('/img/portaeportoes/');
+                $suprema = $this->retornaNomes('/img/suprema/');
+                $temperado8mm = $this->retornaNomes('/img/temperado8mm/');
                 $material = $this->aluminum->findAluminumById($id);
                 $categories = Category::getAllCategoriesByType('aluminio');
                 $nome = 'alumínio';
@@ -229,7 +236,7 @@ class MaterialController extends Controller
             }
         }
 
-        return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras'))->with('title', 'Atualizar ' . $nome);
+        return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm'))->with('title', 'Atualizar ' . $nome);
     }
 
 
@@ -344,6 +351,16 @@ class MaterialController extends Controller
 
         return redirect()->back()->with('error', "Erro ao deletar $tipoNome");
 
+    }
+
+    public function retornaNomes($folder)
+    {
+        $filename = [];
+        $files = File::files(public_path() . $folder);
+        foreach ($files as $file) {
+            $filename[] = pathinfo($file, PATHINFO_BASENAME);
+        }
+        return $filename;
     }
 
 

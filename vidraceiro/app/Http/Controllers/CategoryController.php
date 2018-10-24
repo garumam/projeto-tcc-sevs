@@ -30,6 +30,9 @@ class CategoryController extends Controller
             'ferragem1000' => 'Ferragem 1000',
             'ferragem3000' => 'Ferragem 3000',
             'kitsacada' => 'Kit sacada',
+            'portaeportoes' => 'Porta e Portões',
+            'suprema' => 'Suprema',
+            'temperado8mm' => 'Temperado 8mm',
             'todasimagens' => 'Todas as imagens'
         );
 

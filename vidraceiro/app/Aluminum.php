@@ -17,6 +17,7 @@ class Aluminum extends Model
         'preco',
         'tipo_medida',
         'espessura',
+        'imagem',
         'is_modelo',
         'maluminum_id',
         'categoria_aluminio_id',

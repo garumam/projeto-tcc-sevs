@@ -23,6 +23,7 @@ class CreateAluminumsTable extends Migration
             $table->double('preco')->nullable();
             $table->string('tipo_medida');
             $table->integer('espessura')->nullable();
+            $table->string('imagem')->nullable();
             $table->integer('is_modelo');
             $table->integer('maluminum_id')->nullable();
             $table->integer('categoria_aluminio_id')->unsigned();

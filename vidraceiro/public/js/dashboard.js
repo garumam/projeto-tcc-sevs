@@ -70,6 +70,9 @@ $(document).ready(function () {
         let ferragem1000 = $('#ferragem1000');
         let ferragem3000 = $('#ferragem3000');
         let kitsacada = $('#kitsacada');
+        let portaeportoes = $('#portaeportoes');
+        let suprema = $('#suprema');
+        let temperado8mm = $('#temperado8mm');
         let selecionecategoria = $('#selecione-categoria');
         selecionecategoria.css("display", "none");
         boxdiversos.css("display", "none");
@@ -77,6 +80,9 @@ $(document).ready(function () {
         ferragem1000.css("display", "none");
         ferragem3000.css("display", "none");
         kitsacada.css("display", "none");
+        portaeportoes.css("display", "none");
+        suprema.css("display", "none");
+        temperado8mm.css("display", "none");
 
         switch (valueSelected) {
             case 'todasimagens':
@@ -115,6 +121,30 @@ $(document).ready(function () {
                     break;
             case 'kitsacada':
                 kitsacada.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
+                });
+                if (valueSelected != 'todasimagens')
+                    break;
+            case 'portaeportoes':
+                portaeportoes.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
+                });
+                if (valueSelected != 'todasimagens')
+                    break;
+            case 'suprema':
+                suprema.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
+                });
+                if (valueSelected != 'todasimagens')
+                    break;
+            case 'temperado8mm':
+                temperado8mm.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',

@@ -83,12 +83,23 @@
 
                     @if($type == 'aluminum')
 
-                            <div class="form-group col-md-4">
+                            {{--<div class="form-group col-md-4">
                                 <label for="categoria_aluminio_id" class="obrigatorio">Categoria</label>
                                 <select class="custom-select" id="categoria_aluminio_id" name="categoria_aluminio_id" required>
                                     @foreach ($categories as $category)
                                         <option value="{{$category->id}}"
                                         @if(!empty($material)){{ $material->category->id == $category->id ? 'selected' :''}} @endif>{{$category->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>--}}
+
+                            <div class="form-group col-md-4">
+                                <label for="select-categoria" class="obrigatorio">Categoria</label>
+                                <select id="select-categoria" name="categoria_aluminio_id" class="custom-select"
+                                        required>
+                                    <option value="" selected>Selecione uma categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($material)){{ $category->id == $material->categoria_aluminio_id ? 'selected' :''}} @endif>{{$category->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -151,6 +162,19 @@
                                 </select>
                             </div>
 
+
+                        <div class="form-group col-md-4">
+                            <label>Imagem</label>
+                            <div class="imagem-modal">
+                                <img id="image-selecionar" data-produto="{{!empty($material) ? true : false}}" src="{{ !empty($material) ? $material->imagem : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
+                                     alt="Responsive image">
+                                <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
+                                   data-target="#imagensModal">Selecionar</a>
+                                <label for="url-image"></label>
+                                <input type="text" id="url-image" name="imagem" style="display: none;">
+                            </div>
+
+                        </div>
 
                     @endif
 
@@ -217,4 +241,75 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="imagensModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Imagens</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div id="gridImagens" class="row">
+
+
+
+                            <p id="selecione-categoria" style="color: #191919; font-weight: 600;">Selecione uma
+                                categoria</p>
+
+                            @if($type == 'aluminum')
+                                <div id="portaeportoes" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Porta e Portões</h4>
+                                    @for($i = 0; $i < count($portaeportoes); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ '/img/portaeportoes/'.$portaeportoes[$i]}}"
+                                                 class="img-fluid img-thumbnail images-modal"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
+
+                                <div id="suprema" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Suprema</h4>
+                                    @for($i = 0; $i < count($suprema); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ '/img/suprema/'.$suprema[$i]}}"
+                                                 class="img-fluid img-thumbnail images-modal"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
+
+                                <div id="temperado8mm" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Temperado 8mm</h4>
+                                    @for($i = 0; $i < count($temperado8mm); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ '/img/temperado8mm/'.$temperado8mm[$i]}}"
+                                                 class="img-fluid img-thumbnail images-modal"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
+                            @endif
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custom" data-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
