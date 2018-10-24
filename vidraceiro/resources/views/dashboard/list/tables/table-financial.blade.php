@@ -13,7 +13,7 @@
 
 <div class="form-group p-0 col-md-12 mb-4">
     <ul class="list-group">
-        <li class="list-group-item active" style="background-color: #4264FB;">Total por busca</li>
+        <li class="list-group-item active" style="background-color: #4264FB; border-color: #4264FB">Total por busca</li>
         <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
         <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
         <li class="list-group-item" style="color:#191919;">Saldo:

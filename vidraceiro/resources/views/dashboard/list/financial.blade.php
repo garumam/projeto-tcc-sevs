@@ -68,7 +68,7 @@
 
                     <div class="form-group col-md-12 mt-2 mb-2">
                         <ul class="list-group">
-                            <li class="list-group-item active" style="background-color: #4264FB;">Total geral</li>
+                            <li class="list-group-item active" style="background-color: #4264FB; border-color: #4264FB">Total geral</li>
                             <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
                             <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
                             <li class="list-group-item" style="color:#191919;">Saldo:
