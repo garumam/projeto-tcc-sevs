@@ -33,6 +33,7 @@ class CategoryController extends Controller
             'portaeportoes' => 'Porta e Portões',
             'suprema' => 'Suprema',
             'temperado8mm' => 'Temperado 8mm',
+            'componentes' => 'Componentes',
             'todasimagens' => 'Todas as imagens'
         );
 

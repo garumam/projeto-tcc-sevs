@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
+        <th class="noborder text-center" scope="col" style="padding: 12px 30px 12px 16px;">Imagem</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Produto</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Descrição</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Categoria</th>
@@ -12,6 +13,9 @@
     @foreach($mProducts as $mProduct)
         <tr>
             <th scope="row">{{ $mProduct->id }}</th>
+
+            <td class="text-center"><img style="height: 5rem;" src="{{ $mProduct->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
+
             <td>{{ $mProduct->nome }}</td>
             <td>{{ $mProduct->descricao }}</td>
             <td>{{ $mProduct->category->nome }}</td>

@@ -58,19 +58,19 @@ class CarregaItens extends Seeder
         Category::create([
             'nome' => 'Linha Temperado',
             'tipo' => 'aluminio',
-            'grupo_imagem' => 'todasimagens'
+            'grupo_imagem' => 'temperado8mm'
         ]);
 
         Category::create([
             'nome' => 'Linha Suprema',
             'tipo' => 'aluminio',
-            'grupo_imagem' => 'todasimagens'
+            'grupo_imagem' => 'suprema'
         ]);
 
         Category::create([
             'nome' => 'Porta & Portão',
             'tipo' => 'aluminio',
-            'grupo_imagem' => 'todasimagens'
+            'grupo_imagem' => 'portaeportoes'
         ]);
 
         Category::create([

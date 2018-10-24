@@ -87,13 +87,14 @@ class MaterialController extends Controller
                 $nome = 'alumínio';
                 break;
             case 'component':
+                $componentes = $this->retornaNomes('/img/componentes/');
                 $categories = Category::getAllCategoriesByType('componente');
                 $nome = 'componente';
                 break;
             default:
                 return redirect()->back();
         }
-        return view('dashboard.create.material', compact('type', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm'))->with('title', 'Criar ' . $nome);
+        return view('dashboard.create.material', compact('type', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm','componentes'))->with('title', 'Criar ' . $nome);
     }
 
     public function store(Request $request, $type)
@@ -217,6 +218,7 @@ class MaterialController extends Controller
                 $tabela = 'aluminums';
                 break;
             case 'component':
+                $componentes = $this->retornaNomes('/img/componentes/');
                 $material = $this->component->findComponentById($id);
                 $categories = Category::getAllCategoriesByType('componente');
                 $nome = 'componente';
@@ -236,7 +238,7 @@ class MaterialController extends Controller
             }
         }
 
-        return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm'))->with('title', 'Atualizar ' . $nome);
+        return view('dashboard.create.material', compact('type', 'material', 'categories', 'providers', 'espessuras','portaeportoes','suprema','temperado8mm','componentes'))->with('title', 'Atualizar ' . $nome);
     }
 
 

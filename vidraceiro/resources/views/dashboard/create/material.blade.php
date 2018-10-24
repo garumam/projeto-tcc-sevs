@@ -166,7 +166,7 @@
                         <div class="form-group col-md-4">
                             <label>Imagem</label>
                             <div class="imagem-modal">
-                                <img id="image-selecionar" data-produto="{{!empty($material) ? true : false}}" src="{{ !empty($material) ? $material->imagem : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
+                                <img id="image-selecionar" data-produto="{{!empty($material) ? true : false}}" src="{{ !empty($material) ? $material->imagem??'/img/semimagem.png' : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
                                      alt="Responsive image">
                                 <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
                                    data-target="#imagensModal">Selecionar</a>
@@ -181,12 +181,23 @@
 
                     @if($type == 'component')
 
-                            <div class="form-group col-md-4">
+                            {{--<div class="form-group col-md-4">
                                 <label for="categoria_componente_id" class="obrigatorio">Categoria</label>
                                 <select class="custom-select" id="categoria_componente_id" name="categoria_componente_id" required>
                                     @foreach ($categories as $category)
                                         <option value="{{$category->id}}"
                                         @if(!empty($material)){{ $material->category->id == $category->id ? 'selected' :''}} @endif>{{$category->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>--}}
+
+                            <div class="form-group col-md-4">
+                                <label for="select-categoria" class="obrigatorio">Categoria</label>
+                                <select id="select-categoria" name="categoria_componente_id" class="custom-select"
+                                        required>
+                                    <option value="" selected>Selecione uma categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" data-grupoImagem="{{$category->grupo_imagem}}" @if(!empty($material)){{ $category->id == $material->categoria_aluminio_id ? 'selected' :''}} @endif>{{$category->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -208,6 +219,19 @@
                                 <input type="number" step='0.001' class="form-control" id="preco" name="preco" placeholder="preço"
                                        value="{{$material->preco or old('preco')}}">
                             </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Imagem</label>
+                            <div class="imagem-modal">
+                                <img id="image-selecionar" data-produto="{{!empty($material) ? true : false}}" src="{{ !empty($material) ? $material->imagem??'/img/semimagem.png' : '/img/semimagem.png' }}" class="img-fluid img-thumbnail"
+                                     alt="Responsive image">
+                                <a href="#" class="btn btn-md btn-primary btn-custom" data-toggle="modal"
+                                   data-target="#imagensModal">Selecionar</a>
+                                <label for="url-image"></label>
+                                <input type="text" id="url-image" name="imagem" style="display: none;">
+                            </div>
+
+                        </div>
 
                     @endif
 
@@ -300,6 +324,20 @@
                                 </div>
                             @endif
 
+                            @if($type == 'component')
+
+                                <div id="componentes" style="display: none;">
+                                    <h4 class="text-black-50 col-12 mt-2 pl-1">Componentes</h4>
+                                    @for($i = 0; $i < count($componentes); $i++ )
+                                        <div class="col-">
+                                            <img id="{{$i}}" src="{{ '/img/componentes/'.$componentes[$i]}}"
+                                                 class="img-fluid img-thumbnail images-modal"
+                                                 alt="Responsive image">
+                                        </div>
+                                    @endfor
+                                </div>
+
+                            @endif
                         </div>
 
                     </div>

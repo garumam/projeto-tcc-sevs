@@ -2,6 +2,7 @@
     <thead>
     <tr class="tabela-aluminio">
         <th class="noborder" scope="col">Id</th>
+        <th class="noborder text-center" scope="col">Imagem</th>
         <th class="noborder" scope="col">Perfil</th>
         <th class="noborder" scope="col">Categoria</th>
         <th class="noborder" scope="col">Medida</th>
@@ -16,6 +17,9 @@
     @foreach($aluminums as $aluminum)
         <tr class="tabela-aluminio">
             <th scope="row">{{ $aluminum->id }}</th>
+
+            <td class="text-center"><img style="height: 5rem;" src="{{ $aluminum->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
+
             <td>{{ $aluminum->perfil }}</td>
             <td>{{ $aluminum->category->nome }} {{ $aluminum->espessura ? $aluminum->espessura.'mm' : ''}}</td>
             <td>{{ $aluminum->medida ? $aluminum->medida.'m' : ''}}</td>

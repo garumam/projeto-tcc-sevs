@@ -73,6 +73,7 @@ $(document).ready(function () {
         let portaeportoes = $('#portaeportoes');
         let suprema = $('#suprema');
         let temperado8mm = $('#temperado8mm');
+        let componentes = $('#componentes');
         let selecionecategoria = $('#selecione-categoria');
         selecionecategoria.css("display", "none");
         boxdiversos.css("display", "none");
@@ -83,6 +84,7 @@ $(document).ready(function () {
         portaeportoes.css("display", "none");
         suprema.css("display", "none");
         temperado8mm.css("display", "none");
+        componentes.css("display", "none");
 
         switch (valueSelected) {
             case 'todasimagens':
@@ -145,6 +147,14 @@ $(document).ready(function () {
                     break;
             case 'temperado8mm':
                 temperado8mm.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'justify-content': 'space-between',
+                });
+                if (valueSelected != 'todasimagens')
+                    break;
+            case 'componentes':
+                componentes.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
                     'justify-content': 'space-between',

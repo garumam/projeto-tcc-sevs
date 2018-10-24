@@ -3,6 +3,7 @@
     <!--INICIO HEAD DO COMPONENTE-->
     <tr class="tabela-componente">
         <th class="noborder" scope="col">Id</th>
+        <th class="noborder text-center" scope="col">Imagem</th>
         <th class="noborder" scope="col">Nome</th>
         <th class="noborder" scope="col">Categoria</th>
         <th class="noborder" scope="col">Preço</th>
@@ -17,6 +18,9 @@
     @foreach($components as $component)
         <tr class="tabela-componente">
             <th scope="row">{{ $component->id }}</th>
+
+            <td class="text-center"><img style="height: 5rem;" src="{{ $component->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
+
             <td>{{ $component->nome }}</td>
             <td>{{ $component->category->nome }}</td>
             <td>R${{ $component->preco }}</td>
