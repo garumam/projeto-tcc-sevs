@@ -58,10 +58,18 @@ class BudgetController extends Controller
         $clients = Client::getAllClients();
 
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
+
         $budgetid = $request->id ?? null;
-        $budgetedit = null;
+
         if ($budgetid != null){
-            $budgetedit = Budget::find($budgetid);
+            $budget = new Budget();
+            $budget = $budget->findBudgetById($budgetid);
+            if($budget){
+                $budget->makeCopyWithWaitingState();
+                return redirect(route('budgets.index'))->with('success','Orçamento copiado com sucesso!');
+            }
+            return redirect(route('budgets.index'))->with('error','Não foi possível realizar a cópia');
+
         }
 
         return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients','budgetedit'))->with('title', 'Novo Orçamento');

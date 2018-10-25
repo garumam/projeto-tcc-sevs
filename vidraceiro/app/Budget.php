@@ -181,5 +181,40 @@ class Budget extends Model
 
     }
 
+    public function makeCopyWithWaitingState(){
+
+
+        $budgetcriado = $this->replicate();
+        $budgetcriado->status = 'AGUARDANDO';
+        $budgetcriado->ordem_id = null;
+        $budgetcriado->push();
+
+        foreach ($this->products as $product){
+
+            $productcriado = $product->replicate();
+            $productcriado->budget_id = $budgetcriado->id;
+            $productcriado->push();
+
+            foreach ($product->glasses as $glass){
+                $glasscriado = $glass->replicate();
+                $glasscriado->product_id = $productcriado->id;
+                $glasscriado->save();
+            }
+
+            foreach ($product->aluminums as $aluminum){
+                $aluminumcriado = $aluminum->replicate();
+                $aluminumcriado->product_id = $productcriado->id;
+                $aluminumcriado->save();
+            }
+
+            foreach ($product->components as $component){
+                $componentcriado = $component->replicate();
+                $componentcriado->product_id = $productcriado->id;
+                $componentcriado->save();
+            }
+
+        }
+
+    }
 
 }
