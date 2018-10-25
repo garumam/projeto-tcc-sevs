@@ -123,7 +123,7 @@
                             <div class="form-group col-md-4">
                                 <label for="data">Data</label>
                                 <input type="date" class="form-control" id="data" name="data" placeholder="00/00/0000"
-                                       value="{{$budgetedit->data or old('data')}}">
+                                       value="{{$budgetedit->data or date('Y-m-d', time())}}">
                             </div>
 
                             <div class="form-group col-md-4">
