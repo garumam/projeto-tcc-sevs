@@ -55,6 +55,7 @@
                         data-peso="{{$aluminum->peso}}"
                         data-preco="{{$aluminum->preco}}"
                         data-qtd="{{$aluminum->qtd}}"
+                        data-imagem="{{$aluminum->imagem??'/img/semimagem.png'}}"
                         data-tipomedida="{{$aluminum->tipo_medida}}"
                         value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
             @endforeach
@@ -64,6 +65,7 @@
             @foreach($components as $component)
                 <option data-qtd="{{$component->qtd}}"
                         data-preco="{{$component->preco}}"
+                        data-imagem="{{$component->imagem??'/img/semimagem.png'}}"
                         value="{{$component->id}}">{{$component->nome}}</option>
             @endforeach
         </select>
@@ -98,6 +100,7 @@
                 <!--INICIO HEAD DO ALUMINIO-->
                 <tr id="topo-aluminio" style="display: none;">
                     <th class="noborder" scope="col">Id</th>
+                    <th class="noborder text-center" scope="col">Imagem</th>
                     <th class="noborder" scope="col">Perfil</th>
                     <th class="noborder" scope="col">Medida</th>
                     <th class="noborder" scope="col">Peso</th>
@@ -110,6 +113,7 @@
                 <!--INICIO HEAD DO COMPONENTE-->
                 <tr id="topo-componente" style="display: none;">
                     <th class="noborder" scope="col">Id</th>
+                    <th class="noborder text-center" scope="col">Imagem</th>
                     <th class="noborder" scope="col">Nome</th>
                     <th class="noborder" scope="col">Preço</th>
                     <th class="noborder" scope="col">Qtd</th>
@@ -192,6 +196,7 @@
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->aluminums : $mproductedit->aluminums as $aluminumP)
                         <tr id="linha-aluminio-{{$aluminumP->id}}-{{$contador}}">
                             <th scope="row">{{$aluminumP->id}}</th>
+                            <td class="text-center"><img style="height: 5rem;" src="{{ $aluminumP->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
                             <td>{{$aluminumP->perfil}}</td>
                             <td>{{$aluminumP->medida.'M'}}</td>
                             <td>{{$aluminumP->peso.'Kg'}}</td>
@@ -233,6 +238,7 @@
                             <tr id="linha-aluminio-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
                                 <th scope="row">{{$aluminumP->id}}</th>
+                                <td class="text-center"><img style="height: 5rem;" src="{{ $aluminumP->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
                                 <td>{{$aluminumP->perfil}}</td>
                                 <td>{{$aluminumP->medida.'M'}}</td>
                                 <td>{{$aluminumP->peso.'Kg'}}</td>
@@ -263,8 +269,9 @@
                     @foreach(!empty(session('mproductcriado')) ? Session::get('mproductcriado')->components : $mproductedit->components as $componentP)
                         <tr id="linha-componente-{{$componentP->id}}-{{$contador}}">
                             <th scope="row">{{$componentP->id}}</th>
+                            <td class="text-center"><img style="height: 5rem;" src="{{ $componentP->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
                             <td>{{$componentP->nome}}</td>
-                            <td>{{$componentP->preco}}</td>
+                            <td>{{'R$'.$componentP->preco}}</td>
                             <td>{{$componentP->qtd}}</td>
                             <td>
                                 <button id="linha-componente-{{$componentP->id}}-{{$contador++}}"
@@ -300,8 +307,9 @@
                             <tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
                                 <th scope="row">{{$componentP->id}}</th>
+                                <td class="text-center"><img style="height: 5rem;" src="{{ $componentP->imagem??'/img/semimagem.png' }}" class="img-fluid img-thumbnail"></td>
                                 <td>{{$componentP->nome}}</td>
-                                <td>{{$componentP->preco}}</td>
+                                <td>{{'R$'.$componentP->preco}}</td>
                                 <td>{{$componentP->qtd}}</td>
                                 <td>
 

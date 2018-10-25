@@ -509,6 +509,7 @@ $(document).ready(function () {
                     let medida = selectaluminio.find('option:selected').data('medida');
                     let peso = selectaluminio.find('option:selected').data('peso');
                     let qtdaluminio = selectaluminio.find('option:selected').data('qtd');
+                    let imagemaluminio = selectaluminio.find('option:selected').data('imagem');
                     let produto = $('#select-produto-material option:selected');
                     if (produto.data('largura') !== undefined) {
                         //MEDIDA M LINEAR GERADA ASSIM (largura * 2 + altura * 2)
@@ -545,6 +546,7 @@ $(document).ready(function () {
                         tbody.append(
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
+                            "<td class='text-center'><img style='height: 5rem;' src=" + imagemaluminio + " class='img-fluid img-thumbnail'> </td>" +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + medida + 'M' + '</td>' +
                             '<td>' + peso + 'Kg' + '</td>' +
@@ -565,6 +567,7 @@ $(document).ready(function () {
                         tbody.append(
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
+                            "<td class='text-center'><img style='height: 5rem;' src=" + imagemaluminio + " class='img-fluid img-thumbnail'> </td>" +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + medida + 'M' + '</td>' +
                             '<td>' + peso + 'Kg' + '</td>' +
@@ -589,6 +592,7 @@ $(document).ready(function () {
                     idinput = $('.id-material-componente').attr('value');
                     let qtd = selectcomponente.find('option:selected').data('qtd');
                     let precocomponente = selectcomponente.find('option:selected').data('preco');
+                    let imagemcomponente = selectcomponente.find('option:selected').data('imagem');
                     tbody = $('#tabela-componente');
                     pegaIdLinha = $('#linha-componente-' + idselect).attr('id');
                     criaId = 'linha-componente-' + idselect + '-' + contador++;
@@ -599,6 +603,7 @@ $(document).ready(function () {
                         tbody.append(
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
+                            "<td class='text-center'><img style='height: 5rem;' src=" + imagemcomponente + " class='img-fluid img-thumbnail'> </td>" +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + 'R$' + precocomponente + '</td>' +
                             '<td>' + qtd + '</td>' +
@@ -617,6 +622,7 @@ $(document).ready(function () {
                         tbody.append(
                             '<tr id="' + criaId + '" data-produtoid="' + produtoselecionado + '">' +
                             '<th scope="row">' + idselect + '</th>' +
+                            "<td class='text-center'><img style='height: 5rem;' src=" + imagemcomponente + " class='img-fluid img-thumbnail'> </td>" +
                             '<td>' + nomeselect + '</td>' +
                             '<td>' + 'R$' + precocomponente + '</td>' +
                             '<td>' + qtd + '</td>' +
