@@ -17,7 +17,7 @@
                 $client = $installment->sale()->first()->budget()->first()->client()->first();
             @endphp
             <td>{{$client->nome}}</td>
-            <td>{{$installment->valor_parcela}}</td>
+            <td style="color:#28a745;">R${{$installment->valor_parcela}}</td>
             <td>{{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}</td>
 
             <td>
