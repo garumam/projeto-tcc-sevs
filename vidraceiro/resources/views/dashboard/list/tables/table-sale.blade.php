@@ -7,6 +7,7 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Pagamento</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor da venda</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor pago</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Usuário</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
     </tr>
     </thead>
@@ -23,6 +24,10 @@
                 @php $valorpago += $payment->valor_pago; @endphp
             @endforeach
             <td>{{$valorpago}}</td>
+
+            @php $user = $sale->user()->first(); @endphp
+            <td>{{ !empty($user)? $user->name : 'Excluído' }}</td>
+
             <td>
 
                 {{--@php

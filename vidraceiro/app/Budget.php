@@ -22,7 +22,8 @@ class Budget extends Model
         'total',
         'margem_lucro',
         'ordem_id',
-        'cliente_id'
+        'cliente_id',
+        'usuario_id'
     ];
 
     public function products(){
@@ -44,6 +45,10 @@ class Budget extends Model
         return $this->hasOne(Sale::class, 'orcamento_id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
 
     public function getWithSearchAndPagination($search, $paginate){
 
@@ -51,6 +56,9 @@ class Budget extends Model
 
         return self::where('nome', 'like', '%' . $search . '%')
             ->orWhere('status', 'like', '%' . $search . '%')
+            ->orWhereHas('user',function ($q) use ($search){
+                $q->where('name','like','%' . $search . '%');
+            })
             ->paginate($paginate);
     }
 
@@ -181,12 +189,13 @@ class Budget extends Model
 
     }
 
-    public function makeCopyWithWaitingState(){
+    public function makeCopyWithWaitingState($user_id){
 
 
         $budgetcriado = $this->replicate();
         $budgetcriado->status = 'AGUARDANDO';
         $budgetcriado->ordem_id = null;
+        $budgetcriado->usuario_id = $user_id;
         $budgetcriado->push();
 
         foreach ($this->products as $product){

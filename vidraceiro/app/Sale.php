@@ -11,7 +11,8 @@ class Sale extends Model
         'tipo_pagamento',
         'qtd_parcelas',
         'data_venda',
-        'orcamento_id'
+        'orcamento_id',
+        'usuario_id'
     ];
 
     public function budget(){
@@ -24,6 +25,10 @@ class Sale extends Model
 
     public function payments(){
         return $this->hasMany(Payment::class, 'venda_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'usuario_id');
     }
 
     public function storages(){
@@ -136,6 +141,9 @@ class Sale extends Model
                     $c->where('nome', 'like', '%' . $search . '%');
                 });
             })->orWhere('tipo_pagamento', 'like', '%' . $search . '%')
+            ->orWhereHas('user',function ($q) use ($search){
+                $q->where('name','like','%' . $search . '%');
+            })
             ->paginate($paginate);
     }
 

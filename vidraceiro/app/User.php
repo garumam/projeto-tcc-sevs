@@ -41,6 +41,14 @@ class User extends Authenticatable
         return $this->hasMany(Financial::class, 'usuario_id');
     }
 
+    public function budgets(){
+        return $this->hasMany(Budget::class, 'usuario_id');
+    }
+
+    public function sales(){
+        return $this->hasMany(Sale::class, 'usuario_id');
+    }
+
     public function addRole($role)
     {
         if (!empty($role)) {

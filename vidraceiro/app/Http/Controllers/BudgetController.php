@@ -65,7 +65,7 @@ class BudgetController extends Controller
             $budget = new Budget();
             $budget = $budget->findBudgetById($budgetid);
             if($budget){
-                $budget->makeCopyWithWaitingState();
+                $budget->makeCopyWithWaitingState(Auth::user()->id);
                 return redirect(route('budgets.index'))->with('success','Orçamento copiado com sucesso!');
             }
             return redirect(route('budgets.index'))->with('error','Não foi possível realizar a cópia');
@@ -98,7 +98,7 @@ class BudgetController extends Controller
 
                 $margemlucro = $request->margem_lucro ?? 100;
 
-                $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0]));
+                $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
 
                 if ($budgetcriado)
                     return redirect()->back()->with('success', 'Orçamento criado com sucesso')

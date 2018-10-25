@@ -6,6 +6,7 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Data</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Total</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Status</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Usuário</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
     </tr>
     </thead>
@@ -19,6 +20,8 @@
             <td><span class="badge {{$budget->status === 'AGUARDANDO'?'badge-secondary'
                                         :($budget->status === 'APROVADO'?'badge-success':'badge-primary')}}">{{$budget->status}}</span>
             </td>
+            @php $user = $budget->user()->first(); @endphp
+            <td>{{ !empty($user)? $user->name : 'Excluído' }}</td>
             <td>
                 {{--@php
                     $ordem = $budget->order()->first();

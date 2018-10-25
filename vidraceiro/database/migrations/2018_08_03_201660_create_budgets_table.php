@@ -29,6 +29,8 @@ class CreateBudgetsTable extends Migration
             $table->double('margem_lucro')->nullable();
             $table->integer('ordem_id')->nullable()->unsigned();
             $table->integer('cliente_id')->nullable()->unsigned();
+            $table->integer('usuario_id')->nullable()->unsigned();
+            $table->foreign('usuario_id')->references('id')->on('users');
             $table->foreign('ordem_id')->references('id')->on('orders');
             $table->foreign('cliente_id')->references('id')->on('clients')->onDelete('cascade');
             $table->softDeletes();

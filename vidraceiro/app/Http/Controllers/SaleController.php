@@ -88,7 +88,7 @@ class SaleController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $sale = $this->sale->createSale($request->all());
+        $sale = $this->sale->createSale(array_merge($request->all(),['usuario_id'=>Auth::user()->id]));
 
         if ($request->has('valor_parcela')) {
 
