@@ -21,7 +21,7 @@
                                         :($budget->status === 'APROVADO'?'badge-success':'badge-primary')}}">{{$budget->status}}</span>
             </td>
             @php $user = $budget->user()->first(); @endphp
-            <td>{{ !empty($user)? $user->name : 'Excluído' }}</td>
+            <td><span class="badge {{ !empty($user)? 'badge-primary' : 'badge-dark' }}">{{ !empty($user)? $user->name : 'Excluído' }}</span></td>
             <td>
                 {{--@php
                     $ordem = $budget->order()->first();

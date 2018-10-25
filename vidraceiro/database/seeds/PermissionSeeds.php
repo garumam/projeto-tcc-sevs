@@ -202,7 +202,7 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
-        if (!Permission::where('nome', '=', 'venda_atualizar')->count()) {
+        /*if (!Permission::where('nome', '=', 'venda_atualizar')->count()) {
             Permission::create([
                 'nome' => 'venda_atualizar',
                 'descricao' => 'Atualizar Vendas'
@@ -226,7 +226,7 @@ class PermissionSeeds extends Seeder
                 'nome' => 'venda_deletar',
                 'descricao' => 'Remover Vendas'
             ]);
-        }
+        }*/
 
         //Permissões de pagamento
 

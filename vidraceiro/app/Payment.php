@@ -22,7 +22,7 @@ class Payment extends Model
 
     }
 
-    public function deletePayment(){
+    /*public function deletePayment(){
         return self::delete();
-    }
+    }*/
 }

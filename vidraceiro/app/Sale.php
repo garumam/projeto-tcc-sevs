@@ -47,17 +47,17 @@ class Sale extends Model
 
     }
 
-    public function updateSale(array $input){
+    /*public function updateSale(array $input){
 
         return self::update($input);
 
-    }
+    }*/
 
-    public function deleteSale(){
+    /*public function deleteSale(){
 
         return self::delete();
 
-    }
+    }*/
 
     public function findSaleById($id){
 
@@ -108,11 +108,11 @@ class Sale extends Model
 
     }
 
-    public function havePayments(){
+    /*public function havePayments(){
 
         return !empty($this->payments()->first());
 
-    }
+    }*/
 
     public function attachStorageAndReservedQuantity($storageId,$reserved){
         return $this->storages()->sync([$storageId => ['qtd_reservada' => $reserved]], false);
@@ -122,13 +122,13 @@ class Sale extends Model
         return $this->storages()->where($column, $value)->first();
     }
 
-    public function deleteSaleInstallments(){
+    /*public function deleteSaleInstallments(){
         return $this->installments()->delete();
-    }
+    }*/
 
-    public function getSalePayment(){
+    /*public function getSalePayment(){
         return $this->payments()->first();
-    }
+    }*/
 
     public function getWithSearchAndPagination($search, $paginate){
 
@@ -147,7 +147,7 @@ class Sale extends Model
             ->paginate($paginate);
     }
 
-    public function getSaleInstallmentsWithSearchAndPagination($search, $paginate){
+   /* public function getSaleInstallmentsWithSearchAndPagination($search, $paginate){
         //ESTE METODO NÃO ESTÁ MAIS SENDO UTILIZADO POR ENQUANTO
         $paginate = $paginate ?? 10;
 
@@ -157,7 +157,7 @@ class Sale extends Model
             })->whereHas('installments', function ($q){
                 $q->where('status_parcela', 'ABERTO');
             })->paginate($paginate);
-    }
+    }*/
 
     public function useStorage(){
 

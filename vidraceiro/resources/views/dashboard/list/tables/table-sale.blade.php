@@ -26,7 +26,7 @@
             <td>{{$valorpago}}</td>
 
             @php $user = $sale->user()->first(); @endphp
-            <td>{{ !empty($user)? $user->name : 'Excluído' }}</td>
+            <td><span class="badge {{ !empty($user)? 'badge-primary' : 'badge-dark' }}">{{ !empty($user)? $user->name : 'Excluído' }}</span></td>
 
             <td>
 
