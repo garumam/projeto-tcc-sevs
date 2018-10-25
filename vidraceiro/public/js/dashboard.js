@@ -171,12 +171,14 @@ $(document).ready(function () {
     let contadorTipoCategoria = 0;
     $('#select-tipo-categoria').change(function () {
         let valueSelected = $('#select-tipo-categoria option:selected').val();
+
         if(contadorTipoCategoria > 0){
             $('#option-vazia').prop('selected', true);
         }
         contadorTipoCategoria++;
 
-        $('#select-image-group').attr('required', true).css("display", "block");
+        $('#selectimagegroup').attr('required', true);
+        $('#image-group').css("display", "block");
 
         $('.produtocategoria').each(function () {
             $(this).css("display", "none");
@@ -197,7 +199,8 @@ $(document).ready(function () {
                 });
                 break;
             case 'vidro':
-                $('#select-image-group').attr('required', false).css("display", "none");
+                $('#selectimagegroup').attr('required', false);
+                $('#image-group').css("display", "none");
                 break;
             case 'aluminio':
                 $('.aluminiocategoria').each(function () {

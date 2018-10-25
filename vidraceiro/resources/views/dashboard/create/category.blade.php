@@ -47,10 +47,10 @@
                         </select>
                     </div>
 
-                    <div id="select-image-group" class="form-group col-md-4">
+                    <div id="image-group" class="form-group col-md-4">
                         <label for="selectimagegroup" class="obrigatorio">Grupo de imagens</label>
                         <select id="selectimagegroup" name="grupo_imagem" class="custom-select" required>
-                                <option id="option-vazia">Selecione..</option>
+                                <option id="option-vazia" value>Selecione..</option>
                                 @foreach($group_images_produto as $value => $name)
                                     <option class="produtocategoria" value="{{$value}}"
                                     @if(!empty($category)) {{ $category->grupo_imagem == $value ? 'selected' :''}} @endif>{{$name}}</option>

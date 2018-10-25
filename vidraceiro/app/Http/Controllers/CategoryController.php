@@ -82,11 +82,16 @@ class CategoryController extends Controller
         if(!Auth::user()->can('modelo_adicionar', Category::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
+        $extra = [];
+        if($request->tipo !== 'vidro')
+            $extra = ['grupo_imagem' => 'required|string|max:255'];
 
-        $validado = $this->rules_category($request->all());
+        $validado = $this->rules_category($request->all(),$extra);
+
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
+
         $category = $this->category->createCategory($request->all());
 
         if ($category)
@@ -131,7 +136,12 @@ class CategoryController extends Controller
             return redirect(route('categories.index'))->withErrors($validado);
         }
 
-        $validado = $this->rules_category($request->all());
+        $extra = [];
+        if($request->tipo !== 'vidro')
+            $extra = ['grupo_imagem' => 'required|string|max:255'];
+
+        $validado = $this->rules_category($request->all(),$extra);
+
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
@@ -158,13 +168,16 @@ class CategoryController extends Controller
         }
     }
 
-    public function rules_category(array $data)
+    public function rules_category(array $data, array $extra)
     {
-        $validator = Validator::make($data, [
-            'nome' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'grupo_imagem' => 'required|string|max:255'
-        ]);
+        $validator = Validator::make($data, array_merge(
+            [
+                'nome' => 'required|string|max:255',
+                'tipo' => 'required|string|max:255'
+            ],
+            $extra
+            )
+        );
 
         return $validator;
     }
