@@ -185,6 +185,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li {{ Request::is('companies') ? 'class=active' : '' }}>
+                        <a href="{{ route('companies.index') }}">
+                            <i class="pe-7s-rocket"></i>
+                            Restaurar
+                        </a>
+                    </li>
                     <li>
                         <i class="pe-7s-rocket"></i>
                         <div class="borda-top"></div>
