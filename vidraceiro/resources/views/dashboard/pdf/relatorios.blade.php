@@ -337,6 +337,55 @@
 
     @break
 
+    @case('providers')
+
+
+    <h3>Relatório de fornecedores</h3>
+    <h4>Quantidade encontrada: {{count($providers->toArray())}}</h4>
+
+    @forelse($providers as $provider)
+        @php
+            $telefone = $provider->telefone;
+            $celular = $provider->celular;
+            if($telefone !== null){
+            // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+            $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+            }
+
+            if($celular !== null){
+            $celular="(".substr($celular,0,2).") ".substr($celular,2,-4)." - ".substr($celular,-4);
+            }
+
+            $documento = $provider->cnpj;
+            $mask = '##.###.###/####-##';
+
+        @endphp
+
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$provider->id}}</td>
+
+                    <td class="texto">
+                        <b>Nome:</b> {{$provider->nome .' |'}}
+                        <b>Cnpj: </b>{{App\Http\Controllers\PdfController::mask($documento,$mask).' |'}}
+                        <b>Situação:</b> {{$provider->situacao .' |'}}
+                        <b>Telefone:</b> {{$telefone??'Não possui.'}}{{' |'}}
+                        <b>Celular:</b> {{$celular??'Não possui.'}}{{' |'}}
+                        <b>E-mail:</b> {{$provider->email??'Não possui.'}}{{' |'}}
+                        <b>Cadastrado em:</b> {{date_format(date_create($provider->created_at), 'd/m/Y')}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum cliente encontrado com as características passadas.</p>
+    @endforelse
+
+
+    @break
+
     @default
     <p>Ocorreu um erro inesperado, reinicie a página!</p>
 @endswitch

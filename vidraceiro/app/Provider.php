@@ -69,4 +69,32 @@ class Provider extends Model
     public static function getAll(){
         return self::all();
     }
+
+    public static function filterProviders($request){
+
+        $situacao = $request->situacao;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $providers = new Provider();
+
+        if($data_inicial !== null || $data_final !== null){
+
+            $providers = self::where(function ($q) use ($data_inicial,$data_final){
+                if($data_final !== null)
+                    $q->whereDate('created_at','<=',$data_final);
+
+                if($data_inicial !== null)
+                    $q->whereDate('created_at','>=',$data_inicial);
+            });
+        }
+
+        if($situacao === 'TODAS'){
+            $providers = $providers->get();
+        }else{
+            $providers = $providers->where('situacao',$situacao)->get();
+        }
+
+        return $providers;
+
+    }
 }

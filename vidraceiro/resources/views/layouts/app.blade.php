@@ -183,6 +183,16 @@
                                     <i class="fas fa-angle-double-right pr-1"></i>Clientes
                                 </a>
                             </li>
+                            <li {{ Request::is('pdf/providers') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'providers']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Fornecedores
+                                </a>
+                            </li>
+                            <li {{ Request::is('pdf/sales') ? 'class=active' : '' }}>
+                                <a href="{{ route('pdf.index',['tipo'=>'sales']) }}">
+                                    <i class="fas fa-angle-double-right pr-1"></i>Vendas
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li {{ Request::is('companies') ? 'class=active' : '' }}>

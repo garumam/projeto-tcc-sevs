@@ -99,6 +99,20 @@ class PdfController extends Controller
                 return view('dashboard.create.relatorios', compact('status'))->with('title', 'Relatório de Clientes')->with('tipo',$tipo);
 
                 break;
+            case 'providers':
+
+                /*if(!Auth::user()->can('fornecedor_relatorio', Client::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }*/
+
+                $situacoes = [
+                    'TODAS'=>'Todas',
+                    'ativo'=>'Ativo',
+                    'desativado'=>'Desativado'
+                ];
+                return view('dashboard.create.relatorios', compact('situacoes'))->with('title', 'Relatório de Fornecedores')->with('tipo',$tipo);
+
+                break;
         }
 
     }
@@ -232,6 +246,20 @@ class PdfController extends Controller
 
 
                 break;
+            case 'providers':
+
+                /*if(!Auth::user()->can('fornecedor_relatorio', Provider::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }*/
+
+                $providers = Provider::filterProviders($request);
+
+                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('providers','tipo'));
+                $nomearquivo = 'fornecedor-relatório.pdf';
+
+
+                break;
+
         }
 
         return $pdf->stream($nomearquivo);
