@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class ReajusteParcelas extends Command
 {
@@ -11,7 +12,7 @@ class ReajusteParcelas extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'reajuste:parcelas';
 
     /**
      * The console command description.
@@ -37,6 +38,6 @@ class ReajusteParcelas extends Command
      */
     public function handle()
     {
-        //
+        return \DB::table('budgets')->delete();
     }
 }
