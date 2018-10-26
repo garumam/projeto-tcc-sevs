@@ -18,12 +18,12 @@
             <td>{{$sale->budget->nome}}</td>
             <td>{{$sale->budget->client->nome or 'Anônimo'}}</td>
             <td><span class="badge {{$sale->tipo_pagamento === 'A VISTA'? 'badge-secondary':'badge-warning'}}">{{$sale->tipo_pagamento}}</span></td>
-            <td>{{$sale->budget->total}}</td>
+            <td>R${{$sale->budget->total}}</td>
             @php $valorpago = 0; @endphp
             @foreach($sale->payments as $payment)
                 @php $valorpago += $payment->valor_pago; @endphp
             @endforeach
-            <td>{{$valorpago}}</td>
+            <td style="color: #28a745;">R${{$valorpago}}</td>
 
             @php $user = $sale->user()->first(); @endphp
             <td><span class="badge {{ !empty($user)? 'badge-primary' : 'badge-dark' }}">{{ !empty($user)? $user->name : 'Excluído' }}</span></td>
