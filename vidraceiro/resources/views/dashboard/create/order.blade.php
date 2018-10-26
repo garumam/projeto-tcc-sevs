@@ -46,7 +46,7 @@
                     <div class="form-group col-md-4">
                         <label for="data_inicial" class="obrigatorio">Data inicial</label>
                         <input type="date" class="form-control" id="data_inicial" name="data_inicial"
-                               value="{{$order->data_inicial or old('data_inicial')}}"
+                               value="{{$order->data_inicial or date('Y-m-d', time())}}"
                                required>
                     </div>
 

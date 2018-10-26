@@ -261,7 +261,12 @@
                         <b>Tipo:</b> {{$financial->tipo .' |'}}
                         <b>Descrição:</b> {{$financial->descricao??'Sem descrição!' .' |'}}
                         <b>Valor:</b> {{'R$'.$financial->valor.' |'}}
-                        <b>Adicionada em:</b> {{date_format(date_create($financial->created_at), 'd/m/Y')}}
+                        @php $payment = $financial->payment()->first(); @endphp
+                        @if(!empty($payment))
+                            <b>Adicionada em:</b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
+                        @else
+                            <b>Adicionada em:</b> {{date_format(date_create($financial->created_at), 'd/m/Y')}}
+                        @endif
                     </td>
                 </tr>
 

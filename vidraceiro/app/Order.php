@@ -78,12 +78,12 @@ class Order extends Model
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $totalentrou = $dataentrou = false;
-        if($totalde < $totalate){
+
+        if($totalde !== null || $totalate !== null){
             $totalentrou = true;
         }
 
-        if(strtotime($data_inicial) < strtotime($data_final)){
-
+        if($data_inicial !== null || $data_final !== null){
             $dataentrou = true;
         }
 
@@ -91,11 +91,23 @@ class Order extends Model
 
             $orders =  self::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
                 if($dataentrou){
-                    $query->whereBetween('data_inicial', [$data_inicial,$data_final]);
+                    $query->where(function ($q) use ($data_inicial,$data_final){
+                        if($data_final !== null)
+                            $q->whereDate('data_inicial','<=',$data_final);
+
+                        if($data_inicial !== null)
+                            $q->whereDate('data_inicial','>=',$data_inicial);
+                    });
                 }
 
                 if($totalentrou){
-                    $query->whereBetween('total', [$totalde,$totalate]);
+                    $query->where(function ($q) use ($totalde,$totalate){
+                        if($totalate !== null)
+                            $q->where('total','<=',$totalate);
+
+                        if($totalde !== null)
+                            $q->where('total','>=',$totalde);
+                    });
                 }
             });
         }

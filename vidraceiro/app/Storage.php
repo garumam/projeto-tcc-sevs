@@ -76,21 +76,52 @@ class Storage extends Model
                 $components = self::with('component')->where('component_id', '!=', null);
             }
         }
-        if($qtd_de < $qtd_ate){
-            if($material === 'TODOS'){
-                $glasses = $glasses->whereBetween('metros_quadrados', [$qtd_de,$qtd_ate]);
-                $aluminums = $aluminums->whereBetween('qtd', [$qtd_de,$qtd_ate]);
-                $components = $components->whereBetween('qtd', [$qtd_de,$qtd_ate]);
-            }else{
-                if($material === 'glass_id'){
-                    $glasses = $glasses->whereBetween('metros_quadrados', [$qtd_de,$qtd_ate]);
-                }elseif($material === 'aluminum_id'){
-                    $aluminums = $aluminums->whereBetween('qtd', [$qtd_de,$qtd_ate]);
-                }elseif($material === 'component_id'){
-                    $components = $components->whereBetween('qtd', [$qtd_de,$qtd_ate]);
-                }
+
+        if($qtd_de !== null || $qtd_ate !== null){
+
+            switch($material){
+                case 'TODOS':
+                case 'glass_id':
+
+                    $glasses = $glasses->where(function ($q) use ($qtd_de,$qtd_ate){
+                        if($qtd_ate !== null)
+                            $q->where('metros_quadrados','<=',$qtd_ate);
+
+                        if($qtd_de !== null)
+                            $q->where('metros_quadrados','>=',$qtd_de);
+                    });
+
+                    if($material !== 'TODOS')
+                        break;
+                case 'aluminum_id':
+
+                    $aluminums = $aluminums->where(function ($q) use ($qtd_de,$qtd_ate){
+                        if($qtd_ate !== null)
+                            $q->where('qtd','<=',$qtd_ate);
+
+                        if($qtd_de !== null)
+                            $q->where('qtd','>=',$qtd_de);
+                    });
+
+                    if($material !== 'TODOS')
+                        break;
+                case 'component_id':
+
+                    $components = $components->where(function ($q) use ($qtd_de,$qtd_ate){
+                        if($qtd_ate !== null)
+                            $q->where('qtd','<=',$qtd_ate);
+
+                        if($qtd_de !== null)
+                            $q->where('qtd','>=',$qtd_de);
+                    });
+
+                    if($material !== 'TODOS')
+                        break;
             }
+
         }
+
+
         if($ordenar !== 'nao') {
             if ($material === 'TODOS') {
                 $glasses = $glasses->orderBy('metros_quadrados',$ordenar);

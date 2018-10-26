@@ -124,12 +124,12 @@ class Financial extends Model
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $valorentrou = $dataentrou = false;
-        if($valor_inicial < $valor_final){
+
+        if($valor_inicial !== null || $valor_final !== null){
             $valorentrou = true;
         }
 
-        if(strtotime($data_inicial) < strtotime($data_final)){
-
+        if($data_inicial !== null || $data_final !== null){
             $dataentrou = true;
         }
 
@@ -137,11 +137,41 @@ class Financial extends Model
 
             $financials =  self::where(function ($query) use ($data_inicial,$data_final, $valor_inicial,$valor_final,$valorentrou,$dataentrou){
                 if($dataentrou){
-                    $query->whereBetween('created_at', [$data_inicial,$data_final]);
+
+
+                    $query-> where(function ($c) use ($data_inicial,$data_final){
+
+                        $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                            if($data_final !== null)
+                                $q->whereDate('data_pagamento','<=',$data_final);
+
+                            if($data_inicial !== null)
+                                $q->whereDate('data_pagamento','>=',$data_inicial);
+                        })
+                            ->orWhere(function ($q) use ($data_inicial,$data_final){
+                                $q->whereNull('pagamento_id');
+
+                                if($data_final !== null)
+                                    $q->whereDate('created_at','<=',$data_final);
+
+                                if($data_inicial !== null)
+                                    $q->whereDate('created_at','>=',$data_inicial);
+                            });
+
+                    });
+
+
                 }
 
                 if($valorentrou){
-                    $query->whereBetween('valor', [$valor_inicial,$valor_final]);
+
+                    $query->where(function ($q) use ($valor_inicial,$valor_final){
+                        if($valor_final !== null)
+                            $q->where('valor','<=',$valor_final);
+
+                        if($valor_inicial !== null)
+                            $q->where('valor','>=',$valor_inicial);
+                    });
                 }
             });
         }
