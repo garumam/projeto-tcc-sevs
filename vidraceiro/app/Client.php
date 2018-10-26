@@ -111,8 +111,15 @@ class Client extends Model
         $data_final = $request->data_final;
         $clients = new Client();
 
-        if(strtotime($data_inicial) < strtotime($data_final)){
-            $clients = self::whereBetween('created_at', [$data_inicial,$data_final]);
+        if($data_inicial !== null || $data_final !== null){
+
+            $clients = self::where(function ($q) use ($data_inicial,$data_final){
+                if($data_final !== null)
+                    $q->whereDate('created_at','<=',$data_final);
+
+                if($data_inicial !== null)
+                    $q->whereDate('created_at','>=',$data_inicial);
+            });
         }
 
         if($status === 'TODOS'){
