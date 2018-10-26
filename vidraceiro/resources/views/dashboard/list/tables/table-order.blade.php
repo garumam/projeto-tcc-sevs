@@ -20,7 +20,7 @@
                                         :(($order->situacao === 'CONCLUIDA'?'badge-primary' :'badge-dark')))}}">{{ucfirst($order->situacao)}}</span></td>
             <td>{{date_format(date_create($order->data_inicial), 'd/m/Y')}}</td>
             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
-            <td>R${{$order->total}}</td>
+            <td style="color: #28a745;">R${{$order->total}}</td>
             <td>
                 <a class="btn-link" href="{{ route('orders.show',['id'=> $order->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
