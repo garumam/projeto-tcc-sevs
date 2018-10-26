@@ -41,17 +41,10 @@
     @foreach($financials as $financial)
         <tr class="tabela-vidro">
             <th scope="row">{{ $financial->id }}</th>
-            @if($financial->tipo === 'RECEITA')
-                <td><span class="badge badge-success">Receita</span></td>
-            @else
-                <td><span class="badge badge-danger">Despesa</span></td>
-            @endif
+            <td><span class="badge badge-{{$financial->tipo == 'RECEITA' ? 'success' : 'danger'}}">Receita</span></td>
             <td>{{ $financial->descricao??'' }}</td>
-            @if($financial->tipo === 'RECEITA')
-                <td style="color:#28a745;">R${{ $financial->valor }}</td>
-            @else
-                <td style="color:#dc3545;">R${{ $financial->valor }}</td>
-            @endif
+            <td style="{{$financial->tipo === 'RECEITA' ? 'color:#28a745;' : 'color:#dc3545;'}}">
+                R${{ $financial->valor }}</td>
             @php $payment = $financial->payment()->first(); $user = $financial->user()->first(); @endphp
             @if(!empty($payment))
                 @php $sale = $payment->sale()->first(); @endphp

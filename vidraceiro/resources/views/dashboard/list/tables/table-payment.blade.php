@@ -24,8 +24,8 @@
             <td>{{$sale->budget->nome}}</td>
             <td>{{$sale->budget->client->nome or 'Anônimo'}}</td>
             <td><span class="badge {{$sale->tipo_pagamento === 'A VISTA'? 'badge-secondary':'badge-warning'}}">{{$sale->tipo_pagamento}}</span></td>
-            <td>{{$sale->budget->total}}</td>
-            <td>@if(empty($sale->installments()->where('status_parcela','ABERTO')->first())) <span class="badge badge-success">PAGO</span> @else {{$faltapagar}} @endif</td>
+            <td style="color: #28a745;">R${{$sale->budget->total}}</td>
+            <td>@if(empty($sale->installments()->where('status_parcela','ABERTO')->first())) <span class="badge badge-success">PAGO</span> @else <span style="color:#dc3545;">R${{$faltapagar}}</span> @endif</td>
             <td>
                 <a class="btn-link" href="{{ route('sales.pay',['id'=> $sale->id]) }}">
                     <button class="btn btn-success mb-1 card-shadow-1dp d-flex"

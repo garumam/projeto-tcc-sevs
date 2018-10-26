@@ -90,8 +90,8 @@
                                 <tr>
                                     <th scope="row">{{$contador}}</th>
                                     <td>{{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}</td>
-                                    <td>{{$installment->valor_parcela}}</td>
-                                    <td>{{$installment->status_parcela}}</td>
+                                    <td style="color: #28a745;">R${{$installment->valor_parcela}}</td>
+                                    <td><span class="badge badge-{{$installment->status_parcela == 'ABERTO' ? 'danger' : 'success'}}">{{$installment->status_parcela}}</span></td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
                                         <label class="form-check-label" for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
@@ -103,15 +103,15 @@
 
                             <tr>
                                 <th scope="row">1</th>
-                                <td>{{$sale->budget->total}}</td>
+                                <td style="color: #28a745;">R${{$sale->budget->total}}</td>
                                 @if(empty($sale->payments()->first()))
-                                    <td>Pagamento pendente</td>
+                                    <td><span class="badge badge-danger">Pagamento pendente</span></td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" id="aVista" name="pagar">
                                         <label class="form-check-label" for="aVista">Pagar</label>
                                     </td>
                                 @else
-                                    <td>Pago</td>
+                                    <td><span class="badge badge-success">Pago</span></td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" id="aVista" checked disabled>
                                         <label class="form-check-label" for="aVista">Pago</label>
