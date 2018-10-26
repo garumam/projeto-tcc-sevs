@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('reajuste:parcelas')->daily()->timezone('America/Sao_Paulo');
+        $schedule->command('reajuste:parcelas')->everyMinute()->withoutOverlapping();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Budget;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -38,6 +39,8 @@ class ReajusteParcelas extends Command
      */
     public function handle()
     {
-        return \DB::table('budgets')->delete();
+        $budget = Budget::find(1);
+        $novo = $budget->replicate();
+        return $novo->save();
     }
 }
