@@ -250,4 +250,58 @@ class Sale extends Model
 
     }
 
+    public static function filterSales($request){
+
+        $sales = new Sale();
+        $formas_pagamento = $request->tipo_pagamento;
+        $totalde = $request->valor_inicial;
+        $totalate = $request->valor_final;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $totalentrou = $dataentrou = false;
+
+        if($totalde !== null || $totalate !== null){
+            $totalentrou = true;
+        }
+
+        if($data_inicial !== null || $data_final !== null){
+            $dataentrou = true;
+        }
+
+        if($totalentrou || $dataentrou){
+            $sales =  self::where(function ($query) use ($data_inicial,$data_final, $totalde,$totalate,$totalentrou,$dataentrou){
+                if($dataentrou){
+                    $query->where(function ($q) use ($data_inicial,$data_final){
+                        if($data_final !== null)
+                            $q->whereDate('data_venda','<=',$data_final);
+
+                        if($data_inicial !== null)
+                            $q->whereDate('data_venda','>=',$data_inicial);
+                    });
+                }
+
+                if($totalentrou){
+                    $query->where(function ($q) use ($totalde,$totalate){
+
+                        $q->whereHas('budget',function ($b) use ($totalde,$totalate){
+                            if($totalate !== null)
+                                $b->where('total','<=',$totalate);
+
+                            if($totalde !== null)
+                                $b->where('total','>=',$totalde);
+                        });
+
+                    });
+                }
+            });
+        }
+
+        if($formas_pagamento === 'TODAS'){
+            $sales = $sales->get();
+        }else{
+            $sales = $sales->where('tipo_pagamento',$formas_pagamento)->get();
+        }
+        return $sales;
+    }
+
 }

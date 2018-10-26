@@ -380,7 +380,42 @@
             </table>
         </div>
     @empty
-        <p>Nenhum cliente encontrado com as características passadas.</p>
+        <p>Nenhum fornecedor encontrado com as características passadas.</p>
+    @endforelse
+
+
+    @break
+
+    @case('sales')
+
+
+    <h3>Relatório de vendas</h3>
+    <h4>Quantidade encontrada: {{count($sales->toArray())}}</h4>
+
+    @forelse($sales as $sale)
+        @php
+            $budget = $sale->budget()->first();
+            $client = $budget->client()->first();
+        @endphp
+
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$sale->id}}</td>
+
+                    <td class="texto">
+                        <b>Orçamento utilizado:</b> {{$budget->nome .' |'}}
+                        <b>Cliente: </b>{{$client->nome??'Anônimo'}}{{' |'}}
+                        <b>Forma de pagamento:</b> {{$sale->tipo_pagamento .' |'}}
+                        <b>Valor da venda:</b> {{$budget->total}}{{' |'}}
+                        <b>Data da venda:</b> {{date_format(date_create($sale->data_venda), 'd/m/Y')}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhuma venda encontrada com as características passadas.</p>
     @endforelse
 
 

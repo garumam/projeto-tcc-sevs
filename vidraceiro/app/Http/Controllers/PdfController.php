@@ -101,9 +101,9 @@ class PdfController extends Controller
                 break;
             case 'providers':
 
-                /*if(!Auth::user()->can('fornecedor_relatorio', Client::class)){
+                if(!Auth::user()->can('fornecedor_relatorio', Provider::class)){
                     return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-                }*/
+                }
 
                 $situacoes = [
                     'TODAS'=>'Todas',
@@ -111,6 +111,20 @@ class PdfController extends Controller
                     'desativado'=>'Desativado'
                 ];
                 return view('dashboard.create.relatorios', compact('situacoes'))->with('title', 'Relatório de Fornecedores')->with('tipo',$tipo);
+
+                break;
+            case 'sales':
+
+                if(!Auth::user()->can('venda_relatorio', Sale::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
+                $formas_pagamento = [
+                    'TODAS'=>'Todas',
+                    'A VISTA'=>'À vista',
+                    'A PRAZO'=>'A prazo'
+                ];
+                return view('dashboard.create.relatorios', compact('formas_pagamento'))->with('title', 'Relatório de Vendas')->with('tipo',$tipo);
 
                 break;
         }
@@ -248,14 +262,27 @@ class PdfController extends Controller
                 break;
             case 'providers':
 
-                /*if(!Auth::user()->can('fornecedor_relatorio', Provider::class)){
+                if(!Auth::user()->can('fornecedor_relatorio', Provider::class)){
                     return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-                }*/
+                }
 
                 $providers = Provider::filterProviders($request);
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('providers','tipo'));
                 $nomearquivo = 'fornecedor-relatório.pdf';
+
+
+                break;
+            case 'sales':
+
+                if(!Auth::user()->can('venda_relatorio', Provider::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
+                $sales = Sale::filterSales($request);
+
+                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('sales','tipo'));
+                $nomearquivo = 'venda-relatório.pdf';
 
 
                 break;

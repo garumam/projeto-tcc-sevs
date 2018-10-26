@@ -249,6 +249,55 @@
 
                 @break
 
+                @case('sales')
+
+
+                <form class="formulario" method="GET" role="form" target="_blank"
+                      action="{{route('pdf.showRelatorio',['tipo'=>$tipo])}}">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h5 class="titulo">Filtros (opcionais)</h5>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="tipo">Formas de pagamento</label>
+                            <select class="custom-select" id="tipo" name="tipo_pagamento" required>
+                                @foreach($formas_pagamento as $index => $value)
+                                    <option value="{{$index}}">{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="valor_inicial">Valor de:</label>
+                            <input type="number" step=".01" class="form-control" id="valor_inicial" name="valor_inicial">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="valor_final">até valor:</label>
+                            <input type="number" step=".01" class="form-control" id="valor_final" name="valor_final">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="data-inicial">Data desde:</label>
+                            <input type="date" class="form-control" id="data-inicial" name="data_inicial">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="data-final">até data:</label>
+                            <input type="date" class="form-control" id="data-final" name="data_final">
+                        </div>
+
+
+                    </div>
+
+                    <button id="bt-pdf-invisible" class="d-none" type="submit"></button>
+
+                </form>
+
+
+                @break
+
                 @default
                 <p>Ocorreu um erro inesperado, reinicie a página!</p>
             @endswitch

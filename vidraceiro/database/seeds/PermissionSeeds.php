@@ -623,6 +623,32 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
+        if (!Permission::where('nome', '=', 'fornecedor_relatorio')->count()) {
+            Permission::create([
+                'nome' => 'fornecedor_relatorio',
+                'descricao' => 'Relatório de Fornecedores'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'fornecedor_relatorio')->first();
+            $permission->update([
+                'nome' => 'fornecedor_relatorio',
+                'descricao' => 'Relatório de Fornecedores'
+            ]);
+        }
+
+        if (!Permission::where('nome', '=', 'venda_relatorio')->count()) {
+            Permission::create([
+                'nome' => 'venda_relatorio',
+                'descricao' => 'Relatório de Vendas'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'venda_relatorio')->first();
+            $permission->update([
+                'nome' => 'venda_relatorio',
+                'descricao' => 'Relatório de Vendas'
+            ]);
+        }
+
 
     }
 }
