@@ -31,6 +31,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        dd(date('d/m/Y H:m:s'));
         $totalusers = User::all()->count();
         $totalcategories = Category::all()->count();
         $totalproducts = MProduct::all()->count();
