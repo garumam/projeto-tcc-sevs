@@ -121,7 +121,7 @@
 
 <div class="total">
     <p id="texto-left">Valor total pago: </p>
-    <p id="texto-right">R$ {{$totalPago}}</p>
+    <p id="texto-right">R$ {{number_format($totalPago,2,',','.')}}</p>
 </div>
 
 <h3>Pagamentos pendentes</h3>
@@ -130,9 +130,12 @@
 
 @foreach($installments as $installment)
     <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
+    <b>Valor da multa: </b> R${{$installment->multa or ''}}{{' | '}}
+    @php $valorTotal = number_format(($installment->valor_parcela + $installment->multa),2,'.',''); @endphp
+    <b>Total(parcela+multa): </b> R${{$valorTotal or ''}}{{' | '}}
     <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
     <hr>
-    @php $possuiParcelasPendentes = true; $totalPendente += $installment->valor_parcela;@endphp
+    @php $possuiParcelasPendentes = true; $totalPendente += $valorTotal;@endphp
 @endforeach
 
 @if(!$possuiParcelasPendentes)
@@ -141,7 +144,7 @@
 
 <div class="total">
     <p id="texto-left">Valor total pendente: </p>
-    <p id="texto-right">R$ {{$totalPendente}}</p>
+    <p id="texto-right">R$ {{number_format($totalPendente,2,',','.')}}</p>
 </div>
 
 @php $order = $budget->order()->first(); @endphp

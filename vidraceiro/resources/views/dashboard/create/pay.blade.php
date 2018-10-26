@@ -71,6 +71,8 @@
                                 <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">N° da parcela</th>
                                 <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Data de vencimento</th>
                                 <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor da parcela</th>
+                                <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Multa</th>
+                                <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Total(parcela+multa)</th>
                                 <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Status</th>
                                 <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Pagar</th>
                             @else
@@ -91,6 +93,9 @@
                                     <th scope="row">{{$contador}}</th>
                                     <td>{{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}</td>
                                     <td style="color: #28a745;">R${{$installment->valor_parcela}}</td>
+                                    <td style="color: #dc3545;">R${{$installment->multa}}</td>
+                                    @php $valorTotal = number_format(($installment->valor_parcela + $installment->multa),2,',','.'); @endphp
+                                    <td style="color: #28a745;">R${{$valorTotal}}</td>
                                     <td><span class="badge badge-{{$installment->status_parcela == 'ABERTO' ? 'danger' : 'success'}}">{{$installment->status_parcela}}</span></td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">

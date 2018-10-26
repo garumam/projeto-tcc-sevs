@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Budget;
+use App\Installment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -39,8 +40,11 @@ class ReajusteParcelas extends Command
      */
     public function handle()
     {
-        $budget = Budget::find(1);
+        /*$budget = Budget::find(1);
         $novo = $budget->replicate();
-        return $novo->save();
+        return $novo->save();*/
+
+        Installment::readjust();
+
     }
 }

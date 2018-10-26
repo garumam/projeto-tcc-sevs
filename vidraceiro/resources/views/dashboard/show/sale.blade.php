@@ -72,6 +72,9 @@
                         <div class="card-body">
                             @forelse($sale->installments()->where('status_parcela','ABERTO')->get() as $installment)
                                 <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
+                                <b>Valor da multa: </b> R${{$installment->multa or ''}}{{' | '}}
+                                @php $valorTotal = number_format(($installment->valor_parcela + $installment->multa),2,'.',''); @endphp
+                                <b>Total(parcela+multa): </b> R${{$valorTotal or ''}}{{' | '}}
                                 <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}{{' | '}}
                                 <a class="btn-link ml-2" target="_blank" href="{{ route('sales.pay',['id'=> $sale->id]) }}">
                                     <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>

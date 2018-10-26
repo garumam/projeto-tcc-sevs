@@ -4,6 +4,8 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Id</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cliente</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Valor da parcela</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Multa</th>
+        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Total(parcela+multa)</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Data de vencimento</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Venda Relacionada</th>
     </tr>
@@ -18,6 +20,9 @@
             @endphp
             <td>{{$client->nome}}</td>
             <td style="color:#28a745;">R${{$installment->valor_parcela}}</td>
+            <td style="color: #dc3545;">R${{$installment->multa}}</td>
+            @php $valorTotal = number_format(($installment->valor_parcela + $installment->multa),2,'.',''); @endphp
+            <td style="color: #28a745;">R${{$valorTotal}}</td>
             <td>{{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}</td>
 
             <td>

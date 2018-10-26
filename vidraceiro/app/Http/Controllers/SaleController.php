@@ -366,8 +366,9 @@ class SaleController extends Controller
 
 
                 foreach ($installments as $installment) {
-
-                    $sale->createSalePayment($request->data_pagamento,$installment->valor_parcela,'Pagamento de parcela de venda a prazo.',Auth::user()->id);
+                    $valorParcela = $installment->valor_parcela + $installment->multa;
+                    $valorParcela = number_format($valorParcela,2,'.','');
+                    $sale->createSalePayment($request->data_pagamento,$valorParcela,'Pagamento de parcela de venda a prazo.',Auth::user()->id);
 
                     $installment->updateInstallment('status_parcela','PAGO');
                 }
@@ -382,17 +383,10 @@ class SaleController extends Controller
             } else {
                 return redirect()->back()->with('error', 'Marque pelo menos uma parcela!');
             }
-        }else{
-            if($request->pagar !== null){
-                $payment = $sale->createSalePayment($request->data_pagamento,$sale->budget->total,'Pagamento de venda à vista.',Auth::user()->id);
-            }else{
-                return redirect()->back()->with('error', 'Marque antes de efetuar o pagamento!');
-            }
         }
 
 
-
-        if ($installments || $payment)
+        if ($installments)
             return redirect()->back()->with('success', 'Pagamento efetuado com sucesso');
     }
 

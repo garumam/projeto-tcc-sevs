@@ -17,7 +17,8 @@ class CreateInstallmentsTable extends Migration
             $table->increments('id');
             $table->string('data_vencimento');
             $table->string('status_parcela');
-            $table->string('valor_parcela');
+            $table->double('valor_parcela');
+            $table->double('multa')->default(0);
             $table->integer('venda_id')->unsigned();
             $table->foreign('venda_id')->references('id')->on('sales')->onDelete('cascade');
             $table->timestamps();

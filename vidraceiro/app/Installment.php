@@ -45,4 +45,26 @@ class Installment extends Model
 
         return $queryBuilder->paginate($paginate);
     }
+
+    public static function readjust(){
+
+        $installments = self::where('status_parcela','ABERTO')->get();
+
+        foreach ($installments as $installment){
+            if(strtotime($installment->data_vencimento) < strtotime(date('Y-m-d',time()))){
+
+                $data_inicio = new \DateTime($installment->data_vencimento);
+                $data_fim = new \DateTime(date('Y-m-d',time()));
+
+                $dateInterval = $data_inicio->diff($data_fim);
+
+                // APLICANDO 5% DE REAJUSTE POR DIA SEMPRE EM CIMA DO VALOR DA PARCELA BASE
+                $valorMulta = $dateInterval->days * $installment->valor_parcela * 0.05;
+
+                $valorMulta = number_format($valorMulta,2,'.','');
+
+                $installment->updateInstallment('multa',$valorMulta);
+            }
+        }
+    }
 }

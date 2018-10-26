@@ -8,7 +8,9 @@
             $despesas += $financial->valor;
         }
     }
-    $saldo = $receitas - $despesas;
+    $saldo = number_format(($receitas - $despesas),2,',','.');
+    $receitas = number_format(($receitas),2,',','.');
+    $despesas = number_format(($despesas),2,',','.');
 @endphp
 
 <div class="form-group p-0 col-md-12 mb-4">

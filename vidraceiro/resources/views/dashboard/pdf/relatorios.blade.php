@@ -239,13 +239,13 @@
     @endphp
 
     @if($possui_receitas && $possui_despesas)
-        <h4>Total Receitas: {{'R$'.$totalReceitas}}</h4>
-        <h4>Total Despesas: {{'R$'.$totalDespesas}}</h4>
-        <h4>Saldo: {{'R$'.($totalReceitas - $totalDespesas)}}</h4>
+        <h4>Total Receitas: {{'R$'.number_format($totalReceitas,2,',','.')}}</h4>
+        <h4>Total Despesas: {{'R$'.number_format($totalDespesas,2,',','.')}}</h4>
+        <h4>Saldo: {{'R$'.number_format(($totalReceitas - $totalDespesas),2,',','.')}}</h4>
     @elseif($possui_receitas)
-        <h4>Total Receitas: {{'R$'.$totalReceitas}}</h4>
+        <h4>Total Receitas: {{'R$'.number_format($totalReceitas,2,',','.')}}</h4>
     @elseif($possui_despesas)
-        <h4>Total Despesas: {{'R$'.$totalDespesas}}</h4>
+        <h4>Total Despesas: {{'R$'.number_format($totalDespesas,2,',','.')}}</h4>
     @endif
 
 

@@ -94,7 +94,9 @@
                                         $despesas += $financial->valor;
                                     }
                                 }
-                                $saldo = $receitas - $despesas;
+                                $saldo = number_format(($receitas - $despesas),2,',','.');
+                                $receitas = number_format(($receitas),2,',','.');
+                                $despesas = number_format(($despesas),2,',','.');
                             @endphp
 
                             <div class="form-group col-md-12 mt-2 mb-2">
@@ -155,9 +157,9 @@
                             $receber = 0.00;
 
                             foreach($allInstallments as $installment){
-                                $receber += $installment->valor_parcela;
+                                $receber += $installment->valor_parcela + $installment->multa;
                             }
-
+                            $receber = number_format($receber,2,',','.');
                         @endphp
 
                         <div class="form-group col-md-12 mt-2 mb-2">

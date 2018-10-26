@@ -72,6 +72,7 @@ class Sale extends Model
             $datavencimento = date('Y-m-d', strtotime("+$dias days", strtotime($request->data_venda)));
             Installment::createInstallment([
                 'valor_parcela' => $request->valor_parcela,
+                'multa' => 0,
                 'status_parcela' => 'ABERTO',
                 'data_vencimento' => $datavencimento,
                 'venda_id' => $this->id
