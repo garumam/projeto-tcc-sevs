@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->call(function (){
 
-         })->dailyAt('12:00')->timezone('America/Sao_Paulo');
+         })->daily()->timezone('America/Sao_Paulo');
     }
 
     /**
