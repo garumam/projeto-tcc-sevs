@@ -44,15 +44,18 @@ class RestoreController extends Controller
             $clients = $this->client->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),true);
         if($request->has('orcamentos') || !$request->ajax())
             $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),true);
-
+        if($request->has('ordens') || !$request->ajax())
+            $orders = $this->order->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),true);
         if ($request->ajax()) {
             if($request->has('clientes') || !$request->ajax())
                 return view('dashboard.list.tables.table-client', compact('clients'));
             if($request->has('orcamentos') || !$request->ajax())
                 return view('dashboard.list.tables.table-budget', compact('budgets'));
+            if($request->has('ordens') || !$request->ajax())
+                return view('dashboard.list.tables.table-order', compact('orders'));
         }
 
-        return view('dashboard.list.restore', compact('clients','budgets'))->with('title', 'Restauração');
+        return view('dashboard.list.restore', compact('clients','budgets','orders'))->with('title', 'Restauração');
 
     }
 
@@ -76,6 +79,15 @@ class RestoreController extends Controller
                     return redirect()->back()->with('success','Orçamento restaurado com sucesso');
                 }
                 return redirect()->back()->with('error','Erro ao restaurar orçamento');
+                break;
+            case 'ordens':
+                $order = $this->order->findDeletedOrderById($id);
+
+                if($order){
+                    $order->restore();
+                    return redirect()->back()->with('success','Ordem de serviço restaurada com sucesso');
+                }
+                return redirect()->back()->with('error','Erro ao restaurar ordem de serviço');
                 break;
         }
 

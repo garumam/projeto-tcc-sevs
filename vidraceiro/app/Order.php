@@ -20,13 +20,19 @@ class Order extends Model
         return $this->hasMany(Budget::class,'ordem_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('nome', 'like', '%' . $search . '%')
-            ->orWhere('situacao', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where(function ($query) use ($search){
+            $query->where('nome', 'like', '%' . $search . '%')
+                ->orWhere('situacao', 'like', '%' . $search . '%');
+        });
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function createOrder(array $input){
@@ -50,6 +56,12 @@ class Order extends Model
     public function findOrderById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedOrderById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

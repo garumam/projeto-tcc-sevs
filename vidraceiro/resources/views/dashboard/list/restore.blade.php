@@ -77,7 +77,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseTwo" class="collapse tabelasrestaurar" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -113,8 +113,30 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div id="collapseThree" class="collapse tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
+
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginateordens">Mostrar</label>
+                                    <select id="paginateordens" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?ordens=1&search='+$('#searchordens').val()+'&paginate='+$('#paginateordens').val(),'ordens')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="searchordens">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?ordens=1&search='+$('#searchordens').val()+'&paginate='+$('#paginateordens').val(),'ordens')"
+                                           value="{{ old('search') }}" id="searchordens" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="ordens">
+                                @include('dashboard.list.tables.table-order')
+                            </div>
 
                         </div>
                     </div>
@@ -127,9 +149,9 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                    <div id="collapseFour" class="collapse tabelasrestaurar" data-tipo="mprodutos" aria-labelledby="headingFour" data-parent="#accordion">
                         <div class="card-body">
-                                Vidros excluídos
+
                         </div>
                     </div>
                 </div>
@@ -137,11 +159,11 @@
                     <div class="card-header" id="headingFive">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                Alumínios excluídos
+                                Vidros excluídos
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div id="collapseFive" class="collapse tabelasrestaurar" data-tipo="vidros" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
 
                         </div>
@@ -151,11 +173,11 @@
                     <div class="card-header" id="headingSix">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                Componentes excluídos
+                                Alumínios excluídos
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div id="collapseSix" class="collapse tabelasrestaurar" data-tipo="aluminios" aria-labelledby="headingSix" data-parent="#accordion">
                         <div class="card-body">
 
                         </div>
@@ -165,11 +187,11 @@
                     <div class="card-header" id="headingSeven">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                Categorias excluídas
+                                Componentes excluídos
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div id="collapseSeven" class="collapse tabelasrestaurar" data-tipo="componentes" aria-labelledby="headingSeven" data-parent="#accordion">
                         <div class="card-body">
 
                         </div>
@@ -179,11 +201,11 @@
                     <div class="card-header" id="headingEight">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                Movimentações financeiras excluídas
+                                Categorias excluídas
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div id="collapseEight" class="collapse tabelasrestaurar" data-tipo="categorias" aria-labelledby="headingEight" data-parent="#accordion">
                         <div class="card-body">
 
                         </div>
@@ -193,11 +215,25 @@
                     <div class="card-header" id="headingNine">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                Movimentações financeiras excluídas
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseNine" class="collapse tabelasrestaurar" data-tipo="financeiro" aria-labelledby="headingNine" data-parent="#accordion">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTen">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
                                 Usuários excluídos
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div id="collapseTen" class="collapse tabelasrestaurar" data-tipo="usuarios" aria-labelledby="headingTen" data-parent="#accordion">
                         <div class="card-body">
 
                         </div>
