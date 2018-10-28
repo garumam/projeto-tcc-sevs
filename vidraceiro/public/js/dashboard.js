@@ -15,10 +15,24 @@ $(document).ready(function () {
         submenu.slideToggle("slow");
     });
 
-    //Iniciando selects com search dentro
-    $('.form-control-chosen').chosen({
-        // Chosen options here
-    });
+    //VERIFICAÇÃO DE SUPORTE DO PLUGIN CHOSEN NOS NAVEGADORES,
+    // SE NÃO SUPORTAR EXIBE OS SELECT BÁSICOS PARA SEREM UTILIZADOS
+    if(!("Microsoft Internet Explorer"===window.navigator.appName?document.documentMode>=8:!(/iP(od|hone)/i.test(window.navigator.userAgent)||/IEMobile/i.test(window.navigator.userAgent)||/Windows Phone/i.test(window.navigator.userAgent)||/BlackBerry/i.test(window.navigator.userAgent)||/BB10/i.test(window.navigator.userAgent)||/Android.*Mobile/i.test(window.navigator.userAgent)))){
+
+        $('.form-control-chosen').each(function (select) {
+            $(this).show();
+        });
+
+    }else{
+
+        //Iniciando selects com search dentro
+        $('.form-control-chosen').chosen({
+            // Chosen options here
+        });
+
+    }
+
+
 
 
     $(".navbar-toggler").click(function (event) {
