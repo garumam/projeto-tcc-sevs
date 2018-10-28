@@ -28,15 +28,21 @@ class Client extends Model
         return $this->hasMany(Budget::class,'cliente_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('nome', 'like', '%' . $search . '%')
-            ->orWhere('cpf', 'like', '%' . $search . '%')
-            ->orWhere('cnpj', 'like', '%' . $search . '%')
-            ->orWhere('status', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where(function ($q) use ($search){
+            $q->where('nome', 'like', '%' . $search . '%')
+                ->orWhere('cpf', 'like', '%' . $search . '%')
+                ->orWhere('cnpj', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%');
+        });
+        if($restore){
+            $queryBuilder = $queryBuilder->onlyTrashed();
+        }
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function createClient(array $input){
@@ -60,6 +66,12 @@ class Client extends Model
     public function findClientById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedClientById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

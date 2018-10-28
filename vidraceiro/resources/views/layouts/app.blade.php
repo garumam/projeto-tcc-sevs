@@ -195,8 +195,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li {{ Request::is('companies') ? 'class=active' : '' }}>
-                        <a href="{{ route('companies.index') }}">
+                    <li {{ Request::is('restore') ? 'class=active' : '' }}>
+                        <a href="{{ route('restore.index') }}">
                             <i class="pe-7s-rocket"></i>
                             Restaurar
                         </a>

@@ -1077,6 +1077,14 @@ $(document).ready(function () {
     $('body').on('click', '.pagination a', function (e) {
         e.preventDefault();
         let idtab = $('.nav-tabs a.active').attr('data-id');
+        console.log('entrou');
+        if(idtab === undefined){
+            $('.tabelasrestaurar').each(function () {
+                if($(this).hasClass('show')){
+                    idtab = $(this).data('tipo');
+                }
+            });
+        }
         // $('#load a').css('color', '#dfecf6');
         // $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/loading.gif" />');
         let numeroleftright = $(this).attr('data-page');

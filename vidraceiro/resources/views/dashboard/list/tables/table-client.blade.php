@@ -63,21 +63,34 @@
                         }
                     }
                 @endphp--}}
-                <a class="btn-link" href="{{ route('clients.show',['id'=> $client->id]) }}">
-                    <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
-                </a>
 
-                <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
-                    <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i
-                                class="fas fa-edit pl-1"></i></button>
-                </a>
+                @if(Request::is('restore'))
 
-                @if($client->status === 'EM DIA' && !$client->haveBudgetApproved())
-                    <a class="btn-link" onclick="deletar(event,this.id,'clients')" id="{{ $client->id }}">
-                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i
-                                    class="fas fa-trash-alt"></i></button>
+                    <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'clientes','id'=> $client->id]) }}">
+                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
+
+                @else
+
+                    <a class="btn-link" href="{{ route('clients.show',['id'=> $client->id]) }}">
+                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
+                    </a>
+
+                    <a class="btn-link" href="{{ route('clients.edit',['id'=> $client->id]) }}">
+                        <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i
+                                    class="fas fa-edit pl-1"></i></button>
+                    </a>
+
+                    @if($client->status === 'EM DIA' && !$client->haveBudgetApproved())
+                        <a class="btn-link" onclick="deletar(event,this.id,'clients')" id="{{ $client->id }}">
+                            <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i
+                                        class="fas fa-trash-alt"></i></button>
+                        </a>
+                    @endif
+
                 @endif
+
+
             </td>
         </tr>
     @endforeach

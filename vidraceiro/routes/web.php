@@ -202,6 +202,11 @@ Route::prefix('pdf')->group(function () {
     //Route::delete('/{id}', 'PdfController@destroy')->name('pdf.destroy');
 });
 
+Route::prefix('restore')->group(function () {
+    Route::get('/', 'RestoreController@index')->name('restore.index');
+    Route::get('/{tipo}/{id}', 'RestoreController@restore')->name('restore.restore');
+});
+
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

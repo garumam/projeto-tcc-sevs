@@ -50,16 +50,23 @@ class Budget extends Model
     }
 
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('nome', 'like', '%' . $search . '%')
-            ->orWhere('status', 'like', '%' . $search . '%')
-            ->orWhereHas('user',function ($q) use ($search){
-                $q->where('name','like','%' . $search . '%');
-            })
-            ->paginate($paginate);
+        $queryBuilder = self::where(function ($query) use ($search){
+            $query->where('nome', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%')
+                ->orWhereHas('user',function ($q) use ($search){
+                    $q->where('name','like','%' . $search . '%');
+                });
+        });
+
+        if($restore){
+            $queryBuilder = $queryBuilder->onlyTrashed();
+        }
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function createBudget(array $input){
@@ -83,6 +90,12 @@ class Budget extends Model
     public function findBudgetById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedBudgetById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 
