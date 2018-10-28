@@ -7,7 +7,7 @@
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
-        p, h3 {
+        p,b, h3 {
             font-weight: 700;
             font-family: 'Raleway', sans-serif;
         }
@@ -109,14 +109,14 @@
 @php $possuiPagamento = false; $totalPago = 0; $payments = $sale->payments()->get(); @endphp
 
 @foreach($payments as $payment)
-    <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}
-    <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
+    <b>Valor pago: R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}</b>
+    <b>Data de pagamento: {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}</b>
     <hr>
     @php $possuiPagamento = true; $totalPago += $payment->valor_pago; @endphp
 @endforeach
 
 @if(!$possuiPagamento)
-    <div>Esta venda não recebeu pagamentos!</div><br>
+    <b>Esta venda não recebeu pagamentos!</b><br><br>
 @endif
 
 <div class="total">
@@ -129,17 +129,17 @@
 @php $possuiParcelasPendentes = false; $totalPendente = 0; $installments = $sale->installments()->where('status_parcela','ABERTO')->get();@endphp
 
 @foreach($installments as $installment)
-    <b>Valor da parcela: </b> R${{$installment->valor_parcela or ''}}{{' | '}}
-    <b>Valor da multa: </b> R${{$installment->multa or ''}}{{' | '}}
+    <b>Valor da parcela:  R${{$installment->valor_parcela or ''}}{{' | '}}</b>
+    <b>Valor da multa: R${{$installment->multa or ''}}{{' | '}}</b>
     @php $valorTotal = number_format(($installment->valor_parcela + $installment->multa),2,'.',''); @endphp
-    <b>Total(parcela+multa): </b> R${{$valorTotal or ''}}{{' | '}}
-    <b>Vencimento: </b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}
+    <b>Total(parcela+multa):  R${{$valorTotal or ''}}{{' | '}}</b>
+    <b>Vencimento: {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}} </b>
     <hr>
     @php $possuiParcelasPendentes = true; $totalPendente += $valorTotal;@endphp
 @endforeach
 
 @if(!$possuiParcelasPendentes)
-    <div>Esta venda não possui parcelas pendentes!</div><br>
+    <b>Esta venda não possui parcelas pendentes!</b><br><br>
 @endif
 
 <div class="total">
@@ -152,10 +152,10 @@
 @if(!empty($order))
     <h3>Ordem de serviço associada</h3>
 
-    <b>Nome: </b> {{$order->nome or 'Não cadastrado!'}}{{' | '}}
-    <b>Data inicial: </b> {{date_format(date_create($order->data_inicial), 'd/m/Y')}}{{' | '}}
-    <b>Data final: </b> {{date_format(date_create($order->data_final), 'd/m/Y')}}{{' | '}}
-    <b>Situação: </b> {{$order->situacao or ''}}
+    <b>Nome:  {{$order->nome or 'Não cadastrado!'}}{{' | '}}</b>
+    <b>Data inicial: {{date_format(date_create($order->data_inicial), 'd/m/Y')}}{{' | '}}</b>
+    <b>Data final:  {{date_format(date_create($order->data_final), 'd/m/Y')}}{{' | '}}</b>
+    <b>Situação:  {{$order->situacao or ''}}</b>
 
 @endif
 

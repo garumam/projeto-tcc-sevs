@@ -7,7 +7,7 @@
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
-        p, h3 {
+        p, h3,h2 {
             font-weight: 700;
             font-family: 'Raleway', sans-serif;
         }
@@ -17,7 +17,7 @@
             height: 2px;
         }
 
-        h3 {
+        h3,h2 {
             background-color: #DFEBFF;
             padding: .4rem;
         }
@@ -79,7 +79,7 @@
     </style>
 </head>
 <body>
-<h1>Ordem de serviço</h1>
+<h2>Ordem de serviço</h2>
 
 <p>{{$company->nome}}</p>
 <p>{{$company->endereco .' - '. $company->bairro}}</p>
@@ -105,7 +105,7 @@
 <p><b>Valor total: </b> R${{$order->total or ''}}</p>
 <div class="line"></div>
 @php $budgets = $order->budgets()->get(); @endphp
-<h1>Orçamentos relacionados</h1>
+<h2>Orçamentos relacionados</h2>
 @foreach($budgets as $budget)
     <h3>Dados do orçamento - {{$budget->nome}}</h3>
     <p>Nome: {{$budget->nome}}</p>

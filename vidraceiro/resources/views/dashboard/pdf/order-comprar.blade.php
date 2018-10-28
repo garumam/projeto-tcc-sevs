@@ -7,7 +7,7 @@
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
-        p, h3 {
+        p,b, h3 {
             font-weight: 700;
             font-family: 'Raleway', sans-serif;
         }
