@@ -7,7 +7,7 @@
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
-        p, h3 {
+        p,b, h3 {
             font-weight: 700;
             font-family: 'Raleway', sans-serif;
         }
@@ -139,9 +139,9 @@
 <h3>Orçamentos</h3>
 
 @forelse($client->budgets()->get() as $budget)
-    <b>Nome: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-    <b>Status: </b> {{$budget->status or 'não cadastrado!'}}{{' | '}}
-    <b>Total: </b> R${{$budget->total or ''}}
+    <b>Nome:  {{$budget->nome or 'não cadastrado!'}}{{' | '}}</b>
+    <b>Status:  {{$budget->status or 'não cadastrado!'}}{{' | '}}</b>
+    <b>Total:  R${{$budget->total or ''}}</b>
     <hr>
 @empty
     Este cliente não tem orçamentos!
@@ -159,16 +159,16 @@
         }
     @endphp
     @foreach($payments as $payment)
-        <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
-        <b>Valor pago: </b> R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}
-        <b>Data de pagamento: </b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
+        <b>Orçamento: {{$budget->nome or 'não cadastrado!'}}{{' | '}}</b>
+        <b>Valor pago:  R${{$payment->valor_pago or 'não cadastrado!'}}{{' | '}}</b>
+        <b>Data de pagamento: {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}</b>
         <hr>
         @php $possuiPagamento = true; $totalPago += $payment->valor_pago; @endphp
     @endforeach
 
 @endforeach
 @if(!$possuiPagamento)
-    <div>Este cliente não possui pagamentos!</div><br>
+    <p>Este cliente não possui pagamentos!</p><br>
 @endif
 
 <div class="total">
@@ -198,7 +198,7 @@
 
 @endforeach
 @if(!$possuiParcelasPendentes)
-    <div>Este cliente não possui parcelas pendentes!</div><br>
+    <p>Este cliente não possui parcelas pendentes!</p><br>
 @endif
 
 <div class="total">
