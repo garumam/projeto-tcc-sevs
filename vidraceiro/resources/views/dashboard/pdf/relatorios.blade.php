@@ -41,7 +41,7 @@
             width: 40px;
             padding: 10px;
             text-align: center;
-            vertical-align: center;
+            vertical-align: middle;
             border-right: 1px solid #1b1e21;
 
         }
@@ -154,7 +154,7 @@
     <h4>Quantidade encontrada: {{$quantidade}}</h4>
 
     @if($glasses !== null)
-    <h5>Vidros:</h5>
+    <p>Vidros:</p>
 
     @forelse($glasses as $glass)
         <div class="flex">
@@ -176,7 +176,7 @@
     @endforelse
     @endif
     @if($aluminums !== null)
-        <h5>Alumínios:</h5>
+        <p>Alumínios:</p>
 
     @forelse($aluminums as $aluminum)
         <div class="flex">
@@ -198,7 +198,7 @@
     @endforelse
     @endif
     @if($components !== null)
-        <h5>Componentes:</h5>
+        <p>Componentes:</p>
 
     @forelse($components as $component)
         <div class="flex">
