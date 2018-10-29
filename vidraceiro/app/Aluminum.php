@@ -65,12 +65,16 @@ class Aluminum extends Model
     }
 
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('is_modelo', 1)->where('perfil', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where('is_modelo', 1)->where('perfil', 'like', '%' . $search . '%');
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
 
@@ -89,6 +93,12 @@ class Aluminum extends Model
     public function findAluminumById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedAluminumById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

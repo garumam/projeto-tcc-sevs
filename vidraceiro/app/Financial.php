@@ -24,7 +24,7 @@ class Financial extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $period, &$financialsByPeriod){
+    public function getWithSearchAndPagination($search, $paginate, $period, &$financialsByPeriod, $restore = false){
 
         $paginate = $paginate ?? 10;
         $period = $period ?? 'hoje';
@@ -86,6 +86,9 @@ class Financial extends Model
                     });
             });
 
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
         $financialsByPeriod = $queryBuilder->get();
 
         return $queryBuilder->paginate($paginate);
@@ -94,6 +97,12 @@ class Financial extends Model
     public function findFinancialById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedFinancialById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

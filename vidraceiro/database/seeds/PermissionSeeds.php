@@ -649,6 +649,18 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
+        if (!Permission::where('nome', '=', 'restaurar')->count()) {
+            Permission::create([
+                'nome' => 'restaurar',
+                'descricao' => 'Restaurar itens deletados'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'restaurar')->first();
+            $permission->update([
+                'nome' => 'restaurar',
+                'descricao' => 'Restaurar itens deletados'
+            ]);
+        }
 
     }
 }

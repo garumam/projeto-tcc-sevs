@@ -95,17 +95,27 @@ class User extends Authenticatable
         return $this->roles()->first();
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('name', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where('name', 'like', '%' . $search . '%');
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function findUserById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedUserById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

@@ -152,6 +152,28 @@
                     <div id="collapseFour" class="collapse tabelasrestaurar" data-tipo="mprodutos" aria-labelledby="headingFour" data-parent="#accordion">
                         <div class="card-body">
 
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatemprodutos">Mostrar</label>
+                                    <select id="paginatemprodutos" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?mprodutos=1&search='+$('#searchmprodutos').val()+'&paginate='+$('#paginatemprodutos').val(),'mprodutos')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="searchmprodutos">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?mprodutos=1&search='+$('#searchmprodutos').val()+'&paginate='+$('#paginatemprodutos').val(),'mprodutos')"
+                                           value="{{ old('search') }}" id="searchmprodutos" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="mprodutos">
+                                @include('dashboard.list.tables.table-mproduct')
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -165,6 +187,28 @@
                     </div>
                     <div id="collapseFive" class="collapse tabelasrestaurar" data-tipo="vidros" aria-labelledby="headingFive" data-parent="#accordion">
                         <div class="card-body">
+
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatevidros">Mostrar</label>
+                                    <select id="paginatevidros" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="searchvidros">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?vidros=1&search='+$('#searchvidros').val()+'&paginate='+$('#paginatevidros').val(),'vidros')"
+                                           value="{{ old('searchvidros') }}" id="searchvidros" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="vidros">
+                                @include('dashboard.list.tables.table-glass')
+                            </div>
 
                         </div>
                     </div>
@@ -180,6 +224,28 @@
                     <div id="collapseSix" class="collapse tabelasrestaurar" data-tipo="aluminios" aria-labelledby="headingSix" data-parent="#accordion">
                         <div class="card-body">
 
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatealuminios">Mostrar</label>
+                                    <select id="paginatealuminios" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="search">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?aluminios=1&search='+$('#searchaluminios').val()+'&paginate='+$('#paginatealuminios').val(),'aluminios')"
+                                           value="{{ old('search') }}" id="searchaluminios" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="aluminios">
+                                @include('dashboard.list.tables.table-aluminum')
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -193,6 +259,28 @@
                     </div>
                     <div id="collapseSeven" class="collapse tabelasrestaurar" data-tipo="componentes" aria-labelledby="headingSeven" data-parent="#accordion">
                         <div class="card-body">
+
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatecomponentes">Mostrar</label>
+                                    <select id="paginatecomponentes" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="search">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?componentes=1&search='+$('#searchcomponentes').val()+'&paginate='+$('#paginatecomponentes').val(),'componentes')"
+                                           value="{{ old('search') }}" id="searchcomponentes" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="componentes">
+                                @include('dashboard.list.tables.table-component')
+                            </div>
 
                         </div>
                     </div>
@@ -208,6 +296,28 @@
                     <div id="collapseEight" class="collapse tabelasrestaurar" data-tipo="categorias" aria-labelledby="headingEight" data-parent="#accordion">
                         <div class="card-body">
 
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginatecategorias">Mostrar</label>
+                                    <select id="paginatecategorias" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?categorias=1&search='+$('#searchcategorias').val()+'&paginate='+$('#paginatecategorias').val(),'categorias')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="searchcategorias">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?categorias=1&search='+$('#searchcategorias').val()+'&paginate='+$('#paginatecategorias').val(),'categorias')"
+                                           value="{{ old('search') }}" id="searchcategorias" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-2" id="categorias">
+                                @include('dashboard.list.tables.table-category')
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -222,6 +332,40 @@
                     <div id="collapseNine" class="collapse tabelasrestaurar" data-tipo="financeiro" aria-labelledby="headingNine" data-parent="#accordion">
                         <div class="card-body">
 
+                            <div class="form-row col-12 m-0 formulario px-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-2">
+                                    <label for="paginatefinanceiro">Mostrar</label>
+                                    <select id="paginatefinanceiro" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?financeiro=1&search='+$('#searchfinanceiro').val()+'&paginate='+$('#paginatefinanceiro').val()+'&period='+$('#period').val(),'financeiro')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-2">
+                                    <label for="period">Período</label>
+                                    <select id="period" name="period" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?financeiro=1&search='+$('#searchfinanceiro').val()+'&paginate='+$('#paginatefinanceiro').val()+'&period='+$('#period').val(),'financeiro')">
+                                        <option value="hoje" selected>Hoje</option>
+                                        <option value="semana">Últimos 7 dias</option>
+                                        <option value="mes">Últimos 30 dias</option>
+                                        <option value="semestre">Últimos 180 dias</option>
+                                        <option value="anual">Últimos 360 dias</option>
+                                        <option value="tudo">Todos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                                    <label for="searchfinanceiro">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?financeiro=1&search='+$('#searchfinanceiro').val()+'&paginate='+$('#paginatefinanceiro').val()+'&period='+$('#period').val(),'financeiro')"
+                                           value="{{ old('search') }}" id="searchfinanceiro" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+
+                            <div class="table-responsive text-dark p-1" id="financeiro">
+                                @include('dashboard.list.tables.table-financial')
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -235,6 +379,27 @@
                     </div>
                     <div id="collapseTen" class="collapse tabelasrestaurar" data-tipo="usuarios" aria-labelledby="headingTen" data-parent="#accordion">
                         <div class="card-body">
+
+                            <div class="form-row formulario pb-0 justify-content-between">
+                                <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
+                                    <label for="paginateusuarios">Mostrar</label>
+                                    <select id="paginateusuarios" name="paginate" class="custom-select"
+                                            onchange="ajaxPesquisaLoad('{{url('restore')}}?usuarios=1&search='+$('#searchusuarios').val()+'&paginate='+$('#paginateusuarios').val(),'usuarios')">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-sm-5 col-md-6 col-lg-4">
+                                    <label for="searchusuarios">Pesquisar</label>
+                                    <input type="text" class="form-control"
+                                           onkeyup="ajaxPesquisaLoad('{{url('restore')}}?usuarios=1&search='+$('#searchusuarios').val()+'&paginate='+$('#paginateusuarios').val(),'usuarios')"
+                                           value="{{ old('search') }}" id="searchusuarios" name="search" placeholder="Pesquisar">
+                                </div>
+                            </div>
+                            <div class="table-responsive text-dark p-2" id="usuarios">
+                                @include('dashboard.list.tables.table-user')
+                            </div>
 
                         </div>
                     </div>

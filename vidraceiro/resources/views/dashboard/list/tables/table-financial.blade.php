@@ -1,28 +1,33 @@
-@php
-    $receitas = 0.00;
-    $despesas = 0.00;
-    foreach($financialsByPeriod as $financial){
-        if($financial->tipo === 'RECEITA'){
-            $receitas += $financial->valor;
-        }else{
-            $despesas += $financial->valor;
-        }
-    }
-    $saldo = number_format(($receitas - $despesas),2,',','.');
-    $receitas = number_format(($receitas),2,',','.');
-    $despesas = number_format(($despesas),2,',','.');
-@endphp
 
-<div class="form-group p-0 col-md-12 mb-4">
-    <ul class="list-group">
-        <li class="list-group-item active" style="background-color: #4264FB; border-color: #4264FB">Total por busca</li>
-        <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
-        <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
-        <li class="list-group-item" style="color:#191919;">Saldo:
-            <span style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</span>
-        </li>
-    </ul>
-</div>
+@if(!Request::is('restore'))
+
+    @php
+        $receitas = 0.00;
+        $despesas = 0.00;
+        foreach($financialsByPeriod as $financial){
+            if($financial->tipo === 'RECEITA'){
+                $receitas += $financial->valor;
+            }else{
+                $despesas += $financial->valor;
+            }
+        }
+        $saldo = number_format(($receitas - $despesas),2,',','.');
+        $receitas = number_format(($receitas),2,',','.');
+        $despesas = number_format(($despesas),2,',','.');
+    @endphp
+
+    <div class="form-group p-0 col-md-12 mb-4">
+        <ul class="list-group">
+            <li class="list-group-item active" style="background-color: #4264FB; border-color: #4264FB">Total por busca</li>
+            <li class="list-group-item" style="color:#28a745;">Total Receitas: R${{$receitas}}</li>
+            <li class="list-group-item" style="color:#dc3545;">Total Despesas: R${{$despesas}}</li>
+            <li class="list-group-item" style="color:#191919;">Saldo:
+                <span style="color:{{$saldo > 0? '#28a745':($saldo < 0?'#dc3545':'')}}">R${{$saldo}}</span>
+            </li>
+        </ul>
+    </div>
+
+@endif
 
 
 <table class="table table-hover">
@@ -62,17 +67,29 @@
                 <td><span class="badge badge-dark">Excluído</span></td>
             @endif
             <td>
-                @if(!empty($sale))
-                    <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
-                        <button class="btn btn-light mb-1 card-shadow-1dp" type="button"
-                                title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
+
+                @if(Request::is('restore'))
+
+                    <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'financeiro','id'=> $financial->id]) }}">
+                        <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-                    @php $sale = null; @endphp
+
+                @else
+
+                    @if(!empty($sale))
+                        <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
+                            <button class="btn btn-light mb-1 card-shadow-1dp" type="button"
+                                    title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
+                        </a>
+                        @php $sale = null; @endphp
+                    @endif
+                    <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
+                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
+                        </button>
+                    </a>
+
                 @endif
-                <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
-                    <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
-                    </button>
-                </a>
+
             </td>
 
         </tr>

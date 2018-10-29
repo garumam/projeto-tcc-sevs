@@ -59,17 +59,27 @@ class Component extends Model
         );
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('is_modelo', 1)->where('nome', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where('is_modelo', 1)->where('nome', 'like', '%' . $search . '%');
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function findComponentById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedComponentById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

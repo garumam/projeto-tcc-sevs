@@ -33,17 +33,27 @@ class Category extends Model
         return $this->hasMany(Component::class, 'categoria_componente_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::where('nome', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::where('nome', 'like', '%' . $search . '%');
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public function findCategoryById($id){
 
         return self::find($id);
+
+    }
+
+    public function findDeletedCategoryById($id){
+
+        return self::onlyTrashed()->find($id);
 
     }
 

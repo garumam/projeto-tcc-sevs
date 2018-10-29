@@ -72,6 +72,12 @@ class MProduct extends Model
 
     }
 
+    public function findDeletedMProductById($id){
+
+        return self::onlyTrashed()->find($id);
+
+    }
+
     public function syncMaterialsOfMProduct($glasses, $aluminums, $components){
 
         $this->glasses()->sync($glasses);
@@ -80,13 +86,17 @@ class MProduct extends Model
 
     }
 
-    public function getWithSearchAndPagination($search, $paginate){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false){
 
         $paginate = $paginate ?? 10;
 
-        return self::with('category')
-            ->where('nome', 'like', '%' . $search . '%')
-            ->paginate($paginate);
+        $queryBuilder = self::with('category')
+            ->where('nome', 'like', '%' . $search . '%');
+
+        if($restore)
+            $queryBuilder = $queryBuilder->onlyTrashed();
+
+        return $queryBuilder->paginate($paginate);
     }
 
     public static function getAllMProducts(){
