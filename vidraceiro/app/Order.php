@@ -20,17 +20,21 @@ class Order extends Model
         return $this->hasMany(Budget::class,'ordem_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false, $situation = false){
 
         $paginate = $paginate ?? 10;
 
         $queryBuilder = self::where(function ($query) use ($search){
-            $query->where('nome', 'like', '%' . $search . '%')
-                ->orWhere('situacao', 'like', '%' . $search . '%');
+            $query->where('nome', 'like', '%' . $search . '%');
+            $query->orWhere('situacao', 'like', '%' . $search . '%');
         });
 
         if($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
+
+        if($situation !== false){
+            $queryBuilder = $queryBuilder->where('situacao',$situation);
+        }
 
         return $queryBuilder->paginate($paginate);
     }

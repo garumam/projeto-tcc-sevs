@@ -50,20 +50,23 @@ class Budget extends Model
     }
 
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false,$status = false){
 
         $paginate = $paginate ?? 10;
 
         $queryBuilder = self::where(function ($query) use ($search){
-            $query->where('nome', 'like', '%' . $search . '%')
-                ->orWhere('status', 'like', '%' . $search . '%')
-                ->orWhereHas('user',function ($q) use ($search){
+            $query->where('nome', 'like', '%' . $search . '%');
+            $query->orWhere('status', 'like', '%' . $search . '%');
+            $query->orWhereHas('user',function ($q) use ($search){
                     $q->where('name','like','%' . $search . '%');
                 });
         });
 
         if($restore){
             $queryBuilder = $queryBuilder->onlyTrashed();
+        }
+        if($status !== false){
+            $queryBuilder = $queryBuilder->where('status', $status)->whereNull('ordem_id');
         }
 
         return $queryBuilder->paginate($paginate);
