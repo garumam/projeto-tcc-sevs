@@ -93,10 +93,11 @@ class Budget extends Model
 
     }
 
-    public function findDeletedBudgetById($id){
+    public function restoreBudgetById($id){
 
-        return self::onlyTrashed()->find($id);
+        $budget = self::onlyTrashed()->find($id);
 
+        return $budget? $budget->restore(): false;
     }
 
     public static function getBudgetsWhereStatusWaiting(){

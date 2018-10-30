@@ -72,10 +72,11 @@ class MProduct extends Model
 
     }
 
-    public function findDeletedMProductById($id){
+    public function restoreMProductById($id){
 
-        return self::onlyTrashed()->find($id);
+        $mproduct = self::onlyTrashed()->find($id);
 
+        return $mproduct? $mproduct->restore(): false;
     }
 
     public function syncMaterialsOfMProduct($glasses, $aluminums, $components){

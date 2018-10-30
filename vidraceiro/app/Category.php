@@ -51,10 +51,11 @@ class Category extends Model
 
     }
 
-    public function findDeletedCategoryById($id){
+    public function restoreCategoryById($id){
 
-        return self::onlyTrashed()->find($id);
+        $category = self::onlyTrashed()->find($id);
 
+        return $category? $category->restore(): false;
     }
 
     public function createCategory(array $input){

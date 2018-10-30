@@ -113,10 +113,11 @@ class User extends Authenticatable
 
     }
 
-    public function findDeletedUserById($id){
+    public function restoreUserById($id){
 
-        return self::onlyTrashed()->find($id);
+        $user = self::onlyTrashed()->find($id);
 
+        return $user? $user->restore(): false;
     }
 
     public function createUser(array $input){

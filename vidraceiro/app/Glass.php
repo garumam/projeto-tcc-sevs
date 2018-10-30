@@ -79,10 +79,11 @@ class Glass extends Model
 
     }
 
-    public function findDeletedGlassById($id){
+    public function restoreGlassById($id){
 
-        return self::onlyTrashed()->find($id);
+        $glass = self::onlyTrashed()->find($id);
 
+        return $glass? $glass->restore(): false;
     }
 
     public function createGlass(array $input){

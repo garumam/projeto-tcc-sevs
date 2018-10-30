@@ -100,10 +100,11 @@ class Financial extends Model
 
     }
 
-    public function findDeletedFinancialById($id){
+    public function restoreFinancialById($id){
 
-        return self::onlyTrashed()->find($id);
+        $financial = self::onlyTrashed()->find($id);
 
+        return $financial? $financial->restore(): false;
     }
 
     public function deleteFinancial(){

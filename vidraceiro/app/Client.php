@@ -69,10 +69,11 @@ class Client extends Model
 
     }
 
-    public function findDeletedClientById($id){
+    public function restoreClientById($id){
 
-        return self::onlyTrashed()->find($id);
+        $client = self::onlyTrashed()->find($id);
 
+        return $client? $client->restore(): false;
     }
 
     public static function getAllClients(){

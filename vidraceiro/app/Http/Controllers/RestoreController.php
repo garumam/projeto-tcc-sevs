@@ -98,93 +98,73 @@ class RestoreController extends Controller
 
         switch($tipo){
             case 'clientes':
-                $client = $this->client->findDeletedClientById($id);
 
-                if($client){
-                    $client->restore();
+                if($this->client->restoreClientById($id))
                     return redirect()->back()->with('success','Cliente restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar cliente');
                 break;
             case 'orcamentos':
-                $budget = $this->budget->findDeletedBudgetById($id);
 
-                if($budget){
-                    $budget->restore();
+                if($this->budget->restoreBudgetById($id))
                     return redirect()->back()->with('success','Orçamento restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar orçamento');
                 break;
             case 'ordens':
-                $order = $this->order->findDeletedOrderById($id);
 
-                if($order){
-                    $order->restore();
+                if($this->order->restoreOrderById($id))
                     return redirect()->back()->with('success','Ordem de serviço restaurada com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar ordem de serviço');
                 break;
             case 'mprodutos':
-                $mproduct = $this->mproduct->findDeletedMProductById($id);
 
-                if($mproduct){
-                    $mproduct->restore();
+                if($this->mproduct->restoreMProductById($id))
                     return redirect()->back()->with('success','Modelo de produto restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar modelo de produto');
                 break;
             case 'vidros':
-                $glass = $this->glass->findDeletedGlassById($id);
 
-                if($glass){
-                    $glass->restore();
+                if($this->glass->restoreGlassById($id))
                     return redirect()->back()->with('success','Vidro restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar vidro');
                 break;
             case 'aluminios':
-                $aluminum = $this->aluminum->findDeletedAluminumById($id);
 
-                if($aluminum){
-                    $aluminum->restore();
+                if($this->aluminum->restoreAluminumById($id))
                     return redirect()->back()->with('success','Alumínio restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar alumínio');
                 break;
             case 'componentes':
-                $component = $this->component->findDeletedComponentById($id);
 
-                if($component){
-                    $component->restore();
+                if($this->component->restoreComponentById($id))
                     return redirect()->back()->with('success','Componente restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar componente');
                 break;
             case 'categorias':
-                $category = $this->category->findDeletedCategoryById($id);
 
-                if($category){
-                    $category->restore();
+                if($this->category->restoreCategoryById($id))
                     return redirect()->back()->with('success','Categoria restaurada com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar categoria');
                 break;
             case 'financeiro':
-                $financial = $this->financial->findDeletedFinancialById($id);
 
-                if($financial){
-                    $financial->restore();
+                if($this->financial->restoreFinancialById($id))
                     return redirect()->back()->with('success','Movimentação restaurada com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar movimentação');
                 break;
             case 'usuarios':
-                $user = $this->user->findDeletedUserById($id);
 
-                if($user){
-                    $user->restore();
+                if($this->user->restoreUserById($id))
                     return redirect()->back()->with('success','Usuário restaurado com sucesso');
-                }
+
                 return redirect()->back()->with('error','Erro ao restaurar usuário');
                 break;
         }

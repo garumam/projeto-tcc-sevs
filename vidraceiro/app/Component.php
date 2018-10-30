@@ -77,10 +77,11 @@ class Component extends Model
 
     }
 
-    public function findDeletedComponentById($id){
+    public function restoreComponentById($id){
 
-        return self::onlyTrashed()->find($id);
+        $component = self::onlyTrashed()->find($id);
 
+        return $component? $component->restore(): false;
     }
 
     public function createComponent(array $input){

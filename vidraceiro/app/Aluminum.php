@@ -96,10 +96,11 @@ class Aluminum extends Model
 
     }
 
-    public function findDeletedAluminumById($id){
+    public function restoreAluminumById($id){
 
-        return self::onlyTrashed()->find($id);
+        $aluminum = self::onlyTrashed()->find($id);
 
+        return $aluminum? $aluminum->restore(): false;
     }
 
 

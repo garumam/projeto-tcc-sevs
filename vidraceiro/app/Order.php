@@ -59,10 +59,11 @@ class Order extends Model
 
     }
 
-    public function findDeletedOrderById($id){
+    public function restoreOrderById($id){
 
-        return self::onlyTrashed()->find($id);
+        $order = self::onlyTrashed()->find($id);
 
+        return $order? $order->restore(): false;
     }
 
     public function updateBudgetsStatusByOrderSituation($budgets){
