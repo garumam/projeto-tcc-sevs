@@ -528,10 +528,15 @@ td {
 }
 .card-header{
     background-color: white;
+    padding: 1rem !important;
 }
 
 .card-header .btn-link{
-    color: var(--color-vidraceiro);
+    color: rgba(0,0,0,.9);
+    padding: 0 !important;
+}
+.card-body {
+    padding: 0 !important;
 }
 
 .card-shadow-dashboard {
