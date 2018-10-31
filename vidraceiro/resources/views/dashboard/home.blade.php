@@ -10,7 +10,7 @@
         @endif
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
                 <h4 class="titulo">{{$totalusers}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-verde">
             <div class="widget">
                 <h4 class="titulo">{{$clients}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-vermelha">
             <div class="widget">
                 <h4 class="titulo">{{$totalcategories}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
@@ -40,7 +40,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
                 <h4 class="titulo">{{$totalproducts}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
@@ -84,7 +84,7 @@
         <div class="card-material">
 
             <div id="accordion">
-                <div class="card">
+                <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingTwo">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">

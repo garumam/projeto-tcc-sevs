@@ -1,6 +1,7 @@
 :root {
     --input-padding-x: .75rem;
     --input-padding-y: .75rem;
+    --color-vidraceiro: #4264FB;
 }
 
 *,
@@ -71,8 +72,8 @@ body {
 }
 
 .btn-custom {
-    background-color: #4264FB !important;
-    border-color: #4264FB !important;
+    background-color: var(--color-vidraceiro) !important;
+    border-color: var(--color-vidraceiro) !important;
     color: white !important;
 }
 
@@ -87,13 +88,13 @@ body {
 }
 
 .list-group-item {
-   font-weight: 500;
+    font-weight: 500;
 }
 
 /* auxiliar */
 
 .cor-texto {
-    color: #4264FB;
+    color: var(--color-vidraceiro);
 }
 
 .nomp {
@@ -213,7 +214,7 @@ body {
     position: fixed;
     height: 100%;
     overflow-x: auto;
-    background-color: #4264FB;
+    background-color: var(--color-vidraceiro);
     min-width: 220px;
     color: white;
     font-weight: 200;
@@ -374,12 +375,12 @@ body {
 }
 
 .page-link, .page-link:hover {
-    color: #4264FB;
+    color: var(--color-vidraceiro);
 }
 
 .page-item.active .page-link {
-    background-color: #4264FB;
-    border-color: #4264FB;
+    background-color: var(--color-vidraceiro);
+    border-color: var(--color-vidraceiro);
 }
 
 #image-selecionar {
@@ -473,11 +474,11 @@ td {
 }
 
 .subtitulo {
-    color: #707070;
+    color: #afb2c1;
     padding: 0 1rem 0 0;
-    font-size: .9rem;
+    font-size: 1rem;
     margin: 0;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .borda-top {
@@ -500,7 +501,7 @@ td {
     flex-direction: column;
     font-size: 16px;
     font-weight: 400;
-    min-height: 80px;
+    height: auto;
     overflow: hidden;
     z-index: 1;
     position: relative;
@@ -508,6 +509,36 @@ td {
     border-radius: .5rem;
     box-sizing: border-box;
     margin-bottom: 1rem;
+}
+
+.borda-roxa {
+    border-bottom: 3px solid #716aca;
+}
+
+.borda-verde {
+    border-bottom: 3px solid #34bfa3;
+}
+
+.borda-azul {
+    border-bottom: 3px solid #36a3f7;
+}
+
+.borda-vermelha {
+    border-bottom: 3px solid #f4516c;
+}
+.card-header{
+    background-color: white;
+}
+
+.card-header .btn-link{
+    color: var(--color-vidraceiro);
+}
+
+.card-shadow-dashboard {
+    border-radius: 0 !important;
+    -webkit-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, 0.08);
+    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, 0.08);
+    background-color: #fff;
 }
 
 .card-material:hover {
