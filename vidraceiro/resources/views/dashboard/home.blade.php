@@ -81,7 +81,7 @@
     </div>
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard">
 
             <div id="accordion">
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
