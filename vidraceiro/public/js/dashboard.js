@@ -1077,12 +1077,17 @@ $(document).ready(function () {
     $('body').on('click', '.pagination a', function (e) {
         e.preventDefault();
         let idtab = $('.nav-tabs a.active').attr('data-id');
-        console.log('entrou');
+        let divclicada = $(this).parent().parent().parent();
+        console.log(divclicada);
         if(idtab === undefined){
             $('.tabelasrestaurar').each(function () {
-                if($(this).hasClass('show')){
-                    idtab = $(this).data('tipo');
+                // if($(this).hasClass('show')){
+                let id = $(this).data('tipo');
+                if (divclicada.attr('id') === id){
+                    idtab = id;
                 }
+
+                // }
             });
         }
         // $('#load a').css('color', '#dfecf6');
