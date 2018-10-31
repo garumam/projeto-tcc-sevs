@@ -93,7 +93,7 @@
                         </h5>
                     </div>
 
-                    <div id="collapseOne" class="collapse show tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div id="collapseOne" class="collapse show tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingOne">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -129,7 +129,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div id="collapseTwo" class="collapse show tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
