@@ -116,7 +116,7 @@ Route::prefix('materials')->group(function () {
 Route::prefix('budgets')->group(function () {
     Route::get('/', 'BudgetController@index')->name('budgets.index');
     Route::get('/create', 'BudgetController@create')->name('budgets.create');
-    Route::post('/{tab}', 'BudgetController@store')->name('budgets.store');
+    Route::post('/', 'BudgetController@store')->name('budgets.store');
     Route::get('/{id}', 'BudgetController@show')->name('budgets.show');
     Route::get('/{id}/edit', 'BudgetController@edit')->name('budgets.edit');
     Route::patch('/{tab}/{id}', 'BudgetController@update')->name('budgets.update');

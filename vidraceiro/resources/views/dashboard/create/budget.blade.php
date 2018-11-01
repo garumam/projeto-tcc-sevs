@@ -9,43 +9,24 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'active' : 'disabled' }} noborder-left"
+                            <a class="tabs-budget nav-item nav-link active noborder-left"
                                id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a>
                         @elseif($i == 1)
-                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado')))? !empty($budgetedit)? '':'disabled' : 'active' }}"
+                            <a class="tabs-budget nav-item nav-link {{ !empty($budgetedit)? '':'disabled' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="tabs-budget nav-item nav-link {{ (empty(session('budgetcriado'))&& empty($budgetedit)) ? 'disabled' : '' }}"
+                            <a class="tabs-budget nav-item nav-link {{ empty($budgetedit) ? 'disabled' : '' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a>
                         @endif
                     @endfor
 
-                    {{--<!-- INICIO ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
-
-                    {{--<a class="nav-item nav-link" id="nav-editar-tab" data-toggle="tab"--}}
-                    {{--href="#nav-editar" role="tab" aria-controls="nav-editar"--}}
-                    {{--aria-selected="false">Editar</a>--}}
-
-                    {{--<!-- FIM ABA EXTRA AO EDITAR ORÇAMENTO -->--}}
-
-                    {{--<a class="nav-item nav-link" id="nav-adicionar-tab" data-toggle="tab"--}}
-                    {{--href="#nav-adicionar" role="tab" aria-controls="nav-adicionar"--}}
-                    {{--aria-selected="false">Adicionar</a>--}}
-
-                    {{--<a class="nav-item nav-link" id="nav-material-tab" data-toggle="tab"--}}
-                    {{--href="#nav-material" role="tab" aria-controls="nav-material"--}}
-                    {{--aria-selected="false">Material</a>--}}
-
-                    {{--<a class="nav-item nav-link" id="nav-total-tab" data-toggle="tab"--}}
-                    {{--href="#nav-total" role="tab" aria-controls="nav-total"--}}
-                    {{--aria-selected="false">Total</a>--}}
 
                     <div class="topo-tab">
                         <a class="btn-link bt-budget-deletar-produto" onclick="deletar(event,this.id,'budgets/product')"
@@ -62,12 +43,12 @@
 
             <!--Inicio Conteudo de cada tab -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ (empty(session('budgetcriado')) || !empty($budgetedit)) ? 'show active' : '' }} "
+                <div class="tab-pane fade show active"
                      id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '1']) :  route('budgets.store',['tag' => '1'])}}">
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '1']) :  route('budgets.store')}}">
                         @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -190,12 +171,12 @@
 
                 </div>
 
-                <div class="tab-pane fade {{ !empty(session('budgetcriado')) ? 'show active' : '' }}"
+                <div class="tab-pane fade"
                      id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '2']) :  route('budgets.store',['tag' => '2'])}}">
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '2']) : route('budgets.index')}}">
                         @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -294,10 +275,7 @@
                                        name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
-                            @if(empty($budgetedit))
-                                <input type="hidden" name="budget_id"
-                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
-                            @endif
+
                         </div>
 
                         <button id="bt-add-budget-invisible" class="d-none" type="submit"></button>
@@ -312,7 +290,7 @@
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.store',['tag' => '3'])}}">
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.index')}}">
                         @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -349,21 +327,7 @@
                                 <label for="select-produto" class="obrigatorio">Selecione o produto</label>
                                 <select id="select-produto-edit" name="produtoid" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
-                                    @if(!empty(session('products')))
-                                        @foreach(Session::get('products') as $product)
 
-                                            <option data-descricao="{{$product->mproduct->descricao}}"
-                                                    data-image="{{$product->mproduct->imagem}}"
-                                                    data-altura="{{$product->altura}}"
-                                                    data-largura="{{$product->largura}}"
-                                                    data-qtd="{{$product->qtd}}"
-                                                    data-localizacao="{{$product->localizacao}}"
-                                                    data-valor_mao_obra="{{$product->valor_mao_obra}}"
-                                                    value="{{$product->id}}"
-                                            >{{$product->mproduct->nome .' | M²: '.number_format(($product->altura*$product->largura), 3, '.', '' ) .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
-
-                                        @endforeach
-                                    @endif
                                     @if(!empty($products))
                                         @foreach($products as $product)
 
@@ -420,10 +384,7 @@
                                        name="valor_mao_obra"
                                        placeholder="" value="{{old('valor_mao_obra')}}">
                             </div>
-                            @if(empty($budgetedit))
-                                <input type="hidden" name="budget_id"
-                                       value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
-                            @endif
+
                         </div>
 
                         <button id="bt-edit-budget-invisible" class="d-none" type="submit"></button>
@@ -437,7 +398,7 @@
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '4']) :  route('budgets.store',['tag' => '4'])}}">
+                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '4']) :  route('budgets.index')}}">
                         @if(!empty($budgetedit))
                             <input type="hidden" name="_method" value="PATCH">
                         @endif
@@ -469,16 +430,6 @@
                                 <label for="select-produto" class="obrigatorio">Selecione o produto</label>
                                 <select id="select-produto-material" class="custom-select" required>
                                     <option value="" selected>Selecione um produto</option>
-                                    @if(!empty(session('products')))
-                                        @foreach(Session::get('products') as $product)
-
-                                            <option data-image="{{$product->mproduct->imagem}}"
-                                                    data-largura="{{$product->largura}}"
-                                                    data-altura="{{$product->altura}}"
-                                                    value="{{$product->id}}">{{$product->mproduct->nome ." | M²: ".number_format(($product->altura*$product->largura), 3, '.', '') .' | M Linear: '.number_format((($product->altura * 2) + ($product->largura * 2)), 3, '.', '' )}}</option>
-
-                                        @endforeach
-                                    @endif
 
                                     @if(!empty($products))
                                         @foreach($products as $product)
@@ -497,10 +448,7 @@
 
                         @include('layouts.listarmaterial')
 
-                        @if(empty($budgetedit))
-                            <input type="hidden" name="budget_id"
-                                   value="{{!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '' }}">
-                        @endif
+
                         <button id="bt-material-budget-invisible" class="d-none" type="submit"></button>
 
                     </form>
@@ -509,7 +457,7 @@
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
-                    @php $id = !empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '') @endphp
+                    @php $id = !empty($budgetedit)? $budgetedit->id : '' @endphp
                     <form class="formulario" method="GET" role="form" target="_blank"
                           action="{{ route('pdf.show',['tipo'=>'budget','id'=>$id]) }}">
 
@@ -520,9 +468,9 @@
                                     <h4 class="card-title cor-texto">Total</h4>
                                 </div>
 
-                                @if(!empty(session('products')) || !empty($products))
+                                @if(!empty($products))
                                     <div class="card-text">
-                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                        @foreach($products as $product)
                                             <label>Produto: {{$product->mproduct->nome}}
                                                 M²: {{ number_format($product['altura']*$product['largura'],2)}}
                                                 | M Linear: {{($product['altura'] * 2) + ($product['largura'] * 2)}}
@@ -533,19 +481,10 @@
                                             <label><b>Valor do orçamento sem lucro:
                                                     R$ {{ number_format($budgetedit['total']/(1+$budgetedit['margem_lucro']/100),2,'.','') }}</b></label>
                                             <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
-                                        @elseif(Session::get('budgetcriado'))
-                                            <label><b>Valor do orçamento sem lucro:
-                                                    R$ {{ number_format(Session::get('budgetcriado')['total']/(1+Session::get('budgetcriado')['margem_lucro']/100),2,'.','')}}</b></label>
-                                            <label><b>Valor do orçamento:
-                                                    R$ {{ Session::get('budgetcriado')['total'] }}</b></label>
                                         @endif
                                     </div>
                                 @endif
-                                {{--@if(!empty($products))--}}
-                                {{--@foreach($products as $product)--}}
-                                {{--<label class="card-text">{{$product->mproduct->nome}}</label>--}}
-                                {{--@endforeach--}}
-                                {{--@endif--}}
+
 
                             </div>
 
@@ -556,9 +495,9 @@
                                 <div class="topo px-0 py-0 h-auto">
                                     <h4 class="card-title cor-texto">Vidros</h4>
                                 </div>
-                                @if(!empty(session('products')) || !empty($products))
+                                @if(!empty($products))
                                     <div class="card-text">
-                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                        @foreach($products as $product)
                                             <label><b>Vidros do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->glasses as $glass)
                                                 <label>Nome: {{$glass->nome .' '. $glass->tipo .' | Preço(m²): R$'. $glass->preco}}{{' | Preço total: R$'.number_format((($product->largura * $product->altura) * $glass->preco),2,'.','')}}</label>
@@ -577,9 +516,9 @@
                                 <div class="topo px-0 py-0 h-auto">
                                     <h4 class="card-title cor-texto">Aluminios</h4>
                                 </div>
-                                @if(!empty(session('products')) || !empty($products))
+                                @if(!empty($products))
                                     <div class="card-text">
-                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                        @foreach($products as $product)
                                             <label><b>Alumínios do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->aluminums as $aluminum)
                                                 <label>Perfil: {{$aluminum->perfil .' '. $aluminum->descricao .' | Peso: '.$aluminum->peso.' | Qtd: '.$aluminum->qtd . ' | Preço(kg): R$ '.$aluminum->preco.' | Preço total: R$'.number_format((($aluminum->preco * $aluminum->peso) * $aluminum->qtd),2,'.','')}}</label>
@@ -596,9 +535,9 @@
                                 <div class="topo px-0 py-0 h-auto">
                                     <h4 class="card-title cor-texto">Componentes</h4>
                                 </div>
-                                @if(!empty(session('products')) || !empty($products))
+                                @if(!empty($products))
                                     <div class="card-text">
-                                        @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                                        @foreach($products as $product)
                                             <label><b>Componentes do produto: {{$product->mproduct->nome}}</b></label>
                                             @foreach($product->components as $component)
                                                 <label>Nome: {{$component->nome.' | Qtd: '.$component->qtd .' | Preço(uni): R$ '.$component->preco.' | Preço total: R$'.number_format(($component->preco * $component->qtd),2,'.','')}}</label>
@@ -609,8 +548,6 @@
                             </div>
 
                         </div>
-
-                        {{--<input type="hidden" name="idorcamento" value="{{!empty($budgetedit)? $budgetedit->id : (!empty(session('budgetcriado'))?Session::get('budgetcriado')->id : '')}}">--}}
 
                         <button id="bt-total-budget-invisible" class="d-none" type="submit"></button>
 

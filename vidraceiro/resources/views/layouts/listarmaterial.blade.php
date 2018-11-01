@@ -15,32 +15,7 @@
 
     <div class="form-group col-md-4">
         <label for="select-vidro" id="label_categoria">Vidros</label>
-        {{--<select id="select-vidro" name="vidro_id" class="custom-select">
-            <option value="" selected>Selecione um vidro</option>
-            @foreach($glasses as $glass)
-                <option data-preco="{{$glass->preco}}"
-                        data-comparador="{{ trim($glass->cor . $glass->tipo . $glass->categoria_vidro_id) }}" value="{{$glass->id}}">{{$glass->nome}}</option>
-            @endforeach
-        </select>--}}
-        {{--<select id="select-aluminio" name="aluminio_id" class="custom-select"
-                style="display: none;">
-            <option value="" selected>Selecione um aluminio</option>
-            @foreach($aluminums as $aluminum)
-                <option data-medida="{{$aluminum->medida}}"
-                        data-peso="{{$aluminum->peso}}"
-                        data-preco="{{$aluminum->preco}}"
-                        value="{{$aluminum->id}}">{{$aluminum->perfil}}</option>
-            @endforeach
-        </select>--}}
-        {{--<select id="select-componente" name="componente_id" class="custom-select"
-                style="display: none;">
-            <option value="" selected>Selecione um componente</option>
-            @foreach($components as $component)
-                <option data-qtd="{{$component->qtd}}"
-                        data-preco="{{$component->preco}}"
-                        value="{{$component->id}}">{{$component->nome}}</option>
-            @endforeach
-        </select>--}}
+
         <select id="select-vidro" class="form-control form-control-chosen" name="vidro_id" data-placeholder="Selecione um vidro" style="display: none;">
             <option></option>
             @foreach($glasses as $glass)
@@ -143,27 +118,9 @@
                         </tr>
                     @endforeach
                 @endif
-                {{--@if(!empty($products))--}}
-                {{--@foreach($products as $product)--}}
-                {{--@foreach($product->glasses as $glassP)--}}
-                {{--<tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"--}}
-                {{--style="display: none;">--}}
-                {{--<th scope="row">{{$glassP->id}}</th>--}}
-                {{--<td>{{$glassP->nome}}</td>--}}
-                {{--<td>R${{$glassP->preco}}</td>--}}
-                {{--<td>--}}
-                {{--<button id="linha-vidro-{{$glassP->id}}"--}}
-                {{--class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete--}}
-                {{--</button>--}}
 
-                {{--</td>--}}
-                {{--</tr>--}}
-                {{--@endforeach--}}
-                {{--@endforeach--}}
-                {{--@endif--}}
-
-                @if(!empty(session('products')) || !empty($products))
-                    @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                @if(!empty($products))
+                    @foreach($products as $product)
                         @foreach($product->glasses as $glassP)
                             <tr id="linha-vidro-{{$glassP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
@@ -212,28 +169,9 @@
                         </tr>
                     @endforeach
                 @endif
-                {{--@if(!empty($products))--}}
-                {{--@foreach($products as $product)--}}
-                {{--@foreach($product->aluminums as $aluminumP)--}}
-                {{--<tr id="linha-aluminio-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"--}}
-                {{--style="display: none;">--}}
-                {{--<th scope="row">{{$aluminumP->id}}</th>--}}
-                {{--<td>{{$aluminumP->perfil}}</td>--}}
-                {{--<td>{{$aluminumP->medida}}</td>--}}
-                {{--<td>{{$aluminumP->peso}}</td>--}}
-                {{--<td>{{$aluminumP->preco}}</td>--}}
-                {{--<td>--}}
-                {{--<button id="linha-aluminio-{{$aluminumP->id}}"--}}
-                {{--class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete--}}
-                {{--</button>--}}
 
-                {{--</td>--}}
-                {{--</tr>--}}
-                {{--@endforeach--}}
-                {{--@endforeach--}}
-                {{--@endif--}}
-                @if(!empty(session('products')) || !empty($products))
-                    @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                @if(!empty($products))
+                    @foreach($products as $product)
                         @foreach($product->aluminums as $aluminumP)
                             <tr id="linha-aluminio-{{$aluminumP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
@@ -282,27 +220,9 @@
                         </tr>
                     @endforeach
                 @endif
-                {{--@if(!empty($products))--}}
-                {{--@foreach($products as $product)--}}
-                {{--@foreach($product->components as $componentP)--}}
-                {{--<tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"--}}
-                {{--style="display: none;">--}}
-                {{--<th scope="row">{{$componentP->id}}</th>--}}
-                {{--<td>{{$componentP->nome}}</td>--}}
-                {{--<td>{{$componentP->preco}}</td>--}}
-                {{--<td>{{$componentP->qtd}}</td>--}}
-                {{--<td>--}}
-                {{--<button id="linha-componente-{{$componentP->id}}"--}}
-                {{--class="deletar-material-tabela btn btn-danger mb-1" type="button">Delete--}}
-                {{--</button>--}}
 
-                {{--</td>--}}
-                {{--</tr>--}}
-                {{--@endforeach--}}
-                {{--@endforeach--}}
-                {{--@endif--}}
-                @if(!empty(session('products')) || !empty($products))
-                    @foreach(!empty($products) ? $products : Session::get('products') as $product)
+                @if(!empty($products))
+                    @foreach($products as $product)
                         @foreach($product->components as $componentP)
                             <tr id="linha-componente-{{$componentP->id}}" data-produtoid="{{$product->id}}"
                                 style="display: none;">
@@ -362,27 +282,9 @@
                            value="{{$componentP->id}}" style="display: none;"/>
                 @endforeach
             @endif
-            {{--@if(!empty($products))--}}
-            {{--@foreach($products   as $product)--}}
-            {{--@foreach($product->aluminums as $aluminumP)--}}
-            {{--<input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"--}}
-            {{--name="id_aluminio_{{$product->id}}[]"--}}
-            {{--value="{{$aluminumP->id}}" style="display: none;"/>--}}
-            {{--@endforeach--}}
-            {{--@foreach($product->glasses as $glassP)--}}
-            {{--<input type="number" class="id-material-vidro linha-vidro-{{$glassP->id}}"--}}
-            {{--name="id_vidro_{{$product->id}}[]"--}}
-            {{--value="{{$glassP->id}}" style="display: none;"/>--}}
-            {{--@endforeach--}}
-            {{--@foreach($product->components as $componentP)--}}
-            {{--<input type="number" class="id-material-componente linha-componente-{{$componentP->id}}"--}}
-            {{--name="id_componente_{{$product->id}}[]"--}}
-            {{--value="{{$componentP->id}}" style="display: none;"/>--}}
-            {{--@endforeach--}}
-            {{--@endforeach--}}
-            {{--@endif--}}
-            @if(!empty(session('products')) || !empty($products))
-                @foreach(!empty($products) ? $products : Session::get('products') as $product)
+
+            @if(!empty($products))
+                @foreach($products as $product)
                     @foreach($product->aluminums as $aluminumP)
                         <input type="number" class="id-material-aluminio linha-aluminio-{{$aluminumP->id}}"
                                name="id_aluminio_{{$product->id}}[]"

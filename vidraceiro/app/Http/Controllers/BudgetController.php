@@ -75,113 +75,24 @@ class BudgetController extends Controller
         return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients','budgetedit'))->with('title', 'Novo Orçamento');
     }
 
-    public function store(Request $request, $tab)
+    public function store(Request $request)
     {
         if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        if($request->has('budget_id')){
+        $validado = $this->rules_budget($request->all());
+        if ($validado->fails())
+            return redirect()->back()->withErrors($validado);
 
-            $budgetcriado = $this->budget->findBudgetById($request->budget_id);
+        $margemlucro = $request->margem_lucro ?? 100;
 
-            if($budgetcriado->status !== 'AGUARDANDO'){
-                return redirect(route('budgets.index'))->with('error','Este orçamento não pode ser editado!');
-            }
-        }
+        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
 
-        switch ($tab) {
-            case '1': //tab orçamento
-                $validado = $this->rules_budget($request->all());
-                if ($validado->fails())
-                    return redirect()->back()->withErrors($validado);
+        if ($budgetcriado)
+            return redirect()->route('budgets.edit',['id'=>$budgetcriado->id])->with('success', 'Orçamento criado com sucesso');
 
-                $margemlucro = $request->margem_lucro ?? 100;
 
-                $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
-
-                if ($budgetcriado)
-                    return redirect()->back()->with('success', 'Orçamento criado com sucesso')
-                        ->with(compact('budgetcriado'));
-                break;
-            case '2': //tab adicionar
-                $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
-
-                if ($validado->fails()) {
-                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
-                    $products = $budgetcriado->products;
-
-                    return redirect()->back()->withErrors($validado)
-                        ->with(compact('budgetcriado'))
-                        ->with(compact('products'));
-                }
-                $product = new Product();
-                $product = $product->createProduct($request->all());
-
-                $product->createMaterialsOfMProductToProduct();
-
-                if ($product) {
-                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
-
-                    if ($budgetcriado && $budgetcriado->updateBudgetTotal()) {
-                        $products = $budgetcriado->products;
-
-                        return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')
-                            ->with(compact('budgetcriado'))
-                            ->with(compact('products'));
-                    }
-                }
-
-                break;
-            case '3': //tab editar
-
-                $validado = $this->rules_budget_product_exists(['produtoid'=>$request->get('produtoid')]);
-
-                if(!$validado->fails()){
-                    $validado = $this->rules_budget_product($request->all(),[]);
-                }
-
-                if ($validado->fails()) {
-                    $budgetcriado = $this->budget->findBudgetById($request->budget_id);
-                    $products = $budgetcriado->products;
-                    return redirect()->back()->withErrors($validado)
-                        ->with(compact('budgetcriado'))
-                        ->with(compact('products'));
-                }
-
-                $product = new Product();
-                $product = $product->findProductById($request->produtoid);
-                $product->updateProduct($request->all());
-
-                $product->updateAluminunsWithProductMeasure();
-
-                $budgetcriado = $this->budget->findBudgetById($request->budget_id);
-                if ($product && $budgetcriado->updateBudgetTotal()) {
-                    $products = $budgetcriado->products;
-                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')
-                        ->with(compact('budgetcriado'))
-                        ->with(compact('products'));
-                }
-                break;
-            case '4': //tab material
-                $budgetcriado = $this->budget->findBudgetById($request->budget_id);
-                $products = $budgetcriado->products;
-
-                foreach ($products as $product) {
-
-                    $product->createMaterialsToProduct($request);
-
-                }
-
-                if ($budgetcriado && $budgetcriado->updateBudgetTotal()) {
-
-                    return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')
-                        ->with(compact('budgetcriado'))
-                        ->with(compact('products'));
-                }
-                break;
-            default:
-        }
         return redirect()->back()->with('error', "Erro ao adicionar");
     }
 
@@ -363,12 +274,8 @@ class BudgetController extends Controller
 
                 $product->deleteProduct();
 
-                $voltar = redirect()->back();
+
                 if ($budgetcriado->updateBudgetTotal()) {
-                    if (strpos($voltar->getTargetUrl(), 'create')) {
-                        return redirect()->back()->with('success', 'Produto deletado com sucesso')
-                            ->with(compact('budgetcriado'));
-                    }
                     return redirect()->back()->with('success', 'Produto deletado com sucesso');
                 }
             } else {
