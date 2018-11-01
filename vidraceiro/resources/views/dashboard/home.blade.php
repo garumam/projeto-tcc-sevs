@@ -45,7 +45,7 @@
                 <h4 class="titulo" style="color: #36A3F7;">{{$totalreceita}}
                     <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
-                <p class="subtitulo">Total Receita</p>
+                <p class="subtitulo">Total Receitas</p>
             </div>
         </div>
     </div>
@@ -83,10 +83,10 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
-                <h4 class="titulo" style="color: #36A3F7;">{{$totalmaterials}}
+                <h4 class="titulo" style="color: #36A3F7;">{{$totalproviders}}
                     <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
-                <p class="subtitulo">Total de Materiais</p>
+                <p class="subtitulo">Total de Fornecedores</p>
             </div>
         </div>
     </div>
@@ -97,14 +97,15 @@
             <div id="accordion">
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
+                        <h5 class="mb-0 d-flex justify-content-between">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 Ordens de serviço em aberto
                             </button>
+                            <span class="badge badge-primary">{{count($ordersOpen)}}</span>
                         </h5>
                     </div>
 
-                    <div id="collapseOne" class="collapse show tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingOne">
+                    <div id="collapseOne" class="collapse tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingOne">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -134,13 +135,14 @@
                 </div>
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
+                        <h5 class="mb-0 d-flex justify-content-between">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Orçamentos aprovados para abrir ordem de serviço
                             </button>
+                            <span class="badge badge-primary">{{count($budgetsOpen)}}</span>
                         </h5>
                     </div>
-                    <div id="collapseTwo" class="collapse show tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
+                    <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
