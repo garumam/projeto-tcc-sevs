@@ -12,68 +12,79 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
-                <h4 class="titulo">{{$totalusers}}
-                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                <h4 class="titulo" style="color:#716ACA;">{{$totalusers}}
+                    <small><i class="fas fa-arrow-up" style="color:#716ACA;"></i></small>
                 </h4>
-                <p class="subtitulo">Total de usuarios</p>
+                <p class="subtitulo">Total de Usuarios</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-verde">
             <div class="widget">
-                <h4 class="titulo">{{$clients}}
+                <h4 class="titulo text-success">{{$clients}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
                 </h4>
-                <p class="subtitulo">Total de clientes</p>
+                <p class="subtitulo">Total de Clientes</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-vermelha">
             <div class="widget">
-                <h4 class="titulo">{{$totalcategories}}
-                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                <h4 class="titulo" style="color: #c82333;">{{$totalsales}}
+                    <small><i class="fas fa-arrow-up text-danger"></i></small>
                 </h4>
-                <p class="subtitulo">Total de categorias</p>
+                <p class="subtitulo">Total de Vendas</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
-                <h4 class="titulo">{{$totalproducts}}
-                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                <h4 class="titulo" style="color: #36A3F7;">{{$totalreceita}}
+                    <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
-                <p class="subtitulo">Total de produtos</p>
+                <p class="subtitulo">Total Receita</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="card-material card-shadow-dashboard borda-roxa">
+            <div class="widget">
+                <h4 class="titulo" style="color:#716ACA;">{{$totalbudgets}}
+                    <small><i class="fas fa-arrow-up" style="color:#716ACA;"></i></small>
+                </h4>
+                <p class="subtitulo">Total de Orçamentos</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-verde">
             <div class="widget">
-                <h4 class="titulo">{{$totalbudgets}}
+                <h4 class="titulo text-success">{{$totalorders}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
                 </h4>
-                <p class="subtitulo">Total de orçamentos</p>
+                <p class="subtitulo">Total de Ordens de Serviço</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-vermelha">
             <div class="widget">
-                <h4 class="titulo">{{$totalorders}}
-                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                <h4 class="titulo" style="color: #c82333;">{{$totaldespesa}}
+                    <small><i class="fas fa-arrow-up text-danger"></i></small>
                 </h4>
-                <p class="subtitulo">Total de ordens de serviço</p>
+                <p class="subtitulo">Total de Despesas</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material">
+        <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
-                <h4 class="titulo">{{$totalmaterials}}
-                    <small><i class="fas fa-arrow-up text-success"></i></small>
+                <h4 class="titulo" style="color: #36A3F7;">{{$totalmaterials}}
+                    <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Materiais</p>
             </div>
