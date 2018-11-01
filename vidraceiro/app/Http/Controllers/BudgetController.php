@@ -50,11 +50,6 @@ class BudgetController extends Controller
         }
 
         $states = $this->states;
-        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
-        $glasses = Glass::getAllGlassesOrAllModels(1);
-        $components = Component::getAllComponentsOrAllModels(1);
-        $categories = Category::getAllCategoriesByType('produto');
-        $mproducts = MProduct::getAllMProducts();
         $clients = Client::getAllClients();
 
         $titulotabs = ['Orçamento', 'Adicionar', 'Editar', 'Material', 'Total'];
@@ -72,7 +67,7 @@ class BudgetController extends Controller
 
         }
 
-        return view('dashboard.create.budget', compact('titulotabs', 'states', 'glasses', 'aluminums', 'components', 'categories', 'mproducts', 'clients','budgetedit'))->with('title', 'Novo Orçamento');
+        return view('dashboard.create.budget', compact('titulotabs', 'states', 'clients','budgetedit'))->with('title', 'Novo Orçamento');
     }
 
     public function store(Request $request)

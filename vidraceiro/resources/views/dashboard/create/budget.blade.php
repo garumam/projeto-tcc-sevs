@@ -170,16 +170,16 @@
                     </form>
 
                 </div>
-
+@if(!empty($budgetedit))
                 <div class="tab-pane fade"
                      id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '2']) : route('budgets.index')}}">
-                        @if(!empty($budgetedit))
-                            <input type="hidden" name="_method" value="PATCH">
-                        @endif
+                          action="{{route('budgets.update',['id'=>$budgetedit->id,'tag' => '2'])}}">
+
+                        <input type="hidden" name="_method" value="PATCH">
+
                         @csrf
                         <div class="form-row">
 
@@ -290,10 +290,10 @@
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '3']) :  route('budgets.index')}}">
-                        @if(!empty($budgetedit))
-                            <input type="hidden" name="_method" value="PATCH">
-                        @endif
+                          action="{{route('budgets.update',['id'=>$budgetedit->id,'tag' => '3'])}}">
+
+                        <input type="hidden" name="_method" value="PATCH">
+
                         @csrf
                         <div class="form-row align-items-center">
 
@@ -398,10 +398,10 @@
                      aria-labelledby="nav-{{$titulotabs[3]}}-tab">
 
                     <form class="formulario" method="POST" role="form"
-                          action="{{ !empty($budgetedit) ?  route('budgets.update',['id'=>$budgetedit->id,'tag' => '4']) :  route('budgets.index')}}">
-                        @if(!empty($budgetedit))
-                            <input type="hidden" name="_method" value="PATCH">
-                        @endif
+                          action="{{route('budgets.update',['id'=>$budgetedit->id,'tag' => '4'])}}">
+
+                        <input type="hidden" name="_method" value="PATCH">
+
                         @csrf
                         <div class="form-row align-items-center">
 
@@ -457,7 +457,7 @@
 
                 <div class="tab-pane fade" id="nav-{{$titulotabs[4]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[4]}}-tab">
-                    @php $id = !empty($budgetedit)? $budgetedit->id : '' @endphp
+                    @php $id = $budgetedit->id @endphp
                     <form class="formulario" method="GET" role="form" target="_blank"
                           action="{{ route('pdf.show',['tipo'=>'budget','id'=>$id]) }}">
 
@@ -477,11 +477,10 @@
                                                 Qtd: {{$product['qtd']}}</label>
                                         @endforeach
 
-                                        @if(!empty($budgetedit))
                                             <label><b>Valor do orçamento sem lucro:
                                                     R$ {{ number_format($budgetedit['total']/(1+$budgetedit['margem_lucro']/100),2,'.','') }}</b></label>
                                             <label><b>Valor do orçamento: R$ {{ $budgetedit['total'] }}</b></label>
-                                        @endif
+
                                     </div>
                                 @endif
 
@@ -557,7 +556,7 @@
 
             </div>
             <!--Fim Conteudo de cada tab -->
-
+@endif
         </div>
     </div>
 @endsection
