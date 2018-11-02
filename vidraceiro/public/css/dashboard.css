@@ -510,7 +510,19 @@ td {
     box-sizing: border-box;
     margin-bottom: 1rem;
 }
-
+.notificacao{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: var(--color-vidraceiro);
+    text-align: center;
+    padding: .09rem 0 .1rem 0;
+    margin: 0;
+}
+.notificacao span {
+    font-size: 1.1rem;
+    height: 100%;
+}
 .borda-roxa {
     border-bottom: 3px solid #716aca;
 }

@@ -101,7 +101,7 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 Ordens de serviço em aberto
                             </button>
-                            <span class="badge badge-primary">{{count($ordersOpen)}}</span>
+                            <span class="notificacao"><span>{{count($ordersOpen)}}</span></span>
                         </h5>
                     </div>
 
@@ -139,7 +139,7 @@
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Orçamentos aprovados para abrir ordem de serviço
                             </button>
-                            <span class="badge badge-primary">{{$budgetsOpen->total()}}</span>
+                            <span class="notificacao"><span>{{count($ordersOpen)}}</span></span>
                         </h5>
                     </div>
                     <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
