@@ -26,7 +26,6 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
 
-
 </head>
 <body>
 
@@ -323,7 +322,8 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    function deletar(e,id, nome) {
+
+    function deletar(e, id, nome) {
         if (id != 'vazio') {
             var form = document.getElementById('delete-form');
             form.action = "/" + nome + "/" + id;
@@ -331,7 +331,8 @@
             form.submit();
         }
     }
-    function atualizar(e,id,situacao) {
+
+    function atualizar(e, id, situacao) {
         if (id != 'vazio') {
             var form = document.getElementById('update-form');
             form.action = "/orders/" + id + "/" + situacao;
@@ -341,35 +342,46 @@
     }
 
     var ctxVendas = document.getElementById("vendas");
+    var ctxFinanceiro = document.getElementById("financeiro");
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    var graficoVendas = new Chart(ctxVendas,{
+    var graficoVendas = new Chart(ctxVendas, {
         type: "line",
         data: {
             labels: meses,
             datasets: [{
                 label: 'Vendas',
                 data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                backgroundColor: 'rgba(51,153,255,0.5)',
+                borderColor: 'rgba(51,153,255,1)',
                 borderWidth: 2
             }]
         },
         options: {
-            responsive:true,
+            responsive: true,
+        }
+    });
+    var graficoFinanceiro = new Chart(ctxFinanceiro, {
+        type: "line",
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Receitas',
+                data: [1, 3, 5, 8, 9, 100],
+                backgroundColor: 'rgba(51,153,255,0.5)',
+                borderColor: 'rgba(51,153,255,1)',
+                borderWidth: 2
+            },
+                {
+                    label: 'Despesas',
+                    data: [20, 25, 30, 50, 200, 300],
+                    backgroundColor: 'rgba(255,0,0,0.5)',
+                    borderColor: 'rgba(255,0,0,1)',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
         }
     });
 </script>

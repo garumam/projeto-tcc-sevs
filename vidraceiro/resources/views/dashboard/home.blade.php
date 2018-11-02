@@ -106,10 +106,10 @@
     <div class="col-6">
         <div class="card-material card-shadow-dashboard">
             <div class="card-header">
-                <h4>Receitas</h4>
+                <h4>Financeiro</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="receitas" height="200"></canvas>
+                <canvas id="financeiro" height="200"></canvas>
             </div>
         </div>
     </div>
