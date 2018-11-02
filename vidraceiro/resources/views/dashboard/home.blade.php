@@ -139,7 +139,7 @@
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Orçamentos aprovados para abrir ordem de serviço
                             </button>
-                            <span class="notificacao"><span>{{count($ordersOpen)}}</span></span>
+                            <span class="notificacao"><span>{{$budgetsOpen->total()}}</span></span>
                         </h5>
                     </div>
                     <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
