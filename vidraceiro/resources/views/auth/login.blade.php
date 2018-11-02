@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-label-group">
-            <label for="password">{{ __('Password') }}</label>
+            <label for="password">{{ __('Senha') }}</label>
             <input type="password" id="password"
                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                    name="password" placeholder="Password" required>
@@ -33,11 +33,11 @@
             <label>
                 <input type="checkbox" value="remember" name="remember"
                        id="remember" {{ old('remember') ? 'checked' : '' }}>
-                {{ __('Remember Me') }}
+                {{ __('Lembrar-me') }}
             </label>
         </div>
         <button class="btn btn-md btn-primary btn-block btn-custom"
-                type="submit">{{ __('Login') }}</button>
+                type="submit">{{ __('Logar') }}</button>
         <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p> -->
     </form>
 @endsection
@@ -45,6 +45,6 @@
 
 @section('content-footer')
     <a class="botao text-muted" href="{{ route('password.request') }}">
-        {{ __('Forgot Your Password?') }}
+        {{ __('Perdeu sua senha?') }}
     </a>
 @endsection
