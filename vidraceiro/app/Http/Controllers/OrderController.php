@@ -132,15 +132,11 @@ class OrderController extends Controller
 
         if($order->situacao === 'ANDAMENTO'){
             $budgets = $order->budgets;
-            if($situacao === 'CONCLUIDA'){
+            if($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA'){
                 $order->updateOrder(['situacao'=>$situacao]);
 
                 $order->updateBudgetsStatusByOrderSituation($budgets);
 
-            }else if($situacao === 'CANCELADA'){
-                $order->updateOrder(['situacao'=>$situacao]);
-
-                $order->updateBudgetsStatusByOrderSituation($budgets);
             }
 
             return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
