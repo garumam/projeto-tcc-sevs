@@ -442,7 +442,7 @@
                 label: 'Aprovados',
                 data: [1, 3, 5, 8, 9, 100],
                 backgroundColor: 'rgba(100,255,50,0.5)',
-                borderColor: 'rgba(100,200,255,1)',
+                borderColor: 'rgba(100,255,50,1)',
                 borderWidth: 2
             },
                 {

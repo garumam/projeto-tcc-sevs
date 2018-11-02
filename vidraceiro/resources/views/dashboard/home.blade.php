@@ -92,57 +92,57 @@
     </div>
 
     <div class="col-12">
-        <div class="card-material card-shadow-dashboard">
+        <div class="card-material card-shadow-dashboard" style="height: 320px;">
             <div class="card-header">
                 <h4>Vendas</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="vendas" height="200"></canvas>
+                <canvas id="vendas" height="65"></canvas>
             </div>
 
         </div>
     </div>
 
     <div class="col-6">
-        <div class="card-material card-shadow-dashboard">
+        <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Financeiro</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="financeiro" height="200"></canvas>
+                <canvas id="financeiro" height="185"></canvas>
             </div>
         </div>
     </div>
 
     <div class="col-6">
-        <div class="card-material card-shadow-dashboard">
+        <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Ordens de serviço</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="ordensgraph" height="200"></canvas>
+                <canvas id="ordensgraph" height="185"></canvas>
             </div>
         </div>
     </div>
 
     <div class="col-6">
-        <div class="card-material card-shadow-dashboard">
+        <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Clientes</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="clientes" height="200"></canvas>
+                <canvas id="clientes" height="185"></canvas>
             </div>
         </div>
     </div>
 
     <div class="col-6">
-        <div class="card-material card-shadow-dashboard">
+        <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Orçamentos</h4>
             </div>
             <div style="padding: .5rem;">
-                <canvas id="orcamentosgraph" height="200"></canvas>
+                <canvas id="orcamentosgraph" height="185"></canvas>
             </div>
         </div>
     </div>
