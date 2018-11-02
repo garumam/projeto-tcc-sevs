@@ -343,6 +343,9 @@
 
     var ctxVendas = document.getElementById("vendas");
     var ctxFinanceiro = document.getElementById("financeiro");
+    var ctxOrdens = document.getElementById("ordensgraph");
+    var ctxClientes = document.getElementById("clientes");
+    var ctxOrcamentos = document.getElementById("orcamentosgraph");
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     var graficoVendas = new Chart(ctxVendas, {
         type: "line",
@@ -384,6 +387,79 @@
             responsive: true,
         }
     });
+    var graficoOrdens = new Chart(ctxOrdens, {
+        type: "bar",
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Concluídas',
+                data: [1, 3, 5, 8, 9, 100],
+                backgroundColor: 'rgba(51,153,255,0.5)',
+                borderColor: 'rgba(51,153,255,1)',
+                borderWidth: 2
+            },
+                {
+                    label: 'Canceladas',
+                    data: [20, 25, 30, 50, 200, 300],
+                    backgroundColor: 'rgba(255,0,0,0.5)',
+                    borderColor: 'rgba(255,0,0,1)',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    var graficoClientes = new Chart(ctxClientes, {
+        type: "pie",
+        data: {
+            datasets: [{
+                data: [10,20],
+                backgroundColor: ['rgba(51,153,255,0.5)','rgba(255,0,0,0.5)'],
+                borderColor: ['rgba(51,153,255,1)','rgba(255,0,0,1)'],
+                borderWidth: 2
+            }
+            ],
+
+            labels: [
+                'Em dia',
+                'Devendo'
+            ]
+
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    var graficoOrcamentos = new Chart(ctxOrcamentos, {
+        type: "bar",
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Aprovados',
+                data: [1, 3, 5, 8, 9, 100],
+                backgroundColor: 'rgba(100,255,50,0.5)',
+                borderColor: 'rgba(100,200,255,1)',
+                borderWidth: 2
+            },
+                {
+                    label: 'Finalizados',
+                    data: [20, 25, 30, 50, 200, 300],
+                    backgroundColor: 'rgba(51,153,255,0.5)',
+                    borderColor: 'rgba(51,153,255,1)',
+                    borderWidth: 2
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
 </script>
 </body>
 </html>

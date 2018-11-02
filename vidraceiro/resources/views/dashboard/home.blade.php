@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12">
         <div class="card-material card-shadow-dashboard">
             <div class="card-header">
                 <h4>Vendas</h4>
@@ -110,6 +110,39 @@
             </div>
             <div style="padding: .5rem;">
                 <canvas id="financeiro" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Ordens de serviço</h4>
+            </div>
+            <div style="padding: .5rem;">
+                <canvas id="ordensgraph" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Clientes</h4>
+            </div>
+            <div style="padding: .5rem;">
+                <canvas id="clientes" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Orçamentos</h4>
+            </div>
+            <div style="padding: .5rem;">
+                <canvas id="orcamentosgraph" height="200"></canvas>
             </div>
         </div>
     </div>
