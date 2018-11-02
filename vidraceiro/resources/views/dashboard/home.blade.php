@@ -91,21 +91,47 @@
         </div>
     </div>
 
+    <div class="col-6">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Vendas</h4>
+            </div>
+            <div style="padding: .5rem;">
+                <canvas id="vendas" height="200"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Receitas</h4>
+            </div>
+            <div style="padding: .5rem;">
+                <canvas id="receitas" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
         <div class="card-material card-shadow-dashboard">
 
             <div id="accordion">
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0 d-flex justify-content-between">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
                                 Ordens de serviço em aberto
                             </button>
                             <span class="notificacao"><span>{{count($ordersOpen)}}</span></span>
                         </h5>
                     </div>
 
-                    <div id="collapseOne" class="collapse tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingOne">
+                    <div id="collapseOne" class="collapse tabelasrestaurar" data-tipo="ordens"
+                         aria-labelledby="headingOne">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -122,7 +148,8 @@
                                     <label for="searchordens">Pesquisar</label>
                                     <input type="text" class="form-control"
                                            onkeyup="ajaxPesquisaLoad('{{url('home')}}?ordens=1&search='+$('#searchordens').val()+'&paginate='+$('#paginateordens').val(),'ordens')"
-                                           value="{{ old('search') }}" id="searchordens" name="search" placeholder="Pesquisar">
+                                           value="{{ old('search') }}" id="searchordens" name="search"
+                                           placeholder="Pesquisar">
                                 </div>
                             </div>
 
@@ -136,13 +163,15 @@
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingTwo">
                         <h5 class="mb-0 d-flex justify-content-between">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                 Orçamentos aprovados para abrir ordem de serviço
                             </button>
                             <span class="notificacao"><span>{{$budgetsOpen->total()}}</span></span>
                         </h5>
                     </div>
-                    <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos" aria-labelledby="headingTwo">
+                    <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos"
+                         aria-labelledby="headingTwo">
                         <div class="card-body">
 
                             <div class="form-row formulario pb-0 justify-content-between">
@@ -159,7 +188,8 @@
                                     <label for="searchorcamentos">Pesquisar</label>
                                     <input type="text" class="form-control"
                                            onkeyup="ajaxPesquisaLoad('{{url('home')}}?orcamentos=1&search='+$('#searchorcamentos').val()+'&paginate='+$('#paginateorcamentos').val(),'orcamentos')"
-                                           value="{{ old('search') }}" id="searchorcamentos" name="search" placeholder="Pesquisar">
+                                           value="{{ old('search') }}" id="searchorcamentos" name="search"
+                                           placeholder="Pesquisar">
                                 </div>
                             </div>
 

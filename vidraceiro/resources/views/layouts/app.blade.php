@@ -26,6 +26,7 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
 
+
 </head>
 <body>
 
@@ -314,7 +315,7 @@
 <script src="{{ asset('js/dashboard.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"></script>
 
 <script>
     $.ajaxSetup({
@@ -338,6 +339,39 @@
             form.submit();
         }
     }
+
+    var ctxVendas = document.getElementById("vendas");
+    var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    var graficoVendas = new Chart(ctxVendas,{
+        type: "line",
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Vendas',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive:true,
+        }
+    });
 </script>
 </body>
 </html>
