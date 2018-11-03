@@ -341,28 +341,37 @@
         }
     }
 
-    var ctxVendas = document.getElementById("vendas");
+    function graficoVendas(){
+        var ctxVendas = document.getElementById("vendas");
+        fetch('http://127.0.0.1:8000/api/dashboard/sales')
+            .then(result => result.json())
+            .then((data) => {
+                var graficoVendas = new Chart(ctxVendas, {
+                    type: "line",
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Qtd Vendas',
+                            data: data,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
+    graficoVendas();
+
     var ctxFinanceiro = document.getElementById("financeiro");
     var ctxOrdens = document.getElementById("ordensgraph");
     var ctxClientes = document.getElementById("clientes");
     var ctxOrcamentos = document.getElementById("orcamentosgraph");
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    var graficoVendas = new Chart(ctxVendas, {
-        type: "line",
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Vendas',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: 'rgba(51,153,255,0.5)',
-                borderColor: 'rgba(51,153,255,1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
+
     var graficoFinanceiro = new Chart(ctxFinanceiro, {
         type: "line",
         data: {
