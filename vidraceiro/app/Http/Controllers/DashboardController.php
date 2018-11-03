@@ -92,12 +92,12 @@ class DashboardController extends Controller
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();*/
 
         $sales = DB::table('sales')->get();
-
-        for($i = 1 ; $i <= 12;$i++){
+        $salesArray = [];
+        for ($i = 1; $i <= 12; $i++) {
             $salesArray[] = $sales->filter(function ($value) use ($i) {
-                $mes = substr($value->data_venda,5,2);
-                if($i < 10)
-                    return $mes == '0'.$i;
+                $mes = substr($value->data_venda, 5, 2);
+                if ($i < 10)
+                    return $mes == '0' . $i;
 
                 return $mes == $i;
             })->count();
@@ -105,4 +105,25 @@ class DashboardController extends Controller
 
         return response()->json($salesArray);
     }
+
+    public function financial()
+    {
+
+    }
+
+    public function orders()
+    {
+
+    }
+
+    public function clients()
+    {
+
+    }
+
+    public function budgets()
+    {
+
+    }
+
 }
