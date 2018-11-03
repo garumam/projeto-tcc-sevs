@@ -80,9 +80,9 @@ class StorageController extends Controller
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_vidro_id);
                 $m2 = null;
-                if($request->operacao === 'retirada'){
+                if($request->operacao === 'saida'){
                     if($request->m2 > $storage->metros_quadrados){
-                        return redirect()->back()->with('error', "Não foi possível completar retirada, valor superior ao estoque! Valor em estoque: ".$storage->metros_quadrados." | Valor retirado: ".$request->m2);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->metros_quadrados." | Valor retirado: ".$request->m2);
                     }
                     $m2 = $storage->metros_quadrados - $request->m2;
 
@@ -105,9 +105,9 @@ class StorageController extends Controller
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_aluminio_id);
                 $qtd = null;
-                if($request->operacao === 'retirada'){
+                if($request->operacao === 'saida'){
                     if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar retirada, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
                     }
                     $qtd = $storage->qtd - $request->qtd;
 
@@ -130,9 +130,9 @@ class StorageController extends Controller
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_componente_id);
                 $qtd = null;
-                if($request->operacao === 'retirada'){
+                if($request->operacao === 'saida'){
                     if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar retirada, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
                     }
                     $qtd = $storage->qtd - $request->qtd;
 

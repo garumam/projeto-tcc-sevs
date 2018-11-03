@@ -76,7 +76,7 @@
                                 <label for="select-operacao" class="obrigatorio">Operação</label>
                                 <select id="select-operacao" name="operacao" class="custom-select" required>
                                     <option value="entrada" selected>Entrada</option>
-                                    <option value="retirada">Retirada</option>
+                                    <option value="saida">Saída</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
@@ -169,7 +169,7 @@
                                 <label for="select-operacao" class="obrigatorio">Operação</label>
                                 <select id="select-operacao" name="operacao" class="custom-select" required>
                                     <option value="entrada" selected>Entrada</option>
-                                    <option value="retirada">Retirada</option>
+                                    <option value="saida">Saída</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
@@ -260,7 +260,7 @@
                                 <label for="select-operacao" class="obrigatorio">Operação</label>
                                 <select id="select-operacao" name="operacao" class="custom-select" required>
                                     <option value="entrada" selected>Entrada</option>
-                                    <option value="retirada">Retirada</option>
+                                    <option value="saida">Saída</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
