@@ -165,7 +165,7 @@
 
                     <div id="collapseOne" class="collapse tabelasrestaurar" data-tipo="ordens"
                          aria-labelledby="headingOne">
-                        <div class="card-body">
+                        <div class="card-body p-0">
 
                             <div class="form-row formulario pb-0 justify-content-between">
                                 <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
@@ -205,7 +205,7 @@
                     </div>
                     <div id="collapseTwo" class="collapse tabelasrestaurar" data-tipo="orcamentos"
                          aria-labelledby="headingTwo">
-                        <div class="card-body">
+                        <div class="card-body p-0">
 
                             <div class="form-row formulario pb-0 justify-content-between">
                                 <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
