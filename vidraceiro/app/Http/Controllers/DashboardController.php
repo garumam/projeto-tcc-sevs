@@ -78,7 +78,7 @@ class DashboardController extends Controller
 
     public function sales()
     {
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '01')->count();
+        /*$sales[] = DB::table('sales')->whereMonth('data_venda', '=', '01')->count();
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '02')->count();
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '03')->count();
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '04')->count();
@@ -89,7 +89,20 @@ class DashboardController extends Controller
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '09')->count();
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '10')->count();
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '11')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();
-        return response()->json($sales);
+        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();*/
+
+        $sales = DB::table('sales')->get();
+
+        for($i = 1 ; $i <= 12;$i++){
+            $salesArray[] = $sales->filter(function ($value) use ($i) {
+                $mes = substr($value->data_venda,5,2);
+                if($i < 10)
+                    return $mes == '0'.$i;
+
+                return $mes == $i;
+            })->count();
+        }
+
+        return response()->json($salesArray);
     }
 }
