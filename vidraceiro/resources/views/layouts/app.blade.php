@@ -340,6 +340,7 @@
             form.submit();
         }
     }
+    var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     function graficoVendas(){
         var ctxVendas = document.getElementById("vendas");
@@ -365,37 +366,48 @@
             });
     }
     graficoVendas();
+    graficofinanceiro();
 
-    var ctxFinanceiro = document.getElementById("financeiro");
+    function graficofinanceiro() {
+        var ctxFinanceiro = document.getElementById("financeiro");
+        fetch('http://127.0.0.1:8000/api/dashboard/financial')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoFinanceiro = new Chart(ctxFinanceiro, {
+                    type: "line",
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Receitas',
+                            data: data.receitas,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Despesas',
+                                data: data.despesas,
+                                backgroundColor: 'rgba(255,0,0,0.5)',
+                                borderColor: 'rgba(255,0,0,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+        });
+
+    }
+
+
     var ctxOrdens = document.getElementById("ordensgraph");
     var ctxClientes = document.getElementById("clientes");
     var ctxOrcamentos = document.getElementById("orcamentosgraph");
-    var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-    var graficoFinanceiro = new Chart(ctxFinanceiro, {
-        type: "line",
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Receitas',
-                data: [1, 3, 5, 8, 9, 100],
-                backgroundColor: 'rgba(51,153,255,0.5)',
-                borderColor: 'rgba(51,153,255,1)',
-                borderWidth: 2
-            },
-                {
-                    label: 'Despesas',
-                    data: [20, 25, 30, 50, 200, 300],
-                    backgroundColor: 'rgba(255,0,0,0.5)',
-                    borderColor: 'rgba(255,0,0,1)',
-                    borderWidth: 2
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-        }
-    });
+
     var graficoOrdens = new Chart(ctxOrdens, {
         type: "bar",
         data: {

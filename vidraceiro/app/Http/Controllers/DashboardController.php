@@ -92,23 +92,48 @@ class DashboardController extends Controller
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();*/
 
         $sales = DB::table('sales')->get();
-        $salesArray = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $salesArray[] = $sales->filter(function ($value) use ($i) {
-                $mes = substr($value->data_venda, 5, 2);
-                if ($i < 10)
-                    return $mes == '0' . $i;
+        $salesArray = $this->getMonth($sales,true);
+//        $salesArray = [];
+//        for ($i = 1; $i <= 12; $i++) {
+//            $salesArray[] = $sales->filter(function ($value) use ($i) {
+//                $mes = substr($value->data_venda, 5, 2);
+//                if ($i < 10)
+//                    return $mes == '0' . $i;
+//
+//                return $mes == $i;
+//            })->count();
+//        }
 
-                return $mes == $i;
-            })->count();
-        }
 
         return response()->json($salesArray);
     }
 
     public function financial()
     {
+        $receitas = Financial::getAll()->where('tipo', '=', 'RECEITA');
+        $receitameses = $this->getMonth($receitas);
 
+        $despesas = Financial::getAll()->where('tipo', '=', 'DESPESA');
+        $despesasmeses = $this->getMonth($despesas);
+        return response()->json(array('receitas' => $receitameses, 'despesas' => $despesasmeses));
+    }
+
+    function getMonth($objeto, $data = false)
+    {
+        $meses = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $meses[] = $objeto->filter(function ($value) use ($i, $data) {
+                if ($data)
+                    $mes = substr($value->data_venda, 5, 2);
+                else
+                    $mes = substr($value->created_at, 5, 2);
+                if ($i < 10)
+                    return $mes == '0' . $i;
+
+                return $mes == $i;
+            })->count();
+        }
+        return $meses;
     }
 
     public function orders()
