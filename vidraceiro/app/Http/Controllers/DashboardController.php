@@ -157,7 +157,11 @@ class DashboardController extends Controller
 
     public function clients()
     {
+        $clients = Client::all();
+        $clientesarray[] = $clients->where('status','=','EM DIA')->count();
+        $clientesarray[] = $clients->where('status','=','DEVENDO')->count();
 
+        return response()->json(array('clientes' => $clientesarray));
     }
 
     public function budgets()

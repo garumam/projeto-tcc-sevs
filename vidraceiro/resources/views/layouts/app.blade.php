@@ -345,6 +345,7 @@
     graficoVendas();
     graficofinanceiro();
     graficoOrdens();
+    graficoClientes();
     graficoOrcamentos();
 
     function graficoVendas(){
@@ -491,60 +492,34 @@
 
     }
 
+    function graficoClientes(){
+        var ctxClientes = document.getElementById("clientes");
+        fetch('http://127.0.0.1:8000/api/dashboard/clients')
+            .then(result => result.json())
+            .then((data) => {
+                var graficoClientes = new Chart(ctxClientes, {
+                    type: "pie",
+                    data: {
+                        datasets: [{
+                            data: data.clientes,
+                            backgroundColor: ['rgba(51,153,255,0.5)','rgba(255,0,0,0.5)'],
+                            borderColor: ['rgba(51,153,255,1)','rgba(255,0,0,1)'],
+                            borderWidth: 2
+                        }
+                        ],
 
-    /*var graficoOrcamentos = new Chart(ctxOrcamentos, {
-        type: "bar",
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Aprovados',
-                data: [1, 3, 5, 8, 9, 100],
-                backgroundColor: 'rgba(100,255,50,0.5)',
-                borderColor: 'rgba(100,255,50,1)',
-                borderWidth: 2
-            },
-                {
-                    label: 'Finalizados',
-                    data: [20, 25, 30, 50, 200, 300],
-                    backgroundColor: 'rgba(51,153,255,0.5)',
-                    borderColor: 'rgba(51,153,255,1)',
-                    borderWidth: 2
-                }
+                        labels: [
+                            'Em dia',
+                            'Devendo'
+                        ]
 
-            ]
-        },
-        options: {
-            responsive: true,
-        }
-    });*/
-
-
-
-
-    var ctxClientes = document.getElementById("clientes");
-
-
-    var graficoClientes = new Chart(ctxClientes, {
-        type: "pie",
-        data: {
-            datasets: [{
-                data: [10,20],
-                backgroundColor: ['rgba(51,153,255,0.5)','rgba(255,0,0,0.5)'],
-                borderColor: ['rgba(51,153,255,1)','rgba(255,0,0,1)'],
-                borderWidth: 2
-            }
-            ],
-
-            labels: [
-                'Em dia',
-                'Devendo'
-            ]
-
-        },
-        options: {
-            responsive: true,
-        }
-    });
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
 
 
 </script>
