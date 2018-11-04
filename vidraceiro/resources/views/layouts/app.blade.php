@@ -342,6 +342,10 @@
     }
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
+    graficoVendas();
+    graficofinanceiro();
+    graficoOrdens();
+
     function graficoVendas(){
         var ctxVendas = document.getElementById("vendas");
         fetch('http://127.0.0.1:8000/api/dashboard/sales')
@@ -365,8 +369,7 @@
                 });
             });
     }
-    graficoVendas();
-    graficofinanceiro();
+
 
     function graficofinanceiro() {
         var ctxFinanceiro = document.getElementById("financeiro");
@@ -402,36 +405,45 @@
 
     }
 
+    function graficoOrdens() {
+        var ctxOrdens = document.getElementById("ordensgraph");
+        fetch('http://127.0.0.1:8000/api/dashboard/orders')
+            .then(response => response.json())
+            .then((data) => {
+                var graficoOrdens = new Chart(ctxOrdens, {
+                    type: "bar",
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Concluídas',
+                            data: data.concluidas,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Canceladas',
+                                data: data.canceladas,
+                                backgroundColor: 'rgba(255,0,0,0.5)',
+                                borderColor: 'rgba(255,0,0,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
 
-    var ctxOrdens = document.getElementById("ordensgraph");
+    }
+
+
     var ctxClientes = document.getElementById("clientes");
     var ctxOrcamentos = document.getElementById("orcamentosgraph");
 
 
-    var graficoOrdens = new Chart(ctxOrdens, {
-        type: "bar",
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Concluídas',
-                data: [1, 3, 5, 8, 9, 100],
-                backgroundColor: 'rgba(51,153,255,0.5)',
-                borderColor: 'rgba(51,153,255,1)',
-                borderWidth: 2
-            },
-                {
-                    label: 'Canceladas',
-                    data: [20, 25, 30, 50, 200, 300],
-                    backgroundColor: 'rgba(255,0,0,0.5)',
-                    borderColor: 'rgba(255,0,0,1)',
-                    borderWidth: 2
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-        }
-    });
+
 
     var graficoClientes = new Chart(ctxClientes, {
         type: "pie",

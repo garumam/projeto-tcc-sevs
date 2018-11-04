@@ -138,7 +138,12 @@ class DashboardController extends Controller
 
     public function orders()
     {
+        $ordermconcluida= Order::all()->where('situacao', '=', 'CONCLUIDA');
+        $ordermconcluida = $this->getMonth($ordermconcluida);
 
+        $ordermcancelada = Order::all()->where('situacao', '=', 'CANCELADA');
+        $ordermcancelada = $this->getMonth($ordermcancelada);
+        return response()->json(array('concluidas' => $ordermconcluida, 'canceladas' => $ordermcancelada));
     }
 
     public function clients()
