@@ -341,10 +341,11 @@
         }
     }
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
+    var periodos = ['360 dias','180 dias','30 dias','7 dias','hoje'];
     graficoVendas();
     graficofinanceiro();
     graficoOrdens();
+    graficoOrcamentos();
 
     function graficoVendas(){
         var ctxVendas = document.getElementById("vendas");
@@ -380,16 +381,16 @@
                 var graficoFinanceiro = new Chart(ctxFinanceiro, {
                     type: "line",
                     data: {
-                        labels: meses,
+                        labels: periodos,
                         datasets: [{
-                            label: 'Receitas',
+                            label: 'Receitas(R$)',
                             data: data.receitas,
                             backgroundColor: 'rgba(51,153,255,0.5)',
                             borderColor: 'rgba(51,153,255,1)',
                             borderWidth: 2
                         },
                             {
-                                label: 'Despesas',
+                                label: 'Despesas(R$)',
                                 data: data.despesas,
                                 backgroundColor: 'rgba(255,0,0,0.5)',
                                 borderColor: 'rgba(255,0,0,1)',
@@ -410,10 +411,11 @@
         fetch('http://127.0.0.1:8000/api/dashboard/orders')
             .then(response => response.json())
             .then((data) => {
+                console.log(data);
                 var graficoOrdens = new Chart(ctxOrdens, {
                     type: "bar",
                     data: {
-                        labels: meses,
+                        labels: periodos,
                         datasets: [{
                             label: 'Concluídas',
                             data: data.concluidas,
@@ -432,6 +434,14 @@
                     },
                     options: {
                         responsive: true,
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    suggestedMin: 0
+                                }
+                            }]
+                        }
                     }
                 });
             });
@@ -439,10 +449,79 @@
     }
 
 
+    function graficoOrcamentos() {
+        var ctxOrcamentos = document.getElementById("orcamentosgraph");
+        fetch('http://127.0.0.1:8000/api/dashboard/budgets')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoOrcamentos = new Chart(ctxOrcamentos, {
+                    type: "bar",
+                    data: {
+                        labels: periodos,
+                        datasets: [{
+                            label: 'Aprovados',
+                            data: data.aprovados,
+                            backgroundColor: 'rgba(100,255,50,0.5)',
+                            borderColor: 'rgba(100,255,50,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Finalizados',
+                                data: data.finalizados,
+                                backgroundColor: 'rgba(51,153,255,0.5)',
+                                borderColor: 'rgba(51,153,255,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    suggestedMin: 0
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+
+    }
+
+
+    /*var graficoOrcamentos = new Chart(ctxOrcamentos, {
+        type: "bar",
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Aprovados',
+                data: [1, 3, 5, 8, 9, 100],
+                backgroundColor: 'rgba(100,255,50,0.5)',
+                borderColor: 'rgba(100,255,50,1)',
+                borderWidth: 2
+            },
+                {
+                    label: 'Finalizados',
+                    data: [20, 25, 30, 50, 200, 300],
+                    backgroundColor: 'rgba(51,153,255,0.5)',
+                    borderColor: 'rgba(51,153,255,1)',
+                    borderWidth: 2
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+        }
+    });*/
+
+
+
+
     var ctxClientes = document.getElementById("clientes");
-    var ctxOrcamentos = document.getElementById("orcamentosgraph");
-
-
 
 
     var graficoClientes = new Chart(ctxClientes, {
@@ -467,31 +546,6 @@
         }
     });
 
-    var graficoOrcamentos = new Chart(ctxOrcamentos, {
-        type: "bar",
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Aprovados',
-                data: [1, 3, 5, 8, 9, 100],
-                backgroundColor: 'rgba(100,255,50,0.5)',
-                borderColor: 'rgba(100,255,50,1)',
-                borderWidth: 2
-            },
-                {
-                    label: 'Finalizados',
-                    data: [20, 25, 30, 50, 200, 300],
-                    backgroundColor: 'rgba(51,153,255,0.5)',
-                    borderColor: 'rgba(51,153,255,1)',
-                    borderWidth: 2
-                }
-
-            ]
-        },
-        options: {
-            responsive: true,
-        }
-    });
 
 </script>
 </body>
