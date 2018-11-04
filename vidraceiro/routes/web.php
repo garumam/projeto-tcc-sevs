@@ -19,9 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'DashboardController@index')->name('home');
-Route::get('/list', 'DashboardController@list')->name('list');
-
+Route::get('/home', 'DashboardController@index')->name('home')->middleware('auth');
 
 //rotas do usuario
 Route::prefix('users')->group(function () {
