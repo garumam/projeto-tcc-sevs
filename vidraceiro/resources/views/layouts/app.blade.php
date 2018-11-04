@@ -509,8 +509,8 @@
                         ],
 
                         labels: [
-                            'Em dia',
-                            'Devendo'
+                            'Qtd em dia',
+                            'Qtd devendo'
                         ]
 
                     },
