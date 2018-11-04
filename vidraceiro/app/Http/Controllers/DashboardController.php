@@ -107,16 +107,13 @@ class DashboardController extends Controller
         return response()->json($salesArray);
     }
 
-    function getMonth($objeto, $data = false)
+    function getMonth($objeto)
     {
         $meses = [];
         for ($i = 1; $i <= 12; $i++) {
-            $meses[] = $objeto->filter(function ($value) use ($i, $data) {
-                if ($data){
-                    $mes = substr($value->data_venda, 5, 2);
-                } else{
-                    $mes = substr($value->created_at, 5, 2);
-                }
+            $meses[] = $objeto->filter(function ($value) use ($i) {
+
+                $mes = substr($value->data_venda, 5, 2);
 
                 if ($i < 10)
                     return $mes == '0' . $i;
