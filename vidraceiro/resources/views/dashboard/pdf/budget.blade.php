@@ -7,7 +7,7 @@
     <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
     {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
-        p, h3 {
+        p, h3, span {
             font-weight: 700;
             font-family: 'Raleway', sans-serif;
         }
@@ -22,8 +22,27 @@
             padding: .4rem;
         }
 
+        .borda-assinatura {
+            /*margin-top: 5rem;*/
+            width: 45.7%;
+            height: 20px;
+            display: inline-block;
+            text-align: center;
+            border-top: 2px solid rgba(0, 0, 0, 0.8);
+            padding-top: .5rem;
+        }
+
+        .mt {
+            margin-top: 6rem;
+        }
+
+        .ml-auto {
+            margin-left: 7.7%;
+        }
+
         .flex {
             width: 100%;
+            text-align: center;
         }
 
         .image-produto {
@@ -45,10 +64,12 @@
             border-spacing: 0;
             padding: 0;
         }
-        .tabela-produto tr,td{
+
+        .tabela-produto tr, td {
             border-spacing: 0;
             padding: .6rem;
         }
+
         .indice {
             width: 40px;
             padding-top: 60px;
@@ -57,23 +78,28 @@
             border-right: 1px solid #1b1e21;
 
         }
+
         .texto {
             margin: 0 auto;
             text-align: left;
             vertical-align: center;
         }
-        .total{
+
+        .total {
             width: 100%;
             height: 35px;
         }
+
         .total p {
             margin: 0;
             padding: 0;
         }
-        #texto-left{
+
+        #texto-left {
             float: left;
         }
-        #texto-right{
+
+        #texto-right {
             float: right;
         }
     </style>
@@ -106,7 +132,6 @@
     <p id="texto-right">R$ {{$budget->total}}</p>
 
 </div>
-
 
 
 @forelse($budget->products as $product)
@@ -142,6 +167,16 @@
 @empty
     <p>Nenhum Produto Cadastrado.</p>
 @endforelse
+
+<div class="flex mt">
+    <div class="borda-assinatura">
+        <span>Local e Data</span>
+    </div>
+    <div class="borda-assinatura ml-auto">
+        <span>Assinatura</span>
+    </div>
+
+</div>
 
 
 </body>
