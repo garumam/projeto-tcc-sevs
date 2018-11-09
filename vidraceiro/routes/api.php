@@ -16,13 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('login', 'Api\Auth\LoginController@login');
+
 //Route::middleware('auth:api')->group(function () {
     Route::prefix('dashboard')->group(function () {
-        Route::get('/sales', 'DashboardController@sales')->name('dashboard.sales');
-        Route::get('/financial', 'DashboardController@financial')->name('dashboard.financial');
-        Route::get('/orders', 'DashboardController@orders')->name('dashboard.orders');
-        Route::get('/clients', 'DashboardController@clients')->name('dashboard.clients');
-        Route::get('/budgets', 'DashboardController@budgets')->name('dashboard.budgets');
+        Route::get('/sales', 'Api\DashboardController@sales')->name('dashboard.sales');
+        Route::get('/financial', 'Api\DashboardController@financial')->name('dashboard.financial');
+        Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
+        Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
+        Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');
 
     });
 //});

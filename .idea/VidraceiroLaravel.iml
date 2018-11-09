@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/vidraceiro/tests" isTestSource="true" packagePrefix="Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/barryvdh/laravel-dompdf" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/defuse/php-encryption" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/dnoegel/php-xdg-base-dir" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/doctrine/instantiator" />
@@ -16,13 +17,21 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/firebase/php-jwt" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/fzaninotto/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/jakub-onderka/php-console-color" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/jakub-onderka/php-console-highlighter" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/laravel/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/laravel/passport" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/lcobucci/jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/league/event" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/league/oauth2-server" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/myclabs/deep-copy" />
@@ -37,6 +46,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpseclib/phpseclib" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpunit/php-file-iterator" />
@@ -45,6 +55,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/psy/psysh" />
@@ -73,6 +84,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/psr-http-message-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/symfony/var-dumper" />
@@ -81,6 +93,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/yajra/laravel-datatables-oracle" />
+      <excludeFolder url="file://$MODULE_DIR$/vidraceiro/vendor/zendframework/zend-diactoros" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

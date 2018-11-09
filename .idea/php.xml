@@ -79,6 +79,19 @@
       <path value="$PROJECT_DIR$/vidraceiro/vendor/phenx/php-font-lib" />
       <path value="$PROJECT_DIR$/vidraceiro/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/vidraceiro/vendor/yajra/laravel-datatables-oracle" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/league/event" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/league/oauth2-server" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/zendframework/zend-diactoros" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/defuse/php-encryption" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/laravel/passport" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/guzzlehttp/psr7" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

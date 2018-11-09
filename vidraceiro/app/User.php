@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
-    use Notifiable;
+    use HasApiTokens, SoftDeletes, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,15 +39,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function financials(){
+    public function financials()
+    {
         return $this->hasMany(Financial::class, 'usuario_id');
     }
 
-    public function budgets(){
+    public function budgets()
+    {
         return $this->hasMany(Budget::class, 'usuario_id');
     }
 
-    public function sales(){
+    public function sales()
+    {
         return $this->hasMany(Sale::class, 'usuario_id');
     }
 
@@ -91,48 +94,55 @@ class User extends Authenticatable
         return $this->existsRole('admin');
     }
 
-    public function getRole(){
+    public function getRole()
+    {
         return $this->roles()->first();
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false)
+    {
 
         $paginate = $paginate ?? 10;
 
         $queryBuilder = self::where('name', 'like', '%' . $search . '%');
 
-        if($restore)
+        if ($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
 
         return $queryBuilder->paginate($paginate);
     }
 
-    public function findUserById($id){
+    public function findUserById($id)
+    {
 
         return self::find($id);
 
     }
 
-    public function restoreUserById($id){
+    public function restoreUserById($id)
+    {
 
         $user = self::onlyTrashed()->find($id);
 
-        return $user? $user->restore(): false;
+        return $user ? $user->restore() : false;
     }
 
-    public function createUser(array $input){
+    public function createUser(array $input)
+    {
 
         return self::create($input);
 
     }
 
-    public function updateUser(array $input){
+    public function updateUser(array $input)
+    {
 
         return self::update($input);
 
     }
 
-    public function deleteUser(){
+    public function deleteUser()
+    {
 
         return self::delete();
 
