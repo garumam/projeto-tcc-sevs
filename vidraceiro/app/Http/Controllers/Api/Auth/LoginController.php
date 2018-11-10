@@ -21,14 +21,16 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 401);
         }
-        if (!Auth::attempt($request->all())) {
+        if (!Auth::attempt($request->except('remember'))) {
             return response()->json(['message' => 'Erro ao logar'], 401);
         }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        if ($request->remember_me)
+        if ($request->remember)
             $token->expires_at = Carbon::now()->addWeeks(1);
+        else
+            $token->expires_at = Carbon::now()->addDay(3);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -68,7 +70,7 @@ class LoginController extends Controller
         $validator = Validator::make($data, [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'remember' => 'boolean'
         ]);
 
         return $validator;
