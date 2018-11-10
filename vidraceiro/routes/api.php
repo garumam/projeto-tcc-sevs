@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('login', 'Api\Auth\LoginController@login');
+Route::post('logout','Api\Auth\LoginController@logout')->middleware('auth:api');
 
 //Route::middleware('auth:api')->group(function () {
     Route::prefix('dashboard')->group(function () {
