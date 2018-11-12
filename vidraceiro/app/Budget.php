@@ -69,6 +69,9 @@ class Budget extends Model
             $queryBuilder = $queryBuilder->where('status', $status)->whereNull('ordem_id');
         }
 
+        if($paginate === false)
+            return $queryBuilder->get();
+
         return $queryBuilder->paginate($paginate);
     }
 
