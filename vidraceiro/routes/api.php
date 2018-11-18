@@ -19,16 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Api\Auth\LoginController@login');
 Route::post('logout','Api\Auth\LoginController@logout')->middleware('auth:api');
 
+Route::prefix('dashboard')->group(function () {
+    Route::get('/sales', 'Api\DashboardController@sales')->name('dashboard.sales');
+    Route::get('/financial', 'Api\DashboardController@financial')->name('dashboard.financial');
+    Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
+    Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
+    Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');
+
+});
+
+
 Route::middleware('auth:api')->group(function () {
 
-    Route::prefix('dashboard')->group(function () {
-        Route::get('/sales', 'Api\DashboardController@sales')->name('dashboard.sales');
-        Route::get('/financial', 'Api\DashboardController@financial')->name('dashboard.financial');
-        Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
-        Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
-        Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');
 
-    });
 
 
     Route::prefix('budgets')->group(function () {

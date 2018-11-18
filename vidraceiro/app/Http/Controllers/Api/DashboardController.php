@@ -46,7 +46,9 @@ class DashboardController extends Controller
 //        }
 
 
-        return response()->json($salesArray);
+//        return response()->json($salesArray);
+        //no android é obrigado a ter o nome no array para funcionar
+        return response()->json(["dashboard"=>$salesArray]);
     }
 
     function getMonth($objeto)
