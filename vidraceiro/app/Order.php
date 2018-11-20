@@ -20,7 +20,7 @@ class Order extends Model
         return $this->hasMany(Budget::class,'ordem_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false, $situation = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false, $situation = false,$api = false){
 
         $paginate = $paginate ?? 10;
 
@@ -35,6 +35,12 @@ class Order extends Model
         if($situation !== false){
             $queryBuilder = $queryBuilder->where('situacao',$situation);
         }
+
+        if($api)
+            $queryBuilder = $queryBuilder->with('budgets');
+
+        if($paginate === false)
+            return $queryBuilder->get();
 
         return $queryBuilder->paginate($paginate);
     }

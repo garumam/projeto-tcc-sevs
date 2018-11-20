@@ -32,8 +32,6 @@ Route::prefix('dashboard')->group(function () {
 Route::middleware('auth:api')->group(function () {
 
 
-
-
     Route::prefix('budgets')->group(function () {
         Route::get('/', 'Api\BudgetController@index');
         Route::get('/create', 'Api\BudgetController@create');
@@ -45,6 +43,17 @@ Route::middleware('auth:api')->group(function () {
 
         Route::get('/{type}/{id}/edit', 'Api\BudgetController@editMaterial');
         Route::patch('/{type}/{id}/update', 'Api\BudgetController@updateMaterial');
+    });
+
+
+    Route::prefix('orders')->group(function () {
+        Route::get('/', 'Api\OrderController@index');
+        Route::get('/create', 'Api\OrderController@create');
+        Route::post('/', 'Api\OrderController@store');
+        Route::get('/{id}', 'Api\OrderController@show');
+        Route::get('/{id}/edit', 'Api\OrderController@edit');
+        Route::patch('/{id}/{situacao?}', 'Api\OrderController@update');
+        Route::delete('/{id}', 'Api\OrderController@destroy');
     });
 
 });
