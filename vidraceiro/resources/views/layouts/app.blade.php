@@ -342,15 +342,19 @@
     }
     var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     var periodos = ['360 dias','180 dias','30 dias','7 dias','hoje'];
+    var host = window.location.origin;
+
     graficoVendas();
     graficofinanceiro();
     graficoOrdens();
     graficoClientes();
     graficoOrcamentos();
 
+
     function graficoVendas(){
         var ctxVendas = document.getElementById("vendas");
-        fetch('http://127.0.0.1:8000/api/dashboard/sales')
+
+        fetch(host + '/api/dashboard/sales')
             .then(result => result.json())
             .then((data) => {
                 var graficoVendas = new Chart(ctxVendas, {
@@ -375,7 +379,7 @@
 
     function graficofinanceiro() {
         var ctxFinanceiro = document.getElementById("financeiro");
-        fetch('http://127.0.0.1:8000/api/dashboard/financial')
+        fetch(host + '/api/dashboard/financial')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -409,7 +413,7 @@
 
     function graficoOrdens() {
         var ctxOrdens = document.getElementById("ordensgraph");
-        fetch('http://127.0.0.1:8000/api/dashboard/orders')
+        fetch(host + '/api/dashboard/orders')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -452,7 +456,7 @@
 
     function graficoOrcamentos() {
         var ctxOrcamentos = document.getElementById("orcamentosgraph");
-        fetch('http://127.0.0.1:8000/api/dashboard/budgets')
+        fetch(host + '/api/dashboard/budgets')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -494,7 +498,7 @@
 
     function graficoClientes(){
         var ctxClientes = document.getElementById("clientes");
-        fetch('http://127.0.0.1:8000/api/dashboard/clients')
+        fetch(host + '/api/dashboard/clients')
             .then(result => result.json())
             .then((data) => {
                 var graficoClientes = new Chart(ctxClientes, {

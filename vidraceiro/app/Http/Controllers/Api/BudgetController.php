@@ -33,7 +33,7 @@ class BudgetController extends Controller
             return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
         }
 
-        $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),false);
+        $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),false,false,false,true);
 
         return response()->json(['budgets'=>$budgets]);
 

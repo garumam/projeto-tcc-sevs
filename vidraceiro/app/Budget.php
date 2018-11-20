@@ -50,7 +50,7 @@ class Budget extends Model
     }
 
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false,$status = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false,$status = false, $api = false){
 
         $paginate = $paginate ?? 10;
 
@@ -68,6 +68,9 @@ class Budget extends Model
         if($status !== false){
             $queryBuilder = $queryBuilder->where('status', $status)->whereNull('ordem_id');
         }
+
+        if($api)
+            $queryBuilder = $queryBuilder->with('client','user','products','Order');
 
         if($paginate === false)
             return $queryBuilder->get();
