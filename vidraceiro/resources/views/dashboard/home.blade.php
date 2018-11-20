@@ -103,7 +103,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Financeiro</h4>
@@ -114,7 +114,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Ordens de serviço</h4>
@@ -125,7 +125,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Clientes</h4>
@@ -136,7 +136,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="card-material card-shadow-dashboard" style="height: 400px;">
             <div class="card-header">
                 <h4>Orçamentos</h4>

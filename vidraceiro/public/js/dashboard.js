@@ -17,13 +17,13 @@ $(document).ready(function () {
 
     //VERIFICAÇÃO DE SUPORTE DO PLUGIN CHOSEN NOS NAVEGADORES,
     // SE NÃO SUPORTAR EXIBE OS SELECT BÁSICOS PARA SEREM UTILIZADOS
-    if(!("Microsoft Internet Explorer"===window.navigator.appName?document.documentMode>=8:!(/iP(od|hone)/i.test(window.navigator.userAgent)||/IEMobile/i.test(window.navigator.userAgent)||/Windows Phone/i.test(window.navigator.userAgent)||/BlackBerry/i.test(window.navigator.userAgent)||/BB10/i.test(window.navigator.userAgent)||/Android.*Mobile/i.test(window.navigator.userAgent)))){
+    if (!("Microsoft Internet Explorer" === window.navigator.appName ? document.documentMode >= 8 : !(/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android.*Mobile/i.test(window.navigator.userAgent)))) {
 
         $('.form-control-chosen').each(function (select) {
             $(this).show();
         });
 
-    }else{
+    } else {
 
         //Iniciando selects com search dentro
         $('.form-control-chosen').chosen({
@@ -31,8 +31,6 @@ $(document).ready(function () {
         });
 
     }
-
-
 
 
     $(".navbar-toggler").click(function (event) {
@@ -186,7 +184,7 @@ $(document).ready(function () {
     $('#select-tipo-categoria').change(function () {
         let valueSelected = $('#select-tipo-categoria option:selected').val();
 
-        if(contadorTipoCategoria > 0){
+        if (contadorTipoCategoria > 0) {
             $('#option-vazia').prop('selected', true);
         }
         contadorTipoCategoria++;
@@ -206,7 +204,7 @@ $(document).ready(function () {
             $(this).css("display", "none");
         });
 
-        switch(valueSelected){
+        switch (valueSelected) {
             case 'produto':
                 $('.produtocategoria').each(function () {
                     $(this).css("display", "block");
@@ -1079,11 +1077,11 @@ $(document).ready(function () {
         let idtab = $('.nav-tabs a.active').attr('data-id');
         let divclicada = $(this).parent().parent().parent();
         console.log(divclicada);
-        if(idtab === undefined){
+        if (idtab === undefined) {
             $('.tabelasrestaurar').each(function () {
                 // if($(this).hasClass('show')){
                 let id = $(this).data('tipo');
-                if (divclicada.attr('id') === id){
+                if (divclicada.attr('id') === id) {
                     idtab = id;
                 }
 
@@ -1151,4 +1149,195 @@ function ajaxPesquisaLoad(url, id = null) {
             }
         }
     });
+}
+
+var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+var periodos = ['360 dias', '180 dias', '30 dias', '7 dias', 'hoje'];
+var host = window.location.origin;
+
+graficoVendas();
+graficofinanceiro();
+graficoOrdens();
+graficoClientes();
+graficoOrcamentos();
+
+
+function graficoVendas() {
+    var ctxVendas = document.getElementById("vendas");
+    if (ctxVendas) {
+        fetch(host + '/api/dashboard/sales')
+            .then(result => result.json())
+            .then((data) => {
+                var graficoVendas = new Chart(ctxVendas, {
+                    type: "line",
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Qtd Vendas',
+                            data: data,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
+}
+
+
+function graficofinanceiro() {
+    var ctxFinanceiro = document.getElementById("financeiro");
+    if (ctxFinanceiro) {
+        fetch(host + '/api/dashboard/financial')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoFinanceiro = new Chart(ctxFinanceiro, {
+                    type: "line",
+                    data: {
+                        labels: periodos,
+                        datasets: [{
+                            label: 'Receitas(R$)',
+                            data: data.receitas,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Despesas(R$)',
+                                data: data.despesas,
+                                backgroundColor: 'rgba(255,0,0,0.5)',
+                                borderColor: 'rgba(255,0,0,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
+}
+
+function graficoOrdens() {
+    var ctxOrdens = document.getElementById("ordensgraph");
+    if (ctxOrdens) {
+        fetch(host + '/api/dashboard/orders')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoOrdens = new Chart(ctxOrdens, {
+                    type: "bar",
+                    data: {
+                        labels: periodos,
+                        datasets: [{
+                            label: 'Concluídas',
+                            data: data.concluidas,
+                            backgroundColor: 'rgba(51,153,255,0.5)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Canceladas',
+                                data: data.canceladas,
+                                backgroundColor: 'rgba(255,0,0,0.5)',
+                                borderColor: 'rgba(255,0,0,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    suggestedMin: 0
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+    }
+}
+
+
+function graficoOrcamentos() {
+    var ctxOrcamentos = document.getElementById("orcamentosgraph");
+    if (ctxOrcamentos) {
+        fetch(host + '/api/dashboard/budgets')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoOrcamentos = new Chart(ctxOrcamentos, {
+                    type: "bar",
+                    data: {
+                        labels: periodos,
+                        datasets: [{
+                            label: 'Aprovados',
+                            data: data.aprovados,
+                            backgroundColor: 'rgba(100,255,50,0.5)',
+                            borderColor: 'rgba(100,255,50,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Finalizados',
+                                data: data.finalizados,
+                                backgroundColor: 'rgba(51,153,255,0.5)',
+                                borderColor: 'rgba(51,153,255,1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    suggestedMin: 0
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+    }
+}
+
+function graficoClientes() {
+    var ctxClientes = document.getElementById("clientes");
+    if (ctxClientes) {
+        fetch(host + '/api/dashboard/clients')
+            .then(result => result.json())
+            .then((data) => {
+                var graficoClientes = new Chart(ctxClientes, {
+                    type: "pie",
+                    data: {
+                        datasets: [{
+                            data: data.clientes,
+                            backgroundColor: ['rgba(51,153,255,0.5)', 'rgba(255,0,0,0.5)'],
+                            borderColor: ['rgba(51,153,255,1)', 'rgba(255,0,0,1)'],
+                            borderWidth: 2
+                        }
+                        ],
+
+                        labels: [
+                            'Qtd em dia',
+                            'Qtd devendo'
+                        ]
+
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
 }
