@@ -18,7 +18,7 @@
             <td>{{$sale->budget->nome}}</td>
             <td>{{$sale->budget->client->nome or 'Anônimo'}}</td>
             <td><span class="badge {{$sale->tipo_pagamento === 'A VISTA'? 'badge-secondary':'badge-warning'}}">{{$sale->tipo_pagamento}}</span></td>
-            <td>R${{$sale->budget->total}}</td>
+            <td>R${{$sale->budget->total - $sale->desconto}}</td>
             @php $valorpago = 0; @endphp
             @foreach($sale->payments as $payment)
                 @php $valorpago += $payment->valor_pago; @endphp

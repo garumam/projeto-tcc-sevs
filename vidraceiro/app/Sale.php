@@ -11,6 +11,8 @@ class Sale extends Model
         'tipo_pagamento',
         'qtd_parcelas',
         'data_venda',
+        'desconto',
+        'entrada',
         'orcamento_id',
         'usuario_id'
     ];
@@ -65,7 +67,7 @@ class Sale extends Model
 
     }
 
-    public function createSaleInstallments($request){
+    public function createSaleInstallments($request, $user_id){
 
         for ($i = 1; $i <= $request->qtd_parcelas; $i++) {
             $dias = $i * 30;
@@ -78,6 +80,8 @@ class Sale extends Model
                 'venda_id' => $this->id
             ]);
         }
+
+        $this->createSalePayment($request->data_venda,$request->entrada,'Entrada recebida de venda a prazo.',$user_id);
 
         $budget = $this->budget;
         $client = new Client();

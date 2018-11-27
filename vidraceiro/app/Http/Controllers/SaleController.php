@@ -72,7 +72,8 @@ class SaleController extends Controller
             $arrayextra = [
                 'orcamento_id' => 'required|integer|unique:sales,orcamento_id',
                 'valor_parcela' => 'required|numeric',
-                'qtd_parcelas' => 'required|integer'
+                'qtd_parcelas' => 'required|integer',
+                'entrada' => 'nullable|numeric'
             ];
 
         } else {
@@ -88,15 +89,22 @@ class SaleController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
+        $desconto = $request->desconto ?? 0;
+        $request->merge(['desconto'=>$desconto]);
+
+        if($request->has('entrada')){
+            $entrada = $request->entrada ?? 0;
+            $request->merge(['entrada'=>$entrada]);
+        }
         $sale = $this->sale->createSale(array_merge($request->all(),['usuario_id'=>Auth::user()->id]));
 
         if ($request->has('valor_parcela')) {
 
-            $sale->createSaleInstallments($request);
+            $sale->createSaleInstallments($request,Auth::user()->id);
 
         } else {
-
-            $sale->createSalePayment($request->data_venda,$sale->budget->total,'Pagamento de venda à vista.',Auth::user()->id);
+            $valorPago = $sale->budget->total - $request->desconto;
+            $sale->createSalePayment($request->data_venda,$valorPago,'Pagamento de venda à vista.',Auth::user()->id);
 
         }
         $mensagem = '';
@@ -396,7 +404,8 @@ class SaleController extends Controller
             array_merge(
                 [
                     'tipo_pagamento' => 'required|string|max:255',
-                    'data_venda' => 'required|date'
+                    'data_venda' => 'required|date',
+                    'desconto' => 'nullable|numeric'
                 ],
                 $extra
             )

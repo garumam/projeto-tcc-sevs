@@ -108,7 +108,7 @@
 
                             <tr>
                                 <th scope="row">1</th>
-                                <td style="color: #28a745;">R${{$sale->budget->total}}</td>
+                                <td style="color: #28a745;">R${{$sale->budget->total - $sale->desconto - $sale->entrada}}</td>
                                 @if(empty($sale->payments()->first()))
                                     <td><span class="badge badge-danger">Pagamento pendente</span></td>
                                     <td>

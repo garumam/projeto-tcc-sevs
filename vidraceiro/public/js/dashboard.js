@@ -929,6 +929,23 @@ $(document).ready(function () {
         } else {
             $('#total').val(orcamentoselecionado.data('total'));
         }
+        $('#desconto').val('');
+        $('#entrada').val('');
+    });
+
+
+    $('#entrada').on( "keyup", function() {
+
+        $(this).val(mskDigitosDoisDecimais($(this).val()));
+        calcularEntradaDesconto($(this));
+
+    });
+
+
+    $('#desconto').on( "keyup", function() {
+
+        $(this).val(mskDigitosDoisDecimais($(this).val()));
+        calcularEntradaDesconto($(this));
 
     });
 
@@ -937,7 +954,7 @@ $(document).ready(function () {
 
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
 
-        if (!orcamentoselecionado.data('cliente') && orcamentoselecionado.val() !== '' && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO') {
+        if (!orcamentoselecionado.data('cliente') && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO' || orcamentoselecionado.val() == '') {
             $('#erro-js').attr('class', 'alert alert-danger')
                 .text('Selecione um orçamento com cliente cadastrado para liberar o pagamento a prazo!');
             $('#select-tipo-pagamento').val('A VISTA');
@@ -949,15 +966,19 @@ $(document).ready(function () {
 
             $('#qtd_parcelas').hide();
             $('#valor_parcela').hide();
+            $('#entradadisplay').hide();
             $('#valor_parc').attr('name', '').val('');
             $('#qtd_parc').attr('name', '');
+            $('#entrada').attr('name', '').val('');
 
         } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
 
             $('#qtd_parcelas').show();
             $('#valor_parcela').show();
+            $('#entradadisplay').show();
             $('#valor_parc').attr('name', 'valor_parcela');
             $('#qtd_parc').attr('name', 'qtd_parcelas');
+            $('#entrada').attr('name', 'entrada');
             if (orcamentoselecionado.val() !== '' && $('#qtd_parc').val() !== '') {
                 $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total') / $('#qtd_parc').val()).toFixed(2));
             }
@@ -967,6 +988,8 @@ $(document).ready(function () {
             alert('Problema inesperado reinicie a página!');
         }
 
+        $('#entrada').val('');
+        calcularEntradaDesconto($('#desconto'));
     });
 
     $('#qtd_parc').change(function (e) {
@@ -976,6 +999,71 @@ $(document).ready(function () {
         }
 
     });
+
+
+    function calcularEntradaDesconto(input){
+        let desconto = $('#desconto');
+        let entrada = $('#entrada');
+
+        let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+
+        if(orcamentoselecionado.val() === ''){
+
+            $('#erro-js').attr('class', 'alert alert-danger')
+                .text('Selecione um orçamento antes!');
+            desconto.val('');
+            entrada.val('');
+
+        }else{
+            let valorDesconto = desconto.val();
+            valorDesconto = valorDesconto == ''? 0 : valorDesconto;
+            let valorEntrada = entrada.val();
+            valorEntrada = valorEntrada == ''? 0 : valorEntrada;
+            let total = orcamentoselecionado.data('total');
+
+            let somaDescontoEntrada = parseFloat(valorDesconto) + parseFloat(valorEntrada);
+
+            if(somaDescontoEntrada > 0 && somaDescontoEntrada < total){
+
+                let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
+
+                if (tipopagamentoselecionado.val() === 'A VISTA') {
+
+                    $('#total').val(parseFloat(total - valorDesconto).toFixed(2));
+
+                } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
+
+                    if ($('#qtd_parc').val() !== '') {
+                        let faltaPagar = total - valorDesconto - valorEntrada;
+                        $('#total').val(parseFloat(faltaPagar).toFixed(2));
+                        $('#valor_parc').val(parseFloat(faltaPagar / $('#qtd_parc').val()).toFixed(2));
+                    }else{
+                        alert('Problema inesperado reinicie a página!');
+                    }
+
+                } else {
+                    alert('Problema inesperado reinicie a página!');
+                }
+
+
+            }else{
+
+                if(input.val() != '0'){
+                    if(input.val() != ''){
+                        $('#erro-js').attr('class', 'alert alert-danger')
+                            .text('Valor inválido ou maior que o total!');
+                    }
+
+                    $('#total').val(total);
+                    $('#valor_parc').val(parseFloat(total / $('#qtd_parc').val()).toFixed(2));
+                    input.val('');
+                }
+
+
+            }
+        }
+    }
+
 
     function linhaProdutoAtualiza(tr, produtoselecionado) {
         tr.each(function () {
@@ -1037,19 +1125,25 @@ $(document).ready(function () {
 
     $('.altura').each(function (index) {
         $(this).keyup(function () {
-            $(this).val(mskDigitos($(this).val()));
+            $(this).val(mskDigitosTresDecimais($(this).val()));
         });
     });
 
     $('.largura').each(function (index) {
         $(this).keyup(function () {
-            $(this).val(mskDigitos($(this).val()));
+            $(this).val(mskDigitosTresDecimais($(this).val()));
         });
     });
 
-    function mskDigitos(v) {
+    function mskDigitosTresDecimais(v) {
         v = v.replace(/\D/g, "");
         v = v.replace(/(\d)(\d{1,3}$)/, "$1.$2");
+        return v;
+    }
+
+    function mskDigitosDoisDecimais(v) {
+        v = v.replace(/\D/g, "");
+        v = v.replace(/(\d)(\d{1,2}$)/, "$1.$2");
         return v;
     }
 

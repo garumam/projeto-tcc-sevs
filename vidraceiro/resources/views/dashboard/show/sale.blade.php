@@ -22,13 +22,21 @@
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            @php $tipoPagamento = $sale->tipo_pagamento; @endphp
-                            <b>Orçamento: </b> {{$sale->budget()->first()->nome or 'não cadastrado!'}}{{' | '}}
-                            <a class="btn-link ml-2" target="_blank" href="{{ route('budgets.show',['id'=> $sale->budget()->first()->id]) }}">
+                            @php $tipoPagamento = $sale->tipo_pagamento; $budget = $sale->budget()->first(); @endphp
+                            <b>Orçamento: </b> {{$budget->nome or 'não cadastrado!'}}{{' | '}}
+                            <a class="btn-link ml-2" target="_blank" href="{{ route('budgets.show',['id'=> $budget->id]) }}">
                                 <button class="btn btn-info mb-1 card-shadow-1dp" title="Ver">Veja...</button>
                             </a>
                             <hr>
-                            <b>Total: </b> R${{$sale->budget()->first()->total or ''}}
+                            <b>Total(sem desconto): </b> R${{$budget->total or ''}}
+                            <hr>
+                            <b>Desconto: </b> R${{$sale->desconto or ''}}
+                            <hr>
+                            @if($tipoPagamento === 'A PRAZO')
+                                <b>Entrada: </b> R${{$sale->entrada or ''}}
+                                <hr>
+                            @endif
+                            <b>Total(com desconto): </b> R${{$budget->total - $sale->desconto}}
                             <hr>
                             <b>Tipo de pagamento: </b> {{$tipoPagamento or 'não cadastrado!'}}
                             <hr>
