@@ -23,7 +23,7 @@ class Aluminum extends Model
         'categoria_aluminio_id',
         'product_id'
     ];
-    //visual studio code teste
+    
     public function category()
     {
         return $this->belongsTo(Category::class, 'categoria_aluminio_id')->withTrashed();
