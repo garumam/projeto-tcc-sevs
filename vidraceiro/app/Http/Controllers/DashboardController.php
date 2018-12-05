@@ -57,13 +57,13 @@ class DashboardController extends Controller
         $budgetsOpen = $budgets->getWithSearchAndPagination(null, null, false, 'APROVADO');
         if ($request->has('ordens') || !$request->ajax()) {
             $orders = new Order();
-//            $orders = $orders->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),false,'ABERTA');
-            $orders = $orders->getWithSearchAndPagination($request->get('search'), 1, false, 'ABERTA');
+            $orders = $orders->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),false,'ABERTA');
+//            $orders = $orders->getWithSearchAndPagination($request->get('search'), 1, false, 'ABERTA');
         }
         if ($request->has('orcamentos') || !$request->ajax()) {
 
-//            $budgets = $budgets->getWithSearchAndPagination($request->get('search'), $request->get('paginate'), false, 'APROVADO');
-            $budgets = $budgets->getWithSearchAndPagination($request->get('search'), 1, false, 'APROVADO');
+            $budgets = $budgets->getWithSearchAndPagination($request->get('search'), $request->get('paginate'), false, 'APROVADO');
+//            $budgets = $budgets->getWithSearchAndPagination($request->get('search'), 1, false, 'APROVADO');
         }
         if ($request->ajax()) {
             if ($request->has('ordens'))
