@@ -26,7 +26,7 @@ class ClientController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $clients = $this->client->searchAll();
+        $clients = Client::getAllClients();
 
 
         return response()->json(['clients'=> $clients]);

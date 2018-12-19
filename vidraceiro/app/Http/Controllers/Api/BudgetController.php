@@ -45,10 +45,10 @@ class BudgetController extends Controller
             return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
         }
 
-        $states = $this->states;
+        //$states = $this->states;
         $clients = Client::getAllClients();
 
-        return response()->json(['clients'=>$clients,'states'=>$states]);
+        return response()->json(['clients'=>$clients]);
     }
 
     public function store(Request $request)
