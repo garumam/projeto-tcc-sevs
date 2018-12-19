@@ -92,6 +92,8 @@
       <path value="$PROJECT_DIR$/vidraceiro/vendor/laravel/passport" />
       <path value="$PROJECT_DIR$/vidraceiro/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vidraceiro/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vidraceiro/vendor/symfony/contracts" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

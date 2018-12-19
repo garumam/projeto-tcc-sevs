@@ -45,6 +45,10 @@ class Client extends Model
         return $queryBuilder->paginate($paginate);
     }
 
+    public function searchAll(){
+        return self::all();
+    }
+
     public function createClient(array $input){
 
         return self::create($input);
