@@ -56,14 +56,5 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', 'Api\OrderController@destroy');
     });
 
-    Route::prefix('clients')->group(function () {
-        Route::get('/', 'Api\ClientController@index');
-        Route::get('/create', 'Api\ClientController@create');
-        Route::post('/', 'Api\ClientController@store');
-        Route::get('/{id}', 'Api\ClientController@show');
-        Route::get('/{id}/edit', 'Api\ClientController@edit');
-        Route::patch('/{id}/{situacao?}', 'Api\ClientController@update');
-        Route::delete('/{id}', 'Api\ClientController@destroy');
-    });
 
 });
