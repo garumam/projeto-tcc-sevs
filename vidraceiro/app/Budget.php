@@ -70,7 +70,7 @@ class Budget extends Model
         }
 
         if($api)
-            $queryBuilder = $queryBuilder->with('client','user','products','Order');
+            $queryBuilder = $queryBuilder->with('client','user','products.mproduct','Order');
 
         if($paginate === false)
             return $queryBuilder->get();
