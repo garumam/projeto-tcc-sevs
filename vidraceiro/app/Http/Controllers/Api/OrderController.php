@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     protected $order;
+
     public function __construct(Order $order)
     {
         $this->order = $order;
@@ -19,29 +20,29 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        if(!Auth::user()->can('os_listar', Order::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('os_listar', Order::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
-        $orders = $this->order->getWithSearchAndPagination($request->get('search'),false,false,false,true);
+        $orders = $this->order->getWithSearchAndPagination($request->get('search'), false, false, false, true);
 
-        return response()->json(['orders'=>$orders]);
+        return response()->json(['orders' => $orders]);
 
     }
 
     public function create()
     {
-        if(!Auth::user()->can('os_adicionar', Order::class)){
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        if (!Auth::user()->can('os_adicionar', Order::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
         $budgets = Budget::getBudgetsWhereStatusApproved(null);
-        return view('dashboard.create.order', compact('budgets'))->with('title', 'Nova Ordem de serviço');
+        return response()->json(['budgets' => $budgets]);
     }
 
     public function store(Request $request)
     {
-        if(!Auth::user()->can('os_adicionar', Order::class)){
+        if (!Auth::user()->can('os_adicionar', Order::class)) {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
@@ -57,9 +58,9 @@ class OrderController extends Controller
 
             $order->updateBudgetsStatusByOrderSituation($budgets);
 
-            if($order->situacao === 'CONCLUIDA'){
+            if ($order->situacao === 'CONCLUIDA') {
                 return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
-            }else{
+            } else {
                 return redirect()->back()->with('success', 'Ordem de serviço criada com sucesso');
             }
         }
@@ -69,18 +70,18 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        if(!Auth::user()->can('os_listar', Order::class)){
+        if (!Auth::user()->can('os_listar', Order::class)) {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_order_exists(['id'=>$id]);
+        $validado = $this->rules_order_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return redirect(route('orders.index'))->withErrors($validado);
         }
 
         $order = $this->order->findOrderById($id);
-        if($order)
+        if ($order)
             return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
 
         return redirect(route('orders.index'))->with('error', 'Esta O.S. não existe');
@@ -88,11 +89,11 @@ class OrderController extends Controller
 
     public function edit($id)
     {
-        if(!Auth::user()->can('os_atualizar', Order::class)){
+        if (!Auth::user()->can('os_atualizar', Order::class)) {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_order_exists(['id'=>$id]);
+        $validado = $this->rules_order_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return redirect(route('orders.index'))->withErrors($validado);
@@ -100,7 +101,7 @@ class OrderController extends Controller
 
         $order = $this->order->findOrderById($id);
 
-        if($order->situacao !== 'ABERTA')
+        if ($order->situacao !== 'ABERTA')
             return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
 
 
@@ -114,11 +115,11 @@ class OrderController extends Controller
 
     public function update(Request $request, $id, $situacao = null)
     {
-        if(!Auth::user()->can('os_atualizar', Order::class)){
+        if (!Auth::user()->can('os_atualizar', Order::class)) {
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_order_exists(['id'=>$id]);
+        $validado = $this->rules_order_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return redirect(route('orders.index'))->withErrors($validado);
@@ -126,10 +127,10 @@ class OrderController extends Controller
 
         $order = $this->order->findOrderById($id);
 
-        if($order->situacao === 'ANDAMENTO'){
+        if ($order->situacao === 'ANDAMENTO') {
             $budgets = $order->budgets;
-            if($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA'){
-                $order->updateOrder(['situacao'=>$situacao]);
+            if ($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA') {
+                $order->updateOrder(['situacao' => $situacao]);
 
                 $order->updateBudgetsStatusByOrderSituation($budgets);
 
@@ -143,7 +144,7 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        if($order->situacao !== 'ABERTA'){
+        if ($order->situacao !== 'ABERTA') {
             return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
         }
 
@@ -160,9 +161,9 @@ class OrderController extends Controller
 
                 $order->updateBudgetsStatusByOrderSituation($budgets);
 
-                if($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO'){
+                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
                     return redirect('orders')->with('success', 'Ordem atualizada com sucesso');
-                }else{
+                } else {
                     return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
                 }
 
@@ -173,8 +174,8 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        if(!Auth::user()->can('os_deletar', Order::class)){
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+        if (!Auth::user()->can('os_deletar', Order::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
         $order = $this->order->findOrderById($id);
@@ -182,9 +183,9 @@ class OrderController extends Controller
         if ($order && ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA')) {
 
             $order->deleteOrder();
-            return redirect()->back()->with('success', 'Ordem de serviço deletado com sucesso');
+            return response()->json(['success' => 'Ordem de serviço deletado com sucesso'], 200);
         } else {
-            return redirect()->back()->with('error', 'Erro ao deletar ordem de serviço');
+            return response()->json(['error' => 'Erro ao deletar ordem de serviço'], 202);
         }
     }
 
