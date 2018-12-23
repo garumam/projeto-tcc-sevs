@@ -229,20 +229,20 @@ class BudgetController extends Controller
     public function destroy($del, $id)
     {
         if(!Auth::user()->can('orcamento_deletar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página'],401);
         }
 
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
             if($budget->status !== 'AGUARDANDO'){
-                return  response()->json(['error'=> 'Este orçamento não pode ser deletado!']);
+                return  response()->json(['error'=> 'Este orçamento não pode ser deletado!'],202);
             }
             if ($budget) {
 
                 $budget->deleteBudget();
-                return  response()->json(['success'=> 'Orçamento deletado com sucesso']);
+                return  response()->json(['success'=> 'Orçamento deletado com sucesso'],200);
             } else {
-                return  response()->json(['error'=> 'Erro ao deletar orçamento']);
+                return  response()->json(['error'=> 'Erro ao deletar orçamento'],202);
             }
         } else {
 
