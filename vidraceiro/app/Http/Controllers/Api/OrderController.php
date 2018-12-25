@@ -43,7 +43,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->can('os_adicionar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],202);
         }
 
         $validado = $this->rules_order($request->all());
@@ -61,7 +61,7 @@ class OrderController extends Controller
 //            if ($order->situacao === 'CONCLUIDA') {
 //                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
 //            } else {
-            return response()->json(['success' => 'Ordem de serviço criada com sucesso']);
+            return response()->json(['success' => 'Ordem de serviço criada com sucesso'],200);
 //            }
         }
 
