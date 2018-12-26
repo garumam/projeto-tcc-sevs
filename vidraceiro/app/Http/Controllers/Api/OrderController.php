@@ -43,12 +43,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->can('os_adicionar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],202);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
         }
 
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()],202);
+            return response()->json(['error' => $validado->messages()], 202);
         }
 
         $order = $this->order->createOrder($request->all());
@@ -61,7 +61,7 @@ class OrderController extends Controller
 //            if ($order->situacao === 'CONCLUIDA') {
 //                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
 //            } else {
-            return response()->json(['success' => 'Ordem de serviço criada com sucesso'],200);
+            return response()->json(['success' => 'Ordem de serviço criada com sucesso'], 200);
 //            }
         }
 
@@ -116,13 +116,13 @@ class OrderController extends Controller
     public function update(Request $request, $id, $situacao = null)
     {
         if (!Auth::user()->can('os_atualizar', Order::class)) {
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
         }
 
         $validado = $this->rules_order_exists(['id' => $id]);
 
         if ($validado->fails()) {
-            return redirect(route('orders.index'))->withErrors($validado);
+            return response()->json(['error' => $validado->messages()],202);
         }
 
         $order = $this->order->findOrderById($id);
@@ -131,21 +131,19 @@ class OrderController extends Controller
             $budgets = $order->budgets;
             if ($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA') {
                 $order->updateOrder(['situacao' => $situacao]);
-
                 $order->updateBudgetsStatusByOrderSituation($budgets);
-
             }
 
-            return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
+            return response()->json(['success' => 'Ordem atualizada com sucesso'],200);
         }
 
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return response()->json(['error' => $validado->messages()],202);
         }
 
         if ($order->situacao !== 'ABERTA') {
-            return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
+            return response()->json(['error' => 'Não é possível editar esta O.S.'],202);
         }
 
         foreach ($order->budgets as $budget) {
@@ -155,21 +153,19 @@ class OrderController extends Controller
         $budgets = Budget::getBudgetsWhereIn($request->id_orcamento);
 
         if ($budgets) {
-
             $order->updateOrder($request->all());
             if ($order) {
-
                 $order->updateBudgetsStatusByOrderSituation($budgets);
 
-                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
-                    return redirect('orders')->with('success', 'Ordem atualizada com sucesso');
-                } else {
-                    return redirect()->back()->with('success', 'Ordem atualizada com sucesso');
-                }
+//                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
+//                    return response()->json(['success' => 'Ordem atualizada com sucesso']);
+//                } else {
+                return response()->json(['success' => 'Ordem atualizada com sucesso'],200);
+//                }
 
             }
         }
-        return redirect('orders')->with('error', 'Erro ao atualizar ordem de serviço');
+        return response()->json(['error' => 'Erro ao atualizar ordem de serviço'],202);
     }
 
     public function destroy($id)
