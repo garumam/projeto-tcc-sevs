@@ -8,6 +8,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -192,7 +193,10 @@ class OrderController extends Controller
             'data_inicial' => 'required|date',
             'data_final' => 'required|date',
             'total' => 'required',
-            'situacao' => 'required',
+            'situacao' => [
+                'required',
+                Rule::in(['ABERTA', 'ANDAMENTO','CONCLUIDA','CANCELADA']),
+            ],
             'id_orcamento' => 'required|array'
         ]);
 
