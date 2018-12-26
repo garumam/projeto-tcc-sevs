@@ -62,7 +62,7 @@ class OrderController extends Controller
 //            if ($order->situacao === 'CONCLUIDA') {
 //                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
 //            } else {
-            return response()->json(['success' => 'Ordem de serviço criada com sucesso'], 200);
+            return response()->json(['success' => 'Ordem de serviço criada com sucesso','id'=> $order->id ], 200);
 //            }
         }
 
@@ -161,7 +161,7 @@ class OrderController extends Controller
 //                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
 //                    return response()->json(['success' => 'Ordem atualizada com sucesso']);
 //                } else {
-                return response()->json(['success' => 'Ordem atualizada com sucesso'],200);
+                return response()->json(['success' => 'Ordem atualizada com sucesso','id'=> $order->id],200);
 //                }
 
             }
@@ -178,9 +178,9 @@ class OrderController extends Controller
         $order = $this->order->findOrderById($id);
 
         if ($order && ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA')) {
-
+            
             $order->deleteOrder();
-            return response()->json(['success' => 'Ordem de serviço deletado com sucesso'], 200);
+            return response()->json(['success' => 'Ordem de serviço deletado com sucesso','id'=> $id], 200);
         } else {
             return response()->json(['error' => 'Erro ao deletar ordem de serviço'], 202);
         }
