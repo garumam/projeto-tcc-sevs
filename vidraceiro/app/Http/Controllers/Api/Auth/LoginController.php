@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Passport\Passport;
 
 class LoginController extends Controller
 {
@@ -28,9 +29,11 @@ class LoginController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->expires_at = Carbon::now()->addMinute(1);
         else
-            $token->expires_at = Carbon::now()->addDay(3);
+            $token->expires_at = Carbon::now()->addMinute(1);
+        Passport::tokensExpireIn(Carbon::now()->addMinute(1));
+        Passport::refreshTokensExpireIn(Carbon::now()->addMinute(1));
         $token->save();
         return response()->json([
             'user' => $user,
