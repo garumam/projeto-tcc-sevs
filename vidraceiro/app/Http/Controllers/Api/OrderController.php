@@ -128,6 +128,10 @@ class OrderController extends Controller
 
         $order = $this->order->findOrderById($id);
 
+        if ($order->situacao !== 'ABERTA') {
+            return response()->json(['error' => 'Não é possível editar esta O.S.'],202);
+        }
+
         if ($order->situacao === 'ANDAMENTO') {
             $budgets = $order->budgets;
             if ($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA') {
@@ -143,9 +147,7 @@ class OrderController extends Controller
             return response()->json(['error' => $validado->messages()],202);
         }
 
-        if ($order->situacao !== 'ABERTA') {
-            return response()->json(['error' => 'Não é possível editar esta O.S.'],202);
-        }
+
 
         foreach ($order->budgets as $budget) {
             $budget->updateBudget(['ordem_id' => null]);
