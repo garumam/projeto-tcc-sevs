@@ -62,7 +62,7 @@ class OrderController extends Controller
 //            if ($order->situacao === 'CONCLUIDA') {
 //                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
 //            } else {
-            return response()->json(['success' => 'Ordem de serviço criada com sucesso','id'=> $order->id ], 200);
+            return response()->json(['success' => 'Ordem de serviço criada com sucesso', 'id' => $order->id], 200);
 //            }
         }
 
@@ -123,7 +123,7 @@ class OrderController extends Controller
         $validado = $this->rules_order_exists(['id' => $id]);
 
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()],202);
+            return response()->json(['error' => $validado->messages()], 202);
         }
 
         $order = $this->order->findOrderById($id);
@@ -133,18 +133,20 @@ class OrderController extends Controller
             if ($situacao === 'CONCLUIDA' || $situacao === 'CANCELADA') {
                 $order->updateOrder(['situacao' => $situacao]);
                 $order->updateBudgetsStatusByOrderSituation($budgets);
+                return response()->json(['success' => 'Ordem atualizada com sucesso', 'id' => $order->id], 200);
+            } else {
+                return response()->json(['error' => 'Não é possível editar esta O.S.'], 202);
             }
 
-            return response()->json(['success' => 'Ordem atualizada com sucesso','id'=> $order->id],200);
         }
 
         $validado = $this->rules_order($request->all());
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()],202);
+            return response()->json(['error' => $validado->messages()], 202);
         }
 
         if ($order->situacao !== 'ABERTA') {
-            return response()->json(['error' => 'Não é possível editar esta O.S.'],202);
+            return response()->json(['error' => 'Não é possível editar esta O.S.'], 202);
         }
 
         foreach ($order->budgets as $budget) {
@@ -161,12 +163,12 @@ class OrderController extends Controller
 //                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
 //                    return response()->json(['success' => 'Ordem atualizada com sucesso']);
 //                } else {
-                return response()->json(['success' => 'Ordem atualizada com sucesso','id'=> $order->id],200);
+                return response()->json(['success' => 'Ordem atualizada com sucesso', 'id' => $order->id], 200);
 //                }
 
             }
         }
-        return response()->json(['error' => 'Erro ao atualizar ordem de serviço'],202);
+        return response()->json(['error' => 'Erro ao atualizar ordem de serviço'], 202);
     }
 
     public function destroy($id)
@@ -178,9 +180,9 @@ class OrderController extends Controller
         $order = $this->order->findOrderById($id);
 
         if ($order && ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA')) {
-            
+
             $order->deleteOrder();
-            return response()->json(['success' => 'Ordem de serviço deletado com sucesso','id'=> $id], 200);
+            return response()->json(['success' => 'Ordem de serviço deletado com sucesso', 'id' => $id], 200);
         } else {
             return response()->json(['error' => 'Erro ao deletar ordem de serviço'], 202);
         }
@@ -195,7 +197,7 @@ class OrderController extends Controller
             'total' => 'required',
             'situacao' => [
                 'required',
-                Rule::in(['ABERTA', 'ANDAMENTO','CONCLUIDA','CANCELADA']),
+                Rule::in(['ABERTA', 'ANDAMENTO', 'CONCLUIDA', 'CANCELADA']),
             ],
             'id_orcamento' => 'required|array'
         ]);
