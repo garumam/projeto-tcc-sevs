@@ -54,22 +54,22 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página'],202);
         }
 
         $validado = $this->rules_budget($request->all());
         if ($validado->fails())
-            return response()->json(['error' => $validado->messages()], 401);
+            return response()->json(['error' => $validado->messages()], 202);
 
         $margemlucro = $request->margem_lucro ?? 100;
 
         $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
 
         if ($budgetcriado)
-            return response()->json(['success'=> 'Orçamento criado com sucesso']);
+            return response()->json(['success'=> 'Orçamento criado com sucesso','id' => $budgetcriado->id],200);
 
 
-        return response()->json(['error'=> 'Erro ao adicionar']);
+        return response()->json(['error'=> 'Erro ao adicionar'],202);
     }
 
     public function show($id)
