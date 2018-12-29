@@ -13,6 +13,7 @@ use App\Component;
 use App\Glass;
 use App\Category;
 use App\Client;
+use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,7 @@ class BudgetController extends Controller
 {
     protected $states;
     protected $budget;
+
     public function __construct(Budget $budget)
     {
         $this->budget = $budget;
@@ -29,32 +31,32 @@ class BudgetController extends Controller
 
     public function index(Request $request)
     {
-        if(!Auth::user()->can('orcamento_listar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_listar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
-        $budgets = $this->budget->getWithSearchAndPagination($request->get('search'),false,false,false,true);
+        $budgets = $this->budget->getWithSearchAndPagination($request->get('search'), false, false, false, true);
 
-        return response()->json(['budgets'=>$budgets]);
+        return response()->json(['budgets' => $budgets]);
 
     }
 
     public function create()
     {
-        if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
         //$states = $this->states;
         $clients = Client::getAllClients();
 
-        return response()->json(['clients'=>$clients]);
+        return response()->json(['clients' => $clients]);
     }
 
     public function store(Request $request)
     {
-        if(!Auth::user()->can('orcamento_adicionar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página'],202);
+        if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
         }
 
         $validado = $this->rules_budget($request->all());
@@ -63,38 +65,38 @@ class BudgetController extends Controller
 
         $margemlucro = $request->margem_lucro ?? 100;
 
-        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
+        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id]));
 
         if ($budgetcriado)
-            return response()->json(['success'=> 'Orçamento criado com sucesso','id' => $budgetcriado->id],200);
+            return response()->json(['success' => 'Orçamento criado com sucesso', 'id' => $budgetcriado->id], 200);
 
 
-        return response()->json(['error'=> 'Erro ao adicionar'],202);
+        return response()->json(['error' => 'Erro ao adicionar'], 202);
     }
 
     public function show($id)
     {
-        if(!Auth::user()->can('orcamento_listar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_listar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
-        $validado = $this->rules_budget_exists(['id'=>$id]);
+        $validado = $this->rules_budget_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return response()->json(['error' => $validado->messages()], 401);
         }
 
         $budget = $this->budget->findBudgetById($id);
-        return response()->json(['budget'=> $budget]);
+        return response()->json(['budget' => $budget]);
     }
 
     public function edit($id)
     {
-        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
-        $validado = $this->rules_budget_exists(['id'=>$id]);
+        $validado = $this->rules_budget_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return response()->json(['error' => $validado->messages()], 401);
@@ -102,8 +104,8 @@ class BudgetController extends Controller
 
         $budgetedit = $this->budget->findBudgetById($id);
 
-        if($budgetedit->status !== 'AGUARDANDO'){
-            return  response()->json(['error'=> 'Este orçamento não pode ser editado!']);
+        if ($budgetedit->status !== 'AGUARDANDO') {
+            return response()->json(['error' => 'Este orçamento não pode ser editado!']);
         }
 
         $states = $this->states;
@@ -117,30 +119,30 @@ class BudgetController extends Controller
         if ($budgetedit) {
             $products = $budgetedit->getBudgetProductsWithRelations();
 
-            return  response()->json([
-                'states'=> $states,
-                'glasses'=> $glasses,
-                'aluminums'=> $aluminums,
-                'components'=> $components,
-                'categories'=> $categories,
-                'mproducts'=> $mproducts,
-                'products'=> $products,
-                'budgetedit'=> $budgetedit,
-                'clients'=> $clients]);
+            return response()->json([
+                'states' => $states,
+                'glasses' => $glasses,
+                'aluminums' => $aluminums,
+                'components' => $components,
+                'categories' => $categories,
+                'mproducts' => $mproducts,
+                'products' => $products,
+                'budgetedit' => $budgetedit,
+                'clients' => $clients]);
         }
 
-        return  response()->json(['error'=> 'Erro ao buscar orçamento']);
+        return response()->json(['error' => 'Erro ao buscar orçamento']);
 
     }
 
 
     public function update(Request $request, $tab, $id)
     {
-        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
-        $validado = $this->rules_budget_exists(['id'=>$id]);
+        $validado = $this->rules_budget_exists(['id' => $id]);
 
         if ($validado->fails()) {
             return response()->json(['error' => $validado->messages()], 401);
@@ -148,8 +150,8 @@ class BudgetController extends Controller
 
         $budgetcriado = $this->budget->findBudgetById($id);
 
-        if($budgetcriado->status !== 'AGUARDANDO'){
-            return  response()->json(['error'=> 'Este orçamento não pode ser editado!']);
+        if ($budgetcriado->status !== 'AGUARDANDO') {
+            return response()->json(['error' => 'Este orçamento não pode ser editado!']);
         }
 
         switch ($tab) {
@@ -165,10 +167,10 @@ class BudgetController extends Controller
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                    return  response()->json(['success'=> 'Orçamento atualizado com sucesso']);
+                    return response()->json(['success' => 'Orçamento atualizado com sucesso']);
                 break;
             case '2': //tab adicionar
-                $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
+                $validado = $this->rules_budget_product($request->all(), ['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
                     return response()->json(['error' => $validado->messages()], 401);
@@ -183,14 +185,14 @@ class BudgetController extends Controller
                     $budgetcriado = $this->budget->findBudgetById($id);
 
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                        return  response()->json(['success'=> 'Produto adicionado ao orçamento com sucesso']);
+                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso']);
                 }
                 break;
             case '3': //tab editar
-                $validado = $this->rules_budget_product_exists(['produtoid'=>$request->get('produtoid')]);
+                $validado = $this->rules_budget_product_exists(['produtoid' => $request->get('produtoid')]);
 
-                if(!$validado->fails()){
-                    $validado = $this->rules_budget_product($request->all(),[]);
+                if (!$validado->fails()) {
+                    $validado = $this->rules_budget_product($request->all(), []);
                 }
 
                 if ($validado->fails()) {
@@ -205,7 +207,7 @@ class BudgetController extends Controller
 
                 $budgetcriado = $this->budget->findBudgetById($id);
                 if ($product && $budgetcriado->updateBudgetTotal())
-                    return  response()->json(['success'=> 'Produto atualizado com sucesso']);
+                    return response()->json(['success' => 'Produto atualizado com sucesso']);
 
                 break;
             case '4': //tab material
@@ -219,30 +221,30 @@ class BudgetController extends Controller
                 }
 
                 if ($products && $budgetcriado->updateBudgetTotal())
-                    return  response()->json(['success'=> 'Materiais dos produtos atualizados com sucesso']);
+                    return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso']);
                 break;
             default:
         }
-        return  response()->json(['error'=> 'Erro ao atualizar'],401);
+        return response()->json(['error' => 'Erro ao atualizar'], 401);
     }
 
     public function destroy($del, $id)
     {
-        if(!Auth::user()->can('orcamento_deletar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página'],401);
+        if (!Auth::user()->can('orcamento_deletar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
-            if($budget->status !== 'AGUARDANDO'){
-                return  response()->json(['error'=> 'Este orçamento não pode ser deletado!'],202);
+            if ($budget->status !== 'AGUARDANDO') {
+                return response()->json(['error' => 'Este orçamento não pode ser deletado!'], 202);
             }
             if ($budget) {
 
                 $budget->deleteBudget();
-                return  response()->json(['success'=> 'Orçamento deletado com sucesso'],200);
+                return response()->json(['success' => 'Orçamento deletado com sucesso', 'id' => $id], 200);
             } else {
-                return  response()->json(['error'=> 'Erro ao deletar orçamento'],202);
+                return response()->json(['error' => 'Erro ao deletar orçamento'], 202);
             }
         } else {
 
@@ -252,18 +254,18 @@ class BudgetController extends Controller
             if ($product) {
                 $budgetcriado = $product->budget;
 
-                if($budgetcriado->status !== 'AGUARDANDO'){
-                    return  response()->json(['error'=> 'Este orçamento não pode ser deletado!']);
+                if ($budgetcriado->status !== 'AGUARDANDO') {
+                    return response()->json(['error' => 'Este orçamento não pode ser deletado!'], 202);
                 }
 
                 $product->deleteProduct();
 
 
                 if ($budgetcriado->updateBudgetTotal()) {
-                    return  response()->json(['success'=> 'Produto deletado com sucesso']);
+                    return response()->json(['success' => 'Produto deletado com sucesso', 'id' => $id], 200);
                 }
             } else {
-                return  response()->json(['error'=> 'Erro ao deletar produto']);
+                return response()->json(['error' => 'Erro ao deletar produto'], 202);
             }
 
         }
@@ -271,10 +273,10 @@ class BudgetController extends Controller
     }
 
 
-    public function editMaterial($type,$id)
+    public function editMaterial($type, $id)
     {
-        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
         switch ($type) {
@@ -298,31 +300,31 @@ class BudgetController extends Controller
                 break;
         }
 
-        $validado = $this->rules_budget_material_exists(['id'=>$id],$tabela);
+        $validado = $this->rules_budget_material_exists(['id' => $id], $tabela);
 
         if ($validado->fails()) {
             return response()->json(['error' => $validado->messages()], 401);
-        }else{
-            if($material->is_modelo === 1) {
-                return  response()->json(['error'=> 'Este material não existe!'],401);
+        } else {
+            if ($material->is_modelo === 1) {
+                return response()->json(['error' => 'Este material não existe!'], 401);
             }
         }
 
 
         if ($material) {
 
-            return  response()->json([
-                'material'=> $material,
-                'type'=> $type]);
+            return response()->json([
+                'material' => $material,
+                'type' => $type]);
         }
-        return  response()->json(['error'=> 'Erro ao editar material']);
+        return response()->json(['error' => 'Erro ao editar material']);
 
     }
 
-    public function updateMaterial(Request $request, $type,$id)
+    public function updateMaterial(Request $request, $type, $id)
     {
-        if(!Auth::user()->can('orcamento_atualizar', Budget::class)){
-            return  response()->json(['error'=> 'Você não tem permissão para acessar essa página']);
+        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
         }
 
         $validado = $this->rules_budget_materiais($request->all(), $type);
@@ -359,21 +361,21 @@ class BudgetController extends Controller
         }
 
 
-        $validado = $this->rules_budget_material_exists(['id'=>$id],$tabela);
+        $validado = $this->rules_budget_material_exists(['id' => $id], $tabela);
 
         if ($validado->fails()) {
             return response()->json(['error' => $validado->messages()], 401);
-        }else{
-            if($material->is_modelo === 1) {
-                return  response()->json(['error'=> 'Este material não existe!'],401);
+        } else {
+            if ($material->is_modelo === 1) {
+                return response()->json(['error' => 'Este material não existe!'], 401);
             }
         }
 
         $product = $material->product;
         $budget = $product->findProductById($product->id)->budget;
 
-        if($budget->status !== 'AGUARDANDO'){
-            return  response()->json(['error'=> 'Este orçamento não pode ser deletado!']);
+        if ($budget->status !== 'AGUARDANDO') {
+            return response()->json(['error' => 'Este orçamento não pode ser deletado!']);
         }
 
         switch ($type) {
@@ -394,15 +396,15 @@ class BudgetController extends Controller
                 break;
         }
 
-        if ($material){
+        if ($material) {
 
-            if($budget && $budget->updateBudgetTotal()){
-                return  response()->json(['success'=> "$nome atualizado com sucesso"]);
+            if ($budget && $budget->updateBudgetTotal()) {
+                return response()->json(['success' => "$nome atualizado com sucesso"]);
             }
 
 
         }
-        return  response()->json(['error'=> 'Erro!']);
+        return response()->json(['error' => 'Erro!']);
 
     }
 
@@ -412,11 +414,12 @@ class BudgetController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'telefone' => 'nullable|string|min:10|max:255',
-            'cep' => 'required|string|min:8|max:8',
+            'cep' => 'required|digits:8',
             'endereco' => 'nullable|string|max:255',
             'bairro' => 'nullable|string|max:255',
             'cidade' => 'nullable|string|max:255',
-            'uf' => 'nullable|string|max:255',
+            'uf' => ['required',
+                Rule::notIn('Selecionar')],
             'complemento' => 'nullable|string|max:255',
             'margem_lucro' => 'nullable|numeric|max:255'
         ]);
@@ -472,7 +475,7 @@ class BudgetController extends Controller
         $validator = Validator::make($data,
 
             [
-                'id' => 'exists:'.$tabela.',id'
+                'id' => 'exists:' . $tabela . ',id'
             ], [
                 'exists' => 'Este material não existe!',
             ]
