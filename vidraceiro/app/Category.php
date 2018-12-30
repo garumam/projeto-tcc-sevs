@@ -14,7 +14,7 @@ class Category extends Model
         'grupo_imagem'
     ];
 
-    public function mProducts(){
+    public function mproducts(){
         return $this->hasMany(MProduct::class,'categoria_produto_id');
     }
 
@@ -79,6 +79,11 @@ class Category extends Model
     public static function getAllCategoriesByType($type){
 
         return self::where('tipo', $type)->get();
+
+    }
+    public static function getAllCategories(){
+
+        return self::with('mproducts')->get();
 
     }
 }

@@ -50,8 +50,9 @@ class BudgetController extends Controller
         //$states = $this->states;
         $clients = Client::getAllClients();
         $mproducts = MProduct::getAllMProducts();
+        $categories = Category::getAllCategories();
 
-        return response()->json(['clients' => $clients, 'mproducts' => $mproducts],200);
+        return response()->json(['clients' => $clients, 'mproducts' => $mproducts, 'categories' => $categories], 200);
     }
 
     public function store(Request $request)
