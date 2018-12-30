@@ -50,7 +50,7 @@ class BudgetController extends Controller
         //$states = $this->states;
         $clients = Client::getAllClients();
         $mproducts = MProduct::getAllMProducts();
-        $categories = Category::getAllCategories();
+        $categories = Category::getAllCategories("produto");
 
         return response()->json(['clients' => $clients, 'mproducts' => $mproducts, 'categories' => $categories], 200);
     }

@@ -81,9 +81,9 @@ class Category extends Model
         return self::where('tipo', $type)->get();
 
     }
-    public static function getAllCategories(){
+    public static function getAllCategories($type){
 
-        return self::with('mproducts')->get();
+        return self::with('mproducts.glasses','mproducts.aluminums','mproducts.components')->where('tipo',$type)->get();
 
     }
 }
