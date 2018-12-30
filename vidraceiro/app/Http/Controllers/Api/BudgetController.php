@@ -49,8 +49,9 @@ class BudgetController extends Controller
 
         //$states = $this->states;
         $clients = Client::getAllClients();
+        $mproducts = MProduct::getAllMProducts();
 
-        return response()->json(['clients' => $clients]);
+        return response()->json(['clients' => $clients, 'mproducts' => $mproducts],200);
     }
 
     public function store(Request $request)
@@ -66,6 +67,7 @@ class BudgetController extends Controller
         $margemlucro = $request->margem_lucro ?? 100;
 
         $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id]));
+
 
         if ($budgetcriado)
             return response()->json(['success' => 'Orçamento criado com sucesso', 'id' => $budgetcriado->id], 200);
