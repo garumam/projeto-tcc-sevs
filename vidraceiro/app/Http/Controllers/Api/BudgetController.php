@@ -142,41 +142,40 @@ class BudgetController extends Controller
     public function update(Request $request, $tab, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
         $validado = $this->rules_budget_exists(['id' => $id]);
 
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
+            return response()->json(['error' => $validado->messages()], 202);
         }
 
         $budgetcriado = $this->budget->findBudgetById($id);
 
         if ($budgetcriado->status !== 'AGUARDANDO') {
-            return response()->json(['error' => 'Este orçamento não pode ser editado!']);
+            return response()->json(['error' => 'Este orçamento não pode ser editado!'], 202);
         }
 
         switch ($tab) {
             case '1': //tab orçamento
-
                 $validado = $this->rules_budget($request->all());
 
                 if ($validado->fails()) {
-                    return response()->json(['error' => $validado->messages()], 401);
+                    return response()->json(['error' => $validado->messages()], 202);
                 }
 
                 $margemlucro = $request->margem_lucro ?? 100;
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Orçamento atualizado com sucesso']);
+                    return response()->json(['success' => 'Orçamento atualizado com sucesso', 'id' => $id], 200);
                 break;
             case '2': //tab adicionar
                 $validado = $this->rules_budget_product($request->all(), ['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
-                    return response()->json(['error' => $validado->messages()], 401);
+                    return response()->json(['error' => $validado->messages()], 202);
                 }
 
                 $product = new Product();
@@ -188,7 +187,7 @@ class BudgetController extends Controller
                     $budgetcriado = $this->budget->findBudgetById($id);
 
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso']);
+                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'id' => $id]);
                 }
                 break;
             case '3': //tab editar
@@ -199,36 +198,30 @@ class BudgetController extends Controller
                 }
 
                 if ($validado->fails()) {
-                    return response()->json(['error' => $validado->messages()], 401);
+                    return response()->json(['error' => $validado->messages()], 202);
                 }
 
                 $product = new Product();
                 $product = $product->findProductById($request->produtoid);
                 $product->updateProduct($request->all());
-
                 $product->updateAluminunsWithProductMeasure();
-
                 $budgetcriado = $this->budget->findBudgetById($id);
+
                 if ($product && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Produto atualizado com sucesso']);
+                    return response()->json(['success' => 'Produto atualizado com sucesso', 'id' => $id], 200);
 
                 break;
             case '4': //tab material
-
                 $products = $budgetcriado->products;
-
                 foreach ($products as $product) {
-
                     $product->createMaterialsToProduct($request);
-
                 }
-
                 if ($products && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso']);
+                    return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso', 'id' => $id], 200);
                 break;
             default:
         }
-        return response()->json(['error' => 'Erro ao atualizar'], 401);
+        return response()->json(['error' => 'Erro ao atualizar'], 202);
     }
 
     public function destroy($del, $id)
