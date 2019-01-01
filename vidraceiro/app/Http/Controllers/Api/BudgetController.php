@@ -154,7 +154,7 @@ class BudgetController extends Controller
         $budgetcriado = $this->budget->findBudgetById($id);
 
         if ($budgetcriado->status !== 'AGUARDANDO') {
-            return response()->json(['error' => 'Este orçamento não pode ser editado!'], 202);
+            return response()->json(['error' => ['error' => ['Este orçamento não pode ser editado!']] ], 202);
         }
 
         switch ($tab) {
