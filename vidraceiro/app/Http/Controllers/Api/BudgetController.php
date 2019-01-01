@@ -32,7 +32,7 @@ class BudgetController extends Controller
     public function index(Request $request)
     {
         if (!Auth::user()->can('orcamento_listar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
         $budgets = $this->budget->getWithSearchAndPagination($request->get('search'), false, false, false, true);
@@ -44,7 +44,7 @@ class BudgetController extends Controller
     public function create()
     {
         if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
         //$states = $this->states;
@@ -154,7 +154,9 @@ class BudgetController extends Controller
         $budgetcriado = $this->budget->findBudgetById($id);
 
         if ($budgetcriado->status !== 'AGUARDANDO') {
-            return response()->json(['error' => ['error' => ['Este orçamento não pode ser editado!']] ], 202);
+            return response()->json(['error' => 'Este orçamento não pode ser editado!', 'res' => true], 202);
+//            return response()->json(['error' => ['error' => ['Este orçamento não pode ser editado!']]], 202);
+
         }
 
         switch ($tab) {
