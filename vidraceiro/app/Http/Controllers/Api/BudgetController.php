@@ -432,8 +432,8 @@ class BudgetController extends Controller
         $validator = Validator::make($data, array_merge(
             $mproductValidation,
             [
-                'largura' => 'required|string|max:255',
-                'altura' => 'required|string|max:255',
+                'largura' => 'required|numeric|max:255',
+                'altura' => 'required|numeric|max:255',
                 'qtd' => 'required|integer',
                 'localizacao' => 'nullable|string|max:255',
                 'valor_mao_obra' => 'nullable|numeric'
