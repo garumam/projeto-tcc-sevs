@@ -216,9 +216,10 @@ class BudgetController extends Controller
 
                 break;
             case '4': //tab material
+//                return response()->json(['success' => $request->all(), 'id' => $id], 200);
                 $products = $budgetcriado->products;
                 foreach ($products as $product) {
-                    $product->createMaterialsToProduct($request);
+                    $product->createMaterialsToProduct($request->all());
                 }
                 if ($products && $budgetcriado->updateBudgetTotal())
                     return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso', 'id' => $id], 200);
