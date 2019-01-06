@@ -191,7 +191,7 @@ class BudgetController extends Controller
                     $budgetcriado = $this->budget->findBudgetById($id);
 
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'id' => $id]);
+                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'id' => $product->id]);
                 }
                 break;
             case '3': //tab editar
