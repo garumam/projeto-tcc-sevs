@@ -111,23 +111,25 @@ class BudgetController extends Controller
             return response()->json(['error' => 'Este orçamento não pode ser editado!']);
         }
 
-        $states = $this->states;
-        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
-        $glasses = Glass::getAllGlassesOrAllModels(1);
-        $components = Component::getAllComponentsOrAllModels(1);
-        $categories = Category::getAllCategoriesByType('produto');
+//        $states = $this->states;
+//        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
+//        $glasses = Glass::getAllGlassesOrAllModels(1);
+//        $components = Component::getAllComponentsOrAllModels(1);
+//        $categories = Category::getAllCategoriesByType('produto');
+//        $categories = Category::getAllCategories('produto');
         $mproducts = MProduct::getAllMProducts();
         $clients = Client::getAllClients();
+
 
         if ($budgetedit) {
             $products = $budgetedit->getBudgetProductsWithRelations();
 
             return response()->json([
-                'states' => $states,
-                'glasses' => $glasses,
-                'aluminums' => $aluminums,
-                'components' => $components,
-                'categories' => $categories,
+//                'states' => $states,
+//                'glasses' => $glasses,
+//                'aluminums' => $aluminums,
+//                'components' => $components,
+//                'categories' => $categories,
                 'mproducts' => $mproducts,
                 'products' => $products,
                 'budgetedit' => $budgetedit,
