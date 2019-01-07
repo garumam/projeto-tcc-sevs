@@ -61,6 +61,9 @@ class Product extends Model
 
     public function deleteProduct(){
 
+        $this->glasses()->forceDelete();
+        $this->aluminums()->forceDelete();
+        $this->components()->forceDelete();
         return self::delete();
 
     }
