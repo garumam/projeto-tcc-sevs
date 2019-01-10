@@ -233,20 +233,20 @@ class BudgetController extends Controller
     public function destroy($del, $id)
     {
         if (!Auth::user()->can('orcamento_deletar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página','res'=>true], 401);
         }
 
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
             if ($budget->status !== 'AGUARDANDO') {
-                return response()->json(['error' => 'Este orçamento não pode ser deletado!'], 202);
+                return response()->json(['error' => 'Este orçamento não pode ser deletado!','res'=>true], 202);
             }
             if ($budget) {
 
                 $budget->deleteBudget();
                 return response()->json(['success' => 'Orçamento deletado com sucesso', 'id' => $id], 200);
             } else {
-                return response()->json(['error' => 'Erro ao deletar orçamento'], 202);
+                return response()->json(['error' => 'Erro ao deletar orçamento','res'=>true], 202);
             }
         } else {
 
@@ -257,17 +257,17 @@ class BudgetController extends Controller
                 $budgetcriado = $product->budget;
 
                 if ($budgetcriado->status !== 'AGUARDANDO') {
-                    return response()->json(['error' => 'Este orçamento não pode ser deletado!'], 202);
+                    return response()->json(['error' => 'Este orçamento não pode ser deletado!','res'=>true], 202);
                 }
 
                 $product->deleteProduct();
 
 
                 if ($budgetcriado->updateBudgetTotal()) {
-                    return response()->json(['success' => 'Produto deletado com sucesso', 'id' => $id], 200);
+                    return response()->json(['success' => 'Produto deletado com sucesso', 'budget' => $budgetcriado], 200);
                 }
             } else {
-                return response()->json(['error' => 'Erro ao deletar produto'], 202);
+                return response()->json(['error' => 'Erro ao deletar produto','res'=>true], 202);
             }
 
         }
