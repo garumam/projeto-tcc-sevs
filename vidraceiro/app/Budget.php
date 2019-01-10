@@ -134,7 +134,7 @@ class Budget extends Model
 
     public function getBudgetProductsWithRelations($id){
 
-        return self::findBudgetById($id)->with('products','glasses', 'aluminums', 'components')->get();
+        return self::products()->with('mproduct', 'glasses', 'aluminums', 'components')->get();
 
     }
 

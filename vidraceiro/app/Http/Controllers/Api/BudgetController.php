@@ -188,8 +188,8 @@ class BudgetController extends Controller
                 $product->createMaterialsOfMProductToProduct();
 
                 if ($product) {
-                    $budgetcriado = Budget::with('products.mproduct','products.glasses','products.aluminums','products.components')->find($id);
-
+                    //$budgetcriado = Budget::with('products.mproduct','products.glasses','products.aluminums','products.components')->find($id);
+                    $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                         return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado]);
                 }
@@ -209,10 +209,11 @@ class BudgetController extends Controller
                 $product = $product->findProductById($request->produtoid);
                 $product->updateProduct($request->all());
                 $product->updateAluminunsWithProductMeasure();
-                $budgetcriado = $this->budget->findBudgetById($id);
+                //$budgetcriado = $this->budget->findBudgetById($id);
+                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
 
                 if ($product && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Produto atualizado com sucesso', 'id' => $product->id], 200);
+                    return response()->json(['success' => 'Produto atualizado com sucesso', 'budget' => $budgetcriado], 200);
 
                 break;
             case '4': //tab material
