@@ -262,7 +262,7 @@ class BudgetController extends Controller
 
                 $product->deleteProduct();
 
-
+                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
                 if ($budgetcriado->updateBudgetTotal()) {
                     return response()->json(['success' => 'Produto deletado com sucesso', 'budget' => $budgetcriado], 200);
                 }
