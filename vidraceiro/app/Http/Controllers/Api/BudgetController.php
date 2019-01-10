@@ -191,7 +191,7 @@ class BudgetController extends Controller
                     //$budgetcriado = Budget::with('products.mproduct','products.glasses','products.aluminums','products.components')->find($id);
                     $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado]);
+                        return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado], 200);
                 }
                 break;
             case '3': //tab editar
