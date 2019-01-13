@@ -86,4 +86,9 @@ class Category extends Model
         return self::with('glasses','aluminums','components','mproducts.glasses','mproducts.aluminums','mproducts.components')->where('tipo',$type)->get();
 
     }
+    public static function getAllCategoriesMaterials(){
+
+        return self::with('glasses','aluminums','components')->where('tipo','<>','produto')->get();
+
+    }
 }
