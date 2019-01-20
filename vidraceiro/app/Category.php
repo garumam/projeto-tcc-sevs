@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Category extends Model
 {
     use SoftDeletes;
@@ -14,8 +15,9 @@ class Category extends Model
         'grupo_imagem'
     ];
 
-    public function mproducts(){
-        return $this->hasMany(MProduct::class,'categoria_produto_id');
+    public function mproducts()
+    {
+        return $this->hasMany(MProduct::class, 'categoria_produto_id');
     }
 
     public function glasses()
@@ -33,62 +35,83 @@ class Category extends Model
         return $this->hasMany(Component::class, 'categoria_componente_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false)
+    {
 
         $paginate = $paginate ?? 10;
 
         $queryBuilder = self::where('nome', 'like', '%' . $search . '%');
 
-        if($restore)
+        if ($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
 
         return $queryBuilder->paginate($paginate);
     }
 
-    public function findCategoryById($id){
+    public function findCategoryById($id)
+    {
 
         return self::find($id);
 
     }
 
-    public function restoreCategoryById($id){
+    public function restoreCategoryById($id)
+    {
 
         $category = self::onlyTrashed()->find($id);
 
-        return $category? $category->restore(): false;
+        return $category ? $category->restore() : false;
     }
 
-    public function createCategory(array $input){
+    public function createCategory(array $input)
+    {
 
         return self::create($input);
 
     }
 
-    public function updateCategory(array $input){
+    public function updateCategory(array $input)
+    {
 
         return self::update($input);
 
     }
 
-    public function deleteCategory(){
+    public function deleteCategory()
+    {
 
         return self::delete();
 
     }
 
-    public static function getAllCategoriesByType($type){
+    public static function getAllCategoriesByType($type)
+    {
 
         return self::where('tipo', $type)->get();
 
     }
-    public static function getAllCategories($type){
 
-        return self::with('glasses','aluminums','components','mproducts.glasses','mproducts.aluminums','mproducts.components')->where('tipo',$type)->get();
+    public static function getAllCategories($type)
+    {
+
+        return self::with('glasses', 'aluminums', 'components', 'mproducts.glasses', 'mproducts.aluminums', 'mproducts.components')->where('tipo', $type)->get();
 
     }
-    public static function getAllCategoriesMaterials(){
 
-        return self::with('glasses','aluminums','components')->where('tipo','<>','produto')->get();
+    public static function getAllCategoriesMaterials()
+    {
+
+        return self::with([
+                'glasses' => function ($query) {
+                    $query->where('is_modelo', '=', '1');
+                },
+                'aluminums' => function ($query) {
+                    $query->where('is_modelo', '=', '1');
+                }, 'components' => function ($query) {
+                    $query->where('is_modelo', '=', '1');
+                }
+            ]
+        )->where('tipo', '<>', 'produto')->get();
 
     }
 }
