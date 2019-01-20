@@ -53,7 +53,7 @@ class BudgetController extends Controller
         $categories = Category::getAllCategories("produto");
         $categoriesmaterials = Category::getAllCategoriesMaterials();
 
-        return response()->json(['clients' => $clients, 'mproducts' => $mproducts, 'categories' => $categories,'categoriesmaterials' => $categoriesmaterials], 200);
+        return response()->json(['clients' => $clients, 'mproducts' => $mproducts, 'categories' => $categories, 'categoriesmaterials' => $categoriesmaterials], 200);
     }
 
     public function store(Request $request)
@@ -190,7 +190,7 @@ class BudgetController extends Controller
 
                 if ($product) {
                     //$budgetcriado = Budget::with('products.mproduct','products.glasses','products.aluminums','products.components')->find($id);
-                    $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                    $budgetcriado->load('products.mproduct', 'products.glasses', 'products.aluminums', 'products.components');
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                         return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado], 200);
                 }
@@ -211,14 +211,15 @@ class BudgetController extends Controller
                 $product->updateProduct($request->all());
                 $product->updateAluminunsWithProductMeasure();
                 //$budgetcriado = $this->budget->findBudgetById($id);
-                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                $budgetcriado->load('products.mproduct', 'products.glasses', 'products.aluminums', 'products.components');
 
                 if ($product && $budgetcriado->updateBudgetTotal())
                     return response()->json(['success' => 'Produto atualizado com sucesso', 'budget' => $budgetcriado], 200);
 
                 break;
             case '4': //tab material
-//                return response()->json(['success' => $request->all(), 'id' => $id], 200);
+//                return response()->json(['error' => $request->all(), 'res' => $id], 202);
+                $budgetcriado->load('products.mproduct', 'products.glasses', 'products.aluminums', 'products.components');
                 $products = $budgetcriado->products;
                 foreach ($products as $product) {
                     $product->createMaterialsToProduct($request->all());
@@ -234,20 +235,20 @@ class BudgetController extends Controller
     public function destroy($del, $id)
     {
         if (!Auth::user()->can('orcamento_deletar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página','res'=>true], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página', 'res' => true], 401);
         }
 
         if ($del == 'budget') {
             $budget = $this->budget->findBudgetById($id);
             if ($budget->status !== 'AGUARDANDO') {
-                return response()->json(['error' => 'Este orçamento não pode ser deletado!','res'=>true], 202);
+                return response()->json(['error' => 'Este orçamento não pode ser deletado!', 'res' => true], 202);
             }
             if ($budget) {
 
                 $budget->deleteBudget();
                 return response()->json(['success' => 'Orçamento deletado com sucesso', 'id' => $id], 200);
             } else {
-                return response()->json(['error' => 'Erro ao deletar orçamento','res'=>true], 202);
+                return response()->json(['error' => 'Erro ao deletar orçamento', 'res' => true], 202);
             }
         } else {
 
@@ -258,17 +259,17 @@ class BudgetController extends Controller
                 $budgetcriado = $product->budget;
 
                 if ($budgetcriado->status !== 'AGUARDANDO') {
-                    return response()->json(['error' => 'Este orçamento não pode ser deletado!','res'=>true], 202);
+                    return response()->json(['error' => 'Este orçamento não pode ser deletado!', 'res' => true], 202);
                 }
 
                 $product->deleteProduct();
 
-                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                $budgetcriado->load('products.mproduct', 'products.glasses', 'products.aluminums', 'products.components');
                 if ($budgetcriado->updateBudgetTotal()) {
                     return response()->json(['success' => 'Produto deletado com sucesso', 'budget' => $budgetcriado], 200);
                 }
             } else {
-                return response()->json(['error' => 'Erro ao deletar produto','res'=>true], 202);
+                return response()->json(['error' => 'Erro ao deletar produto', 'res' => true], 202);
             }
 
         }
