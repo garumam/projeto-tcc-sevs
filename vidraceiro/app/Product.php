@@ -162,6 +162,8 @@ class Product extends Model
 
     public function createMaterialsToProduct($request){
 
+        $idOfNewMaterial = -1;
+
         $glass = 'id_vidro_' . $this->id;
         $aluminum = 'id_aluminio_' . $this->id;
         $component = 'id_componente_' . $this->id;
@@ -179,7 +181,7 @@ class Product extends Model
 
                 if ($vidro->is_modelo == 1) {
 
-                    $vidro->createGlass([
+                    $vidro = $vidro->createGlass([
                         'nome' => $vidro->nome,
                         'cor' => $vidro->cor,
                         'tipo' => $vidro->tipo,
@@ -190,6 +192,8 @@ class Product extends Model
                         'is_modelo' => 0,
                         'mglass_id' => $vidro->id
                     ]);
+
+                    $idOfNewMaterial = $vidro->id;
 
                 }
             }
@@ -215,7 +219,7 @@ class Product extends Model
                     $aluminioMedida = $aluminioPeso = 0;
                     $aluminio->calcularMedidaPesoAluminio($aluminioMedida,$aluminioPeso,$aluminio,$this);
 
-                    $aluminio->createAluminum([
+                    $aluminio = $aluminio->createAluminum([
                         'perfil' => $aluminio->perfil,
                         'descricao' => $aluminio->descricao,
                         'medida' => $aluminioMedida,
@@ -230,6 +234,8 @@ class Product extends Model
                         'categoria_aluminio_id' => $aluminio->categoria_aluminio_id,
                         'maluminum_id' => $aluminio->id
                     ]);
+
+                    $idOfNewMaterial = $aluminio->id;
 
                 }
             }
@@ -251,7 +257,7 @@ class Product extends Model
 
                 if ($componente->is_modelo == 1) {
 
-                    $componente->createComponent([
+                    $componente = $componente->createComponent([
                         'nome' => $componente->nome,
                         'qtd' => $componente->qtd,
                         'preco' => $componente->preco,
@@ -262,6 +268,8 @@ class Product extends Model
                         'mcomponent_id' => $componente->id
                     ]);
 
+                    $idOfNewMaterial = $componente->id;
+
                 }
             }
 
@@ -270,6 +278,8 @@ class Product extends Model
             Component::deleteComponentOnListWhereNotIn($componentesProduto,[]);
 
         }
+
+        return $idOfNewMaterial;
 
     }
 
