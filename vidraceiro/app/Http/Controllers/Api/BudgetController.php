@@ -284,7 +284,7 @@ class BudgetController extends Controller
     public function editMaterial($type, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],401);
         }
 
         switch ($type) {
@@ -311,10 +311,10 @@ class BudgetController extends Controller
         $validado = $this->rules_budget_material_exists(['id' => $id], $tabela);
 
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
+            return response()->json(['error' => $validado->messages()], 202);
         } else {
             if ($material->is_modelo === 1) {
-                return response()->json(['error' => 'Este material não existe!'], 401);
+                return response()->json(['error' => 'Este material não existe!'], 202);
             }
         }
 
@@ -325,7 +325,7 @@ class BudgetController extends Controller
                 'material' => $material,
                 'type' => $type]);
         }
-        return response()->json(['error' => 'Erro ao editar material']);
+        return response()->json(['error' => 'Erro ao editar material'],202);
 
     }
 
@@ -412,7 +412,7 @@ class BudgetController extends Controller
 
 
         }
-        return response()->json(['error' => 'Erro!'],202);
+        return response()->json(['error' => 'Erro ao editar material !'],202);
 
     }
 
