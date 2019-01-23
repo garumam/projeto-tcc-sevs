@@ -332,12 +332,12 @@ class BudgetController extends Controller
     public function updateMaterial(Request $request, $type, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],401);
         }
 
         $validado = $this->rules_budget_materiais($request->all(), $type);
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
+            return response()->json(['error' => $validado->messages()], 202);
         }
 
         $tabela = '';
@@ -372,10 +372,10 @@ class BudgetController extends Controller
         $validado = $this->rules_budget_material_exists(['id' => $id], $tabela);
 
         if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
+            return response()->json(['error' => $validado->messages()], 202);
         } else {
             if ($material->is_modelo === 1) {
-                return response()->json(['error' => 'Este material não existe!'], 401);
+                return response()->json(['error' => 'Este material não existe!'], 202);
             }
         }
 
@@ -383,7 +383,7 @@ class BudgetController extends Controller
         $budget = $product->findProductById($product->id)->budget;
 
         if ($budget->status !== 'AGUARDANDO') {
-            return response()->json(['error' => 'Este orçamento não pode ser deletado!']);
+            return response()->json(['error' => 'Este orçamento não pode ser deletado!'],202);
         }
 
         switch ($type) {
@@ -403,16 +403,16 @@ class BudgetController extends Controller
 
                 break;
         }
-
+        $budget->load('products.mproduct','products.glasses','products.aluminums','products.components');
         if ($material) {
 
             if ($budget && $budget->updateBudgetTotal()) {
-                return response()->json(['success' => "$nome atualizado com sucesso"]);
+                return response()->json(['success' => "$nome atualizado com sucesso", 'budget'=>$budget],200);
             }
 
 
         }
-        return response()->json(['error' => 'Erro!']);
+        return response()->json(['error' => 'Erro!'],202);
 
     }
 
