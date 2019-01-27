@@ -22,58 +22,68 @@
             padding: .4rem;
         }
 
-        .flex {
-            width: 100%;
-        }
-
-        .image-produto {
-            position: relative;
-            display: block;
-            margin-top: 20px;
-            width: 15%;
-            height: 140px;
-        }
-
         .tabela-produto {
-            margin-top: 10px;
-            width: 80%;
-            height: 140px;
-            float: right;
-            border: 1px solid #1b1e21;
+            width: 100px;
+            height: auto;
+            border-right: 0.4px solid #1b1e21;
+        }
+
+        .tabela-produto img {
+            width: 100%;
+            height: 100%;
+        }
+
+        table {
+            width: 100%;
             font-family: 'Raleway', sans-serif;
             font-size: .9rem;
             border-spacing: 0;
             padding: 0;
+            margin: 0 0 20px;
         }
-        .tabela-produto tr,td{
+
+        tr,td{
             border-spacing: 0;
             padding: .6rem;
+            border: 1px solid #1b1e21;
         }
-        .indice {
-            width: 40px;
-            padding-top: 60px;
-            text-align: center;
-            vertical-align: center;
-            border-right: 1px solid #1b1e21;
 
+        .semborda {
+            border-spacing: 0;
+            padding: .6rem;
+            border: none;
         }
+
+        .indice {
+            width: 10%;
+            height: auto;
+            text-align: center;
+            border-right: 1px solid #1b1e21;
+        }
+
         .texto {
             margin: 0 auto;
             text-align: left;
             vertical-align: center;
         }
-        .total{
+
+        .total {
+            display: block;
+            position: relative;
             width: 100%;
             height: 35px;
         }
+
         .total p {
             margin: 0;
             padding: 0;
         }
-        #texto-left{
+
+        #texto-left {
             float: left;
         }
-        #texto-right{
+
+        #texto-right {
             float: right;
         }
     </style>
@@ -106,7 +116,9 @@
 <div class="line"></div>
 @php $budgets = $order->budgets()->get(); @endphp
 <h2>Orçamentos relacionados</h2>
+
 @foreach($budgets as $budget)
+
     <h3>Dados do orçamento - {{$budget->nome}}</h3>
     <p>Nome: {{$budget->nome}}</p>
     <p>Endereço: {{$budget->endereco .' - '. $budget->bairro}}</p>
@@ -118,11 +130,18 @@
         <p id="texto-right">R$ {{$budget->total}}</p>
     </div>
 
+<div>
+<table>
     @forelse($budget->products()->get() as $product)
-        <div class="flex">
-            <img class="image-produto" src="{{ public_path().$product->mproduct->imagem}}">
-            <table class="tabela-produto">
+        
+            
+            
                 <tr>
+
+                    <td class="tabela-produto">
+                        <img src="{{ public_path().$product->mproduct->imagem}}">
+                    </td>
+                    
                     <td class="indice">{{$loop->index + 1}}</td>
 
                     <td class="texto"><b>Nome: {{$product->mproduct->nome .' - '}}</b> {{$product->mproduct->descricao}}
@@ -145,14 +164,18 @@
                     </td>
                 </tr>
 
-
-            </table>
-        </div>
+                <tr><td class="semborda"></td></tr>
+            
+        
     @empty
         <p>Nenhum Produto Cadastrado.</p>
     @endforelse
+</table>
+
     <div class="line"></div>
+</div>
 @endforeach
+
 
 
 </body>

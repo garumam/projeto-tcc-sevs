@@ -152,7 +152,7 @@ class PdfController extends Controller
                 $order = new Order();
                 $order = $order->findOrderById($id);
                 //$order = Order::with('budgets.products')->find($id);
-                $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'));
+                $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'))->setPaper('A4','portrait');
                 $nomearquivo = 'ordem_servico.pdf';
 
                 break;
