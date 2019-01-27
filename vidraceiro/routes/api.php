@@ -56,5 +56,11 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', 'Api\OrderController@destroy');
     });
 
+    Route::prefix('pdf')->group(function () {
+        Route::get('/{tipo}', 'Api\PdfController@index')->name('pdf.index');
+        Route::get('/show/{tipo}/{id}', 'Api\PdfController@show')->name('pdf.show');
+        Route::get('/show/{tipo}', 'Api\PdfController@showRelatorio')->name('pdf.showRelatorio');
+    });
+
 
 });
