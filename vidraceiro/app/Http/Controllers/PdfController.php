@@ -144,7 +144,7 @@ class PdfController extends Controller
             case 'budget':
                 $budget = new Budget();
                 $budget = $budget->findBudgetById($id);
-                $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'));
+                $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'))->setPaper('A4','portrait');
                 $nomearquivo = 'orcamento.pdf';
 
                 break;
