@@ -56,6 +56,10 @@
             height: 100%;
         }
 
+        .break-table {
+            page-break-after: always;
+        }
+
         table {
             width: 100%;
             border: 1px solid #1b1e21;
@@ -63,7 +67,7 @@
             font-size: .9rem;
             border-spacing: 0;
             padding: 0;
-            margin: 0 0 20px;
+            margin: 0 0 20px 0;
         }
 
         tr, td {
@@ -85,8 +89,6 @@
         }
 
         .total {
-            display: block;
-            position: relative;
             width: 100%;
             height: 35px;
         }
@@ -134,9 +136,12 @@
 </div>
 
 <div>
+    @php
+        $contador = 0;
+    @endphp
     @forelse($budget->products as $product)
 
-        <table>
+        <table class={{$contador == 0 ? "break-table" : ""}}>
             <tr>
                 <td class="tabela-produto">
                     <img src="{{ public_path().$product->mproduct->imagem}}">
@@ -165,6 +170,9 @@
                 </td>
             </tr>
         </table>
+        @php
+            $contador =+ 1;
+        @endphp
     @empty
         <p>Nenhum Produto Cadastrado.</p>
     @endforelse
