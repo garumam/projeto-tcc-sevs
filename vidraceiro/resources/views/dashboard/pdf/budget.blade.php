@@ -31,16 +31,20 @@
             border-top: 2px solid rgba(0, 0, 0, 0.8);
             padding-top: .5rem;
         }
+
         .ml-auto {
             margin-left: 7.7%;
         }
+
         .mt {
             margin-top: 6rem;
         }
-        .flex{
+
+        .flex {
             width: 100%;
             margin-top: 40px;
         }
+
         .tabela-produto {
             width: 100px;
             height: auto;
@@ -68,12 +72,10 @@
         }
 
         .indice {
-            width: 40px;
-            padding-top: 60px;
+            width: 10%;
+            height: auto;
             text-align: center;
-            vertical-align: center;
             border-right: 1px solid #1b1e21;
-
         }
 
         .texto {
@@ -83,6 +85,8 @@
         }
 
         .total {
+            display: block;
+            position: relative;
             width: 100%;
             height: 35px;
         }
@@ -143,14 +147,14 @@
                     <br>
                     <b>Linha:</b> {{$product->mproduct->category->nome}}
                     <br>
-                    <b>Vidro:</b>
+                    <b>Vidros usados:</b>
                     @foreach($product->glasses as $glass)
-                        {{$glass->nome}}
+                        {{$glass->nome . ' | '}}
                     @endforeach
                     <br>
-                    <b>Aluminios:</b>
+                    <b>Aluminios usados:</b>
                     @foreach($product->aluminums as $aluminum)
-                        {{$aluminum->perfil . ' '. $aluminum->descricao}}
+                        {{$aluminum->perfil . ' '. $aluminum->descricao . ' | '}}
                     @endforeach
                     <br>
                     <b>Largura:</b> {{$product->largura . ' '}}
@@ -164,16 +168,15 @@
     @empty
         <p>Nenhum Produto Cadastrado.</p>
     @endforelse
-        <div class="flex">
-            <div class="borda-assinatura">
-                <span>Local e Data</span>
-            </div>
-            <div class="borda-assinatura ml-auto">
-                <span>Assinatura</span>
-            </div>
+    <div class="flex">
+        <div class="borda-assinatura">
+            <span>Local e Data</span>
         </div>
+        <div class="borda-assinatura ml-auto">
+            <span>Assinatura</span>
+        </div>
+    </div>
 </div>
-
 
 
 </body>
