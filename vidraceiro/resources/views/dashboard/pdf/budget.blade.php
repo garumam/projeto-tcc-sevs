@@ -31,41 +31,38 @@
             border-top: 2px solid rgba(0, 0, 0, 0.8);
             padding-top: .5rem;
         }
-
-        .mt {
-            margin-top: 6rem;
-        }
-
         .ml-auto {
             margin-left: 7.7%;
         }
-
-        .flex {
+        .mt {
+            margin-top: 6rem;
+        }
+        .flex{
             width: 100%;
-            text-align: center;
+            margin-top: 40px;
         }
-
-        .image-produto {
-            position: relative;
-            display: block;
-            margin-top: 20px;
-            width: 15%;
-            height: 140px;
-        }
-
         .tabela-produto {
-            margin-top: 10px;
-            width: 80%;
-            height: 140px;
-            float: right;
+            width: 100px;
+            height: auto;
+            border-right: 0.4px solid #1b1e21;
+        }
+
+        .tabela-produto img {
+            width: 100%;
+            height: 100%;
+        }
+
+        table {
+            width: 100%;
             border: 1px solid #1b1e21;
             font-family: 'Raleway', sans-serif;
             font-size: .9rem;
             border-spacing: 0;
             padding: 0;
+            margin: 0 0 20px;
         }
 
-        .tabela-produto tr, td {
+        tr, td {
             border-spacing: 0;
             padding: .6rem;
         }
@@ -130,27 +127,30 @@
 <div class="total">
     <p id="texto-left">Valor total do orçamento: </p>
     <p id="texto-right">R$ {{$budget->total}}</p>
-
 </div>
 
+<div>
+    @forelse($budget->products as $product)
 
-@forelse($budget->products as $product)
-    <div class="flex">
-        <img class="image-produto" src="{{ public_path().$product->mproduct->imagem}}">
-        <table class="tabela-produto">
+        <table>
             <tr>
+                <td class="tabela-produto">
+                    <img src="{{ public_path().$product->mproduct->imagem}}">
+                </td>
                 <td class="indice">{{$loop->index + 1}}</td>
 
                 <td class="texto"><b>Nome: {{$product->mproduct->nome .' - '}}</b> {{$product->mproduct->descricao}}
                     <br>
                     <b>Linha:</b> {{$product->mproduct->category->nome}}
                     <br>
+                    <b>Vidro:</b>
                     @foreach($product->glasses as $glass)
-                        <b>Vidro:</b> {{$glass->nome}}
+                        {{$glass->nome}}
                     @endforeach
                     <br>
+                    <b>Aluminios:</b>
                     @foreach($product->aluminums as $aluminum)
-                        <b>Aluminios:</b> {{$aluminum->perfil . ' '. $aluminum->descricao}}
+                        {{$aluminum->perfil . ' '. $aluminum->descricao}}
                     @endforeach
                     <br>
                     <b>Largura:</b> {{$product->largura . ' '}}
@@ -160,23 +160,20 @@
                     <b>Localização:</b> {{$product->localizacao}}
                 </td>
             </tr>
-
-
         </table>
-    </div>
-@empty
-    <p>Nenhum Produto Cadastrado.</p>
-@endforelse
-
-<div class="flex mt">
-    <div class="borda-assinatura">
-        <span>Local e Data</span>
-    </div>
-    <div class="borda-assinatura ml-auto">
-        <span>Assinatura</span>
-    </div>
-
+    @empty
+        <p>Nenhum Produto Cadastrado.</p>
+    @endforelse
+        <div class="flex">
+            <div class="borda-assinatura">
+                <span>Local e Data</span>
+            </div>
+            <div class="borda-assinatura ml-auto">
+                <span>Assinatura</span>
+            </div>
+        </div>
 </div>
+
 
 
 </body>
