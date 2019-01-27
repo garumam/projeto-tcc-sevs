@@ -144,7 +144,7 @@ class PdfController extends Controller
             case 'budget':
                 $budget = new Budget();
                 $budget = $budget->findBudgetById($id);
-                $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'))->setPaper('A4','portrait');
+                $pdf = PDF::loadView('dashboard.pdf.budget', compact('budget','company'))->setPaper('A3','portrait');
                 $nomearquivo = 'orcamento.pdf';
 
                 break;
@@ -152,7 +152,7 @@ class PdfController extends Controller
                 $order = new Order();
                 $order = $order->findOrderById($id);
                 //$order = Order::with('budgets.products')->find($id);
-                $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'))->setPaper('A4','portrait');
+                $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'))->setPaper('A3','portrait');
                 $nomearquivo = 'ordem_servico.pdf';
 
                 break;
