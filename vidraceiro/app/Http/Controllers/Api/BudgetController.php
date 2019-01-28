@@ -375,7 +375,7 @@ class BudgetController extends Controller
             return response()->json(['error' => $validado->messages()], 202);
         } else {
             if ($material->is_modelo === 1) {
-                return response()->json(['error' => 'Este material não existe!'], 202);
+                return response()->json(['error' => 'Este material não existe!','res'=>true], 202);
             }
         }
 
@@ -383,7 +383,7 @@ class BudgetController extends Controller
         $budget = $product->findProductById($product->id)->budget;
 
         if ($budget->status !== 'AGUARDANDO') {
-            return response()->json(['error' => 'Este orçamento não pode ser deletado!'],202);
+            return response()->json(['error' => 'Este orçamento não pode ser deletado!','res'=>true],202);
         }
 
         switch ($type) {
@@ -412,7 +412,7 @@ class BudgetController extends Controller
 
 
         }
-        return response()->json(['error' => 'Erro ao editar material !'],202);
+        return response()->json(['error' => 'Erro ao editar material !','res'=>true],202);
 
     }
 
