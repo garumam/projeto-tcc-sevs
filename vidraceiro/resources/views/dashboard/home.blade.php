@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        @if(session('error'))
+    @if(session('error'))
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
             <div class="alerta p-0">
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
             </div>
-        @endif
-    </div>
+        </div>
+    @endif
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
