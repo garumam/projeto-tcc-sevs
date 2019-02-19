@@ -48,7 +48,7 @@
     @foreach($financials as $financial)
         <tr class="tabela-vidro">
             <th scope="row">{{ $financial->id }}</th>
-            <td><span class="badge badge-{{$financial->tipo == 'RECEITA' ? 'success' : 'danger'}}">Receita</span></td>
+            <td><span class="badge badge-{{$financial->tipo == 'RECEITA' ? 'success' : 'danger'}}">{{$financial->tipo}}</span></td>
             <td>{{ $financial->descricao??'' }}</td>
             <td style="{{$financial->tipo === 'RECEITA' ? 'color:#28a745;' : 'color:#dc3545;'}}">
                 R${{ $financial->valor }}</td>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth:api');
+        $this->middleware('auth');
     }
 
     public function sales()
@@ -33,7 +33,7 @@ class DashboardController extends Controller
         $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();*/
 
         $sales = DB::table('sales')->get();
-        $salesArray = $this->getMonth($sales,true);
+        $salesArray = $this->getMonth($sales);
 //        $salesArray = [];
 //        for ($i = 1; $i <= 12; $i++) {
 //            $salesArray[] = $sales->filter(function ($value) use ($i) {

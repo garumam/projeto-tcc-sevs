@@ -1259,7 +1259,7 @@ graficoOrcamentos();
 function graficoVendas() {
     var ctxVendas = document.getElementById("vendas");
     if (ctxVendas) {
-        fetch(host + '/api/dashboard/sales')
+        fetch(host + '/dashboard/sales')
             .then(result => result.json())
             .then((data) => {
                 var graficoVendas = new Chart(ctxVendas, {
@@ -1286,7 +1286,7 @@ function graficoVendas() {
 function graficofinanceiro() {
     var ctxFinanceiro = document.getElementById("financeiro");
     if (ctxFinanceiro) {
-        fetch(host + '/api/dashboard/financial')
+        fetch(host + '/dashboard/financial')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -1321,7 +1321,7 @@ function graficofinanceiro() {
 function graficoOrdens() {
     var ctxOrdens = document.getElementById("ordensgraph");
     if (ctxOrdens) {
-        fetch(host + '/api/dashboard/orders')
+        fetch(host + '/dashboard/orders')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -1365,7 +1365,7 @@ function graficoOrdens() {
 function graficoOrcamentos() {
     var ctxOrcamentos = document.getElementById("orcamentosgraph");
     if (ctxOrcamentos) {
-        fetch(host + '/api/dashboard/budgets')
+        fetch(host + '/dashboard/budgets')
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -1408,7 +1408,7 @@ function graficoOrcamentos() {
 function graficoClientes() {
     var ctxClientes = document.getElementById("clientes");
     if (ctxClientes) {
-        fetch(host + '/api/dashboard/clients')
+        fetch(host + '/dashboard/clients')
             .then(result => result.json())
             .then((data) => {
                 var graficoClientes = new Chart(ctxClientes, {

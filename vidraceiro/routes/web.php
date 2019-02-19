@@ -21,6 +21,18 @@ Route::get('/', function () {
 
 Route::get('/home', 'DashboardController@index')->name('home')->middleware('auth');
 
+
+//rotas para pegar dados para os gráficos
+Route::prefix('dashboard')->group(function () {
+    Route::get('/sales', 'Api\DashboardController@sales')->name('dashboard.sales');
+    Route::get('/financial', 'Api\DashboardController@financial')->name('dashboard.financial');
+    Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
+    Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
+    Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');
+
+});
+
+
 //rotas do usuario
 Route::prefix('users')->group(function () {
     Route::get('/', 'UserController@index')->name('users.index');
