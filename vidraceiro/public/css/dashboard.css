@@ -67,7 +67,10 @@ ul.tabs li {
 }
 
 #nav-tab a.current {
-    background: #ededed;
+    background: #eff3f6;
+    -webkit-box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2);
+	-moz-box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2);
+    box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2);
     color: #222;
 }
 
