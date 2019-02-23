@@ -58,7 +58,7 @@ class Order extends Model
     }
 
     public function deleteOrder(){
-
+        $this->timestamps = false;
         return self::delete();
 
     }
@@ -72,8 +72,11 @@ class Order extends Model
     public function restoreOrderById($id){
 
         $order = self::onlyTrashed()->find($id);
-
-        return $order? $order->restore(): false;
+        if($order){
+            $order->timestamps = false;
+            return $order->restore();
+        }
+        return false;
     }
 
     public function updateBudgetsStatusByOrderSituation($budgets){
