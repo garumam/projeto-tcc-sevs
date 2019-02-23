@@ -255,6 +255,7 @@
                     </button>
                 </nav>
                 <section id="painel">
+                    <div id="loadingpage"></div>
                     @yield('content')
                 </section>
 
@@ -312,11 +313,11 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
 <script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
-<script src="{{ asset('js/dashboard.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}" defer></script>
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"></script>--}}
 <script src="{{ asset('js/Chart.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -342,8 +343,17 @@
         }
     }
 
-
-
 </script>
+
+<script type="text/javascript" DEFER="DEFER">
+function pageLoaded() {
+    
+    $('#loadingpage').delay(200).fadeOut("slow");
+
+}
+
+pageLoaded();
+</script>
+
 </body>
 </html>
