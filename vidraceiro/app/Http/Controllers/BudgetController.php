@@ -169,20 +169,20 @@ class BudgetController extends Controller
                 $validado = $this->rules_budget($request->all());
 
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab', $tab);
                 }
 
                 $margemlucro = $request->margem_lucro ?? 100;
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                    return redirect()->back()->with('success', 'Orçamento atualizado com sucesso');
+                    return redirect()->back()->with('success', 'Orçamento atualizado com sucesso')->with('tab', $tab);
                 break;
             case '2': //tab adicionar
                 $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab', $tab);
                 }
 
                 $product = new Product();
@@ -194,7 +194,7 @@ class BudgetController extends Controller
                     $budgetcriado = $this->budget->findBudgetById($id);
 
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                        return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso');
+                        return redirect()->back()->with('success', 'Produto adicionado ao orçamento com sucesso')->with('tab', $tab);
                 }
                 break;
             case '3': //tab editar
@@ -205,7 +205,7 @@ class BudgetController extends Controller
                 }
 
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab', $tab);
                 }
 
                 $product = new Product();
@@ -216,7 +216,7 @@ class BudgetController extends Controller
 
                 $budgetcriado = $this->budget->findBudgetById($id);
                 if ($product && $budgetcriado->updateBudgetTotal())
-                    return redirect()->back()->with('success', 'Produto atualizado com sucesso');
+                    return redirect()->back()->with('success', 'Produto atualizado com sucesso')->with('tab', $tab);
 
                 break;
             case '4': //tab material
@@ -230,7 +230,7 @@ class BudgetController extends Controller
                 }
 
                 if ($products && $budgetcriado->updateBudgetTotal())
-                    return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso');
+                    return redirect()->back()->with('success', 'Materiais dos produtos atualizados com sucesso')->with('tab', $tab);
                 break;
             default:
         }

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     $('#nav-tab a').click(function(){
         var tab_id = $(this).attr('data-tab');
         
@@ -13,6 +14,28 @@ $(document).ready(function () {
         
     });
 
+
+    if ( $('#tabSession').data('value') != ''){
+            
+        var tabsarray = $('.tabs-budget');
+
+        switch($('#tabSession').data('value')){
+            case 1:
+                tabsarray[0].click();
+                break;
+            case 2:
+                tabsarray[1].click();
+                break;
+            case 3:
+                tabsarray[2].click();
+                $('.bt-budget-deletar-produto').show();
+                break;
+            case 4:
+                tabsarray[3].click();
+                break;
+        }         
+
+    }
 
 
     $('.opensubmenu ul li').each(function () {

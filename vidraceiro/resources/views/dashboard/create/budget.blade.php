@@ -4,11 +4,11 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card-material custom-card">
 
-
+        <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}" />
             <div class="nav nav-tabs" id="nav-tab">
                 @for($i = 0; $i < count($titulotabs); $i++)
                     @if($i == 0)
-                        <a class="tabs-budget nav-item nav-link current"
+                        <a class="tabs-budget nav-item nav-link {{ session('tab')? '' : 'current' }}"
                            data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                     @elseif($i != 0)
                         <a class="tabs-budget nav-item nav-link {{ !empty($budgetedit)? '':'disabled' }}"
