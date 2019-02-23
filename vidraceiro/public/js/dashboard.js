@@ -2,12 +2,15 @@ $(document).ready(function () {
 
     $('#nav-tab a').click(function(){
         var tab_id = $(this).attr('data-tab');
-
-        $('#nav-tab a').removeClass('current');
-        $('.tab-content').removeClass('current');
-
-        $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
+        
+        if(tab_id != undefined){
+            $('#nav-tab a').removeClass('current');
+            $('.tab-content').removeClass('current');
+    
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+        }
+        
     });
 
 
@@ -363,7 +366,7 @@ $(document).ready(function () {
     $('.tabs-budget').each(function (index) {
         $(this).on("click", function () {
 
-            if ($('#nav-Editar-tab').attr('id') == $(this).attr('id') && !$(this).hasClass('disabled')) {
+            if ('nav-Editar-tab' == $(this).data('tab') && !$(this).hasClass('disabled')) {
                 $('.bt-budget-deletar-produto').show();
             } else {
                 $('.bt-budget-deletar-produto').hide();
