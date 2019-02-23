@@ -1,5 +1,16 @@
 $(document).ready(function () {
 
+    $('#nav-tab a').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('#nav-tab a').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    });
+
+
 
     $('.opensubmenu ul li').each(function () {
         let ativo = $(this).attr("class");
@@ -313,7 +324,7 @@ $(document).ready(function () {
     $('#bt-budget-visible').click(function () {
 
         switch (true) {
-            case $('#nav-Orçamento-tab').hasClass('active'):
+            case $('#nav-Orçamento-tab').hasClass('current'):
 
                 if ($('#nome').val().length !== 0 && $('#cep').val().length === 9) {
                     $('#cep').unmask();
@@ -323,22 +334,22 @@ $(document).ready(function () {
                 $('#bt-orcamento-budget-invisible').click();
 
                 break;
-            case $('#nav-Editar-tab').hasClass('active'):
+            case $('#nav-Editar-tab').hasClass('current'):
 
                 $('#bt-edit-budget-invisible').click();
 
                 break;
-            case $('#nav-Adicionar-tab').hasClass('active'):
+            case $('#nav-Adicionar-tab').hasClass('current'):
 
                 $('#bt-add-budget-invisible').click();
 
                 break;
-            case $('#nav-Material-tab').hasClass('active'):
+            case $('#nav-Material-tab').hasClass('current'):
 
                 $('#bt-material-budget-invisible').click();
 
                 break;
-            case $('#nav-Total-tab').hasClass('active'):
+            case $('#nav-Total-tab').hasClass('current'):
 
                 $('#bt-total-budget-invisible').click();
 

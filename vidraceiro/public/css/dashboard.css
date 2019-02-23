@@ -52,6 +52,34 @@ body {
     overflow-y: auto;
 }
 
+ul.tabs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.tabs li {
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+#nav-tab a.current {
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content {
+    width: 100%;
+    display: none;
+}
+
+.tab-content.current {
+    display: inherit;
+}
+
 .botao {
     width: 100%;
     display: inline-block;
@@ -321,8 +349,15 @@ body {
     margin-left: auto;
 }
 
+.nav-tabs a {
+    cursor: pointer;
+}
+
 .nav-tabs .nav-link.disabled {
     color: #8a99a1 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+
 }
 
 /*.form-group .topo {*/
@@ -433,6 +468,7 @@ body {
 /*}*/
 
 .formulario {
+    width: 100%;
     padding: 1rem;
 }
 
@@ -510,7 +546,8 @@ td {
     box-sizing: border-box;
     margin-bottom: 1rem;
 }
-.notificacao{
+
+.notificacao {
     width: 30px;
     height: 30px;
     border-radius: 20px;
@@ -519,10 +556,12 @@ td {
     padding: .09rem 0 .1rem 0;
     margin: 0;
 }
+
 .notificacao span {
     font-size: 1.1rem;
     height: 100%;
 }
+
 .borda-roxa {
     border-bottom: 3px solid #716aca;
 }
@@ -538,19 +577,21 @@ td {
 .borda-vermelha {
     border-bottom: 3px solid #f4516c;
 }
-.card-header{
+
+.card-header {
     background-color: white;
     padding: 1rem !important;
 }
-.card-header h4{
-    color:  rgba(0,0,0,.9);
+
+.card-header h4 {
+    color: rgba(0, 0, 0, .9);
     font-size: 1.2rem;
     margin: 0;
     font-weight: 600;
 }
 
-.card-header .btn-link{
-    color: rgba(0,0,0,.9);
+.card-header .btn-link {
+    color: rgba(0, 0, 0, .9);
     padding: 0 !important;
 }
 
