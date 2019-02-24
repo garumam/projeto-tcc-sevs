@@ -1,25 +1,33 @@
 $(document).ready(function () {
 
 
-    $('#nav-tab a').click(function(){
+    $('#nav-tab a').click(function () {
         var tab_id = $(this).attr('data-tab');
-        
-        if(tab_id != undefined){
+
+        if (tab_id !== undefined) {
+            switch (tab_id) {
+                case "nav-Total-tab":
+                    changeTextBtBudget("Gerar PDF");
+                    break;
+                default:
+                    changeTextBtBudget("Salvar");
+                    break;
+            }
             $('#nav-tab a').removeClass('current');
             $('.tab-content').removeClass('current');
-    
+
             $(this).addClass('current');
-            $("#"+tab_id).addClass('current');
+            $("#" + tab_id).addClass('current');
         }
-        
+
     });
 
 
-    if ( $('#tabSession').data('value') != ''){
-            
+    if ($('#tabSession').data('value') != '') {
+
         var tabsarray = $('.tabs-budget');
 
-        switch($('#tabSession').data('value')){
+        switch ($('#tabSession').data('value')) {
             case 1:
                 tabsarray[0].click();
                 break;
@@ -33,7 +41,7 @@ $(document).ready(function () {
             case 4:
                 tabsarray[3].click();
                 break;
-        }         
+        }
 
     }
 
@@ -446,25 +454,25 @@ $(document).ready(function () {
         $('#bt-material').attr("href", '/materials/component/create');
     });
 
-    $('#nav-Orçamento-tab').click(function () {
-        changeTextBtBudget("Salvar");
-    });
-
-    $('#nav-Editar-tab').click(function () {
-        changeTextBtBudget("Salvar");
-    });
-
-    $('#nav-Adicionar-tab').click(function () {
-        changeTextBtBudget("Salvar");
-    });
-
-    $('#nav-Material-tab').click(function () {
-        changeTextBtBudget("Salvar");
-    });
-
-    $('#nav-Total-tab').click(function () {
-        changeTextBtBudget("Gerar PDF");
-    });
+    // $('#nav-Orçamento-tab').click(function () {
+    //     changeTextBtBudget("Salvar");
+    // });
+    //
+    // $('#nav-Editar-tab').click(function () {
+    //     changeTextBtBudget("Salvar");
+    // });
+    //
+    // $('#nav-Adicionar-tab').click(function () {
+    //     changeTextBtBudget("Salvar");
+    // });
+    //
+    // $('#nav-Material-tab').click(function () {
+    //     changeTextBtBudget("Salvar");
+    // });
+    //
+    // $('#nav-Total-tab').click(function () {
+    //     changeTextBtBudget("Gerar PDF");
+    // });
 
     function changeTextBtBudget($texto) {
         $('#bt-budget-visible').text($texto);
@@ -971,7 +979,7 @@ $(document).ready(function () {
     });
 
 
-    $('#entrada').on( "keyup", function() {
+    $('#entrada').on("keyup", function () {
 
         $(this).val(mskDigitosDoisDecimais($(this).val()));
         calcularEntradaDesconto($(this));
@@ -979,7 +987,7 @@ $(document).ready(function () {
     });
 
 
-    $('#desconto').on( "keyup", function() {
+    $('#desconto').on("keyup", function () {
 
         $(this).val(mskDigitosDoisDecimais($(this).val()));
         calcularEntradaDesconto($(this));
@@ -1038,29 +1046,29 @@ $(document).ready(function () {
     });
 
 
-    function calcularEntradaDesconto(input){
+    function calcularEntradaDesconto(input) {
         let desconto = $('#desconto');
         let entrada = $('#entrada');
 
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
 
-        if(orcamentoselecionado.val() === ''){
+        if (orcamentoselecionado.val() === '') {
 
             $('#erro-js').attr('class', 'alert alert-danger')
                 .text('Selecione um orçamento antes!');
             desconto.val('');
             entrada.val('');
 
-        }else{
+        } else {
             let valorDesconto = desconto.val();
-            valorDesconto = valorDesconto == ''? 0 : valorDesconto;
+            valorDesconto = valorDesconto == '' ? 0 : valorDesconto;
             let valorEntrada = entrada.val();
-            valorEntrada = valorEntrada == ''? 0 : valorEntrada;
+            valorEntrada = valorEntrada == '' ? 0 : valorEntrada;
             let total = orcamentoselecionado.data('total');
 
             let somaDescontoEntrada = parseFloat(valorDesconto) + parseFloat(valorEntrada);
 
-            if(somaDescontoEntrada > 0 && somaDescontoEntrada < total){
+            if (somaDescontoEntrada > 0 && somaDescontoEntrada < total) {
 
                 let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
@@ -1074,7 +1082,7 @@ $(document).ready(function () {
                         let faltaPagar = total - valorDesconto - valorEntrada;
                         $('#total').val(parseFloat(faltaPagar).toFixed(2));
                         $('#valor_parc').val(parseFloat(faltaPagar / $('#qtd_parc').val()).toFixed(2));
-                    }else{
+                    } else {
                         alert('Problema inesperado reinicie a página!');
                     }
 
@@ -1083,10 +1091,10 @@ $(document).ready(function () {
                 }
 
 
-            }else{
+            } else {
 
-                if(input.val() != '0'){
-                    if(input.val() != ''){
+                if (input.val() != '0') {
+                    if (input.val() != '') {
                         $('#erro-js').attr('class', 'alert alert-danger')
                             .text('Valor inválido ou maior que o total!');
                     }
