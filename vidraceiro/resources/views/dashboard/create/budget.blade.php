@@ -9,10 +9,12 @@
                 @for($i = 0; $i < count($titulotabs); $i++)
                     @if($i == 0)
                         <a class="tabs-budget nav-item nav-link {{ session('tab')? '' : 'current' }}"
-                           data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                           data-tab="nav-{{$titulotabs[$i]}}-tab"
+                           data-id="{{lcfirst($titulotabs[$i])}}">{{$titulotabs[$i]}}</a>
                     @elseif($i != 0)
                         <a class="tabs-budget nav-item nav-link {{ !empty($budgetedit)? '':'disabled' }}"
-                           data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                           data-tab="nav-{{$titulotabs[$i]}}-tab"
+                           data-id="{{lcfirst($titulotabs[$i])}}">{{$titulotabs[$i]}}</a>
                     @endif
                 @endfor
                 <div class="topo-tab">
