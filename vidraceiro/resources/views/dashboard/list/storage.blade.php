@@ -5,34 +5,41 @@
         <div class="card-material custom-card">
 
             <!-- Inicio tab de Material-->
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}" />
+                <div class="nav nav-tabs" id="nav-tab">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="true">{{$titulotabs[$i]}}</a>
+                               aria-selected="true">{{$titulotabs[$i]}}</a> -->
+                            <a class="tabs-storage nav-item nav-link {{ session('tab')? '' : 'current' }}"
+                                data-id="{{lcfirst($titulotabs[$i])}}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="tabs-storage nav-item nav-link"
+                                data-id="{{lcfirst($titulotabs[$i])}}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                            <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                               aria-selected="false">{{$titulotabs[$i]}}</a> -->
                         @endif
                     @endfor
                 </div>
 
-            </nav>
+            
             <!-- Fim tab de Material-->
 
             <!--Inicio Conteudo de cada tab -->
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
+            
+                <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
+                <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
                     <form class="formulario" method="POST" role="form"
                           action="{{route('storage.update',['tab'=>'vidro'])}}">
                         <input type="hidden" name="_method" value="PATCH">
@@ -122,9 +129,9 @@
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
-
+                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
+                <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">
 
                     <form class="formulario" method="POST" role="form"
                           action="{{route('storage.update',['tab'=>'aluminio'])}}">
@@ -213,9 +220,10 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[2]}}-tab">
+                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[2]}}-tab"> -->
 
+                <div id="nav-{{$titulotabs[2]}}-tab" class="tab-content">
 
                     <form class="formulario" method="POST" role="form"
                           action="{{route('storage.update',['tab'=>'componente'])}}">
@@ -302,7 +310,7 @@
                     </form>
                 </div>
 
-            </div>
+            
             <!--Inicio Conteudo de cada tab -->
 
 

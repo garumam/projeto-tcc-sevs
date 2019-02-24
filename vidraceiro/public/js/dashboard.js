@@ -1,22 +1,61 @@
 $(document).ready(function () {
 
+    //VERIFICAÇÃO DE SUPORTE DO PLUGIN CHOSEN NOS NAVEGADORES,
+    // SE NÃO SUPORTAR EXIBE OS SELECT BÁSICOS PARA SEREM UTILIZADOS
+    if (!("Microsoft Internet Explorer" === window.navigator.appName ? document.documentMode >= 8 : !(/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android.*Mobile/i.test(window.navigator.userAgent)))) {
+
+        $('.form-control-chosen').each(function (select) {
+            $(this).show();
+        });
+
+    } else {
+
+        //Iniciando selects com search dentro
+        $('.form-control-chosen').chosen({
+            // Chosen options here
+        });
+
+    }
+
+    //Deixando novos selects do plugin chosen invisíveis orçamento material e mproduct material
+    $('#select_aluminio_chosen').hide();
+    $('#select_componente_chosen').hide();
+
 
     $('#nav-tab a').click(function () {
         var tab_id = $(this).attr('data-tab');
-
+        
         if (tab_id !== undefined) {
             switch (tab_id) {
                 case "nav-Total-tab":
                     changeTextBtBudget("Gerar PDF");
                     break;
                 case "nav-Vidros-tab":
+                    
                     $('#bt-material').attr("href", '/materials/glass/create');
+                    
+                    $('#select_componente_chosen').hide();
+                    $('#select_aluminio_chosen').hide();
+                    $('#select_vidro_chosen').show();
+                    
                     break;
                 case "nav-Aluminios-tab":
+                    
                     $('#bt-material').attr("href", '/materials/aluminum/create');
+                    
+                    $('#select_componente_chosen').hide();
+                    $('#select_aluminio_chosen').show();
+                    $('#select_vidro_chosen').hide();
+                    
                     break;
                 case "nav-Componentes-tab":
+                    
                     $('#bt-material').attr("href", '/materials/component/create');
+                    
+                    $('#select_componente_chosen').show();
+                    $('#select_aluminio_chosen').hide();
+                    $('#select_vidro_chosen').hide();
+                    
                     break;
                 default:
                     changeTextBtBudget("Salvar");
@@ -35,6 +74,12 @@ $(document).ready(function () {
     if ($('#tabSession').data('value') != '') {
 
         var tabsarray = $('.tabs-budget');
+        var budgetTabs = true;
+        
+        if(tabsarray.length == 0){
+            tabsarray = $('.tabs-storage');
+            budgetTabs = false;
+        }
 
         switch ($('#tabSession').data('value')) {
             case 1:
@@ -45,7 +90,8 @@ $(document).ready(function () {
                 break;
             case 3:
                 tabsarray[2].click();
-                $('.bt-budget-deletar-produto').show();
+                if(budgetTabs)
+                    $('.bt-budget-deletar-produto').show();
                 break;
             case 4:
                 tabsarray[3].click();
@@ -69,22 +115,7 @@ $(document).ready(function () {
         submenu.slideToggle("slow");
     });
 
-    //VERIFICAÇÃO DE SUPORTE DO PLUGIN CHOSEN NOS NAVEGADORES,
-    // SE NÃO SUPORTAR EXIBE OS SELECT BÁSICOS PARA SEREM UTILIZADOS
-    if (!("Microsoft Internet Explorer" === window.navigator.appName ? document.documentMode >= 8 : !(/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android.*Mobile/i.test(window.navigator.userAgent)))) {
-
-        $('.form-control-chosen').each(function (select) {
-            $(this).show();
-        });
-
-    } else {
-
-        //Iniciando selects com search dentro
-        $('.form-control-chosen').chosen({
-            // Chosen options here
-        });
-
-    }
+    
 
 
     $(".navbar-toggler").click(function (event) {
@@ -750,30 +781,30 @@ $(document).ready(function () {
 
     });
 
-    $('#nav-Vidros-tab').on('click', function () {
+    // $('#nav-Vidros-tab').on('click', function () {
 
-        $('#select_componente_chosen').hide();
-        $('#select_aluminio_chosen').hide();
-        $('#select_vidro_chosen').show();
+    //     $('#select_componente_chosen').hide();
+    //     $('#select_aluminio_chosen').hide();
+    //     $('#select_vidro_chosen').show();
 
-    });
+    // });
 
-    $('#nav-Aluminios-tab').on('click', function () {
+    // $('#nav-Aluminios-tab').on('click', function () {
 
 
-        $('#select_vidro_chosen').hide();
-        $('#select_componente_chosen').hide();
-        $('#select_aluminio_chosen').show();
+    //     $('#select_vidro_chosen').hide();
+    //     $('#select_componente_chosen').hide();
+    //     $('#select_aluminio_chosen').show();
 
-    });
+    // });
 
-    $('#nav-Componentes-tab').on('click', function () {
+    // $('#nav-Componentes-tab').on('click', function () {
 
-        $('#select_vidro_chosen').hide();
-        $('#select_aluminio_chosen').hide();
-        $('#select_componente_chosen').show();
+    //     $('#select_vidro_chosen').hide();
+    //     $('#select_aluminio_chosen').hide();
+    //     $('#select_componente_chosen').show();
 
-    });
+    // });
 
     $('#select-material').change(function (e) {
         let selecionado = $('#select-material option:selected').val();
@@ -1200,10 +1231,6 @@ $(document).ready(function () {
         v = v.replace(/(\d)(\d{1,2}$)/, "$1.$2");
         return v;
     }
-
-    //Deixando novos selects do plugin chosen invisíveis
-    $('#select_aluminio_chosen').hide();
-    $('#select_componente_chosen').hide();
 
     $('#image').on('change', function () {
         var reader = new FileReader();

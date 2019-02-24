@@ -69,20 +69,20 @@ class StorageController extends Controller
         if(!Auth::user()->can('estoque_atualizar', Storage::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
-
+        $tabnumber = 1;
         switch($tab){
             case 'vidro':
-
+                $tabnumber = 1;
                 $validado = $this->rules_storage($request->all(),$tab);
 
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab',1);
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_vidro_id);
                 $m2 = null;
                 if($request->operacao === 'saida'){
                     if($request->m2 > $storage->metros_quadrados){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->metros_quadrados." | Valor retirado: ".$request->m2);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->metros_quadrados." | Valor retirado: ".$request->m2)->with('tab',1);
                     }
                     $m2 = $storage->metros_quadrados - $request->m2;
 
@@ -92,22 +92,22 @@ class StorageController extends Controller
 
 
                 }else{
-                    return redirect()->back()->with('error', 'Operação não existe!');
+                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',1);
                 }
                 $storage->updateStorage('metros_quadrados',$m2);
                 break;
 
             case 'aluminio':
-
+                $tabnumber = 2;
                 $validado = $this->rules_storage($request->all(),$tab);
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab',2);
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_aluminio_id);
                 $qtd = null;
                 if($request->operacao === 'saida'){
                     if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd)->with('tab',2);
                     }
                     $qtd = $storage->qtd - $request->qtd;
 
@@ -117,22 +117,22 @@ class StorageController extends Controller
 
 
                 }else{
-                    return redirect()->back()->with('error', 'Operação não existe!');
+                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',2);
                 }
                 $storage->updateStorage('qtd',$qtd);
                 break;
 
             case 'componente':
-
+                $tabnumber = 3;
                 $validado = $this->rules_storage($request->all(),$tab);
                 if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado);
+                    return redirect()->back()->withErrors($validado)->with('tab',3);
                 }
                 $storage = Storage::getFirstStorageWhere('id',$request->storage_componente_id);
                 $qtd = null;
                 if($request->operacao === 'saida'){
                     if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd);
+                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd)->with('tab',3);
                     }
                     $qtd = $storage->qtd - $request->qtd;
 
@@ -142,7 +142,7 @@ class StorageController extends Controller
 
 
                 }else{
-                    return redirect()->back()->with('error', 'Operação não existe!');
+                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',3);
                 }
                 $storage->updateStorage('qtd',$qtd);
                 break;
@@ -150,7 +150,7 @@ class StorageController extends Controller
 
 
         if ($storage)
-            return redirect()->back()->with('success', "Operação realizada com sucesso");
+            return redirect()->back()->with('success', "Operação realizada com sucesso")->with('tab',$tabnumber);
     }
 
     public function rules_storage(array $data, $type)
