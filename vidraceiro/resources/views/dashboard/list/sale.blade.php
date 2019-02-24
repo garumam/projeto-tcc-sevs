@@ -4,23 +4,29 @@
         <div class="card-material custom-card">
 
             <!-- Inicio tab de Venda-->
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}" />
+                <div class="nav nav-tabs" id="nav-tab">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+                            <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="true">{{$titulotabs[$i]}}</a>
+                               aria-selected="true">{{$titulotabs[$i]}}</a> -->
+                            <a class="tabs-sale nav-item nav-link {{ session('tab')? '' : 'current' }}"
+                                data-id="{{lcfirst($titulotabs[$i])}}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
+                            <a class="tabs-sale nav-item nav-link"
+                                data-id="{{lcfirst($titulotabs[$i])}}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                            <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                               aria-selected="false">{{$titulotabs[$i]}}</a> -->
                         @endif
                     @endfor
                     <div class="topo-tab">
@@ -30,7 +36,7 @@
                     </div>
                 </div>
 
-            </nav>
+            
             <!-- Fim tab de Venda-->
 
             @if(session('success'))
@@ -57,10 +63,11 @@
             @endif
 
         <!--Inicio Conteudo de cada tab -->
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
-
+            
+                <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
+                <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
+                <div class="formulario">
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                             <label for="paginatevendas">Mostrar</label>
@@ -85,11 +92,12 @@
                             serviço em andando ou aberta!</p>
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda que tenha recebido pagamento, apenas será liberado para exclusão após a ordem de serviço ser concluída e não haja pagamento pendente!</p>--}}
                     </div>
-
                 </div>
-                <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
-
+                </div>
+                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
+                <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">     
+                <div class="formulario">
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                             <label for="paginatepagamentos">Mostrar</label>
@@ -111,12 +119,12 @@
                     <div class="table-responsive text-dark p-2" id="pagamentos">
                         @include('dashboard.list.tables.table-payment')
                     </div>
-
                 </div>
-            </div>
+                </div>
+            
             <!--Fim Conteudo de cada tab -->
 
-        </div>
+        
     </div>
 
 @endsection

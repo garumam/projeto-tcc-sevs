@@ -1213,7 +1213,7 @@ $(document).ready(function () {
 
     $('body').on('click', '.pagination a', function (e) {
         e.preventDefault();
-        let idtab = $('.nav-tabs a.active').attr('data-id');
+        let idtab = $('.nav-tabs a.current').attr('data-id');
         let divclicada = $(this).parent().parent().parent();
         console.log(divclicada);
         if (idtab === undefined) {
