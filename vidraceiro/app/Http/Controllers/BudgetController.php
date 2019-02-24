@@ -341,7 +341,7 @@ class BudgetController extends Controller
 
         $validado = $this->rules_budget_materiais($request->all(), $type);
         if ($validado->fails()) {
-            return redirect()->back()->withErrors($validado);
+            return redirect()->back()->withErrors($validado)->with('tab',4);
         }
 
         $tabela = '';
@@ -371,7 +371,7 @@ class BudgetController extends Controller
 
                 break;
             default:
-                return redirect()->back();
+                return redirect()->back()->with('tab',4);
         }
 
 
@@ -409,14 +409,14 @@ class BudgetController extends Controller
 
                 break;
             default:
-                return redirect()->back();
+                return redirect()->back()->with('tab',4);
         }
 
         if ($material){
 
             if($budget && $budget->updateBudgetTotal()){
 
-                return redirect(route('budgets.edit',['id'=>$budget->id]))->with('success', "$nome atualizado com sucesso");
+                return redirect(route('budgets.edit',['id'=>$budget->id]))->with('success', "$nome atualizado com sucesso")->with('tab',4);
             }
 
 

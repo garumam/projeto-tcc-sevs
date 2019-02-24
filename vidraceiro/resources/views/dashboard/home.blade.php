@@ -70,16 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
-        <div class="card-material card-shadow-dashboard borda-vermelha">
-            <div class="widget">
-                <h4 class="titulo" style="color: #c82333;">{{$totaldespesa}}
-                    <small><i class="fas fa-arrow-up text-danger"></i></small>
-                </h4>
-                <p class="subtitulo">Total de Despesas</p>
-            </div>
-        </div>
-    </div>
+    
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
@@ -87,6 +78,17 @@
                     <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Fornecedores</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="card-material card-shadow-dashboard borda-vermelha">
+            <div class="widget">
+                <h4 class="titulo" style="color: #c82333;">{{$totaldespesa}}
+                    <small><i class="fas fa-arrow-up text-danger"></i></small>
+                </h4>
+                <p class="subtitulo">Total de Despesas</p>
             </div>
         </div>
     </div>

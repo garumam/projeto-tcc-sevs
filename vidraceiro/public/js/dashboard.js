@@ -81,6 +81,10 @@ $(document).ready(function () {
             budgetTabs = false;
         }
 
+        if(tabsarray.length == 0){
+            tabsarray = $('.tabs-financial');
+        }
+
         switch ($('#tabSession').data('value')) {
             case 1:
                 tabsarray[0].click();
