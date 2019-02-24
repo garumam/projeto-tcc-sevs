@@ -271,10 +271,10 @@ class BudgetController extends Controller
 
 
                 if ($budgetcriado->updateBudgetTotal()) {
-                    return redirect()->back()->with('success', 'Produto deletado com sucesso');
+                    return redirect()->back()->with('success', 'Produto deletado com sucesso')->with('tab', 3);
                 }
             } else {
-                return redirect()->back()->with('error', 'Erro ao deletar produto');
+                return redirect()->back()->with('error', 'Erro ao deletar produto')->with('tab', 3);
             }
 
         }
