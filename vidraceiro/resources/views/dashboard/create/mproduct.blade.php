@@ -16,10 +16,10 @@
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a> -->
-                            <a class="tabs-budget nav-item nav-link {{ empty(session('mproductcriado')) ? 'current' : 'disabled' }}"
+                            <a class="tabs-mproduct nav-item nav-link {{ empty(session('mproductcriado')) ? 'current' : 'disabled' }}"
                                 data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="tabs-budget nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'current' }}"
+                            <a class="tabs-mproduct nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'current' }}"
                                 data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                             <!-- <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'active' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"

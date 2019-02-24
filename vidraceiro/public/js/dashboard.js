@@ -9,6 +9,15 @@ $(document).ready(function () {
                 case "nav-Total-tab":
                     changeTextBtBudget("Gerar PDF");
                     break;
+                case "nav-Vidros-tab":
+                    $('#bt-material').attr("href", '/materials/glass/create');
+                    break;
+                case "nav-Aluminios-tab":
+                    $('#bt-material').attr("href", '/materials/aluminum/create');
+                    break;
+                case "nav-Componentes-tab":
+                    $('#bt-material').attr("href", '/materials/component/create');
+                    break;
                 default:
                     changeTextBtBudget("Salvar");
                     break;
@@ -444,15 +453,15 @@ $(document).ready(function () {
         $('#bt-pdf-invisible').click();
     });
 
-    $('#nav-Vidros-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/glass/create');
-    });
-    $('#nav-Aluminios-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/aluminum/create');
-    });
-    $('#nav-Componentes-tab').click(function () {
-        $('#bt-material').attr("href", '/materials/component/create');
-    });
+    // $('#nav-Vidros-tab').click(function () {
+    //     $('#bt-material').attr("href", '/materials/glass/create');
+    // });
+    // $('#nav-Aluminios-tab').click(function () {
+    //     $('#bt-material').attr("href", '/materials/aluminum/create');
+    // });
+    // $('#nav-Componentes-tab').click(function () {
+    //     $('#bt-material').attr("href", '/materials/component/create');
+    // });
 
     // $('#nav-Orçamento-tab').click(function () {
     //     changeTextBtBudget("Salvar");
