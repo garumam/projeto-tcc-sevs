@@ -344,7 +344,7 @@ $(document).ready(function () {
 
     //inicio produto form
     $('#bt-product-visible').click(function () {
-        if ($('#nav-Produto-tab').hasClass('active')) {
+        if ($('#nav-Produto-tab').hasClass('current')) {
             //form tab produto
             $('#bt-produto-product-invisible').click();
         } else {

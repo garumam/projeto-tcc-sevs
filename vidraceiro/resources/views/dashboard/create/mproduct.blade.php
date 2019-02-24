@@ -5,22 +5,26 @@
         <div class="card-material custom-card">
 
             <!-- Inicio tab de Produto-->
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            
+                <div class="nav nav-tabs" id="nav-tab">
 
 
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'active' : 'disabled' }} noborder-left"
+                            <!-- <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'active' : 'disabled' }} noborder-left"
                                id="nav-{{$titulotabs[$i]}}-tab"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="true">{{$titulotabs[$i]}}</a>
+                               aria-selected="true">{{$titulotabs[$i]}}</a> -->
+                            <a class="tabs-budget nav-item nav-link {{ empty(session('mproductcriado')) ? 'current' : 'disabled' }}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                         @else
-                            <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'active' }}"
+                            <a class="tabs-budget nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'current' }}"
+                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                            <!-- <a class="nav-item nav-link {{ empty(session('mproductcriado')) ? 'disabled' : 'active' }}"
                                id="nav-{{$titulotabs[$i]}}-tab" data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab" aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a>
+                               aria-selected="false">{{$titulotabs[$i]}}</a> -->
                         @endif
                     @endfor
                     <div class="topo-tab">
@@ -30,15 +34,16 @@
 
                     </div>
                 </div>
-            </nav>
+            
             <!-- Fim tab de Produto-->
 
             <!--Inicio Conteudo de cada tab -->
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{ empty(session('mproductcriado')) ? 'show active' : '' }} "
+            
+                <!-- <div class="tab-pane fade {{ empty(session('mproductcriado')) ? 'show active' : '' }} "
                      id="nav-{{$titulotabs[0]}}"
                      role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[0]}}-tab">
+                     aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
+                <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content {{ empty(session('mproductcriado')) ? 'current' : '' }}">
 
                     <form id="form-product" class="formulario" method="POST" role="form"
                           action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id, 'tab' => '1']) : route('mproducts.store',['tab'=>'1']) }}">
@@ -96,10 +101,11 @@
                     </form>
 
                 </div>
-                <div class="tab-pane pb-5 fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}"
+                <!-- <div class="tab-pane pb-5 fade {{ !empty(session('mproductcriado')) ? 'show active' : '' }}"
                      id="nav-{{$titulotabs[1]}}"
                      role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[1]}}-tab">
+                     aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
+                <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content pb-5 {{ !empty(session('mproductcriado')) ? 'current' : '' }}">
 
                     <form class="formulario" method="POST" role="form"
                           action="{{ !empty($mproductedit) ? route('mproducts.update',['id'=> $mproductedit->id, 'tab' => '2']) : route('mproducts.store',['tab'=>'2']) }}">
@@ -151,7 +157,7 @@
                     </form>
 
                 </div>
-            </div>
+            
             <!--Inicio Conteudo de cada tab -->
 
 
