@@ -45,7 +45,7 @@
                 <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
                 <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
-                <div class="formulario">
+                <div class="formulario px-0">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <div class="topo">
@@ -104,7 +104,7 @@
                 <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
                 <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">
-                <div class="formulario">
+                <div class="formulario px-0">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <div class="topo">
@@ -165,7 +165,7 @@
                 <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[2]}}-tab"> -->
                 <div id="nav-{{$titulotabs[2]}}-tab" class="tab-content">
-                <div class="formulario">
+                <div class="formulario px-0">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <div class="topo">

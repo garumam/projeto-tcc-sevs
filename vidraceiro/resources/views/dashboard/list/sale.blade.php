@@ -4,39 +4,39 @@
         <div class="card-material custom-card">
 
             <!-- Inicio tab de Venda-->
-            <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}" />
-                <div class="nav nav-tabs" id="nav-tab">
-                    @for($i = 0; $i < count($titulotabs); $i++)
-                        @if($i == 0)
-                            <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
+            <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}"/>
+            <div class="nav nav-tabs" id="nav-tab">
+            @for($i = 0; $i < count($titulotabs); $i++)
+                @if($i == 0)
+                    <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a> -->
-                            <a class="tabs-sale nav-item nav-link {{ session('tab')? '' : 'current' }}"
-                                data-id="{{lcfirst($titulotabs[$i])}}"
-                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
-                        @else
-                            <a class="tabs-sale nav-item nav-link"
-                                data-id="{{lcfirst($titulotabs[$i])}}"
-                                data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
-                            <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
+                        <a class="tabs-sale nav-item nav-link {{ session('tab')? '' : 'current' }}"
+                           data-id="{{lcfirst($titulotabs[$i])}}"
+                           data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                    @else
+                        <a class="tabs-sale nav-item nav-link"
+                           data-id="{{lcfirst($titulotabs[$i])}}"
+                           data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
+                    <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
                                data-id="{{lcfirst($titulotabs[$i])}}"
                                data-toggle="tab"
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="false">{{$titulotabs[$i]}}</a> -->
-                        @endif
-                    @endfor
-                    <div class="topo-tab">
-                        <a class="btn-link" href="{{ route('sales.create') }}">
-                            <button class="btn btn-primary btn-block btn-custom" type="submit">Realizar venda</button>
-                        </a>
-                    </div>
+                    @endif
+                @endfor
+                <div class="topo-tab">
+                    <a class="btn-link" href="{{ route('sales.create') }}">
+                        <button class="btn btn-primary btn-block btn-custom" type="submit">Realizar venda</button>
+                    </a>
                 </div>
+            </div>
 
-            
+
             <!-- Fim tab de Venda-->
 
             @if(session('success'))
@@ -58,16 +58,16 @@
                             {{ $error }}
                         </div>
                     </div>
-                @endforeach
+            @endforeach
 
-            @endif
+        @endif
 
         <!--Inicio Conteudo de cada tab -->
-            
-                <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
+
+        <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
-                <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
-                <div class="formulario">
+            <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
+                <div class="formulario p-0">
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                             <label for="paginatevendas">Mostrar</label>
@@ -93,11 +93,11 @@
                         <p class="info-importante mt-1">Não é possível deletar ou editar venda que tenha recebido pagamento, apenas será liberado para exclusão após a ordem de serviço ser concluída e não haja pagamento pendente!</p>--}}
                     </div>
                 </div>
-                </div>
-                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
+            </div>
+        <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
                      aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
-                <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">     
-                <div class="formulario">
+            <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">
+                <div class="formulario p-0">
                     <div class="form-row formulario pb-0 justify-content-between">
                         <div class="form-group col-12 col-sm-4 col-md-3 col-lg-1">
                             <label for="paginatepagamentos">Mostrar</label>
@@ -112,7 +112,8 @@
                             <label for="search">Pesquisar</label>
                             <input type="text" class="form-control"
                                    onkeyup="ajaxPesquisaLoad('{{url('sales')}}?pagamentos=1&search='+$('#searchpagamentos').val()+'&paginate='+$('#paginatepagamentos').val(),'pagamentos')"
-                                   value="{{ old('search') }}" id="searchpagamentos" name="search" placeholder="Pesquisar">
+                                   value="{{ old('search') }}" id="searchpagamentos" name="search"
+                                   placeholder="Pesquisar">
                         </div>
                     </div>
 
@@ -120,12 +121,12 @@
                         @include('dashboard.list.tables.table-payment')
                     </div>
                 </div>
-                </div>
-            
+            </div>
+
             <!--Fim Conteudo de cada tab -->
 
-        
-    </div>
 
+        </div>
+    </div>
 @endsection
 
