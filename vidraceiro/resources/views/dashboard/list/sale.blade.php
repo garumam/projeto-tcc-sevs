@@ -4,7 +4,7 @@
         <div class="card-material custom-card">
 
             <!-- Inicio tab de Venda-->
-            <input type="hidden" id="tabSession" data-value="{{session('tab')? session('tab') : ''}}"/>
+            
             <div class="nav nav-tabs" id="nav-tab">
             @for($i = 0; $i < count($titulotabs); $i++)
                 @if($i == 0)
@@ -14,7 +14,7 @@
                                href="#nav-{{$titulotabs[$i]}}" role="tab"
                                aria-controls="nav-{{$titulotabs[$i]}}"
                                aria-selected="true">{{$titulotabs[$i]}}</a> -->
-                        <a class="tabs-sale nav-item nav-link {{ session('tab')? '' : 'current' }}"
+                        <a class="tabs-sale nav-item nav-link current"
                            data-id="{{lcfirst($titulotabs[$i])}}"
                            data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
                     @else
