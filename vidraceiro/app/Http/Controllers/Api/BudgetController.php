@@ -47,7 +47,6 @@ class BudgetController extends Controller
             return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
-        //$states = $this->states;
         $clients = Client::getAllClients();
         $mproducts = MProduct::getAllMProducts();
         $categories = Category::getAllCategories("produto");
@@ -112,12 +111,6 @@ class BudgetController extends Controller
             return response()->json(['error' => 'Este orçamento não pode ser editado!']);
         }
 
-//        $states = $this->states;
-//        $aluminums = Aluminum::getAllAluminumsOrAllModels(1);
-//        $glasses = Glass::getAllGlassesOrAllModels(1);
-//        $components = Component::getAllComponentsOrAllModels(1);
-//        $categories = Category::getAllCategoriesByType('produto');
-//        $categories = Category::getAllCategories('produto');
         $mproducts = MProduct::getAllMProducts();
         $clients = Client::getAllClients();
 
@@ -126,11 +119,6 @@ class BudgetController extends Controller
             $products = $budgetedit->getBudgetProductsWithRelations();
 
             return response()->json([
-//                'states' => $states,
-//                'glasses' => $glasses,
-//                'aluminums' => $aluminums,
-//                'components' => $components,
-//                'categories' => $categories,
                 'mproducts' => $mproducts,
                 'products' => $products,
                 'budgetedit' => $budgetedit,
@@ -158,7 +146,7 @@ class BudgetController extends Controller
 
         if ($budgetcriado->status !== 'AGUARDANDO') {
             return response()->json(['error' => 'Este orçamento não pode ser editado!', 'res' => true], 202);
-//            return response()->json(['error' => ['error' => ['Este orçamento não pode ser editado!']]], 202);
+
 
         }
 
@@ -189,7 +177,6 @@ class BudgetController extends Controller
                 $product->createMaterialsOfMProductToProduct();
 
                 if ($product) {
-                    //$budgetcriado = Budget::with('products.mproduct','products.glasses','products.aluminums','products.components')->find($id);
                     $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
                     if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                         return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado], 200);
@@ -210,7 +197,7 @@ class BudgetController extends Controller
                 $product = $product->findProductById($request->produtoid);
                 $product->updateProduct($request->all());
                 $product->updateAluminunsWithProductMeasure();
-                //$budgetcriado = $this->budget->findBudgetById($id);
+
                 $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
 
                 if ($product && $budgetcriado->updateBudgetTotal())
@@ -218,7 +205,6 @@ class BudgetController extends Controller
 
                 break;
             case '4': //tab material
-//                return response()->json(['success' => $request->all(), 'id' => $id], 200);
                                 
                 $products = $budgetcriado->products;
                 foreach ($products as $product) {

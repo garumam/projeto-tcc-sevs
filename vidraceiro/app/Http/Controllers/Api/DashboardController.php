@@ -19,36 +19,11 @@ class DashboardController extends Controller
 
     public function sales()
     {
-        /*$sales[] = DB::table('sales')->whereMonth('data_venda', '=', '01')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '02')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '03')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '04')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '05')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '06')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '07')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '08')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '09')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '10')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '11')->count();
-        $sales[] = DB::table('sales')->whereMonth('data_venda', '=', '12')->count();*/
-
         $sales = DB::table('sales')->get();
         $salesArray = $this->getMonth($sales);
-//        $salesArray = [];
-//        for ($i = 1; $i <= 12; $i++) {
-//            $salesArray[] = $sales->filter(function ($value) use ($i) {
-//                $mes = substr($value->data_venda, 5, 2);
-//                if ($i < 10)
-//                    return $mes == '0' . $i;
-//
-//                return $mes == $i;
-//            })->count();
-//        }
-
 
         return response()->json($salesArray);
-        //no android é obrigado a ter o nome no array para funcionar
-//        return response()->json(["dashboard"=>$salesArray]);
+
     }
 
     function getMonth($objeto)
@@ -82,11 +57,6 @@ class DashboardController extends Controller
 
     public function orders()
     {
-        /*$ordermconcluida= Order::all()->where('situacao', '=', 'CONCLUIDA');
-        $ordermconcluida = $this->getMonth($ordermconcluida);
-
-        $ordermcancelada = Order::all()->where('situacao', '=', 'CANCELADA');
-        $ordermcancelada = $this->getMonth($ordermcancelada);*/
 
         $ordens = Order::where('situacao','CONCLUIDA')->orWhere('situacao','CANCELADA')->get();
         $ordermconcluida = $ordermcancelada = null;

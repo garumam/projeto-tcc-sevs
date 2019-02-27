@@ -59,11 +59,8 @@ class OrderController extends Controller
 
             $order->updateBudgetsStatusByOrderSituation($budgets);
 
-//            if ($order->situacao === 'CONCLUIDA') {
-//                return redirect('orders')->with('success', 'Ordem de serviço criada com sucesso');
-//            } else {
             return response()->json(['success' => 'Ordem de serviço criada com sucesso', 'id' => $order->id], 200);
-//            }
+
         }
 
 
@@ -160,11 +157,7 @@ class OrderController extends Controller
             if ($order) {
                 $order->updateBudgetsStatusByOrderSituation($budgets);
 
-//                if ($order->situacao === 'CONCLUIDA' || $order->situacao === 'CANCELADA' || $order->situacao === 'ANDAMENTO') {
-//                    return response()->json(['success' => 'Ordem atualizada com sucesso']);
-//                } else {
                 return response()->json(['success' => 'Ordem atualizada com sucesso', 'id' => $order->id], 200);
-//                }
 
             }
         }

@@ -57,11 +57,6 @@ class UserController extends Controller
             $image = $request->file('image');
             $destino = 'img/users/';
             $image->move($destino, $image->getClientOriginalName());
-//            $user->name = $request->get('name');
-//            $user->email = $request->get('email');
-//            $user->password = $request->get('password');
-//            $user->image = $destino . $image->getClientOriginalName();
-//            $user->save();
             $resq = $request->except('image');
             $resq['image'] = $destino . $image->getClientOriginalName();
             $user = $user->createUser($resq);

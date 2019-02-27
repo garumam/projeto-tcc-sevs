@@ -20,7 +20,7 @@ class PdfController extends Controller
     {
         $this->middleware('auth');
     }
-    // O index EXIBE A VIEW DE CADA SUBMENU
+    // O index EXIBE OS FILTROS do relatório DE CADA SUBMENU
     public function index($tipo)
     {
         switch($tipo){
@@ -151,7 +151,6 @@ class PdfController extends Controller
             case 'order':
                 $order = new Order();
                 $order = $order->findOrderById($id);
-                //$order = Order::with('budgets.products')->find($id);
                 $pdf = PDF::loadView('dashboard.pdf.order', compact('order','company'))->setPaper('A3','portrait');
                 $nomearquivo = 'ordem_servico.pdf';
 
