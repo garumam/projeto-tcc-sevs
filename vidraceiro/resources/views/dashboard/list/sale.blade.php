@@ -8,12 +8,6 @@
             <div class="nav nav-tabs" id="nav-tab">
             @for($i = 0; $i < count($titulotabs); $i++)
                 @if($i == 0)
-                    <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="{{lcfirst($titulotabs[$i])}}"
-                               data-toggle="tab"
-                               href="#nav-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="true">{{$titulotabs[$i]}}</a> -->
                         <a class="tabs-sale nav-item nav-link current"
                            data-id="{{lcfirst($titulotabs[$i])}}"
                            data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
@@ -21,12 +15,6 @@
                         <a class="tabs-sale nav-item nav-link"
                            data-id="{{lcfirst($titulotabs[$i])}}"
                            data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
-                    <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="{{lcfirst($titulotabs[$i])}}"
-                               data-toggle="tab"
-                               href="#nav-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a> -->
                     @endif
                 @endfor
                 <div class="topo-tab">
@@ -64,8 +52,6 @@
 
         <!--Inicio Conteudo de cada tab -->
 
-        <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
             <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
                 <div class="formulario p-0">
                     <div class="form-row formulario pb-0 justify-content-between">
@@ -88,14 +74,10 @@
 
                     <div class="table-responsive text-dark p-2" id="vendas">
                         @include('dashboard.list.tables.table-sale')
-                        {{--<p class="info-importante mt-1">Não é possível deletar ou editar venda relacionada a ordem
-                            serviço em andando ou aberta!</p>
-                        <p class="info-importante mt-1">Não é possível deletar ou editar venda que tenha recebido pagamento, apenas será liberado para exclusão após a ordem de serviço ser concluída e não haja pagamento pendente!</p>--}}
                     </div>
                 </div>
             </div>
-        <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
+        
             <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">
                 <div class="formulario p-0">
                     <div class="form-row formulario pb-0 justify-content-between">
@@ -124,7 +106,6 @@
             </div>
 
             <!--Fim Conteudo de cada tab -->
-
 
         </div>
     </div>

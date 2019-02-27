@@ -237,22 +237,6 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Ordens de serviço excluídas
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse tabelasrestaurar" data-tipo="ordens" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-
-
-
-                        </div>
-                    </div>
-                </div>--}}
 
             </div>
 

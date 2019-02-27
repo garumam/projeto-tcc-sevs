@@ -18,19 +18,6 @@ class CompanyController extends Controller
         $this->company = $company;
     }
 
-    public function index()
-    {
-        if(!Auth::user()->can('empresa_atualizar', Company::class)){
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-        }
-
-        $company = $this->company->getCompany();
-
-        $states = Uf::getUfs();
-        return view('dashboard.create.company', compact('company', 'states'))->with('title', 'Dados da Empresa');
-    }
-
-
     public function store(Request $request)
     {
         if(!Auth::user()->can('empresa_atualizar', Company::class)){

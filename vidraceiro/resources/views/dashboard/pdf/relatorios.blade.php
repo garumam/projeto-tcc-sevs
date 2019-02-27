@@ -66,15 +66,9 @@
             float: right;
         }
 
-
-
     </style>
 </head>
 <body>
-
-
-
-
 @switch($tipo)
     @case('budgets')
     <h3>Relatório de orçamentos</h3>
@@ -85,7 +79,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$budget->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$budget->nome .' |'}}
                         <b>Status:</b> {{$budget->status .' |'}}
@@ -100,11 +93,9 @@
         <p>Nenhum Orçamento encontrado com as características passadas.</p>
     @endforelse
 
-
     @break
 
     @case('orders')
-
 
     <h3>Relatório de ordens de serviço</h3>
     <h4>Quantidade encontrada: {{count($orders->toArray())}}</h4>
@@ -114,7 +105,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$order->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$order->nome .' |'}}
                         <b>Situação:</b> {{$order->situacao .' |'}}
@@ -129,7 +119,6 @@
     @empty
         <p>Nenhuma Ordem de serviço encontrada com as características passadas.</p>
     @endforelse
-
 
     @break
 
@@ -161,7 +150,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$glass->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$glass->glass->nome .' |'}}
                         <b>Tipo:</b> {{$glass->glass->tipo .' |'}}
@@ -183,14 +171,12 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$aluminum->id}}</td>
-
                     <td class="texto">
                         <b>Perfil:</b> {{$aluminum->aluminum->perfil .' |'}}
                         <b>Descrição:</b> {{$aluminum->aluminum->descricao .' |'}}
                         <b>Em estoque:</b> {{$aluminum->qtd}}
                     </td>
                 </tr>
-
             </table>
         </div>
     @empty
@@ -205,7 +191,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$component->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$component->component->nome .' |'}}
                         <b>Em estoque:</b> {{$component->qtd}}
@@ -256,7 +241,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$financial->id}}</td>
-
                     <td class="texto">
                         <b>Tipo:</b> {{$financial->tipo .' |'}}
                         <b>Descrição:</b> {{$financial->descricao??'Sem descrição!' .' |'}}
@@ -269,7 +253,6 @@
                         @endif
                     </td>
                 </tr>
-
             </table>
         </div>
     @empty
@@ -280,7 +263,6 @@
     @break
 
     @case('clients')
-
 
     <h3>Relatório de clientes</h3>
     <h4>Quantidade encontrada: {{count($clients->toArray())}}</h4>
@@ -317,7 +299,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$client->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$client->nome .' |'}}
                         <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask).' |'}}
@@ -334,11 +315,9 @@
         <p>Nenhum cliente encontrado com as características passadas.</p>
     @endforelse
 
-
     @break
 
     @case('providers')
-
 
     <h3>Relatório de fornecedores</h3>
     <h4>Quantidade encontrada: {{count($providers->toArray())}}</h4>
@@ -365,7 +344,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$provider->id}}</td>
-
                     <td class="texto">
                         <b>Nome:</b> {{$provider->nome .' |'}}
                         <b>Cnpj: </b>{{App\Http\Controllers\PdfController::mask($documento,$mask).' |'}}
@@ -383,11 +361,9 @@
         <p>Nenhum fornecedor encontrado com as características passadas.</p>
     @endforelse
 
-
     @break
 
     @case('sales')
-
 
     <h3>Relatório de vendas</h3>
     <h4>Quantidade encontrada: {{count($sales->toArray())}}</h4>
@@ -402,7 +378,6 @@
             <table class="tabela-relatorio">
                 <tr>
                     <td class="indice">{{$sale->id}}</td>
-
                     <td class="texto">
                         <b>Orçamento utilizado:</b> {{$budget->nome .' |'}}
                         <b>Cliente: </b>{{$client->nome??'Anônimo'}}{{' |'}}
@@ -411,13 +386,11 @@
                         <b>Data da venda:</b> {{date_format(date_create($sale->data_venda), 'd/m/Y')}}
                     </td>
                 </tr>
-
             </table>
         </div>
     @empty
         <p>Nenhuma venda encontrada com as características passadas.</p>
     @endforelse
-
 
     @break
 

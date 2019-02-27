@@ -4,8 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Cliente - Vidraceiro</title>
 
-    <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
-    {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
         p,b, h3 {
             font-weight: 700;
@@ -151,14 +149,11 @@
 
 @if(!empty($order))
     <h3>Ordem de serviço associada</h3>
-
     <b>Nome:  {{$order->nome or 'Não cadastrado!'}}{{' | '}}</b>
     <b>Data inicial: {{date_format(date_create($order->data_inicial), 'd/m/Y')}}{{' | '}}</b>
     <b>Data final:  {{date_format(date_create($order->data_final), 'd/m/Y')}}{{' | '}}</b>
     <b>Situação:  {{$order->situacao or ''}}</b>
 
 @endif
-
-
 </body>
 </html>

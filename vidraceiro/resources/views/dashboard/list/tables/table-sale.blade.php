@@ -29,40 +29,9 @@
             <td><span class="badge {{ !empty($user)? 'badge-primary' : 'badge-dark' }}">{{ !empty($user)? $user->name : 'Excluído' }}</span></td>
 
             <td>
-
-                {{--@php
-                    $ordem = $sale->budget->order()->first();
-                    $parcelaPaga = $sale->installments()->where('status_parcela','PAGO')->first();
-                    $parcelaAberta = $sale->installments()->where('status_parcela','ABERTO')->first();
-                    $editar = $deletar = true;
-                @endphp
-                @if(!empty($ordem))
-                    @if($ordem->situacao === 'ANDAMENTO' || $ordem->situacao === 'ABERTA')
-                        @php $editar = $deletar = false; @endphp
-                    @endif
-                @endif
-
-                @if($sale->budget->status === 'FINALIZADO')
-                    @php $editar = false; @endphp
-                @endif
-
-                @if(!empty($parcelaAberta) && !empty($parcelaPaga))
-                    @php $editar = false; $deletar = false; @endphp
-                @endif--}}
-
                 <a class="btn-link" href="{{ route('sales.show',['id'=> $sale->id]) }}">
                     <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                 </a>
-                {{--@if($editar)--}}
-                    {{--<a class="btn-link" href="{{ route('sales.edit',['id'=> $sale->id]) }}">
-                        <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
-                    </a>--}}
-                {{--@endif
-                @if($deletar)--}}
-                    {{--<a class="btn-link" onclick="deletar(event,this.id,'sales')" id="{{ $sale->id }}">
-                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i></button>
-                    </a>--}}
-                {{--@endif--}}
             </td>
         </tr>
     @endforeach

@@ -4,8 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Cliente - Vidraceiro</title>
 
-    <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
-    {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
         p,b, h3 {
             font-weight: 700;

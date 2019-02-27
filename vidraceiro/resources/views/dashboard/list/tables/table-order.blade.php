@@ -22,15 +22,11 @@
             <td>{{date_format(date_create($order->data_final), 'd/m/Y')}}</td>
             <td style="color: #28a745;">R${{$order->total}}</td>
             <td>
-
                 @if(Request::is('restore'))
-
                     <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'ordens','id'=> $order->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-
                 @else
-
                     <a class="btn-link" href="{{ route('orders.show',['id'=> $order->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                     </a>
@@ -53,9 +49,7 @@
                             <button class="btn btn-dark mb-1 card-shadow-1dp" title="Cancelar"><i class="fas fa-calendar-times"></i></button>
                         </a>
                     @endif
-
                 @endif
-
             </td>
         </tr>
     @endforeach

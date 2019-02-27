@@ -4,8 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Orçamento - Vidraceiro</title>
 
-    <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
-    {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
         p, h3, span {
             font-weight: 700;
@@ -23,7 +21,6 @@
         }
 
         .borda-assinatura {
-            /*margin-top: 5rem;*/
             width: 45.7%;
             height: 20px;
             display: inline-block;

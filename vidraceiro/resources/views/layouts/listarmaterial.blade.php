@@ -10,12 +10,10 @@
     </div>
 </div>
 
-
 <div class="form-row mt-3 align-items-end">
 
     <div class="form-group col-md-4">
         <label for="select-vidro" id="label_categoria">Vidros</label>
-
         <select id="select-vidro" class="form-control form-control-chosen" name="vidro_id" data-placeholder="Selecione um vidro" style="display: none;">
             <option></option>
             @foreach($glasses as $glass)

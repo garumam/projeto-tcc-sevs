@@ -184,13 +184,24 @@ Route::prefix('providers')->group(function () {
 
 //rotas da empresa
 Route::prefix('companies')->group(function () {
-    Route::get('/', 'CompanyController@index')->name('companies.index');
+    // Route::get('/', 'CompanyController@index')->name('companies.index');
     Route::get('/create', 'CompanyController@create')->name('companies.create');
     Route::post('/', 'CompanyController@store')->name('companies.store');
     Route::get('/{user}', 'CompanyController@show')->name('companies.show');
     Route::get('/{id}/edit', 'CompanyController@edit')->name('companies.edit');
     Route::patch('/{id}', 'CompanyController@update')->name('companies.update');
     Route::delete('/{id}', 'CompanyController@destroy')->name('companies.destroy');
+});
+
+//rotas da configuracao
+Route::prefix('configuration')->group(function () {
+    Route::get('/', 'ConfigurationController@index')->name('configuration.index');
+    Route::get('/create', 'CompanyController@create')->name('configuration.create');
+    Route::post('/', 'CompanyController@store')->name('configuration.store');
+    Route::get('/{user}', 'CompanyController@show')->name('configuration.show');
+    Route::get('/{id}/edit', 'CompanyController@edit')->name('configuration.edit');
+    Route::patch('/{id}', 'CompanyController@update')->name('configuration.update');
+    Route::delete('/{id}', 'CompanyController@destroy')->name('configuration.destroy');
 });
 
 //rotas da financeiro

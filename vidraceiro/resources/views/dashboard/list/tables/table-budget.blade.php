@@ -23,33 +23,13 @@
             @php $user = $budget->user()->first(); @endphp
             <td><span class="badge {{ !empty($user)? 'badge-primary' : 'badge-dark' }}">{{ !empty($user)? $user->name : 'Excluído' }}</span></td>
             <td>
-                {{--@php
-                    $ordem = $budget->order()->first();
-                    $sale = $budget->sale()->first();
-                    $parcela = $sale === null? $sale : $sale->installments()->where('status_parcela','ABERTO')->first();
-                    $editar = $deletar = true;
-                @endphp
-                @if(!empty($ordem))
-                    @if($ordem->situacao === 'ANDAMENTO' || $ordem->situacao === 'ABERTA')
-                        @php $editar = $deletar = false; @endphp
-                    @endif
-                @endif
-
-                @if(!empty($parcela))
-                    @php $editar = $deletar = false; @endphp
-                @endif
-                @if($budget->status !== 'AGUARDANDO')
-                    @php $editar = false; @endphp
-                @endif--}}
-
+                
                 @if(Request::is('restore'))
 
                     <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'orcamentos','id'=> $budget->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-
                 @else
-
                     <a class="btn-link" href="{{ route('budgets.show',['id'=> $budget->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                     </a>
@@ -70,8 +50,6 @@
                     </a>
 
                 @endif
-
-
             </td>
         </tr>
     @endforeach

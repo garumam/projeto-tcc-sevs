@@ -4,8 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ordem de serviço</title>
 
-    <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
-    {{--<link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">--}}
     <style>
         p, b, h3, h4 {
             font-weight: 700;
@@ -113,7 +111,6 @@
     @php
         $sale = $budget->sale()->first();
         $reservasNoEstoque = $sale->storages()->get();
-        //$reservasNoEstoque->shift()->pivot->qtd_reservada
     @endphp
     <h3>Orçamento - {{$budget->nome or 'não cadastrado!'}}</h3>
     <h3>Materiais necessários por produto</h3>

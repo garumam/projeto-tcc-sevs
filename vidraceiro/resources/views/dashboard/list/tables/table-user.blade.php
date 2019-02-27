@@ -14,15 +14,11 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>
-
                 @if(Request::is('restore'))
-
                     <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'usuarios','id'=> $user->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-
                 @else
-
                     <a class="btn-link" href="{{ route('users.edit',['id' => $user->id]) }}">
                         <button class="btn btn-warning mb-1 card-shadow-1dp pl-2 pr-2" title="Editar"><i class="fas fa-edit pl-1"></i></button>
                     </a>

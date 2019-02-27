@@ -6,7 +6,6 @@
         @csrf
         <div class="text-center mb-4">
             <img class="" src="img/vidraceiro-solid.svg" alt="" width="72" height="72">
-            <!-- <h1 class="title">Vidraceiro</h1> -->
         </div>
         <h1 class="title">{{ __('Registrar') }}</h1>
         <div class="form-label-group">
@@ -45,7 +44,6 @@
         </div>
 
         <button class="btn btn-md btn-primary btn-block btn-custom" type="submit">{{ __('Registrar') }}</button>
-        <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p> -->
     </form>
 
 @endsection

@@ -9,12 +9,6 @@
                 <div class="nav nav-tabs" id="nav-tab">
                     @for($i = 0; $i < count($titulotabs); $i++)
                         @if($i == 0)
-                            <!-- <a class="nav-item nav-link active noborder-left" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="{{lcfirst($titulotabs[$i])}}"
-                               data-toggle="tab"
-                               href="#nav-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="true">{{$titulotabs[$i]}}</a> -->
                             <a class="tabs-material nav-item nav-link current"
                                 data-id="{{lcfirst($titulotabs[$i])}}"
                                 data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
@@ -22,12 +16,7 @@
                             <a class="tabs-material nav-item nav-link"
                                 data-id="{{lcfirst($titulotabs[$i])}}"
                                 data-tab="nav-{{$titulotabs[$i]}}-tab">{{$titulotabs[$i]}}</a>
-                            <!-- <a class="nav-item nav-link" id="nav-{{$titulotabs[$i]}}-tab"
-                               data-id="{{lcfirst($titulotabs[$i])}}"
-                               data-toggle="tab"
-                               href="#nav-{{$titulotabs[$i]}}" role="tab"
-                               aria-controls="nav-{{$titulotabs[$i]}}"
-                               aria-selected="false">{{$titulotabs[$i]}}</a> -->
+                
                         @endif
                     @endfor
                     <div class="topo-tab">
@@ -42,8 +31,6 @@
 
             <!--Inicio Conteudo de cada tab -->
             
-                <!-- <div class="tab-pane fade show active" id="nav-{{$titulotabs[0]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[0]}}-tab"> -->
                 <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
                 <div class="formulario px-0">
                     <div class="form-row">
@@ -101,8 +88,7 @@
                 </div>
                 </div>
 
-                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[1]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[1]}}-tab"> -->
+            
                 <div id="nav-{{$titulotabs[1]}}-tab" class="tab-content">
                 <div class="formulario px-0">
                     <div class="form-row">
@@ -162,8 +148,7 @@
                 </div>
                 </div>
 
-                <!-- <div class="tab-pane fade" id="nav-{{$titulotabs[2]}}" role="tabpanel"
-                     aria-labelledby="nav-{{$titulotabs[2]}}-tab"> -->
+            
                 <div id="nav-{{$titulotabs[2]}}-tab" class="tab-content">
                 <div class="formulario px-0">
                     <div class="form-row">

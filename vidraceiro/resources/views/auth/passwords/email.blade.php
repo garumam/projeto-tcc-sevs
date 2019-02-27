@@ -7,7 +7,6 @@
         @csrf
         <div class="text-center mb-3">
             <img class="" src="{{ asset('img/vidraceiro-solid.svg') }}" alt="" width="72" height="72">
-            <!-- <h1 class="title">Vidraceiro</h1> -->
         </div>
         <h1 class="title">{{ __('Resetar Senha') }}</h1>
         @if (session('status'))
@@ -25,6 +24,5 @@
         </div>
         <button class="btn btn-md btn-primary btn-block btn-custom"
                 type="submit"> {{ __('Resetar Senha') }}</button>
-        <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p> -->
     </form>
 @endsection

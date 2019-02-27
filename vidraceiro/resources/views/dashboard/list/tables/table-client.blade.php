@@ -43,35 +43,12 @@
                 <span class="badge {{$client->status === 'EM DIA'? 'badge-success' : 'badge-danger'}}">{{$client->status}}</span>
             </td>
             <td>
-                {{--@php
-                    $editar = $deletar = true;
-                    $ordem = null;
-                    foreach($client->budgets as $budget){
-                        $ordem = $budget->order()->first();
-                        if(!empty($ordem)){
-
-                            if($ordem->situacao === 'ANDAMENTO'){
-                                $deletar = false;
-                                break;
-                            }
-                        }
-                        $sale = $budget->sale()->first();
-                        $parcela = $sale === null? $sale : $sale->installments()->where('status_parcela','ABERTO')->first();
-                        if(!empty($parcela)){
-                            $deletar = false;
-                            break;
-                        }
-                    }
-                @endphp--}}
 
                 @if(Request::is('restore'))
-
                     <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'clientes','id'=> $client->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-
                 @else
-
                     <a class="btn-link" href="{{ route('clients.show',['id'=> $client->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i class="fas fa-eye"></i></button>
                     </a>
@@ -87,9 +64,7 @@
                                         class="fas fa-trash-alt"></i></button>
                         </a>
                     @endif
-
                 @endif
-
 
             </td>
         </tr>

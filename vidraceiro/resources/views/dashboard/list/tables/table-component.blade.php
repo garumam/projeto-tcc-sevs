@@ -29,13 +29,10 @@
             <td>
 
                 @if(Request::is('restore'))
-
                     <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'componentes','id'=> $component->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
                     </a>
-
                 @else
-
                     <a class="btn-link"
                        href="{{ route('materials.show',['type'=>'component','id'=> $component->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Ver"><i
@@ -51,9 +48,7 @@
                         <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar">
                             <i class="fas fa-trash-alt"></i></button>
                     </a>
-
                 @endif
-
             </td>
         </tr>
     @endforeach
