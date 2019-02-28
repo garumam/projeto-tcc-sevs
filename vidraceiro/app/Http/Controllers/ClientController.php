@@ -26,7 +26,7 @@ class ClientController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $clients = $this->client->getWithSearchAndPagination($request->get('search'),$request->get('paginate'));
+        $clients = $this->client->getWithSearchAndPagination($request->get('search'),$request->get('paginate'),false,Auth::user()->can('gerenciamento', Client::class));
 
         if ($request->ajax()) {
             return view('dashboard.list.tables.table-client', compact('clients'));

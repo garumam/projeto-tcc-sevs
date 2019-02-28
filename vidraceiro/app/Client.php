@@ -28,15 +28,16 @@ class Client extends Model
         return $this->hasMany(Budget::class,'cliente_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $restore = false, $havePermission = true){
 
         $paginate = $paginate ?? 10;
 
-        $queryBuilder = self::where(function ($q) use ($search){
+        $queryBuilder = self::where(function ($q) use ($search,$havePermission){
             $q->where('nome', 'like', '%' . $search . '%')
                 ->orWhere('cpf', 'like', '%' . $search . '%')
-                ->orWhere('cnpj', 'like', '%' . $search . '%')
-                ->orWhere('status', 'like', '%' . $search . '%');
+                ->orWhere('cnpj', 'like', '%' . $search . '%');
+                if($havePermission)
+                    $q->orWhere('status', 'like', '%' . $search . '%');
         });
         if($restore){
             $queryBuilder = $queryBuilder->onlyTrashed();
