@@ -50,6 +50,8 @@ class Installment extends Model
 
         $installments = self::where('status_parcela','ABERTO')->get();
 
+        $configuration = Configuration::all()->first();
+
         foreach ($installments as $installment){
             if(strtotime($installment->data_vencimento) < strtotime(date('Y-m-d',time()))){
 
@@ -58,8 +60,9 @@ class Installment extends Model
 
                 $dateInterval = $data_inicio->diff($data_fim);
 
-                // APLICANDO 5% DE REAJUSTE POR DIA SEMPRE EM CIMA DO VALOR DA PARCELA BASE
-                $valorMulta = $dateInterval->days * $installment->valor_parcela * 0.05;
+                $porcentagem_reajuste = $configuration->porcent_reajuste / 100;
+                // APLICANDO % DE REAJUSTE CONFIGURADA NO SISTEMA POR DIA SEMPRE EM CIMA DO VALOR DA PARCELA BASE
+                $valorMulta = $dateInterval->days * $installment->valor_parcela * $porcentagem_reajuste;
 
                 $valorMulta = number_format($valorMulta,2,'.','');
 

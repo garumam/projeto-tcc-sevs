@@ -68,9 +68,10 @@ class Sale extends Model
     }
 
     public function createSaleInstallments($request, $user_id){
+        $configuration = Configuration::all()->first();
 
         for ($i = 1; $i <= $request->qtd_parcelas; $i++) {
-            $dias = $i * 30;
+            $dias = $i * $configuration->dias_parcelas;
             $datavencimento = date('Y-m-d', strtotime("+$dias days", strtotime($request->data_venda)));
             Installment::createInstallment([
                 'valor_parcela' => $request->valor_parcela,

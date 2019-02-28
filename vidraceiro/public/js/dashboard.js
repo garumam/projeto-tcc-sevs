@@ -484,6 +484,10 @@ $(document).ready(function () {
         $('#bt-company-invisible').click();
     });
 
+    $('#bt-configuration-visible').click(function () {
+        $('#bt-configuration-invisible').click();
+    });
+
     $('#bt-pdf-visible').click(function () {
         $('#bt-pdf-invisible').click();
     });

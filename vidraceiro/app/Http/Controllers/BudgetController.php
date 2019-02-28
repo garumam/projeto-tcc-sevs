@@ -15,6 +15,7 @@ use App\Client;
 use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Configuration;
 
 class BudgetController extends Controller
 {
@@ -80,7 +81,9 @@ class BudgetController extends Controller
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
 
-        $margemlucro = $request->margem_lucro ?? 100;
+        $configuration = Configuration::all()->first();
+
+        $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
 
         $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
 
@@ -171,8 +174,9 @@ class BudgetController extends Controller
                 if ($validado->fails()) {
                     return redirect()->back()->withErrors($validado)->with('tab', $tab);
                 }
+                $configuration = Configuration::all()->first();
 
-                $margemlucro = $request->margem_lucro ?? 100;
+                $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())

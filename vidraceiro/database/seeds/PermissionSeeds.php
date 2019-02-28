@@ -662,6 +662,7 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
+        // permissão de acesso a informações gerenciais
         if (!Permission::where('nome', '=', 'gerenciamento')->count()) {
             Permission::create([
                 'nome' => 'gerenciamento',
@@ -672,6 +673,20 @@ class PermissionSeeds extends Seeder
             $permission->update([
                 'nome' => 'gerenciamento',
                 'descricao' => 'Acesso a informações gerenciais'
+            ]);
+        }
+
+        // permissão de acesso as configurações do sistema
+        if (!Permission::where('nome', '=', 'configuracao')->count()) {
+            Permission::create([
+                'nome' => 'configuracao',
+                'descricao' => 'Acesso as configurações do sistema'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'configuracao')->first();
+            $permission->update([
+                'nome' => 'configuracao',
+                'descricao' => 'Acesso as configurações do sistema'
             ]);
         }
 

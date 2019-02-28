@@ -2,6 +2,7 @@
 @section('content')
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        @can('empresa_atualizar')
         <div class="card-material custom-card">
 
             <div class="topo">
@@ -26,6 +27,11 @@
                         @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
                             </div>
                         @endif
                         @foreach($errors->all() as $error)
@@ -94,5 +100,48 @@
 
             </form>
         </div>
+        @endcan
+        @can('configuracao')
+        <div class="card-material custom-card">
+
+            <div class="topo">
+                <h4 class="titulo">{{$title2}} </h4>
+                
+                <button id="bt-configuration-visible" class="btn btn-primary btn-custom"
+                        type="button">Atualizar</button>
+            </div>
+
+            <form class="formulario" method="POST" role="form"
+                  action="{{route('configuration.update',['id'=>$configuration->id])}}">
+                
+                <input type="hidden" name="_method" value="PATCH">
+                @csrf
+                <div class="form-row">
+                    
+                    <div class="form-group col-md-4">
+                        <label for="reajuste_parcela" class="obrigatorio">Porcentagem de reajuste das parcelas</label>
+                        <input type="number" step=".01" id="reajuste_parcela" class="form-control" name="porcent_reajuste" value="{{ $configuration->porcent_reajuste or old('porcent_reajuste')}}"
+                               placeholder="5" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="interval_dias" class="obrigatorio">Intervalo de dias entre parcelas</label>
+                        <input type="number" id="interval_dias" class="form-control" name="dias_parcelas"
+                               value="{{ $configuration->dias_parcelas or old('dias_parcelas')}}" placeholder="30" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="porcent_marg_lucro" class="obrigatorio">Margem de lucro padrão</label>
+                        <input type="text" id="porcent_marg_lucro" class="form-control" name="porcent_m_lucro"
+                               value="{{ $configuration->porcent_m_lucro or old('porcent_m_lucro')}}" placeholder="100" required>
+                    </div>
+
+                </div>
+
+                <button id="bt-configuration-invisible" class="d-none" type="submit"></button>
+
+            </form>
+        </div>
+        @endcan
     </div>
 @endsection
