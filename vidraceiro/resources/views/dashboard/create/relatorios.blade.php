@@ -180,7 +180,7 @@
                         <div class="form-group col-md-12">
                             <h5 class="titulo">Filtros (opcionais)</h5>
                         </div>
-
+                        @can('gerenciamento')
                         <div class="form-group col-md-4">
                             <label for="status">Situação do cliente</label>
                             <select class="custom-select" id="status" name="status" required>
@@ -189,7 +189,7 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        @endcan
                         <div class="form-group col-md-4">
                             <label for="data-inicial">Cadastrados desde:</label>
                             <input type="date" class="form-control" id="data-inicial" name="data_inicial">

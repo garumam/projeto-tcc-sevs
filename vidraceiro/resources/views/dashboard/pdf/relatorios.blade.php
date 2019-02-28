@@ -302,7 +302,7 @@
                     <td class="texto">
                         <b>Nome:</b> {{$client->nome .' |'}}
                         <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask).' |'}}
-                        <b>Situação:</b> {{$client->status .' |'}}
+                        @can('gerenciamento')<b>Situação:</b> {{$client->status .' |'}}@endcan
                         <b>Telefone:</b> {{$telefone??'Não possui.'}}
                         <b>Celular:</b> {{$celular??'Não possui.'}}
                         <b>Cadastrado em:</b> {{date_format(date_create($client->created_at), 'd/m/Y')}}

@@ -662,5 +662,18 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
+        if (!Permission::where('nome', '=', 'gerenciamento')->count()) {
+            Permission::create([
+                'nome' => 'gerenciamento',
+                'descricao' => 'Acesso a informações gerenciais'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'gerenciamento')->first();
+            $permission->update([
+                'nome' => 'gerenciamento',
+                'descricao' => 'Acesso a informações gerenciais'
+            ]);
+        }
+
     }
 }

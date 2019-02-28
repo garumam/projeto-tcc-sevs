@@ -5,7 +5,7 @@
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Nome</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Cpf | Cnpj</th>
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Telefone</th>
-        <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Situação</th>
+        @can('gerenciamento')<th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Situação</th>@endcan
         <th class="noborder" scope="col" style="padding: 12px 30px 12px 16px;">Ação</th>
     </tr>
     </thead>
@@ -39,9 +39,11 @@
 
             @endphp
             <td class="telefone">{{$telefone}}</td>
+            @can('gerenciamento')
             <td>
                 <span class="badge {{$client->status === 'EM DIA'? 'badge-success' : 'badge-danger'}}">{{$client->status}}</span>
             </td>
+            @endcan
             <td>
 
                 @if(Request::is('restore'))

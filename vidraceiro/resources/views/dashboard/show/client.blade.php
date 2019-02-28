@@ -40,8 +40,10 @@
 
                             @endphp
                             <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask)}}
+                            @can('gerenciamento')
                             <hr>
                             <b>Situação: </b> {{$client->status}}
+                            @endcan
                         </div>
                     </div>
                 </div>

@@ -117,7 +117,7 @@ class Client extends Model
         return $budgetUpdated;
     }
 
-    public static function filterClients($request){
+    public static function filterClients($request, $dontHavePermission){
 
         $status = $request->status;
         $data_inicial = $request->data_inicial;
@@ -135,7 +135,7 @@ class Client extends Model
             });
         }
 
-        if($status === 'TODOS'){
+        if($status === 'TODOS' || $dontHavePermission){
             $clients = $clients->get();
         }else{
             $clients = $clients->where('status',$status)->get();

@@ -252,7 +252,7 @@ class PdfController extends Controller
                     return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
                 }
 
-                $clients = Client::filterClients($request);
+                $clients = Client::filterClients($request,!Auth::user()->can('gerenciamento', Client::class));
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('clients','tipo'));
                 $nomearquivo = 'cliente-relatório.pdf';

@@ -9,6 +9,7 @@
             </div>
         </div>
     @endif
+    @can('gerenciamento') 
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
@@ -150,12 +151,13 @@
             </div>
         </div>
     </div>
-
+    @endcan
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
         <div class="card-material card-shadow-dashboard">
 
             <div id="accordion">
+                @can('os_listar') 
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0 d-flex justify-content-between">
@@ -197,6 +199,8 @@
                         </div>
                     </div>
                 </div>
+                @endcan
+                @can('orcamento_listar')
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingTwo">
                         <h5 class="mb-0 d-flex justify-content-between">
@@ -237,7 +241,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endcan
             </div>
 
         </div>
