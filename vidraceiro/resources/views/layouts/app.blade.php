@@ -118,12 +118,7 @@
                                 Fornecedores
                             </a>
                         </li>
-                        <li {{ Request::is( 'configuration') ? 'class=active' : '' }}>
-                            <a href="{{ route('configuration.index') }}">
-                                <i class="pe-7s-rocket"></i>
-                                Configurações
-                            </a>
-                        </li>
+                       
                         <li class="opensubmenu">
                             <a>
                                 <i class="pe-7s-news-paper"></i>
@@ -171,6 +166,12 @@
                             <a href="{{ route('restore.index') }}">
                                 <i class="pe-7s-rocket"></i>
                                 Restaurar
+                            </a>
+                        </li>
+                        <li {{ Request::is( 'configuration') ? 'class=active' : '' }}>
+                            <a href="{{ route('configuration.index') }}">
+                                <i class="pe-7s-rocket"></i>
+                                Configurações
                             </a>
                         </li>
                         <li>
