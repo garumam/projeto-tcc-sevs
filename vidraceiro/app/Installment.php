@@ -86,18 +86,6 @@ class Installment extends Model
 
 
                     }
-
-                    // if($valorentrou){
-
-                    //     $query->where(function ($q) use ($valor_inicial,$valor_final){
-                    //         if($valor_final !== null)
-                    //             $q->where('valor_parcela','<=',$valor_final);
-
-                    //         if($valor_inicial !== null)
-                    //             $q->where('valor_parcela','>=',$valor_inicial);
-                    //     });
-                    // }
-
                     
                 });
             }

@@ -38,13 +38,15 @@ class DashboardController extends Controller
     {
         $totalusers = User::all()->count();
         $totalsales = Sale::all()->count();
-        $financials = Financial::all('valor', 'tipo');
+        $financials = Financial::all('valor', 'tipo', 'status');
         $totalreceita = $totaldespesa = null;
         foreach ($financials as $total) {
-            if ($total->tipo == 'RECEITA') {
-                $totalreceita += $total->valor;
-            } else {
-                $totaldespesa += $total->valor;
+            if($total->status == 'CONFIRMADO'){
+                if ($total->tipo == 'RECEITA') {
+                    $totalreceita += $total->valor;
+                } else {
+                    $totaldespesa += $total->valor;
+                }
             }
         }
         $totalbudgets = Budget::all()->count();
