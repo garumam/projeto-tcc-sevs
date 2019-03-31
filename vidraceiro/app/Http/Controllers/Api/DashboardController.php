@@ -48,7 +48,7 @@ class DashboardController extends Controller
 
         $receitaperiodos = $despesasperiodos = null;
 
-        $financials = Financial::all();
+        $financials = Financial::getAllByStatus('CONFIRMADO');
         $this->getPeriods($financials,$receitaperiodos,$despesasperiodos,'financial');
 
         return response()->json(array('receitas' => $receitaperiodos, 'despesas' => $despesasperiodos));
@@ -124,12 +124,12 @@ class DashboardController extends Controller
                 if($modelName === 'order'){
                     $data = date_format(date_create($object->updated_at), 'Y-m-d');
                 }elseif($modelName === 'financial'){
-                    $payment = $object->payment;
-                    if($payment)
-                        $data = $payment->data_pagamento;
-                    else
-                        $data = $object->created_at;
-
+                    // $payment = $object->payment;
+                    // if($payment)
+                    //     $data = $payment->data_pagamento;
+                    // else
+                    //     $data = $object->created_at;
+                    $data = $object->data_vencimento;
                     $data = date_format(date_create($data), 'Y-m-d');
                 }elseif($modelName === 'budget'){
                     if($object->status === 'APROVADO'){
