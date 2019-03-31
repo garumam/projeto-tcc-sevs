@@ -71,15 +71,6 @@ class Financial extends Model
                         $c->whereDate('data_vencimento','<=',$data_final);
                         $c->whereDate('data_vencimento','>=',$data_inicial);
                         
-                        // $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                        //     $q->whereDate('data_pagamento','<=',$data_final);
-                        //     $q->whereDate('data_pagamento','>=',$data_inicial);
-                        // })
-                        // ->orWhere(function ($q) use ($data_inicial,$data_final){
-                        //     $q->whereNull('pagamento_id');
-                        //     $q->whereDate('data_vencimento','<=',$data_final);
-                        //     $q->whereDate('data_vencimento','>=',$data_inicial);
-                        // });
 
                     });
             })
@@ -176,23 +167,6 @@ class Financial extends Model
 
                         if($data_inicial !== null)
                             $c->whereDate('data_vencimento','>=',$data_inicial);
-
-                        // $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                        //     if($data_final !== null)
-                        //         $q->whereDate('data_pagamento','<=',$data_final);
-
-                        //     if($data_inicial !== null)
-                        //         $q->whereDate('data_pagamento','>=',$data_inicial);
-                        // })
-                        //     ->orWhere(function ($q) use ($data_inicial,$data_final){
-                        //         $q->whereNull('pagamento_id');
-
-                        //         if($data_final !== null)
-                        //             $q->whereDate('data_vencimento','<=',$data_final);
-
-                        //         if($data_inicial !== null)
-                        //             $q->whereDate('data_vencimento','>=',$data_inicial);
-                        //     });
 
                     });
 
