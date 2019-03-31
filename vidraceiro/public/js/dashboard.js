@@ -1047,7 +1047,7 @@ $(document).ready(function () {
     $('#usar_desconto').click(function (){
         let valorTotal = $('#total').val();
         let desconto =  $('#desconto').val();
-        if(valorTotal.length !== 0){
+        if(valorTotal.length !== 0 && desconto.length == 0){
             if($('#usar_desconto').is(":checked")){
                  $('#desconto').val(valorTotal);
                  $('#total').val('');
