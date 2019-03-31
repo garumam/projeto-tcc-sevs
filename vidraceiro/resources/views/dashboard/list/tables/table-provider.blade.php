@@ -13,7 +13,7 @@
         <tr>
             <th scope="row">{{ $provider->id }}</th>
             <td>{{ $provider->nome }}</td>
-            <td>{{ $provider->email }}</td>
+            <td>{{ $provider->contact()->first()->email }}</td>
             <td>
                 <span class="badge {{$provider->situacao == "ativo" ? 'badge-success' : 'badge-secondary'}}">{{ ucfirst($provider->situacao) }}</span>
             </td>

@@ -1,6 +1,13 @@
-@if(!Request::is('restore')) @php $receitas = 0.00; $despesas = 0.00; foreach($financialsByPeriod as $financial){ if($financial->tipo
-=== 'RECEITA'){ $receitas += $financial->valor; }else{ $despesas += $financial->valor; } } $saldo = number_format(($receitas
-- $despesas),2,',','.'); $receitas = number_format(($receitas),2,',','.'); $despesas = number_format(($despesas),2,',','.');
+@if(!Request::is('restore')) 
+@php $receitas = 0.00; $despesas = 0.00; 
+foreach($financialsByPeriod as $financial){
+    if($financial->tipo === 'RECEITA'){
+        $receitas += $financial->valor; 
+    }else{
+        $despesas += $financial->valor;
+    } 
+} 
+$saldo = number_format(($receitas - $despesas),2,',','.'); $receitas = number_format(($receitas),2,',','.'); $despesas = number_format(($despesas),2,',','.');
 
 @endphp
 
@@ -38,18 +45,21 @@
             <td>{{ $financial->descricao??'' }}</td>
             <td style="{{$financial->tipo === 'RECEITA' ? 'color:#28a745;' : 'color:#dc3545;'}}">
                 R${{ $financial->valor }}</td>
-            @php $payment = $financial->payment()->first(); $user = $financial->user()->first(); 
-            @endphp @if(!empty($payment)) @php $sale
-            = $payment->sale()->first(); 
+            @php 
+            $payment = $financial->payment()->first(); 
+            $user = $financial->user()->first(); 
+            @endphp 
+            @if(!empty($payment)) 
+            @php 
+            $sale = $payment->sale()->first(); 
+            $payment = null;
             @endphp
-            <td>{{ date_format(date_create($payment->data_pagamento), 'd/m/Y') }}</td>
-            @php $payment = null; 
-            @endphp @else
-            <td>{{ date_format(date_create($financial->create_at), 'd/m/Y') }}</td>
-            @endif @if(!empty($user))
+            @endif 
+            <td>{{ date_format(date_create($financial->data_vencimento), 'd/m/Y') }}</td>
+            @if(!empty($user))
             <td><span class="badge badge-primary">{{ $user->name }}</span></td>
-            @php $user = null; 
-            @endphp @else
+            @php $user = null; @endphp 
+            @else
             <td><span class="badge badge-dark">Excluído</span></td>
             @endif
             <td>
@@ -57,16 +67,20 @@
                 @if(Request::is('restore'))
                 <a class="btn-link" href="{{ route('restore.restore',['tipo'=>'financeiro','id'=> $financial->id]) }}">
                         <button class="btn btn-light mb-1 card-shadow-1dp" title="Restaurar"><i class="fas fa-undo-alt"></i></button>
-                    </a> @else @if(!empty($sale))
-                <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
-                            <button class="btn btn-light mb-1 card-shadow-1dp" type="button"
-                                    title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
-                        </a> @php $sale = null; 
-                    @endphp @endif
-                <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
-                        <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
-                        </button>
-                    </a> @endif
+                </a> 
+                @else 
+                    @if(!empty($sale))
+                        <a class="btn-link" target="_blank" href="{{ route('sales.show',['id'=> $sale->id]) }}">
+                                <button class="btn btn-light mb-1 card-shadow-1dp" type="button"
+                                        title="Ver venda relacionada a este pagamento"><i class="fas fa-eye"></i></button>
+                        </a> 
+                        @php $sale = null; @endphp 
+                    @endif
+                    <a class="btn-link" onclick="deletar(event,this.id,'financial')" id="{{ $financial->id }}">
+                            <button class="btn btn-danger mb-1 card-shadow-1dp" title="Deletar"><i class="fas fa-trash-alt"></i>
+                            </button>
+                    </a> 
+                @endif
 
             </td>
 

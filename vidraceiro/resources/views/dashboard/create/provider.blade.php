@@ -51,54 +51,61 @@
                                value="{{ $provider->cnpj or old('cnpj')}}" placeholder="CNPJ">
                     </div>
 
+                    @php 
+                    if(!empty($provider)){
+                        $location = $provider->location()->first();
+                        $contact = $provider->contact()->first();
+                    }
+                    @endphp
+
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
                         <input type="tel" class="form-control" id="telefone" name="telefone"
-                               value="{{ $provider->telefone or old('telefone')}}" placeholder="Telefone">
+                               value="{{ $contact->telefone or old('telefone')}}" placeholder="Telefone">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="celular">Celular</label>
                         <input type="tel" class="form-control" id="celular" name="celular"
-                               value="{{ $provider->celular or old('celular')}}" placeholder="Celular">
+                               value="{{ $contact->celular or old('celular')}}" placeholder="Celular">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email"
-                               value="{{ $provider->email or old('email')}}" placeholder="E-mail">
+                               value="{{ $contact->email or old('email')}}" placeholder="E-mail">
                     </div>
-
+                    
                     <div class="form-group col-md-4">
                         <label for="cep" class="obrigatorio">Cep</label>
                         <input type="text" class="form-control" id="cep" name="cep"
-                               value="{{ $provider->cep or old('cep')}}" placeholder="00000-000" minlength="9" required>
+                               value="{{ $location->cep or old('cep')}}" placeholder="00000-000" minlength="9" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
                         <input type="text" class="form-control" id="rua" name="endereco"
-                               value="{{ $provider->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250">
+                               value="{{ $location->endereco or old('endereco')}}" placeholder="Av. exemplo, n° 250">
                     </div>
 
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
                         <input type="text" class="form-control" id="bairro" name="bairro"
-                               value="{{ $provider->bairro or old('bairro')}}" placeholder="Bairro">
+                               value="{{ $location->bairro or old('bairro')}}" placeholder="Bairro">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
                         <input type="text" class="form-control" id="cidade" name="cidade"
-                               value="{{ $provider->cidade or old('cidade')}}" placeholder="Cidade">
+                               value="{{ $location->cidade or old('cidade')}}" placeholder="Cidade">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="uf" class="obrigatorio">UF</label>
                         <select class="custom-select" id="uf" name="uf" required>
                             @foreach ($states as $uf => $estado)
                                 <option value="{{$uf}}"
-                                @if(!empty($provider)){{ $provider->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                                @if(!empty($provider)){{ $location->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
                             @endforeach
                         </select>
                     </div>

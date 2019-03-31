@@ -57,15 +57,19 @@
                             style="display: none;">
                                 <option value="">Nada selecionado</option>
                                 @foreach ($clients as $client)
+                                    @php 
+                                    $locationClient = $client->location()->first(); 
+                                    $contactClient = $client->contact()->first();
+                                    @endphp
                                     <option value="{{$client->id}}"
-                                            data-endereco="{{$client->endereco}}"
-                                            data-cep="{{$client->cep}}"
-                                            data-bairro="{{$client->bairro}}"
-                                            data-cidade="{{$client->cidade}}"
-                                            data-uf="{{$client->uf}}"
-                                            data-complemento="{{$client->complemento}}"
-                                            data-telefone="{{$client->telefone}}"
-                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome}}@if($client->cpf !== null){{', cpf: '.$client->cpf}}@else {{', cnpj: '.$client->cnpj}} @endif</option>
+                                            data-endereco="{{$locationClient->endereco}}"
+                                            data-cep="{{$locationClient->cep}}"
+                                            data-bairro="{{$locationClient->bairro}}"
+                                            data-cidade="{{$locationClient->cidade}}"
+                                            data-uf="{{$locationClient->uf}}"
+                                            data-complemento="{{$locationClient->complemento}}"
+                                            data-telefone="{{$contactClient->telefone}}"
+                                    @if(!empty($budgetedit)){{ $budgetedit->cliente_id == $client->id ? 'selected' :''}} @endif>{{$client->nome}}@if(strlen($client->documento) <= 11){{', cpf: '.$client->documento}}@else {{', cnpj: '.$client->documento}} @endif</option>
                                 @endforeach
                             </select>
                     </div>
@@ -81,25 +85,32 @@
                         <input type="date" class="form-control" id="data" name="data" placeholder="00/00/0000" value="{{$budgetedit->data or date('Y-m-d', time())}}">
                     </div>
 
+                    @php 
+                    if(!empty($budgetedit)){
+                        $location = $budgetedit->location()->first(); 
+                        $contact = $budgetedit->contact()->first(); 
+                    }
+                    @endphp
+
                     <div class="form-group col-md-4">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(00)0000-0000" value="{{$budgetedit->telefone or old('telefone')}}">
+                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(00)0000-0000" value="{{$contact->telefone or old('telefone')}}">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Av. exemplo, n° 250" value="{{$budgetedit->endereco or old('endereco')}}">
+                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Av. exemplo, n° 250" value="{{$location->endereco or old('endereco')}}">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cep" class="obrigatorio">Cep</label>
-                        <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" value="{{$budgetedit->cep or old('cep')}}"
+                        <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" value="{{$location->cep or old('cep')}}"
                             minlength="9" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="bairro" value="{{$budgetedit->bairro or old('bairro')}}">
+                        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="bairro" value="{{$location->bairro or old('bairro')}}">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -107,19 +118,19 @@
                         <select id="select-UF" name="uf" class="custom-select">
                                 @foreach ($states as $uf => $estado)
                                     <option value="{{$uf}}"
-                                    @if(!empty($budgetedit)){{ $budgetedit->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
+                                    @if(!empty($budgetedit)){{ $location->uf == $uf ? 'selected' :''}} @endif>{{$estado}}</option>
                                 @endforeach
                             </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="cidade" value="{{$budgetedit->cidade or old('cidade')}}">
+                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="cidade" value="{{$location->cidade or old('cidade')}}">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="complemento">Complemento</label>
-                        <input type="text" class="form-control" id="complemento" name="complemento" placeholder="complemento" value="{{$budgetedit->complemento or old('complemento')}}">
+                        <input type="text" class="form-control" id="complemento" name="complemento" placeholder="complemento" value="{{$location->complemento or old('complemento')}}">
                     </div>
 
                     <div class="form-group col-md-4">

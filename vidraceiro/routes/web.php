@@ -196,13 +196,14 @@ Route::prefix('companies')->group(function () {
 //rotas da configuracao
 Route::prefix('configuration')->group(function () {
     Route::get('/', 'ConfigurationController@index')->name('configuration.index');
-    Route::patch('/{id}', 'ConfigurationController@update')->name('configuration.update');
+    Route::patch('/', 'ConfigurationController@update')->name('configuration.update');
 });
 
 //rotas da financeiro
 Route::prefix('financial')->group(function () {
     Route::get('/', 'FinancialController@index')->name('financial.index');
     Route::post('/', 'FinancialController@store')->name('financial.store');
+    Route::patch('/{id}', 'FinancialController@update')->name('financial.update');
     Route::delete('/{id}', 'FinancialController@destroy')->name('financial.destroy');
 });
 

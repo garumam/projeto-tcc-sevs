@@ -309,6 +309,16 @@
                 form.submit();
             }
         }
+
+        function atualizar(e, id) {
+            
+            var form = document.getElementById('update-form');
+            form.action = "/financial/" + id;
+            e.preventDefault();
+            form.submit();
+            
+        }
+
     </script>
 
     <script type="text/javascript" DEFER="DEFER">

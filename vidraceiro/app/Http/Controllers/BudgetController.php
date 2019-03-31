@@ -16,6 +16,8 @@ use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Configuration;
+use App\Location;
+use App\Contact;
 
 class BudgetController extends Controller
 {
@@ -84,8 +86,11 @@ class BudgetController extends Controller
         $configuration = Configuration::all()->first();
 
         $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
-
-        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id]));
+        $location = new Location();
+        $location = $location->createLocation($request->all());
+        $contact = new Contact();
+        $contact = $contact->createContact($request->all());
+        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0,'usuario_id'=>Auth::user()->id,'endereco_id'=>$location->id,'contato_id'=>$contact->id]));
 
         if ($budgetcriado)
             return redirect()->route('budgets.edit',['id'=>$budgetcriado->id])->with('success', 'Orçamento criado com sucesso');
@@ -178,6 +183,10 @@ class BudgetController extends Controller
 
                 $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
 
+                $location = $budgetcriado->location()->first();
+                $location->updateLocation($request->all());
+                $contact = $budgetcriado->contact()->first();
+                $contact->updateContact($request->all());
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso')->with('tab', $tab);

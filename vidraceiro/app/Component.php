@@ -89,7 +89,6 @@ class Component extends Model
 
         if($component->is_modelo === 1){
             Storage::createStorage([
-                'qtd' => 0,
                 'component_id' => $component->id
             ]);
         }

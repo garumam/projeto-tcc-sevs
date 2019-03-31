@@ -7,6 +7,8 @@ use App\Uf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Location;
+use App\Contact;
 
 class ProviderController extends Controller
 {
@@ -59,8 +61,12 @@ class ProviderController extends Controller
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
 
+        $location = new Location();
+        $location = $location->createLocation($request->all());
+        $contact = new Contact();
+        $contact = $contact->createContact($request->all());
 
-        $provider = $this->provider->createProvider($request->all());
+        $provider = $this->provider->createProvider(array_merge($request->all(),['endereco_id'=>$location->id,'contato_id'=>$contact->id]));
         if($provider)
             return redirect()->back()->with('success', 'Fornecedor criado com sucesso');
     }
@@ -121,6 +127,10 @@ class ProviderController extends Controller
 
 
         $provider = $this->provider->findProviderById($id);
+        $location = $provider->location()->first();
+        $location->updateLocation($request->all());
+        $contact = $provider->contact()->first();
+        $contact->updateContact($request->all());
         $provider = $provider->updateProvider($request->all());
 
         if ($provider)
@@ -135,7 +145,11 @@ class ProviderController extends Controller
         $provider = $this->provider->findProviderById($id);
 
         if ($provider){
+            $location = $provider->location()->first();
+            $contact = $provider->contact()->first();
             $provider->deleteProvider();
+            $location->deleteLocation();
+            $contact->deleteContact();
             return redirect()->back()->with('success', 'Fornecedor deletado com sucesso');
         }
 

@@ -70,84 +70,38 @@ class StorageController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
         $tabnumber = 1;
-        switch($tab){
-            case 'vidro':
-                $tabnumber = 1;
-                $validado = $this->rules_storage($request->all(),$tab);
-
-                if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado)->with('tab',1);
-                }
-                $storage = Storage::getFirstStorageWhere('id',$request->storage_vidro_id);
-                $m2 = null;
-                if($request->operacao === 'saida'){
-                    if($request->m2 > $storage->metros_quadrados){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->metros_quadrados." | Valor retirado: ".$request->m2)->with('tab',1);
-                    }
-                    $m2 = $storage->metros_quadrados - $request->m2;
-
-                }elseif($request->operacao === 'entrada'){
-
-                    $m2 = $storage->metros_quadrados + $request->m2;
-
-
-                }else{
-                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',1);
-                }
-                $storage->updateStorage('metros_quadrados',$m2);
-                break;
-
-            case 'aluminio':
-                $tabnumber = 2;
-                $validado = $this->rules_storage($request->all(),$tab);
-                if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado)->with('tab',2);
-                }
-                $storage = Storage::getFirstStorageWhere('id',$request->storage_aluminio_id);
-                $qtd = null;
-                if($request->operacao === 'saida'){
-                    if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd)->with('tab',2);
-                    }
-                    $qtd = $storage->qtd - $request->qtd;
-
-                }elseif($request->operacao === 'entrada'){
-
-                    $qtd = $storage->qtd + $request->qtd;
-
-
-                }else{
-                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',2);
-                }
-                $storage->updateStorage('qtd',$qtd);
-                break;
-
-            case 'componente':
-                $tabnumber = 3;
-                $validado = $this->rules_storage($request->all(),$tab);
-                if ($validado->fails()) {
-                    return redirect()->back()->withErrors($validado)->with('tab',3);
-                }
-                $storage = Storage::getFirstStorageWhere('id',$request->storage_componente_id);
-                $qtd = null;
-                if($request->operacao === 'saida'){
-                    if($request->qtd > $storage->qtd){
-                        return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd)->with('tab',3);
-                    }
-                    $qtd = $storage->qtd - $request->qtd;
-
-                }elseif($request->operacao === 'entrada'){
-
-                    $qtd = $storage->qtd + $request->qtd;
-
-
-                }else{
-                    return redirect()->back()->with('error', 'Operação não existe!')->with('tab',3);
-                }
-                $storage->updateStorage('qtd',$qtd);
-                break;
+        $materialType = 'storage_vidro_id';
+        if($tab == 'aluminio'){
+            $tabnumber = 2;
+            $materialType = 'storage_aluminio_id';
+        }elseif($tab == 'componente'){
+            $tabnumber = 3;
+            $materialType = 'storage_componente_id';
         }
 
+        $validado = $this->rules_storage($request->all(),$materialType);
+
+        if ($validado->fails()) {
+            return redirect()->back()->withErrors($validado)->with('tab',$tabnumber);
+        }
+        $storage = Storage::getFirstStorageWhere('id',$request->$materialType);
+        $qtd = null;
+        if($request->operacao === 'saida'){
+            if($request->qtd > $storage->qtd){
+                return redirect()->back()->with('error', "Não foi possível completar saída, valor superior ao estoque! Valor em estoque: ".$storage->qtd." | Valor retirado: ".$request->qtd)->with('tab',$tabnumber);
+            }
+            $qtd = $storage->qtd - $request->qtd;
+
+        }elseif($request->operacao === 'entrada'){
+
+            $qtd = $storage->qtd + $request->qtd;
+
+
+        }else{
+            return redirect()->back()->with('error', 'Operação não existe!')->with('tab',$tabnumber);
+        }
+        $storage->updateStorage('qtd',$qtd);
+        
 
         if ($storage)
             return redirect()->back()->with('success', "Operação realizada com sucesso")->with('tab',$tabnumber);
@@ -155,33 +109,13 @@ class StorageController extends Controller
 
     public function rules_storage(array $data, $type)
     {
-        switch ($type) {
-            case 'vidro':
-                $validator = Validator::make($data, [
-                    'storage_vidro_id' => 'required|integer|exists:storages,id',
-                    'm2' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
-                break;
-            case 'aluminio':
-                $validator = Validator::make($data, [
-                    'storage_aluminio_id' => 'required|integer|exists:storages,id',
-                    'qtd' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
-                break;
-            case 'componente':
-                $validator = Validator::make($data, [
-                    'storage_componente_id' => 'required|integer|exists:storages,id',
-                    'qtd' => 'required|integer'
-                ], [
-                    'exists' => 'Material não registrado no estoque!',
-                ]);
-                break;
-        }
-
+        $validator = Validator::make($data, [
+            $type => 'required|integer|exists:storages,id',
+            'qtd' => 'required|integer'
+        ], [
+            'exists' => 'Material não registrado no estoque!',
+        ]);
+        
         return $validator;
     }
 }

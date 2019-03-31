@@ -16,18 +16,12 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('cpf')->nullable()->unique();
-            $table->string('cnpj')->nullable()->unique();
-            $table->string('telefone')->nullable();
-            $table->string('celular')->nullable();
-            $table->string('email')->nullable();
-            $table->integer('cep');
-            $table->string('endereco')->nullable();
-            $table->string('bairro')->nullable();
-            $table->string('uf')->nullable();
-            $table->string('cidade')->nullable();
-            $table->string('complemento')->nullable();
+            $table->string('documento')->nullable()->unique();
             $table->string('status');
+            $table->integer('endereco_id')->unsigned();
+            $table->foreign('endereco_id')->references('id')->on('locations');
+            $table->integer('contato_id')->unsigned();
+            $table->foreign('contato_id')->references('id')->on('contacts');
             $table->softDeletes();
             $table->timestamps();
         });

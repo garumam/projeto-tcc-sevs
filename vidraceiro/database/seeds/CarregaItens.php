@@ -964,7 +964,6 @@ class CarregaItens extends Seeder
         $glassesModel = Glass::where('is_modelo',1)->get();
         foreach($glassesModel as $glass){
             Storage::create([
-                'metros_quadrados' => 0,
                 'glass_id' => $glass->id
             ]);
         }
@@ -972,7 +971,6 @@ class CarregaItens extends Seeder
         $aluminumsModel = Aluminum::where('is_modelo',1)->get();
         foreach($aluminumsModel as $aluminum){
             Storage::create([
-                'qtd' => 0,
                 'aluminum_id' => $aluminum->id
             ]);
         }
@@ -980,7 +978,6 @@ class CarregaItens extends Seeder
         $componentsModel = Component::where('is_modelo',1)->get();
         foreach($componentsModel as $component){
             Storage::create([
-                'qtd' => 0,
                 'component_id' => $component->id
             ]);
         }

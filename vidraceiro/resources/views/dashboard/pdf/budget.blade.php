@@ -110,26 +110,34 @@
 </head>
 <body>
 
-<p>{{$company->nome}}</p>
-<p>{{$company->endereco .' - '. $company->bairro}}</p>
-<p>{{$company->cidade .' - '. $company->uf}}</p>
-<p>E-mail: {{$company->email}}</p>
+@if(!empty($company)) 
 @php
-    $telefone = $company->telefone;
+    $location = $company->location()->first();
+    $contact = $company->contact()->first();
+    $telefone = $contact->telefone;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
     }
-
 @endphp
+<p>{{$company->nome}}</p>
+<p>{{$location->endereco .' - '. $location->bairro}}</p>
+<p>{{$location->cidade .' - '. $location->uf}}</p>
+<p>E-mail: {{$contact->email}}</p>
 <p>Telefone: {{$telefone}}</p>
 <div class="line"></div>
+@endif
 
+@php 
+    $location = $budget->location()->first(); 
+    $contact = $budget->contact()->first();
+@endphp
 <h3>Dados do orçamento</h3>
 <p>Nome: {{$budget->nome}}</p>
-<p>Endereço: {{$budget->endereco .' - '. $budget->bairro}}</p>
-<p>Cep: {{$budget->cep}}</p>
-<p>Complemento: {{$budget->complemento}}</p>
+<p>Endereço: {{$location->endereco .' - '. $location->bairro}}</p>
+<p>Cep: {{$location->cep}}</p>
+<p>Complemento: {{$location->complemento}}</p>
+<p>Telefone: {{$contact->telefone}}</p>
 <h3>Produtos</h3>
 <div class="total">
     <p id="texto-left">Valor total do orçamento: </p>

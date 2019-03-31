@@ -34,7 +34,7 @@ class ConfigurationController extends Controller
         return view('dashboard.create.configuration', compact('company', 'states','configuration'))->with('title', 'Dados da Empresa')->with('title2', 'Configurações');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if(!Auth::user()->can('configuracao', Configuration::class)){
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
@@ -45,7 +45,7 @@ class ConfigurationController extends Controller
             return redirect()->back()->withErrors($validado);
         }
 
-        $configuration = $this->configuration->findConfigurationById($id);
+        $configuration = $this->configuration->getConfiguration();
 
         if($configuration){
             $configuration->updateConfiguration($request->all());
@@ -60,7 +60,8 @@ class ConfigurationController extends Controller
         $validator = Validator::make($data, [
             'porcent_reajuste' => 'required|numeric',
             'dias_parcelas' => 'required|numeric',
-            'porcent_m_lucro' => 'required|numeric'
+            'porcent_m_lucro' => 'required|numeric',
+            'juros_mensal_parcel' => 'required|numeric'
         ]);
 
         return $validator;

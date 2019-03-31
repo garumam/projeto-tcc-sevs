@@ -7,6 +7,8 @@ use App\Uf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Location;
+use App\Contact;
 
 class CompanyController extends Controller
 {
@@ -28,8 +30,16 @@ class CompanyController extends Controller
         if ($validado->fails()) {
             return redirect()->back()->withErrors($validado);
         }
+        $company = $this->company->getCompany();
+        if(!empty($company)){
+            return redirect()->route('configuration.index')->with('error', 'Dados da empresa já existem');
+        }
+        $location = new Location();
+        $location = $location->createLocation($request->all());
+        $contact = new Contact();
+        $contact = $contact->createContact($request->all());
 
-        $company = $this->company->createCompany($request->all());
+        $company = $this->company->createCompany(array_merge($request->all(),['endereco_id'=>$location->id,'contato_id'=>$contact->id]));
         if ($company)
             return redirect()->back()->with('success', 'Dados da empresa criados com sucesso');
     }
@@ -49,11 +59,15 @@ class CompanyController extends Controller
         $company = $this->company->findCompanyById($id);
 
         if ($company){
+            $location = $company->location()->first();
+            $location->updateLocation($request->all());
+            $contact = $company->contact()->first();
+            $contact->updateContact($request->all());
             $company->updateCompany($request->all());
 
             return redirect()->back()->with('success', 'Dados da empresa atualizados com sucesso');
         }
-
+        return redirect()->route('configuration.index')->with('error', 'Erro ao atualizar os dados da empresa');
     }
 
     public function destroy($id)
@@ -64,7 +78,11 @@ class CompanyController extends Controller
 
         $company = $this->company->findCompanyById($id);
         if ($company) {
+            $location = $company->location()->first();
+            $contact = $company->contact()->first();
             $company->deleteCompany();
+            $location->deleteLocation();
+            $contact->deleteContact();
             return redirect()->back()->with('success', 'Dados da empresa deletados com sucesso');
         } else {
             return redirect()->back()->with('error', 'Erro ao deletar dados');

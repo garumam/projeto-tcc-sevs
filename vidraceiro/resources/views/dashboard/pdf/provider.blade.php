@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Cliente - Vidraceiro</title>
+    <title>Fornecedor - Vidraceiro</title>
 
     <style>
         p, h3 {
@@ -78,23 +78,24 @@
 </head>
 <body>
 
-
-<p>{{$company->nome}}</p>
-<p>{{$company->endereco .' - '. $company->bairro}}</p>
-<p>{{$company->cidade .' - '. $company->uf}}</p>
-<p>E-mail: {{$company->email}}</p>
-
+@if(!empty($company)) 
 @php
-    $telefone = $company->telefone;
+    $location = $company->location()->first();
+    $contact = $company->contact()->first();
+    $telefone = $contact->telefone;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
     }
-
 @endphp
-
+<p>{{$company->nome}}</p>
+<p>{{$location->endereco .' - '. $location->bairro}}</p>
+<p>{{$location->cidade .' - '. $location->uf}}</p>
+<p>E-mail: {{$contact->email}}</p>
 <p>Telefone: {{$telefone}}</p>
 <div class="line"></div>
+@endif
+
 
 <h3>Dados do fornecedor</h3>
 <p>Nome: {{$provider->nome or 'não cadastrado!'}}</p>
@@ -104,8 +105,9 @@
 <h3>Formas de contato</h3>
 
 @php
-    $telefone = $provider->telefone;
-    $celular = $provider->celular;
+    $contact = $provider->contact()->first();
+    $telefone = $contact->telefone;
+    $celular = $contact->celular;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
@@ -115,20 +117,44 @@
     $celular="(".substr($celular,0,2).") ".substr($celular,2,-4)." - ".substr($celular,-4);
     }
 
+    $location = $provider->location()->first();
 @endphp
 
 <p>Telefone: {{$telefone or 'não cadastrado!'}}</p>
 <p>Celular: {{$celular or 'não cadastrado!'}}</p>
-<p>Email: {{$provider->email or 'não cadastrado!'}}</p>
+<p>Email: {{$contact->email or 'não cadastrado!'}}</p>
 
 
 <h3>Endereço</h3>
 
-<p>Endereço: {{$provider->endereco or 'não cadastrado!'}}</p>
-<p>Bairro: {{$provider->bairro or 'não cadastrado!'}}</p>
-<p>Cidade: {{$provider->cidade or 'não cadastrado!'}}</p>
-<p>Uf: {{$provider->uf or 'não cadastrado!'}}</p>
+<p>Endereço: {{$location->endereco or 'não cadastrado!'}}</p>
+<p>Bairro: {{$location->bairro or 'não cadastrado!'}}</p>
+<p>Cidade: {{$location->cidade or 'não cadastrado!'}}</p>
+<p>Uf: {{$location->uf or 'não cadastrado!'}}</p>
 <p>Cep: {{App\Http\Controllers\PdfController::mask($provider->cnpj,'#####-###')}}</p>
+
+<h3>Materiais fornecidos</h3>
+<p>VIDROS:</p>
+@forelse($provider->glasses()->get() as $glass)
+<p>->{{' '.$glass->nome .' '.$glass->tipo}}</p>
+@empty
+<p>Nenhum vidro!</p>
+@endforelse
+<div class="line"></div>
+<p>ALUMÍNIOS:</p>
+@forelse($provider->aluminums()->get() as $aluminum)
+<p>->{{' '.$aluminum->perfil}}</p>
+@empty
+<p>Nenhum alumínio!</p>
+@endforelse
+<div class="line"></div>
+<p>COMPONENTES:</p>
+@forelse($provider->components()->get() as $component)
+<p>->{{' '.$component->nome}}</p>
+@empty
+<p>Nenhum componente!</p>
+@endforelse
+
 
 
 </body>

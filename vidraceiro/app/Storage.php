@@ -85,10 +85,10 @@ class Storage extends Model
 
                     $glasses = $glasses->where(function ($q) use ($qtd_de,$qtd_ate){
                         if($qtd_ate !== null)
-                            $q->where('metros_quadrados','<=',$qtd_ate);
+                            $q->where('qtd','<=',$qtd_ate);
 
                         if($qtd_de !== null)
-                            $q->where('metros_quadrados','>=',$qtd_de);
+                            $q->where('qtd','>=',$qtd_de);
                     });
 
                     if($material !== 'TODOS')
@@ -124,12 +124,12 @@ class Storage extends Model
 
         if($ordenar !== 'nao') {
             if ($material === 'TODOS') {
-                $glasses = $glasses->orderBy('metros_quadrados',$ordenar);
+                $glasses = $glasses->orderBy('qtd',$ordenar);
                 $aluminums = $aluminums->orderBy('qtd',$ordenar);
                 $components = $components->orderBy('qtd',$ordenar);
             } else {
                 if ($glasses !== null) {
-                    $glasses = $glasses->orderBy('metros_quadrados',$ordenar);
+                    $glasses = $glasses->orderBy('qtd',$ordenar);
                 } elseif ($aluminums !== null) {
                     $aluminums = $aluminums->orderBy('qtd',$ordenar);
                 } elseif ($components !== null) {

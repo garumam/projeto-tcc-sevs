@@ -54,7 +54,11 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Telefone: </b><label id="{{$budget->telefone !== null?'telefone':''}}"> {{$budget->telefone or 'não cadastrado!'}}</label>
+                            @php 
+                            $location = $budget->location()->first(); 
+                            $contact = $budget->contact()->first();
+                            @endphp
+                            <b>Telefone: </b><label id="{{$contact->telefone !== null?'telefone':''}}"> {{$contact->telefone or 'não cadastrado!'}}</label>
                         </div>
                     </div>
                 </div>
@@ -68,17 +72,17 @@
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Endereço: </b> {{$budget->endereco or 'não cadastrado!'}}
+                            <b>Endereço: </b> {{$location->endereco or 'não cadastrado!'}}
                             <hr>
-                            <b>Bairro: </b> {{$budget->bairro or 'não cadastrado!'}}
+                            <b>Bairro: </b> {{$location->bairro or 'não cadastrado!'}}
                             <hr>
-                            <b>Cidade: </b> {{$budget->cidade or 'não cadastrado!'}}
+                            <b>Cidade: </b> {{$location->cidade or 'não cadastrado!'}}
                             <hr>
-                            <b>Uf: </b> {{$budget->uf or 'não cadastrado!'}}
+                            <b>Uf: </b> {{$location->uf or 'não cadastrado!'}}
                             <hr>
-                            <b>Cep: </b><label id="{{$budget->cep !== null?'cep':''}}"> {{$budget->cep or 'não cadastrado!'}}</label>
+                            <b>Cep: </b><label id="{{$location->cep !== null?'cep':''}}"> {{$location->cep or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Complemento: </b> {{$budget->complemento or 'não cadastrado!'}}
+                            <b>Complemento: </b> {{$location->complemento or 'não cadastrado!'}}
                         </div>
                     </div>
                 </div>

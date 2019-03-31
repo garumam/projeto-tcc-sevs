@@ -11,6 +11,7 @@ use App\Client;
 use App\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Configuration;
 
 
 class SaleController extends Controller
@@ -55,7 +56,8 @@ class SaleController extends Controller
         }
 
         $budgets = Budget::getBudgetsWhereStatusWaiting();
-        return view('dashboard.create.sale', compact('budgets'))->with('title', 'Nova venda');
+        $juros = (new Configuration())->getConfiguration()->juros_mensal_parcel;
+        return view('dashboard.create.sale', compact('budgets','juros'))->with('title', 'Nova venda');
     }
 
     public function store(Request $request)

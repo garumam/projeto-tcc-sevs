@@ -13,6 +13,7 @@ use App\Sale;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Installment;
 
 class PdfController extends Controller
 {
@@ -241,8 +242,9 @@ class PdfController extends Controller
                 }
 
                 $financials = Financial::filterFinancial($request);
-
-                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('financials','tipo'));
+                $installments = Installment::filterInstallment($request);
+                
+                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('financials','installments','tipo'));
                 $nomearquivo = 'financeiro-relatório.pdf';
 
                 break;

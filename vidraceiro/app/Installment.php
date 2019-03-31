@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class Installment extends Model
 {
@@ -28,9 +29,8 @@ class Installment extends Model
         return self::whereIn('id', $ids)->get();
     }
 
-    public static function getPendingInstallmentsWithSearchAndPagination($search,$paginate,&$notPaginateInstallments){
+    public static function getPendingInstallmentsWithSearchAndPagination($search){
 
-        $paginate = $paginate ?? 10;
 
         $queryBuilder = self::where('status_parcela', 'ABERTO')
             ->whereHas('sale',function ($s) use ($search){
@@ -38,12 +38,94 @@ class Installment extends Model
                     $b->whereHas('client',function ($c) use ($search){
                         $c->where('nome','like', '%' . $search . '%');
                     });
+                })->orWhereHas('user',function ($d) use ($search){
+                    $d->where('name','like', '%' . $search . '%');
                 });
             });
 
-        $notPaginateInstallments = $queryBuilder->get();
+        return $queryBuilder->get();
+    }
 
-        return $queryBuilder->paginate($paginate);
+    public static function filterInstallment($request){
+        $tipo_financa = $request->tipo_financa;
+        $installments = new Installment();
+        $valor_inicial = $request->valor_inicial;
+        $valor_final = $request->valor_final;
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+        $status = $request->status;
+        $valorentrou = $dataentrou = false;
+
+        if($tipo_financa === 'RECEITA' 
+        || $tipo_financa === 'TODOS' 
+        && $status === 'PENDENTE'){
+
+            if($valor_inicial !== null || $valor_final !== null){
+                $valorentrou = true;
+            }
+
+            if($data_inicial !== null || $data_final !== null){
+                $dataentrou = true;
+            }
+
+            if($valorentrou || $dataentrou){
+
+                $installments =  self::where(function ($query) use ($data_inicial,$data_final, $valor_inicial,$valor_final,$valorentrou,$dataentrou,$status){
+                    if($dataentrou){
+
+
+                        $query-> where(function ($c) use ($data_inicial,$data_final){
+
+                            if($data_final !== null)
+                                $c->whereDate('data_vencimento','<=',$data_final);
+
+                            if($data_inicial !== null)
+                                $c->whereDate('data_vencimento','>=',$data_inicial);
+
+                        });
+
+
+                    }
+
+                    // if($valorentrou){
+
+                    //     $query->where(function ($q) use ($valor_inicial,$valor_final){
+                    //         if($valor_final !== null)
+                    //             $q->where('valor_parcela','<=',$valor_final);
+
+                    //         if($valor_inicial !== null)
+                    //             $q->where('valor_parcela','>=',$valor_inicial);
+                    //     });
+                    // }
+
+                    
+                });
+            }
+        
+        
+            $installments = $installments->where('status_parcela','ABERTO')->get();
+        }else{
+            $installments = new Collection();
+        }
+
+        if($valorentrou){
+
+            $installments = $installments->filter(function ($q) use ($valor_inicial,$valor_final){
+                $condicao = false;
+                $soma = $q->valor_parcela + $q->multa;
+                $soma = number_format($soma,2,'.','');
+                if($valor_final !== null)
+                    $condicao = $soma <= $valor_final? true : false;
+
+                if($valor_inicial !== null)
+                    $condicao = $soma >= $valor_inicial? true : false;
+                
+                return $condicao;
+            });
+        }
+
+        return $installments;
+
     }
 
     public static function readjust(){

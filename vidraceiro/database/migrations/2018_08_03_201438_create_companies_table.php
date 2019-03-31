@@ -16,13 +16,10 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('endereco')->nullable();
-            $table->string('cidade')->nullable();
-            $table->string('bairro')->nullable();
-            $table->integer('cep')->nullable();
-            $table->string('uf')->nullable();
-            $table->string('email')->nullable();
-            $table->string('telefone')->nullable();
+            $table->integer('endereco_id')->unsigned();
+            $table->foreign('endereco_id')->references('id')->on('locations');
+            $table->integer('contato_id')->unsigned();
+            $table->foreign('contato_id')->references('id')->on('contacts');
             $table->timestamps();
         });
     }

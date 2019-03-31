@@ -994,7 +994,7 @@ $(document).ready(function () {
         let documentoselecionado = $('#select-documento option:selected');
         if (documentoselecionado.val() === 'cpf') {
             $('#doc-cpf-input').show();
-            $('#cpf').attr({required: true, name: 'cpf'});
+            $('#cpf').attr({required: true, name: 'documento'});
             $('#doc-cnpj-input').hide();
             $('#cnpj').attr({required: false, name: ''}).val('');
 
@@ -1002,7 +1002,7 @@ $(document).ready(function () {
             $('#doc-cpf-input').hide();
             $('#cpf').attr({required: false, name: ''}).val('');
             $('#doc-cnpj-input').show();
-            $('#cnpj').attr({required: true, name: 'cnpj'});
+            $('#cnpj').attr({required: true, name: 'documento'});
         } else {
             $('#doc-cpf-input').hide();
             $('#doc-cnpj-input').hide();
@@ -1031,7 +1031,7 @@ $(document).ready(function () {
 
         $(this).val(mskDigitosDoisDecimais($(this).val()));
         calcularEntradaDesconto($(this));
-
+        
     });
 
 
@@ -1039,7 +1039,7 @@ $(document).ready(function () {
 
         $(this).val(mskDigitosDoisDecimais($(this).val()));
         calcularEntradaDesconto($(this));
-
+        
     });
 
 
@@ -1055,44 +1055,91 @@ $(document).ready(function () {
 
         let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
+        $('#entrada').val('');
+        $('#desconto').val('');
+        $('#qtd_parc').val('1');
+        $('#sem_juros').prop( "checked", false);
+        
+
         if (tipopagamentoselecionado.val() === 'A VISTA') {
 
             $('#qtd_parcelas').hide();
             $('#valor_parcela').hide();
             $('#entradadisplay').hide();
+            $('#semjurosdisplay').hide();
             $('#valor_parc').attr('name', '').val('');
             $('#qtd_parc').attr('name', '');
             $('#entrada').attr('name', '').val('');
+            $('#sem_juros').attr('name', '')
+
+            $('#total').val(orcamentoselecionado.data('total'));
 
         } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
 
             $('#qtd_parcelas').show();
             $('#valor_parcela').show();
             $('#entradadisplay').show();
+            $('#semjurosdisplay').show();
             $('#valor_parc').attr('name', 'valor_parcela');
             $('#qtd_parc').attr('name', 'qtd_parcelas');
             $('#entrada').attr('name', 'entrada');
+            $('#sem_juros').attr('name', 'sem_juros')
             if (orcamentoselecionado.val() !== '' && $('#qtd_parc').val() !== '') {
-                $('#valor_parc').val(parseFloat(orcamentoselecionado.data('total') / $('#qtd_parc').val()).toFixed(2));
+                calcularJuros(0, false);
             }
 
 
         } else {
-            alert('Problema inesperado reinicie a página!');
+            alert('Problema inesperado atualize a página!');
         }
 
-        $('#entrada').val('');
-        calcularEntradaDesconto($('#desconto'));
+        
     });
 
     $('#qtd_parc').change(function (e) {
 
         if ($(this).val !== '' && $('#total').val() !== '') {
-            $('#valor_parc').val(parseFloat($('#total').val() / $(this).val()).toFixed(2));
+            
+            let desconto = $('#desconto').val();
+            desconto = desconto == ''? 0 : desconto;
+            let entrada = $('#entrada').val();
+            entrada = entrada == ''? 0 : entrada;
+
+            if($('#sem_juros').prop("checked")) {
+                calcularJuros((parseFloat(desconto) + parseFloat(entrada)),true);
+            }else{
+                calcularJuros((parseFloat(desconto) + parseFloat(entrada)),false);
+            }
+            
         }
 
     });
 
+    $('#sem_juros').change(function() {
+
+        $('#entrada').val('');
+        $('#desconto').val('');
+        $('#qtd_parc').val('1');
+        
+        if(this.checked) {
+            calcularJuros(0,true);
+        }else{
+            calcularJuros(0,false);
+        }       
+    });
+
+    function calcularJuros(descontoEentrada, semJuros){
+        let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+        let total = '';
+        if(semJuros){
+            total = parseFloat(orcamentoselecionado.data('total') - descontoEentrada).toFixed(2);
+        }else{
+            total = parseFloat((parseFloat(orcamentoselecionado.data('total')) - descontoEentrada) * Math.pow(1 + $('#sem_juros').data('juros'), $('#qtd_parc').val())).toFixed(2);
+        }
+        $('#total').val(total);
+        
+        $('#valor_parc').val(parseFloat(total / $('#qtd_parc').val()).toFixed(2));
+    }
 
     function calcularEntradaDesconto(input) {
         let desconto = $('#desconto');
@@ -1112,24 +1159,32 @@ $(document).ready(function () {
             valorDesconto = valorDesconto == '' ? 0 : valorDesconto;
             let valorEntrada = entrada.val();
             valorEntrada = valorEntrada == '' ? 0 : valorEntrada;
-            let total = orcamentoselecionado.data('total');
+            let total = '';
 
             let somaDescontoEntrada = parseFloat(valorDesconto) + parseFloat(valorEntrada);
 
-            if (somaDescontoEntrada > 0 && somaDescontoEntrada < total) {
+            let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
-                let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
+            if (tipopagamentoselecionado.val() === 'A PRAZO') {
+                total = parseFloat((orcamentoselecionado.data('total')) * Math.pow(1 + $('#sem_juros').data('juros'), $('#qtd_parc').val())).toFixed(2)
+            }else{
+                total = orcamentoselecionado.data('total');
+            }
+            
+            if (somaDescontoEntrada > 0 && somaDescontoEntrada < total) {
 
                 if (tipopagamentoselecionado.val() === 'A VISTA') {
 
                     $('#total').val(parseFloat(total - valorDesconto).toFixed(2));
 
                 } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
-
+                    
                     if ($('#qtd_parc').val() !== '') {
-                        let faltaPagar = total - valorDesconto - valorEntrada;
-                        $('#total').val(parseFloat(faltaPagar).toFixed(2));
-                        $('#valor_parc').val(parseFloat(faltaPagar / $('#qtd_parc').val()).toFixed(2));
+                        if($('#sem_juros').prop("checked")) {
+                            calcularJuros(somaDescontoEntrada,true);
+                        }else{
+                            calcularJuros(somaDescontoEntrada,false);
+                        } 
                     } else {
                         alert('Problema inesperado reinicie a página!');
                     }
@@ -1147,11 +1202,21 @@ $(document).ready(function () {
                             .text('Valor inválido ou maior que o total!');
                     }
 
-                    $('#total').val(total);
-                    $('#valor_parc').val(parseFloat(total / $('#qtd_parc').val()).toFixed(2));
+
+                    if (tipopagamentoselecionado.val() === 'A PRAZO') {
+                        if($('#sem_juros').prop("checked")) {
+                            calcularJuros(0,true);
+                        }else{
+                            calcularJuros(0,false);
+                        } 
+                        
+                    }else{
+                        total = orcamentoselecionado.data('total');
+                        $('#total').val(total);
+                    }
+                    
                     input.val('');
                 }
-
 
             }
         }

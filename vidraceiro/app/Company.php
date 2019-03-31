@@ -8,14 +8,17 @@ class Company extends Model
 {
     protected $fillable = [
         'nome',
-        'endereco',
-        'cidade',
-        'bairro',
-        'cep',
-        'uf',
-        'email',
-        'telefone'
+        'endereco_id',
+        'contato_id'
     ];
+
+    public function location(){
+        return $this->hasOne(Location::class,'id','endereco_id');
+    }
+
+    public function contact(){
+        return $this->hasOne(Contact::class,'id','endereco_id');
+    }
 
     public function getCompany(){
         return self::take(1)->first();
@@ -38,7 +41,7 @@ class Company extends Model
     }
 
     public function deleteCompany(){
-
+        
         return self::delete();
 
     }

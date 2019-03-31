@@ -12,19 +12,22 @@ class Budget extends Model
         'nome',
         'data',
         'status',
-        'telefone',
-        'cep',
-        'endereco',
-        'bairro',
-        'uf',
-        'cidade',
-        'complemento',
         'total',
         'margem_lucro',
+        'endereco_id',
         'ordem_id',
         'cliente_id',
-        'usuario_id'
+        'usuario_id',
+        'contato_id'
     ];
+
+    public function location(){
+        return $this->hasOne(Location::class,'id','endereco_id');
+    }
+
+    public function contact(){
+        return $this->hasOne(Contact::class,'id','endereco_id');
+    }
 
     public function products(){
         return $this->hasMany(
@@ -230,6 +233,14 @@ class Budget extends Model
 
 
         $budgetcriado = $this->replicate();
+        $location = $this->location()->first();
+        $location = $location->replicate();
+        $location->push();
+        $budgetcriado->endereco_id = $location->id;
+        $contact = $this->contact()->first();
+        $contact = $contact->replicate();
+        $contact->push();
+        $budgetcriado->contato_id = $contact->id;
         $budgetcriado->status = 'AGUARDANDO';
         $budgetcriado->ordem_id = null;
         $budgetcriado->usuario_id = $user_id;

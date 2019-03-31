@@ -9,12 +9,13 @@ class Configuration extends Model
     protected $fillable = [
         'porcent_reajuste',
         'dias_parcelas',
-        'porcent_m_lucro'
+        'porcent_m_lucro',
+        'juros_mensal_parcel'
     ];
 
-    public function findConfigurationById($id){
+    public function getConfiguration(){
 
-        return self::find($id);
+        return self::take(1)->first();
 
     }
 

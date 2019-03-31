@@ -15,6 +15,8 @@ use App\Installment;
 use App\Payment;
 use App\Financial;
 use Illuminate\Database\Seeder;
+use App\Location;
+use App\Contact;
 
 class CarregaItensTeste extends Seeder
 {
@@ -26,32 +28,50 @@ class CarregaItensTeste extends Seeder
     public function run()
     {
 
-        Client::create([
-            'nome'=> 'João da Silva',
+        $endereco = Location::create([
             'bairro'=> 'Centro',
             'cep'=> 28907170,
-            'cpf' => '12043219632',
             'cidade'=> 'Cabo frio',
             'complemento'=> 'Logo ali',
             'endereco'=> 'Fim do mundo, n° 250',
+            'uf' => 'RJ'
+        ]);
+
+        $contato = Contact::create([
             'telefone'=> '2212344321',
             'celular'=> '22912344321',
+            'email' => 'joao@gmail.com'
+        ]);
+
+        Client::create([
+            'nome'=> 'João da Silva',
+            'documento' => '12043219632',
             'status'=> 'EM DIA',
-            'uf' => 'RJ'
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
+        $endereco = Location::create([
+            'bairro'=> 'Vila velha',
+            'cep'=> 10459289,
+            'cidade'=> 'Terezina',
+            'complemento'=> 'Depois de la',
+            'endereco'=> 'Goiaba, n° 130',
+            'uf' => 'MG'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '4565432456',
+            'celular'=> '45925432456',
+            'email' => 'maria@gmail.com'
         ]);
 
         Client::create([
             'nome'=> 'Maria Pereira',
-            'bairro'=> 'Vila velha',
-            'cep'=> 10459289,
-            'cpf' => '98737284728',
-            'cidade'=> 'Terezina',
-            'complemento'=> 'Depois de la',
-            'endereco'=> 'Goiaba, n° 130',
-            'telefone'=> '4565432456',
-            'celular'=> '45925432456',
+            'documento' => '98737284728',
             'status'=> 'DEVENDO',
-            'uf' => 'MG'
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
         ]);
 
         MProduct::create([
@@ -77,53 +97,77 @@ class CarregaItensTeste extends Seeder
             'total'=> 198.38
         ]);
 
-        Budget::create([
-            'status'=> 'APROVADO',
+        $endereco = Location::create([
             'bairro'=> 'Centro',
             'cep'=> 28907170,
             'cidade'=> 'Cabo frio',
             'complemento'=> 'Logo ali',
-            'data'=> '2018-08-07',
-            'margem_lucro'=> 100.0,
-            'nome'=> 'orcamento1',
             'endereco'=> 'Fim do mundo, n° 250',
-            'telefone'=> '2212344321',
-            'total'=> 800.04,
-            'ordem_id'=> 1,
-            'uf' => 'RJ',
-            'cliente_id' => '1'
+            'uf' => 'RJ'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '2212344321'
         ]);
 
         Budget::create([
             'status'=> 'APROVADO',
+            'data'=> '2018-08-07',
+            'margem_lucro'=> 100.0,
+            'nome'=> 'orcamento1',
+            'total'=> 800.61,
+            'ordem_id'=> 1,
+            'cliente_id' => '1',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
+        $endereco = Location::create([
             'bairro'=> 'Vila velha',
             'cep'=> 10459289,
             'cidade'=> 'Terezina',
             'complemento'=> 'Depois de la',
-            'data'=> '2018-08-08',
-            'margem_lucro'=> 200.0,
-            'nome'=> 'orçamento2',
             'endereco'=> 'Goiaba, n° 130',
-            'telefone'=> '4565432456',
-            'total'=> 198.38,
-            'ordem_id'=> 2,
-            'uf' => 'MG',
-            'cliente_id' => '2'
+            'uf' => 'MG'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '4565432456'
         ]);
 
         Budget::create([
-            'status'=> 'AGUARDANDO',
+            'status'=> 'APROVADO',
+            'data'=> '2018-08-08',
+            'margem_lucro'=> 200.0,
+            'nome'=> 'orçamento2',
+            'total'=> 199.75,
+            'ordem_id'=> 2,
+            'cliente_id' => '2',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
+        $endereco = Location::create([
             'bairro'=> 'Lugar nenhum',
             'cep'=> 12345678,
             'cidade'=> 'São Bento',
             'complemento'=> '',
+            'endereco'=> 'Freeza, n° 80',
+            'uf' => 'CE'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '8533756283'
+        ]);
+
+        Budget::create([
+            'status'=> 'AGUARDANDO',
             'data'=> '2018-08-08',
             'margem_lucro'=> 150.0,
             'nome'=> 'orçamento3',
-            'endereco'=> 'Freeza, n° 80',
-            'telefone'=> '8533756283',
             'total'=> 0,
-            'uf' => 'CE'
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
         ]);
 
         Product::create([
@@ -211,32 +255,48 @@ class CarregaItensTeste extends Seeder
             'categoria_componente_id' => 8
         ]);
 
-        Provider::create([
+        $endereco = Location::create([
             'bairro'=> 'bairro1',
-            'celular'=> '91134567890',
             'cep'=> 12345678,
             'cidade'=> 'cidade1',
-            'cnpj'=> '21312412412234',
-            'email'=> 'fornecedor1@fornecedor.com',
-            'nome'=> 'fornecedor 1',
             'endereco'=> 'rua1, n° 23',
-            'situacao'=> 'ativo',
-            'telefone'=> '1122334455',
             'uf'=> 'BA'
         ]);
 
+        $contato = Contact::create([
+            'telefone'=> '1122334455',
+            'celular'=> '91134567890',
+            'email' => 'fornecedor1@fornecedor.com'
+        ]);
+
         Provider::create([
+            'cnpj'=> '21312412412234',
+            'nome'=> 'fornecedor 1',
+            'situacao'=> 'ativo',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
+        $endereco = Location::create([
             'bairro'=> 'bairro2',
-            'celular'=> '91232435465',
             'cep'=> 64364364,
             'cidade'=> 'cidade2',
-            'cnpj'=> '12325674747547',
-            'email'=> 'fornecedor2@fornecedor.com',
-            'nome'=> 'fornecedor2',
             'endereco'=> 'rua2, n° 120',
-            'situacao'=> 'desativado',
-            'telefone'=> '0998877665',
             'uf'=> 'MG'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '0998877665',
+            'celular'=> '91232435465',
+            'email' => 'fornecedor2@fornecedor.com'
+        ]);
+
+        Provider::create([
+            'cnpj'=> '12325674747547',
+            'nome'=> 'fornecedor2',
+            'situacao'=> 'desativado',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
         ]);
 
 
@@ -266,20 +326,29 @@ class CarregaItensTeste extends Seeder
         $order = Order::find(2);
         $order->budgets()->attach([2]);*/
 
-        Company::create([
+        $endereco = Location::create([
             'bairro'=> 'centro',
-            'cidade'=> 'Cabo frio',
             'cep'=> 52930120,
-            'email'=> 'vidracaria@sv.com',
-            'nome'=> 'Vidraçaria S&V',
+            'cidade'=> 'Cabo frio',
             'endereco'=> 'av. souza n°255',
-            'telefone'=> '2326776451',
             'uf'=> 'RJ'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '2326776451',
+            'email' => 'vidracaria@sv.com'
+        ]);
+
+        Company::create([
+            'nome'=> 'Vidraçaria S&V',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
         ]);
 
         Sale::create([
             'tipo_pagamento'=> 'A VISTA',
             'data_venda'=> '2018-08-29',
+            'valor_venda'=> 800.61,
             'orcamento_id'=> 1
         ]);
 
@@ -287,26 +356,27 @@ class CarregaItensTeste extends Seeder
             'tipo_pagamento'=> 'A PRAZO',
             'data_venda'=> '2018-08-29',
             'qtd_parcelas'=> 2,
+            'valor_venda'=> 199.75,
             'orcamento_id'=> 2
         ]);
 
         Installment::create([
             'data_vencimento'=> '2018-09-29',
             'status_parcela'=> 'PAGO',
-            'valor_parcela'=> 99.19,
+            'valor_parcela'=> 99.87,
             'venda_id'=> 2
         ]);
 
         Installment::create([
             'data_vencimento'=> '2018-09-29',
             'status_parcela'=> 'ABERTO',
-            'valor_parcela'=> 99.19,
+            'valor_parcela'=> 99.87,
             'venda_id'=> 2
         ]);
 
         $payment = Payment::create([
             'data_pagamento'=> '2018-09-29',
-            'valor_pago'=> 800.04,
+            'valor_pago'=> 800.61,
             'venda_id'=> 1
         ]);
 
@@ -314,13 +384,15 @@ class CarregaItensTeste extends Seeder
             'tipo'=>'RECEITA',
             'descricao'=>'Pagamento de venda à vista.',
             'valor'=>$payment->valor_pago,
+            'data_vencimento'=> $payment->data_pagamento,
+            'status'=>'CONFIRMADO',
             'pagamento_id'=> $payment->id,
             'usuario_id'=> 1
         ]);
 
         $payment = Payment::create([
             'data_pagamento'=> '2018-10-18',
-            'valor_pago'=> 99.19,
+            'valor_pago'=> 99.87,
             'venda_id'=> 2
         ]);
 
@@ -328,6 +400,8 @@ class CarregaItensTeste extends Seeder
             'tipo'=>'RECEITA',
             'descricao'=>'Parcelas pagas.',
             'valor'=>$payment->valor_pago,
+            'data_vencimento'=> $payment->data_pagamento,
+            'status'=>'CONFIRMADO',
             'pagamento_id'=> $payment->id,
             'usuario_id'=> 1
         ]);

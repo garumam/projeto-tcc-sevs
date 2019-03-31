@@ -16,22 +16,20 @@
             <td>{{$client->nome}}</td>
             @php
                 $campoNome = '';
-                $documento = null;
+                $documento = $client->documento;
                 $mask = '';
-                if($client->cpf !== null){
+                if(strlen($client->documento) <= 11){
                     $campoNome = 'Cpf:';
-                    $documento = $client->cpf;
                     $mask = '###.###.###-##';
                 }else{
                     $campoNome = 'Cnpj:';
-                    $documento = $client->cnpj;
                     $mask = '##.###.###/####-##';
                 }
 
             @endphp
             <td>{{App\Http\Controllers\PdfController::mask($documento,$mask)}}</td>
             @php
-                $telefone = $client->telefone;
+                $telefone = $client->contact()->first()->telefone;
                 if($telefone !== null){
                 // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
                 $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);

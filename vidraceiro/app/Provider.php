@@ -6,7 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Provider extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'nome',
+        'situacao',
+        'cnpj',
+        'endereco_id',
+        'contato_id'
+    ];
+
+    public function location(){
+        return $this->hasOne(Location::class,'id','endereco_id');
+    }
+
+    public function contact(){
+        return $this->hasOne(Contact::class,'id','endereco_id');
+    }
 
     public function glasses(){
         return $this->belongsToMany(

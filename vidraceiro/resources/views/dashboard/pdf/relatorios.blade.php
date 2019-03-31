@@ -153,7 +153,7 @@
                     <td class="texto">
                         <b>Nome:</b> {{$glass->glass->nome .' |'}}
                         <b>Tipo:</b> {{$glass->glass->tipo .' |'}}
-                        <b>Em estoque:</b> {{$glass->metros_quadrados . ' m²'}}
+                        <b>Em estoque:</b> {{$glass->qtd . ' m²'}}
                     </td>
                 </tr>
 
@@ -209,13 +209,17 @@
 
 
     <h3>Relatório financeiro</h3>
-    <h4>Movimentações encontradas: {{count($financials->toArray())}}</h4>
+    <h4>Movimentações encontradas: {{count($financials->toArray()) + count($installments->toArray())}}</h4>
     @php
         $possui_receitas = $possui_despesas = false;
         $totalReceitas = $totalDespesas = 0;
         foreach ($financials->where('tipo','RECEITA') as $receita){
             $possui_receitas = true;
             $totalReceitas += $receita->valor;
+        }
+        foreach ($installments as $receita){
+            $possui_receitas = true;
+            $totalReceitas += ($receita->valor_parcela + $receita->multa);
         }
         foreach ($financials->where('tipo','DESPESA') as $despesa){
             $possui_despesas = true;
@@ -234,31 +238,50 @@
     @endif
 
 
-
-    @forelse($financials as $financial)
-
+    @php $contador = 0; @endphp
+    @foreach($financials as $financial)
+        @php $contador += 1; @endphp
         <div class="flex">
             <table class="tabela-relatorio">
                 <tr>
-                    <td class="indice">{{$financial->id}}</td>
+                    <td class="indice">{{$contador}}</td>
                     <td class="texto">
                         <b>Tipo:</b> {{$financial->tipo .' |'}}
                         <b>Descrição:</b> {{$financial->descricao??'Sem descrição!' .' |'}}
                         <b>Valor:</b> {{'R$'.$financial->valor.' |'}}
-                        @php $payment = $financial->payment()->first(); @endphp
-                        @if(!empty($payment))
-                            <b>Adicionada em:</b> {{date_format(date_create($payment->data_pagamento), 'd/m/Y')}}
-                        @else
-                            <b>Adicionada em:</b> {{date_format(date_create($financial->created_at), 'd/m/Y')}}
-                        @endif
+                        <b>Data:</b> {{date_format(date_create($financial->data_vencimento), 'd/m/Y')}}
                     </td>
                 </tr>
             </table>
         </div>
-    @empty
-        <p>Nenhuma movimentação encontrada com as características passadas.</p>
-    @endforelse
+    @endforeach
+    
+    @foreach($installments as $installment)
+        @php 
+        $contador += 1; 
+        
+        $sale = $installment->sale()->first();     
+        $client = $sale->budget()->first()->client()->first();
 
+        @endphp
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$contador}}</td>
+                    <td class="texto">
+                        <b>Tipo:</b> RECEITA
+                        <b>Descrição:</b> {{$client->nome.' - Parcela a receber'.' |'}}
+                        <b>Valor:</b> {{'R$'.($installment->valor_parcela + $installment->multa).' |'}}
+                        <b>Data de vencimento:</b> {{date_format(date_create($installment->data_vencimento), 'd/m/Y')}}      
+                    </td>
+                </tr>
+            </table>
+        </div>
+    @endforeach
+    
+    @if(empty($installments) && empty($financials))
+    <p>Nenhuma movimentação encontrada com as características passadas.</p>
+    @endif
 
     @break
 
@@ -269,8 +292,9 @@
 
     @forelse($clients as $client)
         @php
-            $telefone = $client->telefone;
-            $celular = $client->celular;
+            $contact = $client->contact()->first();
+            $telefone = $contact->telefone;
+            $celular = $contact->celular;
             if($telefone !== null){
             // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
             $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
@@ -282,15 +306,13 @@
 
 
             $campoNome = '';
-            $documento = null;
+            $documento = $client->documento;
             $mask = '';
-            if($client->cpf !== null){
+            if(strlen($client->documento) <= 11){
                 $campoNome = 'Cpf:';
-                $documento = $client->cpf;
                 $mask = '###.###.###-##';
             }else{
                 $campoNome = 'Cnpj:';
-                $documento = $client->cnpj;
                 $mask = '##.###.###/####-##';
             }
         @endphp
@@ -305,6 +327,7 @@
                         @can('gerenciamento')<b>Situação:</b> {{$client->status .' |'}}@endcan
                         <b>Telefone:</b> {{$telefone??'Não possui.'}}
                         <b>Celular:</b> {{$celular??'Não possui.'}}
+                        <b>E-mail:</b> {{$contact->email??'Não possui.'}}
                         <b>Cadastrado em:</b> {{date_format(date_create($client->created_at), 'd/m/Y')}}
                     </td>
                 </tr>
@@ -324,8 +347,9 @@
 
     @forelse($providers as $provider)
         @php
-            $telefone = $provider->telefone;
-            $celular = $provider->celular;
+            $contact = $provider->contact()->first();
+            $telefone = $contact->telefone;
+            $celular = $contact->celular;
             if($telefone !== null){
             // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
             $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
@@ -350,7 +374,7 @@
                         <b>Situação:</b> {{$provider->situacao .' |'}}
                         <b>Telefone:</b> {{$telefone??'Não possui.'}}{{' |'}}
                         <b>Celular:</b> {{$celular??'Não possui.'}}{{' |'}}
-                        <b>E-mail:</b> {{$provider->email??'Não possui.'}}{{' |'}}
+                        <b>E-mail:</b> {{$contact->email??'Não possui.'}}{{' |'}}
                         <b>Cadastrado em:</b> {{date_format(date_create($provider->created_at), 'd/m/Y')}}
                     </td>
                 </tr>
@@ -372,6 +396,14 @@
         @php
             $budget = $sale->budget()->first();
             $client = $budget->client()->first();
+
+            $valorVenda = $sale->installments()->first();
+            if($valorVenda){
+            $valorVenda = $valorVenda->valor_parcela * $sale->qtd_parcelas;
+            }else{
+            $valorVenda = $sale->payments()->first()->valor_pago;
+            }
+            $valorVenda += $sale->entrada;
         @endphp
 
         <div class="flex">
@@ -382,7 +414,7 @@
                         <b>Orçamento utilizado:</b> {{$budget->nome .' |'}}
                         <b>Cliente: </b>{{$client->nome??'Anônimo'}}{{' |'}}
                         <b>Forma de pagamento:</b> {{$sale->tipo_pagamento .' |'}}
-                        <b>Valor da venda:</b> {{$budget->total}}{{' |'}}
+                        <b>Valor da venda:</b> {{$valorVenda}}{{' |'}}
                         <b>Data da venda:</b> {{date_format(date_create($sale->data_venda), 'd/m/Y')}}
                     </td>
                 </tr>

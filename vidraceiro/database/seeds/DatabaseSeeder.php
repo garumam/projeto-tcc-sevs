@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeds::class);
         $this->call(CarregaItens::class);
         $this->call(CarregaItensTeste::class);
-
+        /*
         //INICIO FACTORY
 
         factory(App\Client::class, 10)->create();
@@ -159,7 +159,7 @@ class DatabaseSeeder extends Seeder
 
 
         //FIM FACTORY
-
+        */
     }
 
     public function atualizaTotal()

@@ -11,6 +11,7 @@ class Sale extends Model
         'tipo_pagamento',
         'qtd_parcelas',
         'data_venda',
+        'valor_venda',
         'desconto',
         'entrada',
         'orcamento_id',
@@ -81,8 +82,8 @@ class Sale extends Model
                 'venda_id' => $this->id
             ]);
         }
-
-        $this->createSalePayment($request->data_venda,$request->entrada,'Entrada recebida de venda a prazo.',$user_id);
+        if($request->entrada !== 0)
+            $this->createSalePayment($request->data_venda,$request->entrada,'Entrada recebida de venda a prazo.',$user_id);
 
         $budget = $this->budget;
         $client = new Client();
@@ -102,6 +103,8 @@ class Sale extends Model
             'tipo' => 'RECEITA',
             'descricao' => $message,
             'valor' => $payment->valor_pago,
+            'data_vencimento' => $payment->data_pagamento,
+            'status' => 'CONFIRMADO',
             'pagamento_id' => $payment->id,
             'usuario_id'=> $user_id
         ]);
@@ -175,14 +178,14 @@ class Sale extends Model
                 $m2 = ceil((($product->largura * $product->altura)*$product->qtd));
                 $glassestoque = Storage::getFirstStorageWhere('glass_id', $glass->mglass_id);
                 $qtdreservadavenda = $this->getStorageSalePivot('glass_id',$glass->mglass_id);
-                if ($glassestoque->metros_quadrados > 0) {
+                if ($glassestoque->qtd > 0) {
                     $qtd_reservada = null;
                     $resto = 0;
-                    if ($glassestoque->metros_quadrados < $m2) {
-                        $qtd_reservada = $glassestoque->metros_quadrados;
+                    if ($glassestoque->qtd < $m2) {
+                        $qtd_reservada = $glassestoque->qtd;
                     } else {
                         $qtd_reservada = $m2;
-                        $resto = $glassestoque->metros_quadrados - $m2;
+                        $resto = $glassestoque->qtd - $m2;
                     }
 
                     if (!empty($qtdreservadavenda)) {
@@ -190,7 +193,7 @@ class Sale extends Model
                     }
                     $this->attachStorageAndReservedQuantity($glassestoque->id,$qtd_reservada);
 
-                    $glassestoque->updateStorage('metros_quadrados',$resto);
+                    $glassestoque->updateStorage('qtd',$resto);
                     $mensagem = ', estoque atualizado!';
 
                 }
@@ -288,15 +291,13 @@ class Sale extends Model
 
                 if($totalentrou){
                     $query->where(function ($q) use ($totalde,$totalate){
+                        
+                        if($totalate !== null)
+                            $q->where('valor_venda','<=',$totalate);
 
-                        $q->whereHas('budget',function ($b) use ($totalde,$totalate){
-                            if($totalate !== null)
-                                $b->where('total','<=',$totalate);
-
-                            if($totalde !== null)
-                                $b->where('total','>=',$totalde);
-                        });
-
+                        if($totalde !== null)
+                            $q->where('valor_venda','>=',$totalde);
+                        
                     });
                 }
             });

@@ -17,6 +17,8 @@ class CreateFinancialsTable extends Migration
             $table->increments('id');
             $table->string('tipo');
             $table->string('descricao')->nullable();
+            $table->string('data_vencimento');
+            $table->string('status');
             $table->double('valor');
             $table->integer('usuario_id')->nullable()->unsigned();
             $table->foreign('usuario_id')->references('id')->on('users');

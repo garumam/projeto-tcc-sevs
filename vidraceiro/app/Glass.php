@@ -91,7 +91,6 @@ class Glass extends Model
 
         if($glass->is_modelo === 1){
             Storage::createStorage([
-                'metros_quadrados' => 0,
                 'glass_id' => $glass->id
             ]);
         }

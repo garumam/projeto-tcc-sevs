@@ -56,7 +56,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="total">Total</label>
-                        <input type="number" class="form-control" id="total"
+                        <input type="number" step=".01" name="valor_venda" class="form-control" id="total"
                                value="{{old('total')}}" placeholder="R$" required
                                readonly>
                     </div>
@@ -80,7 +80,7 @@
 
                     <div id="valor_parcela" class="form-group col-md-4" style="display: none;">
                         <label for="valor_parc">Valor das parcelas</label>
-                        <input type="number" class="form-control" id="valor_parc" placeholder="R$" readonly>
+                        <input type="number" step=".01" class="form-control" id="valor_parc" placeholder="R$" readonly>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -99,6 +99,11 @@
                         <label for="entrada">Entrada(R$)</label>
                         <input type="number" step=".01" class="form-control" id="entrada"
                                value="{{old('entrada')}}" placeholder="R$">
+                    </div>
+
+                    <div id="semjurosdisplay" class="form-check col-md-12 ml-4" style="display: none;">
+                        <input type="checkbox" class="form-check-input" data-juros="{{$juros/100}}" name="sem_juros" id="sem_juros">
+                        <label class="form-check-label" for="sem_juros">Sem juros</label>
                     </div>
 
                     <div class="form-check col-md-12 ml-4">

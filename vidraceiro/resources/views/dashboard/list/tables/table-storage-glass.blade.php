@@ -15,7 +15,7 @@
             <th scope="row">{{ $glass->id }}</th>
             <td>{{ $glass->nome.' '. $glass->tipo}}</td>
             <td>{{ $glass->category->nome }}</td>
-            <td>{{ $glass->storage->metros_quadrados or '0' }}</td>
+            <td>{{ $glass->storage->qtd or '0' }}</td>
         </tr>
     @endforeach
     </tbody>

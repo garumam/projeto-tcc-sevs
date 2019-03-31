@@ -78,48 +78,48 @@
 </head>
 <body>
 
-<p>{{$company->nome}}</p>
-<p>{{$company->endereco .' - '. $company->bairro}}</p>
-<p>{{$company->cidade .' - '. $company->uf}}</p>
-<p>E-mail: {{$company->email}}</p>
-
+@if(!empty($company)) 
 @php
-    $telefone = $company->telefone;
+    $location = $company->location()->first();
+    $contact = $company->contact()->first();
+    $telefone = $contact->telefone;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
     }
-
 @endphp
-
+<p>{{$company->nome}}</p>
+<p>{{$location->endereco .' - '. $location->bairro}}</p>
+<p>{{$location->cidade .' - '. $location->uf}}</p>
+<p>E-mail: {{$contact->email}}</p>
 <p>Telefone: {{$telefone}}</p>
 <div class="line"></div>
+@endif
 
 <h3>Dados do cliente</h3>
 <p>Nome: {{$client->nome}}</p>
 @php
     $campoNome = '';
-    $documento = null;
+    $documento = $client->documento;
     $mask = '';
-    if($client->cpf !== null){
+    if(strlen($client->documento) <= 11){
         $campoNome = 'Cpf:';
-        $documento = $client->cpf;
         $mask = '###.###.###-##';
     }else{
         $campoNome = 'Cnpj:';
-        $documento = $client->cnpj;
         $mask = '##.###.###/####-##';
     }
-
+    $location = $client->location()->first();
 @endphp
 <p>{{$campoNome.' '}} {{App\Http\Controllers\PdfController::mask($documento,$mask)}}</p>
-<p>Endereço: {{$client->endereco .' - '. $client->bairro}}</p>
-<p>Uf: {{$client->uf}}</p>
-<p>Cep: {{$client->cep}}</p>
-<p>Complemento: {{$client->complemento}}</p>
+<p>Endereço: {{$location->endereco .' - '. $location->bairro}}</p>
+<p>Uf: {{$location->uf}}</p>
+<p>Cep: {{$location->cep}}</p>
+<p>Complemento: {{$location->complemento}}</p>
 @php
-    $telefone = $client->telefone;
-    $celular = $client->celular;
+    $contact = $client->contact()->first();
+    $telefone = $contact->telefone;
+    $celular = $contact->celular;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
@@ -132,7 +132,7 @@
 @endphp
 <p>Telefone: {{$telefone or 'não cadastrado!'}}</p>
 <p>Celular: {{$celular or 'não cadastrado!'}}</p>
-<p>Email: {{$client->email or 'não cadastrado!'}}</p>
+<p>Email: {{$contact->email or 'não cadastrado!'}}</p>
 
 <h3>Orçamentos</h3>
 

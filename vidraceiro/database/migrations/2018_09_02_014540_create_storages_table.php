@@ -16,8 +16,7 @@ class CreateStoragesTable extends Migration
 
         Schema::create('storages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('metros_quadrados')->nullable();
-            $table->integer('qtd')->nullable();
+            $table->integer('qtd')->default(0);
             $table->integer('glass_id')->nullable()->unsigned();
             $table->integer('aluminum_id')->nullable()->unsigned();
             $table->integer('component_id')->nullable()->unsigned();

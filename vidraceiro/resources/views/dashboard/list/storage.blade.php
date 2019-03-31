@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="m2" class="obrigatorio">M²</label>
-                                <input type="number" class="form-control" id="m2" name="m2"
+                                <input type="number" class="form-control" id="m2" name="qtd"
                                        placeholder="0" required>
                             </div>
                             <div class="form-group col-md-2 align-self-end">

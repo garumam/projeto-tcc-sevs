@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigurationsTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateConfigurationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configurations', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('porcent_reajuste')->default(5.0);
-            $table->integer('dias_parcelas')->default(30);
-            $table->double('porcent_m_lucro')->default(100.0);
-            $table->double('juros_mensal_parcel')->default(1.0);
+            $table->string('email')->nullable();
+            $table->string('telefone')->nullable();
+            $table->string('celular')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateConfigurationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configurations');
+        Schema::dropIfExists('contacts');
     }
 }

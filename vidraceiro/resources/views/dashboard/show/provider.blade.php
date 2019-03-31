@@ -40,11 +40,15 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Telefone: </b><label id="{{$provider->telefone !== null?'telefone':''}}"> {{$provider->telefone or 'não cadastrado!'}}</label>
+                            @php 
+                            $location = $provider->location()->first(); 
+                            $contact = $provider->contact()->first();
+                            @endphp
+                            <b>Telefone: </b><label id="{{$contact->telefone !== null?'telefone':''}}"> {{$contact->telefone or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Celular: </b><label id="{{$provider->celular !== null?'celular':''}}"> {{$provider->celular or 'não cadastrado!'}}</label>
+                            <b>Celular: </b><label id="{{$contact->celular !== null?'celular':''}}"> {{$contact->celular or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Email: </b> {{$provider->email or 'não cadastrado!'}}
+                            <b>Email: </b> {{$contact->email or 'não cadastrado!'}}
                         </div>
                     </div>
                 </div>
@@ -58,15 +62,48 @@
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Endereço: </b> {{$provider->endereco or 'não cadastrado!'}}
+                            <b>Endereço: </b> {{$location->endereco or 'não cadastrado!'}}
                             <hr>
-                            <b>Bairro: </b> {{$provider->bairro or 'não cadastrado!'}}
+                            <b>Bairro: </b> {{$location->bairro or 'não cadastrado!'}}
                             <hr>
-                            <b>Cidade: </b> {{$provider->cidade or 'não cadastrado!'}}
+                            <b>Cidade: </b> {{$location->cidade or 'não cadastrado!'}}
                             <hr>
-                            <b>Uf: </b> {{$provider->uf or 'não cadastrado!'}}
+                            <b>Uf: </b> {{$location->uf or 'não cadastrado!'}}
                             <hr>
-                            <b>Cep: </b><label id="{{$provider->cep !== null?'cep':''}}"> {{$provider->cep or 'não cadastrado!'}}</label>
+                            <b>Cep: </b><label id="{{$location->cep !== null?'cep':''}}"> {{$location->cep or 'não cadastrado!'}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Materiais fornecidos
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            <b>Vidros: </b> 
+                            @forelse($provider->glasses()->get() as $glass)
+                            {{$glass->nome .' '.$glass->tipo.' | '}}
+                            @empty
+                            Nenhum vidro!
+                            @endforelse
+                            <hr>
+                            <b>Alumínios: </b> 
+                            @forelse($provider->aluminums()->get() as $aluminum)
+                            {{$aluminum->perfil.' | '}}
+                            @empty
+                            Nenhum alumínio!
+                            @endforelse
+                            <hr>
+                            <b>Componentes: </b>
+                            @forelse($provider->components()->get() as $component)
+                            {{$component->nome.' | '}}
+                            @empty
+                            Nenhum componente!
+                            @endforelse
                         </div>
                     </div>
                 </div>

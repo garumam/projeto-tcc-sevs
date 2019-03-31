@@ -7,6 +7,8 @@ use App\Uf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Location;
+use App\Contact;
 
 class ClientController extends Controller
 {
@@ -53,16 +55,18 @@ class ClientController extends Controller
         }
 
         $docvalidation = null;
-        $docnull = null;
 
-        $this->prepareDocValidation($docvalidation,$docnull,'',$request);
+        $this->prepareDocValidation($docvalidation,'',$request);
 
         $validado = $this->rules_client($request->all(), $docvalidation);
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
 
-
-        $client = $this->client->createClient(array_merge($request->all(), $docnull, ['status' => 'EM DIA']));
+        $location = new Location();
+        $location = $location->createLocation($request->all());
+        $contact = new Contact();
+        $contact = $contact->createContact($request->all());
+        $client = $this->client->createClient(array_merge($request->all(),['status' => 'EM DIA','endereco_id' => $location->id,'contato_id'=>$contact->id]));
 
         if ($client)
             return redirect()->back()->with('success', 'Cliente cadastrado com sucesso');
@@ -116,9 +120,8 @@ class ClientController extends Controller
             return redirect(route('clients.index'))->withErrors($validado);
 
         $docvalidation = null;
-        $docnull = null;
 
-        $this->prepareDocValidation($docvalidation,$docnull,$id,$request);
+        $this->prepareDocValidation($docvalidation,$id,$request);
 
         $validado = $this->rules_client($request->all(), $docvalidation);
 
@@ -126,7 +129,11 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validado);
 
         $this->client = $this->client->findClientById($id);
-        $client = $this->client->updateClient(array_merge($request->all(), $docnull));
+        $location = $this->client->location()->first();
+        $location->updateLocation($request->all());
+        $contact = $this->client->contact()->first();
+        $contact->updateContact($request->all());
+        $client = $this->client->updateClient($request->all());
 
         if ($client) {
             $mensagem = 'Cliente atualizado com sucesso';
@@ -194,16 +201,16 @@ class ClientController extends Controller
         return $validator;
     }
 
-    public function prepareDocValidation(&$docvalidation,&$docnull,$ignoreId, $request){
+    public function prepareDocValidation(&$docvalidation,$ignoreId, $request){
 
-        if ($request->has('cpf')) {
-            $docvalidation = ['cpf' => 'required|string|unique:clients,cpf,' . $ignoreId . '|min:11|max:20'];
-            $docnull = ['cnpj' => null];
-        } elseif ($request->has('cnpj')) {
-            $docvalidation = ['cnpj' => 'required|string|unique:clients,cnpj,' . $ignoreId . '|min:14|max:20'];
-            $docnull = ['cpf' => null];
+        if (strlen($request->documento) <= 11) {
+            $docvalidation = ['documento' => 'required|string|unique:clients,documento,' . $ignoreId . '|min:11|max:11'];
+            
+        } elseif (strlen($request->documento) > 11) {
+            $docvalidation = ['documento' => 'required|string|unique:clients,documento,' . $ignoreId . '|min:14|max:14'];
+            
         } else {
-            $docvalidation = ['cnpj' => 'required', 'cpf' => 'required'];
+            $docvalidation = ['documento' => 'required'];
         }
 
     }

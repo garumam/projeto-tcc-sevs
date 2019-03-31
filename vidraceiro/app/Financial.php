@@ -12,6 +12,8 @@ class Financial extends Model
         'tipo',
         'descricao',
         'valor',
+        'data_vencimento',
+        'status',
         'pagamento_id',
         'usuario_id'
     ];
@@ -24,7 +26,7 @@ class Financial extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function getWithSearchAndPagination($search, $paginate, $period, &$financialsByPeriod, $restore = false){
+    public function getWithSearchAndPagination($search, $paginate, $period, &$financialsByPeriod, $restore = false, $status = null, $type = null){
 
         $paginate = $paginate ?? 10;
         $period = $period ?? 'hoje';
@@ -65,16 +67,19 @@ class Financial extends Model
         $queryBuilder = self::when($data_inicial, function ($query) use ($data_inicial, $data_final) {
 
                     return $query-> where(function ($c) use ($data_inicial,$data_final){
-
-                        $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                            $q->whereDate('data_pagamento','<=',$data_final);
-                            $q->whereDate('data_pagamento','>=',$data_inicial);
-                        })
-                        ->orWhere(function ($q) use ($data_inicial,$data_final){
-                            $q->whereNull('pagamento_id');
-                            $q->whereDate('created_at','<=',$data_final);
-                            $q->whereDate('created_at','>=',$data_inicial);
-                        });
+                        
+                        $c->whereDate('data_vencimento','<=',$data_final);
+                        $c->whereDate('data_vencimento','>=',$data_inicial);
+                        
+                        // $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                        //     $q->whereDate('data_pagamento','<=',$data_final);
+                        //     $q->whereDate('data_pagamento','>=',$data_inicial);
+                        // })
+                        // ->orWhere(function ($q) use ($data_inicial,$data_final){
+                        //     $q->whereNull('pagamento_id');
+                        //     $q->whereDate('data_vencimento','<=',$data_final);
+                        //     $q->whereDate('data_vencimento','>=',$data_inicial);
+                        // });
 
                     });
             })
@@ -86,6 +91,12 @@ class Financial extends Model
                     });
             });
 
+        if($status !== null)
+            $queryBuilder = $queryBuilder->where('status',$status);
+        
+        if($type !== null)
+            $queryBuilder = $queryBuilder->where('tipo',$type);
+
         if($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
 
@@ -93,6 +104,7 @@ class Financial extends Model
 
         return $queryBuilder->paginate($paginate);
     }
+
 
     public function findFinancialById($id){
 
@@ -113,15 +125,21 @@ class Financial extends Model
 
     }
 
-    public static function getAll(){
+    public static function getAllByStatus($status){
 
-        return self::all();
+        return self::where('status',$status)->get();
 
     }
 
     public static function createFinancial(array $input){
 
         return self::create($input);
+
+    }
+
+    public function updateFinancial(array $input){
+
+        return self::update($input);
 
     }
 
@@ -133,7 +151,9 @@ class Financial extends Model
         $valor_final = $request->valor_final;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
+        $status = $request->status;
         $valorentrou = $dataentrou = false;
+        
 
         if($valor_inicial !== null || $valor_final !== null){
             $valorentrou = true;
@@ -145,28 +165,34 @@ class Financial extends Model
 
         if($valorentrou || $dataentrou){
 
-            $financials =  self::where(function ($query) use ($data_inicial,$data_final, $valor_inicial,$valor_final,$valorentrou,$dataentrou){
+            $financials =  self::where(function ($query) use ($data_inicial,$data_final, $valor_inicial,$valor_final,$valorentrou,$dataentrou,$status){
                 if($dataentrou){
 
 
                     $query-> where(function ($c) use ($data_inicial,$data_final){
 
-                        $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
-                            if($data_final !== null)
-                                $q->whereDate('data_pagamento','<=',$data_final);
+                        if($data_final !== null)
+                            $c->whereDate('data_vencimento','<=',$data_final);
 
-                            if($data_inicial !== null)
-                                $q->whereDate('data_pagamento','>=',$data_inicial);
-                        })
-                            ->orWhere(function ($q) use ($data_inicial,$data_final){
-                                $q->whereNull('pagamento_id');
+                        if($data_inicial !== null)
+                            $c->whereDate('data_vencimento','>=',$data_inicial);
 
-                                if($data_final !== null)
-                                    $q->whereDate('created_at','<=',$data_final);
+                        // $c->whereHas('payment', function ($q) use ($data_inicial,$data_final) {
+                        //     if($data_final !== null)
+                        //         $q->whereDate('data_pagamento','<=',$data_final);
 
-                                if($data_inicial !== null)
-                                    $q->whereDate('created_at','>=',$data_inicial);
-                            });
+                        //     if($data_inicial !== null)
+                        //         $q->whereDate('data_pagamento','>=',$data_inicial);
+                        // })
+                        //     ->orWhere(function ($q) use ($data_inicial,$data_final){
+                        //         $q->whereNull('pagamento_id');
+
+                        //         if($data_final !== null)
+                        //             $q->whereDate('data_vencimento','<=',$data_final);
+
+                        //         if($data_inicial !== null)
+                        //             $q->whereDate('data_vencimento','>=',$data_inicial);
+                        //     });
 
                     });
 
@@ -183,9 +209,13 @@ class Financial extends Model
                             $q->where('valor','>=',$valor_inicial);
                     });
                 }
+
+                
             });
         }
 
+        $financials = $financials->where('status',$status);
+        
         if($tipo_financa === 'TODOS'){
             $financials = $financials->get();
         }else{

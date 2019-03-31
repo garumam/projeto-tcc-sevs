@@ -133,6 +133,14 @@
                         </div>
 
                         <div class="form-group col-md-4">
+                            <label for="tipo">Situação da movimentação</label>
+                            <select class="custom-select" id="tipo" name="status" required>
+                                <option value="CONFIRMADO" selected>Confirmada</option>
+                                <option value="PENDENTE">Pendente</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
                             <label for="tipo">Tipo</label>
                             <select class="custom-select" id="tipo" name="tipo_financa" required>
                                 @foreach($tipos as $index => $value)

@@ -26,18 +26,17 @@
                             <hr>
                             @php
                                 $campoNome = '';
-                                $documento = null;
+                                $documento = $client->documento;
                                 $mask = '';
-                                if($client->cpf !== null){
+                                if(strlen($client->documento) <= 11){
                                     $campoNome = 'Cpf:';
-                                    $documento = $client->cpf;
                                     $mask = '###.###.###-##';
                                 }else{
                                     $campoNome = 'Cnpj:';
-                                    $documento = $client->cnpj;
                                     $mask = '##.###.###/####-##';
                                 }
-
+                                $location = $client->location()->first();
+                                $contact = $client->contact()->first();
                             @endphp
                             <b>{{$campoNome}} </b>{{App\Http\Controllers\PdfController::mask($documento,$mask)}}
                             @can('gerenciamento')
@@ -57,11 +56,11 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            <b>Telefone: </b><label id="{{$client->telefone !== null?'telefone':''}}"> {{$client->telefone or 'não cadastrado!'}}</label>
+                            <b>Telefone: </b><label id="{{$contact->telefone !== null?'telefone':''}}"> {{$contact->telefone or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Celular: </b><label id="{{$client->celular !== null?'celular':''}}"> {{$client->celular or 'não cadastrado!'}}</label>
+                            <b>Celular: </b><label id="{{$contact->celular !== null?'celular':''}}"> {{$contact->celular or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Email: </b> {{$client->email or 'não cadastrado!'}}
+                            <b>Email: </b> {{$contact->email or 'não cadastrado!'}}
                         </div>
                     </div>
                 </div>
@@ -74,18 +73,18 @@
                         </h5>
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-                            <b>Endereço: </b> {{$client->endereco or 'não cadastrado!'}}
+                        <div class="card-body">   
+                            <b>Endereço: </b> {{$location->endereco or 'não cadastrado!'}}
                             <hr>
-                            <b>Bairro: </b> {{$client->bairro or 'não cadastrado!'}}
+                            <b>Bairro: </b> {{$location->bairro or 'não cadastrado!'}}
                             <hr>
-                            <b>Cidade: </b> {{$client->cidade or 'não cadastrado!'}}
+                            <b>Cidade: </b> {{$location->cidade or 'não cadastrado!'}}
                             <hr>
-                            <b>Uf: </b> {{$client->uf or 'não cadastrado!'}}
+                            <b>Uf: </b> {{$location->uf or 'não cadastrado!'}}
                             <hr>
-                            <b>Cep: </b><label id="{{$client->cep !== null?'cep':''}}"> {{$client->cep or 'não cadastrado!'}}</label>
+                            <b>Cep: </b><label id="{{$location->cep !== null?'cep':''}}"> {{$location->cep or 'não cadastrado!'}}</label>
                             <hr>
-                            <b>Complemento: </b> {{$client->complemento or 'não cadastrado!'}}
+                            <b>Complemento: </b> {{$location->complemento or 'não cadastrado!'}}
                         </div>
                     </div>
                 </div>

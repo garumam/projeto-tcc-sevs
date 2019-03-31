@@ -18,6 +18,7 @@ class CreateSalesTable extends Migration
             $table->string('tipo_pagamento');
             $table->integer('qtd_parcelas')->nullable();
             $table->string('data_venda');
+            $table->double('valor_venda')->default(0);
             $table->double('desconto')->default(0);
             $table->double('entrada')->default(0);
             $table->integer('usuario_id')->nullable()->unsigned();

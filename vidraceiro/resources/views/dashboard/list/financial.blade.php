@@ -13,6 +13,9 @@
                         
                 <a class="tabs-financial nav-item nav-link" data-tab="nav-{{$titulotabs[1]}}-tab"
                                 data-id="{{lcfirst($titulotabs[1])}}">{{$titulotabs[1]}}</a>
+
+                <a class="tabs-financial nav-item nav-link" data-tab="nav-{{$titulotabs[2]}}-tab"
+                                data-id="{{lcfirst($titulotabs[2])}}">{{$titulotabs[2]}}</a>                
                 </div>
 
         
@@ -60,9 +63,22 @@
                                 <input type="text" maxlength="100" class="form-control" id="descricao" name="descricao">
                             </div>
 
+                            <div class="form-group col-md-4">
+                                <label for="data" class="obrigatorio">Data</label>
+                                <input type="date" class="form-control" id="data" name="data_vencimento" placeholder="00/00/0000" value="{{date('Y-m-d', time())}}">
+                            </div>
+
                             <div class="form-group col-md-2">
                                 <label for="valor" class="obrigatorio">Valor</label>
                                 <input type="number" step=".01" class="form-control" id="valor" name="valor" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="select-status" class="obrigatorio">Situação da movimentação</label>
+                                <select id="select-status" name="status" class="custom-select" required>
+                                    <option value="CONFIRMADO" selected>Confirmada</option>
+                                    <option value="PENDENTE">Pendente</option>
+                                </select>
                             </div>
 
                             <div class="form-group col-md-2 align-self-end">
@@ -138,9 +154,14 @@
                         @php
                             $receber = 0.00;
 
-                            foreach($allInstallments as $installment){
-                                $receber += $installment->valor_parcela + $installment->multa;
+                            foreach($pendingFinancials as $object){
+                                if($object instanceof App\Installment){
+                                    $receber += $object->valor_parcela + $object->multa;
+                                }else{
+                                    $receber += $object->valor;
+                                }
                             }
+                            
                             $receber = number_format($receber,2,',','.');
                         @endphp
 
@@ -169,12 +190,59 @@
                         </div>
 
                         <div class="table-responsive text-dark p-1" id="receber">
-                            @include('dashboard.list.tables.table-installments')
+                            @php $installAndFinanc = $futureReceipts; //INICIANDO VARIAVEL QUE SERÁ UTILIZADA ENTRO DA TABELA @endphp
+                            @include('dashboard.list.tables.table-receber-pagar')
                         </div>
 
                     </div>
                 </div>
             
+                <div id="nav-{{$titulotabs[2]}}-tab" class="tab-content">
+                    <div class="form-row formulario">
+
+                        @php
+                            $pagar = 0.00;
+
+                            foreach($payPending as $object){
+                                
+                                $pagar += $object->valor;
+                        
+                            }
+                            
+                            $pagar = number_format($pagar,2,',','.');
+                        @endphp
+
+                        <div class="form-group col-md-12 mt-2 mb-2">
+                            <ul class="list-group">
+                                <li class="list-group-item active" style="background-color: #4264FB; border-color: #4264FB">Total geral</li>
+                                <li class="list-group-item text-dark" >A pagar: <span style="color:{{$pagar > 0?'#dc3545':''}};">R${{$pagar}}</span></li>
+                            </ul>
+                        </div>
+                        <div class="form-row col-12 m-0 formulario px-0 justify-content-between">
+                            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-2">
+                                <label for="paginatepagar">Mostrar</label>
+                                <select id="paginatepagar" name="paginate" class="custom-select"
+                                        onchange="ajaxPesquisaLoad('{{url('financial')}}?pagar=1&search='+$('#searchpagar').val()+'&paginate='+$('#paginatepagar').val(),'pagar')">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                                <label for="searchpagar">Pesquisar</label>
+                                <input type="text" class="form-control"
+                                       onkeyup="ajaxPesquisaLoad('{{url('financial')}}?pagar=1&search='+$('#searchpagar').val()+'&paginate='+$('#paginatepagar').val(),'pagar')"
+                                       value="{{ old('search') }}" id="searchpagar" name="search" placeholder="Pesquisar">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive text-dark p-1" id="pagar">
+                            @php $installAndFinanc = $futurePayments; //INICIANDO VARIAVEL QUE SERÁ UTILIZADA ENTRO DA TABELA @endphp
+                            @include('dashboard.list.tables.table-receber-pagar')
+                        </div>
+
+                    </div>
+                </div>
             <!--Final Conteudo de cada tab -->
 
         </div>

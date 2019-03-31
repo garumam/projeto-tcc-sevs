@@ -89,20 +89,23 @@
 <body>
 <h2>Ordem de serviço</h2>
 
-<p>{{$company->nome}}</p>
-<p>{{$company->endereco .' - '. $company->bairro}}</p>
-<p>{{$company->cidade .' - '. $company->uf}}</p>
-<p>E-mail: {{$company->email}}</p>
+@if(!empty($company)) 
 @php
-    $telefone = $company->telefone;
+    $location = $company->location()->first();
+    $contact = $company->contact()->first();
+    $telefone = $contact->telefone;
     if($telefone !== null){
     // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
     $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
     }
-
 @endphp
+<p>{{$company->nome}}</p>
+<p>{{$location->endereco .' - '. $location->bairro}}</p>
+<p>{{$location->cidade .' - '. $location->uf}}</p>
+<p>E-mail: {{$contact->email}}</p>
 <p>Telefone: {{$telefone}}</p>
 <div class="line"></div>
+@endif
 
 <h3>Detalhes da ordem de serviço</h3>
 

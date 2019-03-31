@@ -10,19 +10,19 @@ class Client extends Model
 
     protected $fillable = [
         'nome',
-        'cpf',
-        'cnpj',
-        'telefone',
-        'celular',
-        'email',
-        'cep',
-        'endereco',
-        'bairro',
-        'uf',
-        'cidade',
-        'complemento',
-        'status'
+        'documento',
+        'status',
+        'endereco_id',
+        'contato_id'
     ];
+
+    public function location(){
+        return $this->hasOne(Location::class,'id','endereco_id');
+    }
+
+    public function contact(){
+        return $this->hasOne(Contact::class,'id','endereco_id');
+    }
 
     public function budgets(){
         return $this->hasMany(Budget::class,'cliente_id');
@@ -34,8 +34,7 @@ class Client extends Model
 
         $queryBuilder = self::where(function ($q) use ($search,$havePermission){
             $q->where('nome', 'like', '%' . $search . '%')
-                ->orWhere('cpf', 'like', '%' . $search . '%')
-                ->orWhere('cnpj', 'like', '%' . $search . '%');
+                ->orWhere('documento', 'like', '%' . $search . '%');
                 if($havePermission)
                     $q->orWhere('status', 'like', '%' . $search . '%');
         });
@@ -112,8 +111,9 @@ class Client extends Model
 
     public function updateClientBudgets(array $input){
         $budgetUpdated = false;
-        foreach (self::budgets()->get() as $budget) {
-            $budgetUpdated = $budget->update($input);
+        foreach (self::budgets()->with('location','contact')->get() as $budget) {
+            $budget->contact->updateContact(['telefone'=>$input['telefone']]);
+            $budgetUpdated = $budget->location->updateLocation($input);
         }
         return $budgetUpdated;
     }
