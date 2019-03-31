@@ -37,7 +37,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="select-orcamento-venda" class="obrigatorio">Orçamento</label>
-                        <select id="select-orcamento-venda" class="form-control form-control-chosen" name="orcamento_id" data-placeholder="Selecie um orçamento" style="display: none;">
+                        <select id="select-orcamento-venda" class="form-control form-control-chosen" name="orcamento_id" id="orcamento_id" data-placeholder="Selecie um orçamento" style="display: none;">
 
                                 <option value=""
                                         data-cliente="{{0}}"
@@ -104,6 +104,11 @@
                     <div id="semjurosdisplay" class="form-check col-md-12 ml-4" style="display: none;">
                         <input type="checkbox" class="form-check-input" data-juros="{{$juros/100}}" name="sem_juros" id="sem_juros">
                         <label class="form-check-label" for="sem_juros">Sem juros</label>
+                    </div>
+
+                    <div class="form-check col-md-12 ml-4">
+                        <input type="checkbox" class="form-check-input" name="usar_desconto" id="usar_desconto">
+                        <label class="form-check-label" for="usar_desconto">Marque se deseja vender como desconto</label>
                     </div>
 
                     <div class="form-check col-md-12 ml-4">

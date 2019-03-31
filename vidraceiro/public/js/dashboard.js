@@ -1042,6 +1042,24 @@ $(document).ready(function () {
         
     });
 
+    //checkbox usar desconto como venda
+
+    $('#usar_desconto').click(function (){
+        let valorTotal = $('#total').val();
+        let desconto =  $('#desconto').val();
+        if(valorTotal.length !== 0){
+            if($('#usar_desconto').is(":checked")){
+                 $('#desconto').val(valorTotal);
+                 $('#total').val('');
+            }
+        }else{
+            $('#usar_desconto').prop("checked", false);
+            $('#total').val(desconto);
+            $('#desconto').val('');
+        }
+        
+    });
+
 
     $('#select-tipo-pagamento').change(function (e) {
 
@@ -1171,7 +1189,7 @@ $(document).ready(function () {
                 total = orcamentoselecionado.data('total');
             }
             
-            if (somaDescontoEntrada > 0 && somaDescontoEntrada < total) {
+            if (somaDescontoEntrada > 0 && somaDescontoEntrada <= total) {
 
                 if (tipopagamentoselecionado.val() === 'A VISTA') {
 
