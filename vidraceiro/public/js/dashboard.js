@@ -1126,16 +1126,20 @@ $(document).ready(function () {
 
         if ($(this).val !== '' && $('#total').val() !== '') {
             
-            let desconto = $('#desconto').val();
-            desconto = desconto == ''? 0 : desconto;
-            let entrada = $('#entrada').val();
-            entrada = entrada == ''? 0 : entrada;
 
-            if($('#sem_juros').prop("checked")) {
-                calcularJuros((parseFloat(desconto) + parseFloat(entrada)),true);
-            }else{
-                calcularJuros((parseFloat(desconto) + parseFloat(entrada)),false);
-            }
+            calcularEntradaDesconto($('#desconto'), true);
+
+
+            // let desconto = $('#desconto').val();
+            // desconto = desconto == ''? 0 : desconto;
+            // let entrada = $('#entrada').val();
+            // entrada = entrada == ''? 0 : entrada;
+
+            // if($('#sem_juros').prop("checked")) {
+            //     calcularJuros((parseFloat(desconto) + parseFloat(entrada)),true);
+            // }else{
+            //     calcularJuros((parseFloat(desconto) + parseFloat(entrada)),false);
+            // }
             
         }
 
@@ -1160,14 +1164,15 @@ $(document).ready(function () {
         if(semJuros){
             total = parseFloat(orcamentoselecionado.data('total') - descontoEentrada).toFixed(2);
         }else{
-            total = parseFloat((parseFloat(orcamentoselecionado.data('total')) - descontoEentrada) * Math.pow(1 + $('#sem_juros').data('juros'), $('#qtd_parc').val())).toFixed(2);
+            total = parseFloat((parseFloat(orcamentoselecionado.data('total')) * Math.pow(1 + $('#sem_juros').data('juros'), $('#qtd_parc').val()) - descontoEentrada)).toFixed(2);
         }
+        total = total == -0? 0.00 : total;
         $('#total').val(total);
         
         $('#valor_parc').val(parseFloat(total / $('#qtd_parc').val()).toFixed(2));
     }
 
-    function calcularEntradaDesconto(input) {
+    function calcularEntradaDesconto(input, reset = false) {
         let desconto = $('#desconto');
         let entrada = $('#entrada');
 
@@ -1191,7 +1196,7 @@ $(document).ready(function () {
 
             let tipopagamentoselecionado = $('#select-tipo-pagamento option:selected');
 
-            if (tipopagamentoselecionado.val() === 'A PRAZO') {
+            if (tipopagamentoselecionado.val() === 'A PRAZO' && !$('#sem_juros').prop("checked")) {
                 total = parseFloat((orcamentoselecionado.data('total')) * Math.pow(1 + $('#sem_juros').data('juros'), $('#qtd_parc').val())).toFixed(2)
             }else{
                 total = orcamentoselecionado.data('total');
@@ -1222,18 +1227,25 @@ $(document).ready(function () {
 
             } else {
 
+
                 if (input.val() != '0') {
                     if (input.val() != '') {
                         $('#erro-js').attr('class', 'alert alert-danger')
                             .text('Valor inválido ou maior que o total!');
                     }
-
-
+                    if(reset){
+                        desconto.val('');
+                        entrada.val('');
+                        somaDescontoEntrada = 0;
+                    }else{
+                        somaDescontoEntrada = somaDescontoEntrada - input.val();
+                    }
+                    
                     if (tipopagamentoselecionado.val() === 'A PRAZO') {
                         if($('#sem_juros').prop("checked")) {
-                            calcularJuros(0,true);
+                            calcularJuros(somaDescontoEntrada,true);
                         }else{
-                            calcularJuros(0,false);
+                            calcularJuros(somaDescontoEntrada,false);
                         } 
                         
                     }else{
@@ -1434,7 +1446,7 @@ graficofinanceiro();
 graficoOrdens();
 graficoClientes();
 graficoOrcamentos();
-
+graficoCaixaFuturo();
 
 function graficoVendas() {
     var ctxVendas = document.getElementById("vendas");
@@ -1607,6 +1619,52 @@ function graficoClientes() {
                             'Qtd devendo'
                         ]
 
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                });
+            });
+    }
+}
+
+function graficoCaixaFuturo() {
+    var ctxCaixaFuturo = document.getElementById("caixafuturo");
+    if (ctxCaixaFuturo) {
+        fetch(host + '/dashboard/futurefinancial')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var saldofuturo = new Array();
+                for(let i = 0; i < data.receitas.length; i++){
+                    saldofuturo.push((data.receitas[i] - data.despesas[i]).toFixed(2));
+                }
+                var graficoCaixaFuturo = new Chart(ctxCaixaFuturo, {
+                    type: "line",
+                    data: {
+                        labels: periodos.reverse(),
+                        datasets: [{
+                            label: 'Receitas(R$)',
+                            data: data.receitas,
+                            backgroundColor: 'rgba(51,153,255,0)',
+                            borderColor: 'rgba(51,153,255,1)',
+                            borderWidth: 2
+                        },
+                            {
+                                label: 'Despesas(R$)',
+                                data: data.despesas,
+                                backgroundColor: 'rgba(255,0,0,0)',
+                                borderColor: 'rgba(255,0,0,1)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Saldo(R$)',
+                                data: saldofuturo,
+                                backgroundColor: 'rgba(100,255,50,0)',
+                                borderColor: 'rgba(100,255,50,1)',
+                                borderWidth: 2
+                            }
+                        ]
                     },
                     options: {
                         responsive: true,

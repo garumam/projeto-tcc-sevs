@@ -26,6 +26,7 @@ Route::get('/home', 'DashboardController@index')->name('home')->middleware('auth
 Route::prefix('dashboard')->group(function () {
     Route::get('/sales', 'Api\DashboardController@sales')->name('dashboard.sales');
     Route::get('/financial', 'Api\DashboardController@financial')->name('dashboard.financial');
+    Route::get('/futurefinancial', 'Api\DashboardController@futureFinancial')->name('dashboard.futurefinancial');
     Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
     Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
     Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');

@@ -96,6 +96,9 @@ class SaleController extends Controller
             $entrada = $request->entrada ?? 0;
             $request->merge(['entrada'=>$entrada]);
         }
+        $valorVenda = $request->valor_venda ?? 0;
+        $request->merge(['valor_venda'=>$valorVenda]);
+        
         $sale = $this->sale->createSale(array_merge($request->all(),['usuario_id'=>Auth::user()->id]));
 
         if ($request->has('valor_parcela')) {

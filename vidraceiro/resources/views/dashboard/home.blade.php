@@ -151,6 +151,19 @@
             </div>
         </div>
     </div>
+
+    <div class="col-12">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Previsão do fluxo de caixa futuro</h4>
+            </div>
+            <div class="chart-container" style="padding: .5rem; margin-bottom: 1rem;">
+                <canvas id="caixafuturo"></canvas>
+            </div>
+
+        </div>
+    </div>
+
     @endcan
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 

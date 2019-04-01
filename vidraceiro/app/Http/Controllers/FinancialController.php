@@ -40,7 +40,7 @@ class FinancialController extends Controller
         }
 
         if($request->has('receber') || !$request->ajax()){
-            $allInstallments = Installment::getPendingInstallmentsWithSearchAndPagination($request->get('search'));
+            $allInstallments = Installment::getPendingInstallmentsBySearch($request->get('search'));
             $pendingFinancials = null;
             $this->financial->getWithSearchAndPagination($request->get('search'),null,'tudo',$pendingFinancials,false,'PENDENTE','RECEITA');
             

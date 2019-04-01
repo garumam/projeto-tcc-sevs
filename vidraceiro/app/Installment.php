@@ -29,7 +29,7 @@ class Installment extends Model
         return self::whereIn('id', $ids)->get();
     }
 
-    public static function getPendingInstallmentsWithSearchAndPagination($search){
+    public static function getPendingInstallmentsBySearch($search){
 
 
         $queryBuilder = self::where('status_parcela', 'ABERTO')

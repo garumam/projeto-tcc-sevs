@@ -9,6 +9,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Installment;
 
 class DashboardController extends Controller
 {
@@ -54,6 +55,22 @@ class DashboardController extends Controller
         return response()->json(array('receitas' => $receitaperiodos, 'despesas' => $despesasperiodos));
     }
 
+    public function futureFinancial(){
+
+        $receitaperiodos = $despesasperiodos = null;
+
+        $financials = Financial::getAllByStatus('PENDENTE');
+        $installments = Installment::getPendingInstallmentsBySearch(null);
+        foreach($installments as $installment){
+            $financials->push($installment);
+        }
+
+        $this->getPeriods($financials,$receitaperiodos,$despesasperiodos,'futurefinancial');
+        
+        return response()->json(array('receitas' => $receitaperiodos, 'despesas' => $despesasperiodos));
+
+    }
+
 
     public function orders()
     {
@@ -90,7 +107,13 @@ class DashboardController extends Controller
 
 
         $periodos = ['anual','semestre','mes','semana','hoje'];
-
+        if($modelName === 'futurefinancial'){
+            $periodos = array_reverse($periodos);
+            $sinal = '+';
+        }else{
+            $sinal = '-';
+        }
+        
         foreach($periodos as $value) {
             $data_inicial = $data_final = date_format(date_create(today()), 'Y-m-d');
 
@@ -99,36 +122,38 @@ class DashboardController extends Controller
                     break;
                 case 'semana':
 
-                    $data_inicial = date('Y-m-d', strtotime("-6 days", strtotime($data_inicial)));
+                    $data_inicial = date('Y-m-d', strtotime($sinal."6 days", strtotime($data_inicial)));
 
                     break;
                 case 'mes':
 
-                    $data_inicial = date('Y-m-d', strtotime("-29 days", strtotime($data_inicial)));
+                    $data_inicial = date('Y-m-d', strtotime($sinal."29 days", strtotime($data_inicial)));
 
                     break;
                 case 'semestre':
 
-                    $data_inicial = date('Y-m-d', strtotime("-179 days", strtotime($data_inicial)));
+                    $data_inicial = date('Y-m-d', strtotime($sinal."179 days", strtotime($data_inicial)));
 
                     break;
                 case 'anual':
 
-                    $data_inicial = date('Y-m-d', strtotime("-359 days", strtotime($data_inicial)));
+                    $data_inicial = date('Y-m-d', strtotime($sinal."359 days", strtotime($data_inicial)));
 
                     break;
+            }
+
+            if($modelName === 'futurefinancial'){
+                $aux = $data_final;
+                $data_final = $data_inicial;
+                $data_inicial = $aux;
             }
 
 
             $objectsfilter = $objects->filter(function ($object) use($data_inicial,$data_final,$modelName){
                 if($modelName === 'order'){
                     $data = date_format(date_create($object->updated_at), 'Y-m-d');
-                }elseif($modelName === 'financial'){
-                    // $payment = $object->payment;
-                    // if($payment)
-                    //     $data = $payment->data_pagamento;
-                    // else
-                    //     $data = $object->created_at;
+                }elseif($modelName === 'financial' || $modelName === 'futurefinancial'){
+                    
                     $data = $object->data_vencimento;
                     $data = date_format(date_create($data), 'Y-m-d');
                 }elseif($modelName === 'budget'){
@@ -150,10 +175,16 @@ class DashboardController extends Controller
                 $firstArgument[] = $objectsfilter->where('situacao','=','CONCLUIDA')->count();
 
                 $secondArgument[] = $objectsfilter->where('situacao','=','CANCELADA')->count();
-            }elseif($modelName === 'financial'){
-
+            }elseif($modelName === 'financial' || $modelName === 'futurefinancial'){
+                
                 $receitas =  $objectsfilter->where('tipo','=','RECEITA');
                 $valor = $receitas->sum('valor');
+
+                if($modelName === 'futurefinancial'){
+                    $receitas = $objectsfilter->where('status_parcela','=','ABERTO');
+                    $valor += $receitas->sum('valor_parcela');
+                }
+
                 $valor = number_format($valor,2,'.','');
                 $firstArgument[] = (double)$valor;
 
@@ -161,6 +192,7 @@ class DashboardController extends Controller
                 $valor = $despesas->sum('valor');
                 $valor = number_format($valor,2,'.','');
                 $secondArgument[] = (double)$valor;
+                
 
             }elseif($modelName === 'budget'){
 
