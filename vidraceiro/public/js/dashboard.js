@@ -1083,7 +1083,7 @@ $(document).ready(function () {
         $('#desconto').val('');
         $('#qtd_parc').val('1');
         $('#sem_juros').prop( "checked", false);
-        
+        $('#usar_desconto').prop( "checked", false);
 
         if (tipopagamentoselecionado.val() === 'A VISTA') {
 
@@ -1091,6 +1091,7 @@ $(document).ready(function () {
             $('#valor_parcela').hide();
             $('#entradadisplay').hide();
             $('#semjurosdisplay').hide();
+            $('#userdescontodisplay').show();
             $('#valor_parc').attr('name', '').val('');
             $('#qtd_parc').attr('name', '');
             $('#entrada').attr('name', '').val('');
@@ -1099,11 +1100,12 @@ $(document).ready(function () {
             $('#total').val(totalOrcamento);
 
         } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
-            $('#usar_desconto').prop("checked", false);
+            
             $('#qtd_parcelas').show();
             $('#valor_parcela').show();
             $('#entradadisplay').show();
             $('#semjurosdisplay').show();
+            $('#userdescontodisplay').hide();
             $('#valor_parc').attr('name', 'valor_parcela');
             $('#qtd_parc').attr('name', 'qtd_parcelas');
             $('#entrada').attr('name', 'entrada');

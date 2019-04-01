@@ -106,7 +106,7 @@
                         <label class="form-check-label" for="sem_juros">Sem juros</label>
                     </div>
 
-                    <div class="form-check col-md-12 ml-4">
+                    <div id="userdescontodisplay" class="form-check col-md-12 ml-4">
                         <input type="checkbox" class="form-check-input" name="usar_desconto" id="usar_desconto">
                         <label class="form-check-label" for="usar_desconto">Marque se deseja desconto de 100% do valor</label>
                     </div>
