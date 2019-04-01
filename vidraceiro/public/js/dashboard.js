@@ -1071,7 +1071,7 @@ $(document).ready(function () {
 
         let orcamentoselecionado = $('#select-orcamento-venda option:selected');
 
-        if (!orcamentoselecionado.data('cliente') && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO' || orcamentoselecionado.val() == '') {
+        if (!orcamentoselecionado.data('cliente') && $('#select-tipo-pagamento option:selected').val() === 'A PRAZO') {
             $('#erro-js').attr('class', 'alert alert-danger')
                 .text('Selecione um orçamento com cliente cadastrado para liberar o pagamento a prazo!');
             $('#select-tipo-pagamento').val('A VISTA');
