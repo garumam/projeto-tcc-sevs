@@ -1045,18 +1045,24 @@ $(document).ready(function () {
     //checkbox usar desconto como venda
 
     $('#usar_desconto').click(function (){
-        let valorTotal = $('#total').val();
-        let desconto =  $('#desconto').val();
-        if(valorTotal.length !== 0 && desconto.length == 0){
-            if($('#usar_desconto').is(":checked")){
-                 $('#desconto').val(valorTotal);
-                 $('#total').val('');
+        let tipoPagamento = $('#select-tipo-pagamento option:selected').val() == "A VISTA" ? true : false;
+        if(tipoPagamento){
+            let valorTotal = $('#total').val();
+            let desconto =  $('#desconto').val();
+            if(valorTotal.length !== 0 && desconto.length == 0){
+                if($('#usar_desconto').is(":checked")){
+                     $('#desconto').val(valorTotal);
+                     $('#total').val('');
+                }
+            }else{
+                $('#usar_desconto').prop("checked", false);
+                $('#total').val(desconto);
+                $('#desconto').val('');
             }
         }else{
             $('#usar_desconto').prop("checked", false);
-            $('#total').val(desconto);
-            $('#desconto').val('');
         }
+        
         
     });
 
@@ -1089,11 +1095,11 @@ $(document).ready(function () {
             $('#qtd_parc').attr('name', '');
             $('#entrada').attr('name', '').val('');
             $('#sem_juros').attr('name', '')
-
-            $('#total').val(orcamentoselecionado.data('total'));
+            let totalOrcamento = orcamentoselecionado.data('total') == 0 ? '' : orcamentoselecionado.data('total');
+            $('#total').val(totalOrcamento);
 
         } else if (tipopagamentoselecionado.val() === 'A PRAZO') {
-
+            $('#usar_desconto').prop("checked", false);
             $('#qtd_parcelas').show();
             $('#valor_parcela').show();
             $('#entradadisplay').show();
