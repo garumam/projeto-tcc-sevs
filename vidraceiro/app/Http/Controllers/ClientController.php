@@ -54,11 +54,7 @@ class ClientController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $docvalidation = null;
-
-        $this->prepareDocValidation($docvalidation,'',$request);
-
-        $validado = $this->rules_client($request->all(), $docvalidation);
+        $validado = $this->rules_client($request->all(), '');
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
 
@@ -119,11 +115,7 @@ class ClientController extends Controller
         if ($validado->fails())
             return redirect(route('clients.index'))->withErrors($validado);
 
-        $docvalidation = null;
-
-        $this->prepareDocValidation($docvalidation,$id,$request);
-
-        $validado = $this->rules_client($request->all(), $docvalidation);
+        $validado = $this->rules_client($request->all(), $id);
 
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
@@ -165,7 +157,7 @@ class ClientController extends Controller
         return redirect()->back()->with('error', 'Este cliente não pode ser deletado pois possui pendências');
     }
 
-    public function rules_client(array $data, $docarray)
+    public function rules_client(array $data, $ignoreId)
     {
         $validator = Validator::make($data, array_merge(
 
@@ -179,8 +171,9 @@ class ClientController extends Controller
                 'uf' => 'nullable|string|max:255',
                 'complemento' => 'nullable|string|max:255',
                 'email' => 'nullable|email|max:255',
-                'celular' => 'nullable|string|min:10|max:20'
-            ], $docarray
+                'celular' => 'nullable|string|min:10|max:20',
+                'documento' => 'required|cpf_cnpj|unique:clients,documento,'.$ignoreId
+            ]
 
         ));
 
@@ -201,17 +194,4 @@ class ClientController extends Controller
         return $validator;
     }
 
-    public function prepareDocValidation(&$docvalidation,$ignoreId, $request){
-
-        if (strlen($request->documento) <= 11) {
-            $docvalidation = ['documento' => 'required|string|unique:clients,documento,' . $ignoreId . '|min:11|max:11'];
-            
-        } elseif (strlen($request->documento) > 11) {
-            $docvalidation = ['documento' => 'required|string|unique:clients,documento,' . $ignoreId . '|min:14|max:14'];
-            
-        } else {
-            $docvalidation = ['documento' => 'required'];
-        }
-
-    }
 }

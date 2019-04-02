@@ -57,7 +57,7 @@ class ProviderController extends Controller
             return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
         }
 
-        $validado = $this->rules_provider($request->all());
+        $validado = $this->rules_provider($request->all(),'');
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
 
@@ -120,7 +120,7 @@ class ProviderController extends Controller
             return redirect(route('providers.index'))->withErrors($validado);
 
 
-        $validado = $this->rules_provider($request->all());
+        $validado = $this->rules_provider($request->all(),$id);
 
         if ($validado->fails())
             return redirect()->back()->withErrors($validado);
@@ -157,14 +157,14 @@ class ProviderController extends Controller
 
     }
 
-    public function rules_provider(array $data)
+    public function rules_provider(array $data, $ignoreId)
     {
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
             'situacao' => 'required|string|max:255',
             'telefone' => 'nullable|string|min:10|max:255',
             'celular' => 'nullable|string|min:10|max:255',
-            'cnpj' => 'nullable|string|min:14|max:255',
+            'cnpj' => 'nullable|cnpj|unique:providers,cnpj,'.$ignoreId,
             'cep' => 'required|string|min:8|max:8',
             'bairro' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255',

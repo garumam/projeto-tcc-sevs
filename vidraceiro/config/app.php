@@ -146,7 +146,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        /*
+         * Validação de documentos (cpf,cnpj,etc)
+         */
+        geekcom\ValidatorDocs\ValidatorProvider::class,
         /*
          * Package Service Providers...
          */
