@@ -69,7 +69,12 @@ class Aluminum extends Model
 
         $paginate = $paginate ?? 10;
 
-        $queryBuilder = self::where('is_modelo', 1)->where('perfil', 'like', '%' . $search . '%');
+        $queryBuilder = self::where('is_modelo', 1)->where(function($c) use ($search){
+            $c->where('perfil', 'like', '%' . $search . '%')
+            ->orWhereHas('category',function ($q) use ($search){
+                $q->where('nome','like', '%' . $search . '%');
+            });
+        });
 
         if($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();

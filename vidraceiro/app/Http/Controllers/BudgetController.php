@@ -192,6 +192,11 @@ class BudgetController extends Controller
                     return redirect()->back()->with('success', 'Orçamento atualizado com sucesso')->with('tab', $tab);
                 break;
             case '2': //tab adicionar
+
+                $request->merge(['largura'=>$request->largura ?? 0.000]);
+                $request->merge(['altura'=>$request->altura ?? 0.000]);
+                $request->merge(['qtd'=>$request->qtd ?? 1]);
+
                 $validado = $this->rules_budget_product($request->all(),['m_produto_id' => 'required|integer']);
 
                 if ($validado->fails()) {
@@ -211,6 +216,11 @@ class BudgetController extends Controller
                 }
                 break;
             case '3': //tab editar
+
+                $request->merge(['largura'=>$request->largura ?? 0.000]);
+                $request->merge(['altura'=>$request->altura ?? 0.000]);
+                $request->merge(['qtd'=>$request->qtd ?? 1]);
+                
                 $validado = $this->rules_budget_product_exists(['produtoid'=>$request->get('produtoid')]);
 
                 if(!$validado->fails()){
@@ -462,9 +472,9 @@ class BudgetController extends Controller
         $validator = Validator::make($data, array_merge(
             $mproductValidation,
             [
-                'largura' => 'required|string|max:255',
-                'altura' => 'required|string|max:255',
-                'qtd' => 'required|integer',
+                'largura' => 'numeric',
+                'altura' => 'numeric',
+                'qtd' => 'integer',
                 'localizacao' => 'nullable|string|max:255',
                 'valor_mao_obra' => 'nullable|numeric'
             ]

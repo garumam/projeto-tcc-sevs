@@ -209,12 +209,12 @@ class Budget extends Model
             $resultAluminio = 0.0;
             foreach ($product->aluminums()->get() as $aluminum) {
                 //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
-                $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
+                $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'] * $product['qtd'];
             }
 
             $resultComponente = 0.0;
             foreach ($product->components()->get() as $component) {
-                $resultComponente += $component['preco'] * $component['qtd'];
+                $resultComponente += $component['preco'] * $component['qtd'] * $product['qtd'];
             }
 
             $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);

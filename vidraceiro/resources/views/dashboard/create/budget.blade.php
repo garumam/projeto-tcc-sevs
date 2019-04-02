@@ -213,19 +213,18 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="altura" class="obrigatorio">Altura</label>
-                        <input type="text" class="form-control altura" id="altura" name="altura" placeholder="0.000" value="{{old('altura')}}" required>
+                        <label for="altura">Altura</label>
+                        <input type="text" class="form-control altura" id="altura" name="altura" placeholder="0.000" value="{{old('altura')}}">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="largura" class="obrigatorio">Largura</label>
-                        <input type="text" class="form-control largura" id="largura" name="largura" placeholder="0.000" value="{{old('largura')}}"
-                            required>
+                        <label for="largura">Largura</label>
+                        <input type="text" class="form-control largura" id="largura" name="largura" placeholder="0.000" value="{{old('largura')}}">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="qtd" class="obrigatorio">Quantidade</label>
-                        <input type="number" class="form-control" id="qtd" name="qtd" placeholder="quantidade" value="{{old('qtd')}}" required>
+                        <label for="qtd">Quantidade</label>
+                        <input type="number" class="form-control" id="qtd" name="qtd" placeholder="quantidade" value="{{old('qtd')}}">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -309,20 +308,18 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="altura-edit" class="obrigatorio">Altura</label>
-                        <input type="text" class="form-control altura" id="altura-edit" name="altura" placeholder="0,000" value="{{old('altura')}}"
-                            required>
+                        <label for="altura-edit">Altura</label>
+                        <input type="text" class="form-control altura" id="altura-edit" name="altura" placeholder="0,000" value="{{old('altura')}}">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="largura-edit" class="obrigatorio">Largura</label>
-                        <input type="text" class="form-control largura" id="largura-edit" name="largura" placeholder="0,000" value="{{old('largura')}}"
-                            required>
+                        <label for="largura-edit">Largura</label>
+                        <input type="text" class="form-control largura" id="largura-edit" name="largura" placeholder="0,000" value="{{old('largura')}}">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="qtd-edit" class="obrigatorio">Quantidade</label>
-                        <input type="number" class="form-control" id="qtd-edit" name="qtd" placeholder="quantidade" value="{{old('qtd')}}" required>
+                        <label for="qtd-edit">Quantidade</label>
+                        <input type="number" class="form-control" id="qtd-edit" name="qtd" placeholder="quantidade" value="{{old('qtd')}}">
                     </div>
 
                     <div class="form-group col-md-4">

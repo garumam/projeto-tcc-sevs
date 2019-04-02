@@ -45,7 +45,7 @@ class CarregaItensTeste extends Seeder
 
         Client::create([
             'nome'=> 'João da Silva',
-            'documento' => '12043219632',
+            'documento' => '24392022820',
             'status'=> 'EM DIA',
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
@@ -68,25 +68,43 @@ class CarregaItensTeste extends Seeder
 
         Client::create([
             'nome'=> 'Maria Pereira',
-            'documento' => '98737284728',
+            'documento' => '61846326397',
             'status'=> 'DEVENDO',
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
         ]);
 
-        MProduct::create([
-            'categoria_produto_id'=> '1',
-            'descricao'=> 'mproduto1',
-            'imagem' => '/img/boxdiversos/bxc1.png',
-            'nome'=> 'modelo produto1',
+
+        $endereco = Location::create([
+            'bairro'=> 'Rio Comprido',
+            'cep'=> 20261301,
+            'cidade'=> 'Rio de janeiro',
+            'complemento'=> '',
+            'endereco'=> 'Rua Barbosa, n° 1200',
+            'uf' => 'RJ'
         ]);
+
+        $contato = Contact::create([
+            'telefone'=> '2126457895',
+            'celular'=> '21925432456',
+            'email' => 'maria@gmail.com'
+        ]);
+
+        Client::create([
+            'nome'=> 'Serra LTDA',
+            'documento' => '83258342000133',
+            'status'=> 'EM DIA',
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
 
         Order::create([
             'data_final' => '2018-08-05',
             'data_inicial' => '2018-08-03',
             'nome'=> 'order1',
             'situacao' => 'ABERTA',
-            'total'=> 800.04
+            'total'=> 812.77
         ]);
 
         Order::create([
@@ -94,7 +112,7 @@ class CarregaItensTeste extends Seeder
             'data_inicial' => '2018-04-05',
             'nome'=> 'order2',
             'situacao' => 'ANDAMENTO',
-            'total'=> 198.38
+            'total'=> 199.75
         ]);
 
         $endereco = Location::create([
@@ -114,10 +132,11 @@ class CarregaItensTeste extends Seeder
             'status'=> 'APROVADO',
             'data'=> '2018-08-07',
             'margem_lucro'=> 100.0,
-            'nome'=> 'orcamento1',
-            'total'=> 800.61,
+            'nome'=> 'orçamento de produto BX-A1 e manutenção de janela',
+            'total'=> 812.77,
             'ordem_id'=> 1,
-            'cliente_id' => '1',
+            'cliente_id' => 1,
+            'usuario_id' => 1,
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
         ]);
@@ -139,10 +158,11 @@ class CarregaItensTeste extends Seeder
             'status'=> 'APROVADO',
             'data'=> '2018-08-08',
             'margem_lucro'=> 200.0,
-            'nome'=> 'orçamento2',
+            'nome'=> 'orçamento de produto BX-C1',
             'total'=> 199.75,
             'ordem_id'=> 2,
-            'cliente_id' => '2',
+            'cliente_id' => 2,
+            'usuario_id' => 2,
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
         ]);
@@ -164,12 +184,65 @@ class CarregaItensTeste extends Seeder
             'status'=> 'AGUARDANDO',
             'data'=> '2018-08-08',
             'margem_lucro'=> 150.0,
-            'nome'=> 'orçamento3',
-            'total'=> 0,
+            'nome'=> 'orçamento de manutenção em janela',
+            'total'=> 500,
+            'usuario_id' => 1,
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
         ]);
 
+        $endereco = Location::create([
+            'bairro'=> 'Rio Comprido',
+            'cep'=> 20261301,
+            'cidade'=> 'Rio de janeiro',
+            'complemento'=> '',
+            'endereco'=> 'Rua Barbosa, n° 1200',
+            'uf' => 'RJ'
+        ]);
+
+        $contato = Contact::create([
+            'telefone'=> '2126457895'
+        ]);
+
+        Budget::create([
+            'status'=> 'AGUARDANDO',
+            'data'=> '2019-02-08',
+            'margem_lucro'=> 50.0,
+            'nome'=> 'orçamento de porta padrão',
+            'total'=> 0,
+            'usuario_id' => 2,
+            'cliente_id' => 3,
+            'endereco_id' => $endereco->id,
+            'contato_id' => $contato->id
+        ]);
+
+        $mproduct = MProduct::create([
+            'categoria_produto_id'=> '6',
+            'descricao'=> 'janela de correr',
+            'imagem' => '/img/ferragem1000/ferragem1029.png',
+            'nome'=> 'Manutenção de janela',
+        ]);
+
+        Product::create([
+            'altura'=> 0.0,
+            'largura'=> 0.0,
+            'm_produto_id'=> $mproduct->id,
+            'budget_id'=> 3,
+            'qtd'=> 1,
+            'valor_mao_obra'=> 200
+        ]);
+
+        $mproduct = MProduct::create([
+            'categoria_produto_id'=> '6',
+            'descricao'=> 'Portão genérico',
+            'imagem' => '/img/boxdiversos/bxf1.png',
+            'nome'=> 'Portão padrão',
+        ]);
+
+        $mproduct->aluminums()->attach([49]);
+        $mproduct->aluminums()->attach([50]);
+        $mproduct->aluminums()->attach([55]);
+        
         Product::create([
             'altura'=> 4.321,
             'largura'=> 1.234,
@@ -270,7 +343,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Provider::create([
-            'cnpj'=> '21312412412234',
+            'cnpj'=> '78865212000129',
             'nome'=> 'fornecedor 1',
             'situacao'=> 'ativo',
             'endereco_id' => $endereco->id,
@@ -292,7 +365,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         Provider::create([
-            'cnpj'=> '12325674747547',
+            'cnpj'=> '56476454000198',
             'nome'=> 'fornecedor2',
             'situacao'=> 'desativado',
             'endereco_id' => $endereco->id,
@@ -348,7 +421,7 @@ class CarregaItensTeste extends Seeder
         Sale::create([
             'tipo_pagamento'=> 'A VISTA',
             'data_venda'=> '2018-08-29',
-            'valor_venda'=> 800.61,
+            'valor_venda'=> 812.77,
             'orcamento_id'=> 1
         ]);
 
@@ -376,7 +449,7 @@ class CarregaItensTeste extends Seeder
 
         $payment = Payment::create([
             'data_pagamento'=> '2018-09-29',
-            'valor_pago'=> 800.61,
+            'valor_pago'=> 812.77,
             'venda_id'=> 1
         ]);
 

@@ -65,7 +65,12 @@ class Glass extends Model
 
         $paginate = $paginate ?? 10;
 
-        $queryBuilder = self::where('is_modelo', 1)->where('nome', 'like', '%' . $search . '%');
+        $queryBuilder = self::where('is_modelo', 1)->where(function($c) use ($search){
+            $c->where('nome', 'like', '%' . $search . '%')
+            ->orWhereHas('category',function ($q) use ($search){
+                $q->where('nome','like', '%' . $search . '%');
+            });
+        });
 
         if($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
