@@ -1129,17 +1129,6 @@ $(document).ready(function () {
 
             calcularEntradaDesconto($('#desconto'), true);
 
-
-            // let desconto = $('#desconto').val();
-            // desconto = desconto == ''? 0 : desconto;
-            // let entrada = $('#entrada').val();
-            // entrada = entrada == ''? 0 : entrada;
-
-            // if($('#sem_juros').prop("checked")) {
-            //     calcularJuros((parseFloat(desconto) + parseFloat(entrada)),true);
-            // }else{
-            //     calcularJuros((parseFloat(desconto) + parseFloat(entrada)),false);
-            // }
             
         }
 
