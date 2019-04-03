@@ -27,12 +27,9 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/', 'Api\BudgetController@index');
         Route::get('/create', 'Api\BudgetController@create');
         Route::post('/', 'Api\BudgetController@store');
-        Route::get('/{id}', 'Api\BudgetController@show');
-        Route::get('/{id}/edit', 'Api\BudgetController@edit');
         Route::patch('/{tab}/{id}', 'Api\BudgetController@update');
         Route::delete('/{del}/{id}', 'Api\BudgetController@destroy');
 
-        Route::get('/{type}/{id}/edit', 'Api\BudgetController@editMaterial');
         Route::patch('/{type}/{id}/update', 'Api\BudgetController@updateMaterial');
     });
 
@@ -41,8 +38,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/', 'Api\OrderController@index');
         Route::get('/create', 'Api\OrderController@create');
         Route::post('/', 'Api\OrderController@store');
-        Route::get('/{id}', 'Api\OrderController@show');
-        Route::get('/{id}/edit', 'Api\OrderController@edit');
         Route::patch('/{id}/{situacao?}', 'Api\OrderController@update');
         Route::delete('/{id}', 'Api\OrderController@destroy');
     });

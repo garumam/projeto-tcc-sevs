@@ -245,7 +245,7 @@
 
         </div>
 
-        <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
+        <!-- INICIO CONTEUDO ABA EXTRA AO EDITAR PRODUTO DO ORÇAMENTO -->
         <div id="nav-{{$titulotabs[2]}}-tab" class="tab-content">
 
             <form class="formulario" method="POST" role="form" action="{{route('budgets.update',['id'=>$budgetedit->id,'tag' => '3'])}}">
@@ -339,7 +339,7 @@
             </form>
 
         </div>
-        <!-- FIM CONTEUDO ABA EXTRA AO EDITAR ORÇAMENTO -->
+        <!-- FIM CONTEUDO ABA EXTRA AO EDITAR PRODUTO DO ORÇAMENTO -->
 
         <div id="nav-{{$titulotabs[3]}}-tab" class="tab-content pb-5">
 

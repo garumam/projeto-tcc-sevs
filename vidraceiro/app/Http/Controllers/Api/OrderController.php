@@ -38,6 +38,24 @@ class OrderController extends Controller
         }
 
         $budgets = Budget::getBudgetsWhereStatusApproved(null);
+
+        $budgets = $budgets->map(function($b){
+            $location = $b->location()->first([
+                'cep',
+                'endereco',
+                'bairro',
+                'uf',
+                'cidade',
+                'complemento'
+            ]);
+
+            $contact = $b->contact()->first(['telefone','celular','email']);
+           
+            $b = array_merge($b->toArray(),$location->toArray(),$contact->toArray());
+            
+            return $b;
+        });
+
         return response()->json(['budgets' => $budgets]);
     }
 
@@ -63,50 +81,6 @@ class OrderController extends Controller
 
         }
 
-
-    }
-
-    public function show($id)
-    {
-        if (!Auth::user()->can('os_listar', Order::class)) {
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-        }
-
-        $validado = $this->rules_order_exists(['id' => $id]);
-
-        if ($validado->fails()) {
-            return redirect(route('orders.index'))->withErrors($validado);
-        }
-
-        $order = $this->order->findOrderById($id);
-        if ($order)
-            return view('dashboard.show.order', compact('order'))->with('title', 'Informações da ordem de serviço');
-
-        return redirect(route('orders.index'))->with('error', 'Esta O.S. não existe');
-    }
-
-    public function edit($id)
-    {
-        if (!Auth::user()->can('os_atualizar', Order::class)) {
-            return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
-        }
-
-        $validado = $this->rules_order_exists(['id' => $id]);
-
-        if ($validado->fails()) {
-            return redirect(route('orders.index'))->withErrors($validado);
-        }
-
-        $order = $this->order->findOrderById($id);
-
-        if ($order->situacao !== 'ABERTA')
-            return redirect('orders')->with('error', 'Não é possível editar esta O.S.');
-
-
-        $budgets = Budget::getBudgetsWhereStatusApproved($order->id);
-
-        $budgetsOrders = $order->budgets;
-        return view('dashboard.create.order', compact('order', 'budgetsOrders', 'budgets'))->with('title', 'Atualizar ordem de serviço');
 
     }
 

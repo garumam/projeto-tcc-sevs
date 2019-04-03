@@ -57,7 +57,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="select-vidro" class="obrigatorio text-dark">Vidros</label>
-                                <select id="select-vidro" class="form-control form-control-chosen" name="storage_vidro_id" data-placeholder="Selecione um vidro" style="display: none;">
+                                <select id="select-vidro" class="form-control form-control-chosen" name="storage_vidro_id" data-placeholder="Selecione um vidro">
                                     <option></option>
                                     @foreach($allglasses as $glass)
                                         <option value="{{$glass->storage->id}}">{{$glass->nome .' '. $glass->tipo}}</option>

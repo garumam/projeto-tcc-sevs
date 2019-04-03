@@ -17,6 +17,7 @@ use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Configuration;
 
 class BudgetController extends Controller
 {
@@ -37,10 +38,13 @@ class BudgetController extends Controller
 
         $budgets = $this->budget->getWithSearchAndPagination($request->get('search'), false, false, false, true);
 
+        $budgets = $this->mergeLocationAndContact($budgets);
+
         return response()->json(['budgets' => $budgets]);
 
     }
 
+    
     public function create()
     {
         if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
@@ -48,6 +52,9 @@ class BudgetController extends Controller
         }
 
         $clients = Client::getAllClients();
+
+        $clients = $this->mergeLocationAndContact($clients);
+
         $mproducts = MProduct::getAllMProducts();
         $categories = Category::getAllCategories("produto");
         $categoriesmaterials = Category::getAllCategoriesMaterials();
@@ -65,9 +72,15 @@ class BudgetController extends Controller
         if ($validado->fails())
             return response()->json(['error' => $validado->messages()], 202);
 
-        $margemlucro = $request->margem_lucro ?? 100;
+        $configuration = Configuration::all()->first();
 
-        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id]));
+        $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
+        $location = new Location();
+        $location = $location->createLocation($request->all());
+        $contact = new Contact();
+        $contact = $contact->createContact($request->all());
+
+        $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id,'endereco_id'=>$location->id,'contato_id'=>$contact->id]));
 
 
         if ($budgetcriado)
@@ -75,58 +88,6 @@ class BudgetController extends Controller
 
 
         return response()->json(['error' => 'Erro ao adicionar'], 202);
-    }
-
-    public function show($id)
-    {
-        if (!Auth::user()->can('orcamento_listar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
-        }
-
-        $validado = $this->rules_budget_exists(['id' => $id]);
-
-        if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
-        }
-
-        $budget = $this->budget->findBudgetById($id);
-        return response()->json(['budget' => $budget]);
-    }
-
-    public function edit($id)
-    {
-        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
-        }
-
-        $validado = $this->rules_budget_exists(['id' => $id]);
-
-        if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 401);
-        }
-
-        $budgetedit = $this->budget->findBudgetById($id);
-
-        if ($budgetedit->status !== 'AGUARDANDO') {
-            return response()->json(['error' => 'Este orçamento não pode ser editado!']);
-        }
-
-        $mproducts = MProduct::getAllMProducts();
-        $clients = Client::getAllClients();
-
-
-        if ($budgetedit) {
-            $products = $budgetedit->getBudgetProductsWithRelations();
-
-            return response()->json([
-                'mproducts' => $mproducts,
-                'products' => $products,
-                'budgetedit' => $budgetedit,
-                'clients' => $clients]);
-        }
-
-        return response()->json(['error' => 'Erro ao buscar orçamento']);
-
     }
 
 
@@ -158,7 +119,14 @@ class BudgetController extends Controller
                     return response()->json(['error' => $validado->messages()], 202);
                 }
 
-                $margemlucro = $request->margem_lucro ?? 100;
+                $configuration = Configuration::all()->first();
+
+                $margemlucro = $request->margem_lucro ?? $configuration->porcent_m_lucro;
+
+                $location = $budgetcriado->location()->first();
+                $location->updateLocation($request->all());
+                $contact = $budgetcriado->contact()->first();
+                $contact->updateContact($request->all());
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal())
@@ -267,54 +235,6 @@ class BudgetController extends Controller
     }
 
 
-    public function editMaterial($type, $id)
-    {
-        if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],401);
-        }
-
-        switch ($type) {
-            case 'glass':
-                $glass = new Glass();
-                $material = $glass->findGlassById($id);
-
-                $tabela = 'glasses';
-                break;
-            case 'aluminum':
-                $aluminum = new Aluminum();
-                $material = $aluminum->findAluminumById($id);
-
-                $tabela = 'aluminums';
-                break;
-            case 'component':
-                $component = new Component();
-                $material = $component->findComponentById($id);
-
-                $tabela = 'components';
-                break;
-        }
-
-        $validado = $this->rules_budget_material_exists(['id' => $id], $tabela);
-
-        if ($validado->fails()) {
-            return response()->json(['error' => $validado->messages()], 202);
-        } else {
-            if ($material->is_modelo === 1) {
-                return response()->json(['error' => 'Este material não existe!'], 202);
-            }
-        }
-
-
-        if ($material) {
-
-            return response()->json([
-                'material' => $material,
-                'type' => $type]);
-        }
-        return response()->json(['error' => 'Erro ao editar material'],202);
-
-    }
-
     public function updateMaterial(Request $request, $type, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
@@ -400,6 +320,26 @@ class BudgetController extends Controller
         }
         return response()->json(['error' => 'Erro ao editar material !','res'=>true],202);
 
+    }
+
+
+    public function mergeLocationAndContact($objects){
+        return $objects->map(function($b){
+            $location = $b->location()->first([
+                'cep',
+                'endereco',
+                'bairro',
+                'uf',
+                'cidade',
+                'complemento'
+            ]);
+
+            $contact = $b->contact()->first(['telefone','celular','email']);
+           
+            $b = array_merge($b->toArray(),$location->toArray(),$contact->toArray());
+            
+            return $b;
+        });
     }
 
 

@@ -1,13 +1,29 @@
 $(document).ready(function () {
-
+    var isSmartphone = false;  //VARIÁVEL QUE MOSTRA SE O PROGRAMA ESTÁ SENDO ABERTO EM UM DISPOSITIVO MÓVEL
     //VERIFICAÇÃO DE SUPORTE DO PLUGIN CHOSEN NOS NAVEGADORES,
     // SE NÃO SUPORTAR EXIBE OS SELECT BÁSICOS PARA SEREM UTILIZADOS
     if (!("Microsoft Internet Explorer" === window.navigator.appName ? document.documentMode >= 8 : !(/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android.*Mobile/i.test(window.navigator.userAgent)))) {
+        var materialSelecionado = $('#select-material').val();
+        isSmartphone = true;
 
-        $('.form-control-chosen').each(function (select) {
-            $(this).show();
+        $('.form-control-chosen').each(function(){
+            let id = $(this).attr('id');
+            if(id == 'select-vidro' || id == 'select-aluminio' || id == 'select-componente'){
+
+                if(materialSelecionado == 0){
+                    $('#select-vidro').show();
+                }else if(materialSelecionado == 1){
+                    $('#select-aluminio').show();
+                }else if(materialSelecionado == 2){
+                    $('#select-componente').show();
+                }
+
+            }else{
+                $(this).show();
+            }
         });
-
+        
+         
     } else {
 
         //Iniciando selects com search dentro
@@ -15,8 +31,9 @@ $(document).ready(function () {
             // Chosen options here
         });
 
-    }
 
+    }
+    
     //Deixando novos selects do plugin chosen invisíveis orçamento material e mproduct material
     $('#select_aluminio_chosen').hide();
     $('#select_componente_chosen').hide();
@@ -33,29 +50,47 @@ $(document).ready(function () {
                 case "nav-Vidros-tab":
                     
                     $('#bt-material').attr("href", '/materials/glass/create');
+                    if(isSmartphone){
+                        $('#select-componente').hide();
+                        $('#select-aluminio').hide();
+                        $('#select-vidro').show();
+                    }else{
+                        $('#select_componente_chosen').hide();
+                        $('#select_aluminio_chosen').hide();
+                        $('#select_vidro_chosen').show();
+                    }
                     
-                    $('#select_componente_chosen').hide();
-                    $('#select_aluminio_chosen').hide();
-                    $('#select_vidro_chosen').show();
                     
                     break;
                 case "nav-Aluminios-tab":
                     
                     $('#bt-material').attr("href", '/materials/aluminum/create');
                     
-                    $('#select_componente_chosen').hide();
-                    $('#select_aluminio_chosen').show();
-                    $('#select_vidro_chosen').hide();
+                    if(isSmartphone){
+                        $('#select-componente').hide();
+                        $('#select-aluminio').show();
+                        $('#select-vidro').hide();
+                    }else{
+                        $('#select_componente_chosen').hide();
+                        $('#select_aluminio_chosen').show();
+                        $('#select_vidro_chosen').hide();
+                    }
                     
                     break;
                 case "nav-Componentes-tab":
                     
                     $('#bt-material').attr("href", '/materials/component/create');
                     
-                    $('#select_componente_chosen').show();
-                    $('#select_aluminio_chosen').hide();
-                    $('#select_vidro_chosen').hide();
-                    
+                    if(isSmartphone){
+                        $('#select-componente').show();
+                        $('#select-aluminio').hide();
+                        $('#select-vidro').hide();
+                    }else{
+                        $('#select_componente_chosen').show();
+                        $('#select_aluminio_chosen').hide();
+                        $('#select_vidro_chosen').hide();
+                    }
+
                     break;
                 default:
                     changeTextBtBudget("Salvar");
@@ -559,7 +594,7 @@ $(document).ready(function () {
             mensagemAlerta('Selecione um produto!');
         } else {
             produtoselecionado = produtoselecionado != undefined ? produtoselecionado : '';
-            if (selectvidrofalse.is(":visible")) {
+            if (selectvidrofalse.is(":visible") || selectvidro.is(":visible")) {
                 if (selectvidro.val().length !== 0) {
                     idselect = selectvidro.val();
                     nomeselect = selectvidro.find('option:selected').text();
@@ -605,7 +640,7 @@ $(document).ready(function () {
                 }
 
             }
-            if (selectaluminiofalse.is(":visible")) {
+            if (selectaluminiofalse.is(":visible") || selectaluminio.is(":visible")) {
 
                 if (selectaluminio.val().length !== 0) {
                     idselect = selectaluminio.val();
@@ -689,7 +724,7 @@ $(document).ready(function () {
                 }
 
             }
-            if (selectcomponentefalse.is(":visible")) {
+            if (selectcomponentefalse.is(":visible") || selectcomponente.is(":visible")) {
 
                 if (selectcomponente.val().length !== 0) {
                     idselect = selectcomponente.val();
@@ -817,17 +852,20 @@ $(document).ready(function () {
     $('#select-material').change(function (e) {
         let selecionado = $('#select-material option:selected').val();
         let label = $('#label_categoria');
-
+        
         switch (selecionado) {
             case '0':
                 label.text('Vidros');
                 $('.titulo').text('Vidros');
-                //$('#select-vidro').show();
-                $('#select_vidro_chosen').show();
-                //$('#select-componente').hide();
-                $('#select_componente_chosen').hide();
-                //$('#select-aluminio').hide();
-                $('#select_aluminio_chosen').hide();
+                if(isSmartphone){
+                    $('#select-componente').hide();
+                    $('#select-aluminio').hide();
+                    $('#select-vidro').show();
+                }else{
+                    $('#select_componente_chosen').hide();
+                    $('#select_aluminio_chosen').hide();
+                    $('#select_vidro_chosen').show();
+                }
                 $('#topo-vidro').show();
                 $('#topo-aluminio').hide();
                 $('#topo-componente').hide();
@@ -838,12 +876,15 @@ $(document).ready(function () {
             case '1':
                 label.text('Aluminios');
                 $('.titulo').text('Aluminios');
-                //$('#select-vidro').hide();
-                $('#select_vidro_chosen').hide();
-                //$('#select-componente').hide();
-                $('#select_componente_chosen').hide();
-                //$('#select-aluminio').show();
-                $('#select_aluminio_chosen').show();
+                if(isSmartphone){
+                    $('#select-componente').hide();
+                    $('#select-aluminio').show();
+                    $('#select-vidro').hide();
+                }else{
+                    $('#select_componente_chosen').hide();
+                    $('#select_aluminio_chosen').show();
+                    $('#select_vidro_chosen').hide();
+                }
                 $('#topo-vidro').hide();
                 $('#topo-aluminio').show();
                 $('#topo-componente').hide();
@@ -854,12 +895,15 @@ $(document).ready(function () {
             case '2':
                 label.text('Componentes');
                 $('.titulo').text('Componentes');
-                //$('#select-vidro').hide();
-                $('#select_vidro_chosen').hide();
-                //$('#select-componente').show();
-                $('#select_componente_chosen').show();
-                //$('#select-aluminio').hide();
-                $('#select_aluminio_chosen').hide();
+                if(isSmartphone){
+                    $('#select-componente').show();
+                    $('#select-aluminio').hide();
+                    $('#select-vidro').hide();
+                }else{
+                    $('#select_componente_chosen').show();
+                    $('#select_aluminio_chosen').hide();
+                    $('#select_vidro_chosen').hide();
+                }
                 $('#topo-vidro').hide();
                 $('#topo-aluminio').hide();
                 $('#topo-componente').show();
