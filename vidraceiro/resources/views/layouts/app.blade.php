@@ -304,19 +304,15 @@
         function atualizar(e, id, situacao) {
             if (id != 'vazio') {
                 var form = document.getElementById('update-form');
-                form.action = "/orders/" + id + "/" + situacao;
+                if(situacao == undefined){
+                    form.action = "/financial/" + id;
+                }else{
+                    form.action = "/orders/" + id + "/" + situacao;
+                }
+                
                 e.preventDefault();
                 form.submit();
             }
-        }
-
-        function atualizar(e, id) {
-            
-            var form = document.getElementById('update-form');
-            form.action = "/financial/" + id;
-            e.preventDefault();
-            form.submit();
-            
         }
 
     </script>

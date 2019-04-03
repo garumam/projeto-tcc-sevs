@@ -130,7 +130,8 @@ class CarregaItensTeste extends Seeder
 
         Budget::create([
             'status'=> 'APROVADO',
-            'data'=> '2018-08-07',
+            'data'=> '2019-05-29',
+            'updated_at' => '2019-05-29',
             'margem_lucro'=> 100.0,
             'nome'=> 'orçamento de produto BX-A1 e manutenção de janela',
             'total'=> 812.77,
@@ -156,7 +157,8 @@ class CarregaItensTeste extends Seeder
 
         Budget::create([
             'status'=> 'APROVADO',
-            'data'=> '2018-08-08',
+            'data'=> '2019-05-31',
+            'updated_at' => '2019-05-31',
             'margem_lucro'=> 200.0,
             'nome'=> 'orçamento de produto BX-C1',
             'total'=> 199.75,
@@ -420,35 +422,37 @@ class CarregaItensTeste extends Seeder
 
         Sale::create([
             'tipo_pagamento'=> 'A VISTA',
-            'data_venda'=> '2018-08-29',
+            'data_venda'=> '2019-05-29',
             'valor_venda'=> 812.77,
-            'orcamento_id'=> 1
+            'orcamento_id'=> 1,
+            'usuario_id' => 1
         ]);
 
         Sale::create([
             'tipo_pagamento'=> 'A PRAZO',
-            'data_venda'=> '2018-08-29',
+            'data_venda'=> '2019-05-31',
             'qtd_parcelas'=> 2,
             'valor_venda'=> 199.75,
-            'orcamento_id'=> 2
+            'orcamento_id'=> 2,
+            'usuario_id' => 2
         ]);
 
         Installment::create([
-            'data_vencimento'=> '2018-09-29',
+            'data_vencimento'=> '2019-06-30',
             'status_parcela'=> 'PAGO',
             'valor_parcela'=> 99.87,
             'venda_id'=> 2
         ]);
 
         Installment::create([
-            'data_vencimento'=> '2018-09-29',
+            'data_vencimento'=> '2019-07-30',
             'status_parcela'=> 'ABERTO',
             'valor_parcela'=> 99.87,
             'venda_id'=> 2
         ]);
 
         $payment = Payment::create([
-            'data_pagamento'=> '2018-09-29',
+            'data_pagamento'=> '2019-05-29',
             'valor_pago'=> 812.77,
             'venda_id'=> 1
         ]);
@@ -464,7 +468,7 @@ class CarregaItensTeste extends Seeder
         ]);
 
         $payment = Payment::create([
-            'data_pagamento'=> '2018-10-18',
+            'data_pagamento'=> '2019-06-30',
             'valor_pago'=> 99.87,
             'venda_id'=> 2
         ]);

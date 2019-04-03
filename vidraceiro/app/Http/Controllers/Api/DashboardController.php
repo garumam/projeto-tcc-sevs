@@ -160,7 +160,7 @@ class DashboardController extends Controller
                     if($object->status === 'APROVADO'){
                         $sale = $object->sale;
                         if($sale)
-                            $data = $sale->created_at;
+                            $data = $sale->data_venda;
                     }else{
                         $data = $object->updated_at;
                     }
