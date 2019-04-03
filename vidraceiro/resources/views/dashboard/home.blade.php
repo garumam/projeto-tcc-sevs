@@ -13,7 +13,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
-                <h4 class="titulo" style="color:#716ACA;">{{$totalusers}}
+                <h4 class="titulo" style="color:#716ACA;">{{$totalusers??0}}
                     <small><i class="fas fa-arrow-up" style="color:#716ACA;"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Usuarios</p>
@@ -23,7 +23,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-verde">
             <div class="widget">
-                <h4 class="titulo text-success">{{$clients}}
+                <h4 class="titulo text-success">{{$clients??0}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Clientes</p>
@@ -33,7 +33,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-vermelha">
             <div class="widget">
-                <h4 class="titulo" style="color: #c82333;">{{$totalsales}}
+                <h4 class="titulo" style="color: #c82333;">{{$totalsales??0}}
                     <small><i class="fas fa-arrow-up text-danger"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Vendas</p>
@@ -43,7 +43,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
-                <h4 class="titulo" style="color: #36A3F7;">{{$totalreceita}}
+                <h4 class="titulo" style="color: #36A3F7;">{{$totalreceita??0}}
                     <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
                 <p class="subtitulo">Total Receitas</p>
@@ -54,7 +54,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-roxa">
             <div class="widget">
-                <h4 class="titulo" style="color:#716ACA;">{{$totalbudgets}}
+                <h4 class="titulo" style="color:#716ACA;">{{$totalbudgets??0}}
                     <small><i class="fas fa-arrow-up" style="color:#716ACA;"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Orçamentos</p>
@@ -64,7 +64,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-verde">
             <div class="widget">
-                <h4 class="titulo text-success">{{$totalorders}}
+                <h4 class="titulo text-success">{{$totalorders??0}}
                     <small><i class="fas fa-arrow-up text-success"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Ordens de Serviço</p>
@@ -75,7 +75,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-vermelha">
             <div class="widget">
-                <h4 class="titulo" style="color: #c82333;">{{$totaldespesa}}
+                <h4 class="titulo" style="color: #c82333;">{{$totaldespesa??0}}
                     <small><i class="fas fa-arrow-up text-danger"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Despesas</p>
@@ -86,7 +86,7 @@
     <div class="col-12 col-sm-4 col-md-4 col-lg-3">
         <div class="card-material card-shadow-dashboard borda-azul">
             <div class="widget">
-                <h4 class="titulo" style="color: #36A3F7;">{{$totalproviders}}
+                <h4 class="titulo" style="color: #36A3F7;">{{$totalproviders??0}}
                     <small><i class="fas fa-arrow-up" style="color: #36A3F7;"></i></small>
                 </h4>
                 <p class="subtitulo">Total de Fornecedores</p>
