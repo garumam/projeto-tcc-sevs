@@ -131,13 +131,18 @@
 @php 
     $location = $budget->location()->first(); 
     $contact = $budget->contact()->first();
+    $telefone = $contact->telefone;
+    if($telefone !== null){
+    // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+    $telefone="(".substr($telefone,0,2).") ".substr($telefone,2,-4)." - ".substr($telefone,-4);
+    }
 @endphp
 <h3>Dados do orçamento</h3>
 <p>Nome: {{$budget->nome}}</p>
 <p>Endereço: {{$location->endereco .' - '. $location->bairro}}</p>
 <p>Cep: {{$location->cep}}</p>
 <p>Complemento: {{$location->complemento}}</p>
-<p>Telefone: {{$contact->telefone}}</p>
+<p>Telefone: {{$telefone}}</p>
 <h3>Produtos</h3>
 <div class="total">
     <p id="texto-left">Valor total do orçamento: </p>
@@ -159,14 +164,19 @@
                     <br>
                     <b>Linha:</b> {{$product->mproduct->category->nome}}
                     <br>
-                    <b>Vidros usados:</b>
+                    <b>Vidros utilizados:</b>
                     @foreach($product->glasses as $glass)
                         {{$glass->nome . ' | '}}
                     @endforeach
                     <br>
-                    <b>Aluminios usados:</b>
+                    <b>Aluminios utilizados:</b>
                     @foreach($product->aluminums as $aluminum)
                         {{$aluminum->perfil . ' '. $aluminum->descricao . ' | '}}
+                    @endforeach
+                    <br>
+                    <b>Componentes utilizados:</b>
+                    @foreach($product->components as $component)
+                        {{$component->nome . ' | '}}
                     @endforeach
                     <br>
                     <b>Largura:</b> {{$product->largura . ' '}}

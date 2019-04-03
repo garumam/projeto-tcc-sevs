@@ -56,10 +56,8 @@ class Installment extends Model
         $status = $request->status;
         $valorentrou = $dataentrou = false;
 
-        if($tipo_financa === 'RECEITA' 
-        || $tipo_financa === 'TODOS' 
-        && $status === 'PENDENTE'){
-
+        if($status === 'PENDENTE' && ($tipo_financa === 'RECEITA' || $tipo_financa === 'TODOS')){
+            
             if($valor_inicial !== null || $valor_final !== null){
                 $valorentrou = true;
             }
