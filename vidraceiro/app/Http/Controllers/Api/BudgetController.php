@@ -65,7 +65,7 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
         }
 
         $validado = $this->rules_budget($request->all());
