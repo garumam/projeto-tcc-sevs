@@ -86,8 +86,10 @@ class BudgetController extends Controller
         $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id,'endereco_id'=>$location->id,'contato_id'=>$contact->id]));
 
 
-        if ($budgetcriado)
-            return response()->json(['success' => 'Orçamento criado com sucesso', 'id' => $budgetcriado->id], 200);
+        if ($budgetcriado){
+            $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
+            return response()->json(['success' => 'Orçamento criado com sucesso', 'budget' => $budgetcriado], 200);
+        }
 
 
         return response()->json(['error' => 'Erro ao adicionar'], 202);
