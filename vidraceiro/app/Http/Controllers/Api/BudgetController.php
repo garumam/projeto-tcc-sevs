@@ -18,6 +18,8 @@ use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Configuration;
+use App\Location;
+use App\Contact;
 
 class BudgetController extends Controller
 {
