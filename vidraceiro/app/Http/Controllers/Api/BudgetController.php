@@ -132,8 +132,12 @@ class BudgetController extends Controller
                 $contact->updateContact($request->all());
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
-                if ($budgetcriado && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Orçamento atualizado com sucesso', 'id' => $id], 200);
+                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                if ($budgetcriado && $budgetcriado->updateBudgetTotal()){
+                    $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
+                    return response()->json(['success' => 'Orçamento atualizado com sucesso', 'budget' => $budgetcriado], 200);
+                }
+                    
                 break;
             case '2': //tab adicionar
                 $validado = $this->rules_budget_product($request->all(), ['m_produto_id' => 'required|integer']);
