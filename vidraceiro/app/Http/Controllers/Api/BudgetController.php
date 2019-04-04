@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Configuration;
 use App\Location;
 use App\Contact;
+use Illuminate\Support\Collection;
 
 class BudgetController extends Controller
 {
@@ -40,7 +41,7 @@ class BudgetController extends Controller
 
         $budgets = $this->budget->getWithSearchAndPagination($request->get('search'), false, false, false, true);
 
-        $budgets = $this->mergeLocationAndContact($budgets);
+        $budgets = $this->mergeLocationAndContactToObjects($budgets);
 
         return response()->json(['budgets' => $budgets]);
 
@@ -55,7 +56,7 @@ class BudgetController extends Controller
 
         $clients = Client::getAllClients();
 
-        $clients = $this->mergeLocationAndContact($clients);
+        $clients = $this->mergeLocationAndContactToObjects($clients);
 
         $mproducts = MProduct::getAllMProducts();
         $categories = Category::getAllCategories("produto");
@@ -148,8 +149,12 @@ class BudgetController extends Controller
 
                 if ($product) {
                     $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
-                    if ($budgetcriado && $budgetcriado->updateBudgetTotal())
+                    
+                    if ($budgetcriado && $budgetcriado->updateBudgetTotal()){
+                        $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);    
                         return response()->json(['success' => 'Produto adicionado ao orçamento com sucesso', 'budget' => $budgetcriado], 200);
+                    }
+                  
                 }
                 break;
             case '3': //tab editar
@@ -170,8 +175,11 @@ class BudgetController extends Controller
 
                 $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
 
-                if ($product && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Produto atualizado com sucesso', 'budget' => $budgetcriado], 200);
+                if ($product && $budgetcriado->updateBudgetTotal()){
+                    $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
+                    return response()->json(['success' => 'Produto atualizado com sucesso', 'budget' => $budgetcriado], 200);    
+                }
+                    
 
                 break;
             case '4': //tab material
@@ -226,6 +234,7 @@ class BudgetController extends Controller
 
                 $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
                 if ($budgetcriado->updateBudgetTotal()) {
+                    $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
                     return response()->json(['success' => 'Produto deletado com sucesso', 'budget' => $budgetcriado], 200);
                 }
             } else {
@@ -315,6 +324,7 @@ class BudgetController extends Controller
         if ($material) {
 
             if ($budget && $budget->updateBudgetTotal()) {
+                $budget = $this->mergeLocationAndContactToObject($budget);
                 return response()->json(['success' => "$nome atualizado com sucesso", 'budget'=>$budget],200);
             }
 
@@ -325,7 +335,8 @@ class BudgetController extends Controller
     }
 
 
-    public function mergeLocationAndContact($objects){
+    public function mergeLocationAndContactToObjects($objects){
+        
         return $objects->map(function($b){
             $location = $b->location()->first([
                 'cep',
@@ -342,6 +353,24 @@ class BudgetController extends Controller
             
             return $b;
         });
+    }
+
+    public function mergeLocationAndContactToObject($object){
+        
+        $location = $object->location()->first([
+                'cep',
+                'endereco',
+                'bairro',
+                'uf',
+                'cidade',
+                'complemento'
+        ]);
+
+        $contact = $object->contact()->first(['telefone','celular','email']);
+           
+        $object = array_merge($object->toArray(),$location->toArray(),$contact->toArray());
+        return $object;
+        
     }
 
 
