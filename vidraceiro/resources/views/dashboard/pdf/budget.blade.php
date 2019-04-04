@@ -190,7 +190,8 @@
             <tr><td class="semborda"></td></tr>
         
     @empty
-        <p>Nenhum Produto Cadastrado.</p>
+        <tr><p style="margin-bottom: 100px;">Nenhum Produto Cadastrado.</p></tr>
+        <tr><td class="semborda"></td></tr>
     @endforelse
 
 </table>

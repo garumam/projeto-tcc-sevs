@@ -198,8 +198,12 @@ class BudgetController extends Controller
                     }
                 }
 
-                if ($products && $budgetcriado->updateBudgetTotal())
-                    return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso', 'id' => $id], 200);
+                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                if ($products && $budgetcriado->updateBudgetTotal()){
+                    $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
+                    return response()->json(['success' => 'Materiais dos produtos atualizados com sucesso', 'budget' => $budgetcriado], 200);
+                }
+                    
                 break;
             default:
         }
