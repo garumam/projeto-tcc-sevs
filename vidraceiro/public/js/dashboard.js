@@ -1091,6 +1091,9 @@ $(document).ready(function () {
     $('#usar_desconto').click(function (){
         let tipoPagamento = $('#select-tipo-pagamento option:selected').val() == "A VISTA" ? true : false;
         if(tipoPagamento){
+            let orcamentoselecionado = $('#select-orcamento-venda option:selected');
+            $('#total').val(orcamentoselecionado.data('total'));
+            $('#desconto').val('');
             let valorTotal = $('#total').val();
             let desconto =  $('#desconto').val();
             if(valorTotal.length !== 0 && desconto.length == 0){

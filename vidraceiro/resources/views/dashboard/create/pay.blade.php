@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-
+                    <div class="table-responsive">
                     <table class="table table-hover" style="margin: 6px 0px 6px 0px;">
                         <thead>
                         <tr>
@@ -98,8 +98,8 @@
                                     <td style="color: #28a745;">R${{$valorTotal}}</td>
                                     <td><span class="badge badge-{{$installment->status_parcela == 'ABERTO' ? 'danger' : 'success'}}">{{$installment->status_parcela}}</span></td>
                                     <td>
-                                        <input type="checkbox" class="form-check-input" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
-                                        <label class="form-check-label" for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
+                                        <input type="checkbox" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
+                                        <label for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
                                     </td>
                                 </tr>
 
@@ -108,20 +108,14 @@
 
                             <tr>
                                 <th scope="row">1</th>
-                                <td style="color: #28a745;">R${{$sale->budget->total - $sale->desconto - $sale->entrada}}</td>
-                                @if(empty($sale->payments()->first()))
-                                    <td><span class="badge badge-danger">Pagamento pendente</span></td>
-                                    <td>
-                                        <input type="checkbox" class="form-check-input" id="aVista" name="pagar">
-                                        <label class="form-check-label" for="aVista">Pagar</label>
-                                    </td>
-                                @else
-                                    <td><span class="badge badge-success">Pago</span></td>
-                                    <td>
-                                        <input type="checkbox" class="form-check-input" id="aVista" checked disabled>
-                                        <label class="form-check-label" for="aVista">Pago</label>
-                                    </td>
-                                @endif
+                                <td style="color: #28a745;">R${{$sale->valor_venda}}</td>
+                                
+                                <td><span class="badge badge-success">Pago</span></td>
+                                <td>
+                                    <input type="checkbox" id="aVista" checked disabled>
+                                    <label for="aVista">Pago</label>
+                                </td>
+                                
 
                             </tr>
 
@@ -129,7 +123,7 @@
 
                         </tbody>
                     </table>
-
+                    </div>
 
                 </div>
 
