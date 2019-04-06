@@ -517,6 +517,7 @@ td {
     padding: 0;
 }
 
+
 .text-success {
     color: #0acf97 !important;
 }
@@ -708,11 +709,14 @@ footer p {
         font-size: 1.0rem;
     }
     #nav-tab a {
-        font-size: 0.7rem !important;
+        font-size: 0.8rem !important;
         padding: 5px;
     }
     .topo-tab {
         margin: auto;
+    }
+    .horizontal-scroll {
+        overflow-x: scroll;
     }
 }
 

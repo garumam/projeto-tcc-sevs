@@ -228,7 +228,7 @@
                 @can('orcamento_listar')
                 <div class="card-material card-shadow-dashboard m-0 h-auto">
                     <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0 d-flex justify-content-between">
+                        <h5 class="mb-0 d-flex justify-content-between horizontal-scroll">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                 Orçamentos aprovados para abrir ordem de serviço
