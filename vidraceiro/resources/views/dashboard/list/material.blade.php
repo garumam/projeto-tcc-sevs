@@ -20,8 +20,8 @@
                         @endif
                     @endfor
                     <div class="topo-tab">
-                        <a id="bt-material" class="btn-link" href="">
-                            <button class="btn btn-primary btn-block btn-custom" type="submit">Adicionar</button>
+                        <a id="bt-material" class="btn btn-primary btn-block btn-custom" href="">
+                            Adicionar
                         </a>
                     </div>
                 </div>

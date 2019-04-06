@@ -18,8 +18,8 @@
                     @endif
                 @endfor
                 <div class="topo-tab">
-                    <a class="btn-link" href="{{ route('sales.create') }}">
-                        <button class="btn btn-primary btn-block btn-custom" type="submit">Realizar venda</button>
+                    <a class="btn btn-primary btn-block btn-custom" href="{{ route('sales.create') }}">
+                        Realizar venda
                     </a>
                 </div>
             </div>

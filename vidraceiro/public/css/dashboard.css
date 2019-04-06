@@ -680,6 +680,7 @@ footer p {
     .modal {
         left: 220px;
     }
+
 }
 
 @media (max-width: 767px) {
@@ -694,6 +695,7 @@ footer p {
     .navbar-brand {
         margin-left: 0;
     }
+
 }
 @media (max-width: 940px) {
     #botoespdf a {
@@ -704,6 +706,13 @@ footer p {
 @media (max-width: 440px) {
     .titulo {
         font-size: 1.0rem;
+    }
+    #nav-tab a {
+        font-size: 0.7rem !important;
+        padding: 5px;
+    }
+    .topo-tab {
+        margin: auto;
     }
 }
 
