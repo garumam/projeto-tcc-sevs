@@ -426,6 +426,39 @@
 
     @break
 
+    @case('products')
+
+    @php
+        $quantidade = 0;
+        if($mproducts !== null){
+            $quantidade += count($mproducts->toArray());
+        }
+
+    @endphp
+
+    <h3>Relatório de produtos por quantidade vendida</h3>
+    <h4>Quantidade encontrada: {{$quantidade}}</h4>
+
+    @forelse($mproducts as $mproduct)
+        <div class="flex">
+            <table class="tabela-relatorio">
+                <tr>
+                    <td class="indice">{{$mproduct->id}}</td>
+                    <td class="texto">
+                        <b>Nome:</b> {{$mproduct->nome .' |'}}
+                        <b>Descrição:</b> {{$mproduct->descricao}}<hr>
+                        <b>Qtd vendida:</b> {{$mproduct->products->sum('qtd')}}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    @empty
+        <p>Nenhum produto encontrado.</p>
+    @endforelse
+    
+    @break
+
     @default
     <p>Ocorreu um erro inesperado, reinicie a página!</p>
 @endswitch

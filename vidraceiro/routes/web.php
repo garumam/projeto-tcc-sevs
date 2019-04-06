@@ -30,7 +30,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/orders', 'Api\DashboardController@orders')->name('dashboard.orders');
     Route::get('/clients', 'Api\DashboardController@clients')->name('dashboard.clients');
     Route::get('/budgets', 'Api\DashboardController@budgets')->name('dashboard.budgets');
-
+    Route::get('/products', 'Api\DashboardController@products')->name('dashboard.products');
 });
 
 

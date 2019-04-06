@@ -160,6 +160,11 @@
                                         <i class="fas fa-angle-double-right pr-1"></i>Vendas
                                     </a>
                                 </li>
+                                <li {{ Request::is( 'pdf/products') ? 'class=active' : '' }}>
+                                    <a href="{{ route('pdf.index',['tipo'=>'products']) }}">
+                                        <i class="fas fa-angle-double-right pr-1"></i>Produtos
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li {{ Request::is( 'restore') ? 'class=active' : '' }}>

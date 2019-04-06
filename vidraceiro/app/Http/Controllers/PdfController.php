@@ -14,6 +14,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Installment;
+use App\MProduct;
 
 class PdfController extends Controller
 {
@@ -128,6 +129,15 @@ class PdfController extends Controller
                 return view('dashboard.create.relatorios', compact('formas_pagamento'))->with('title', 'Relatório de Vendas')->with('tipo',$tipo);
 
                 break;
+            case 'products':
+
+                if(!Auth::user()->can('produto_relatorio', Sale::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+                
+                return view('dashboard.create.relatorios')->with('title', 'Relatório de Produtos')->with('tipo',$tipo);
+
+            break;
         }
 
     }
@@ -284,6 +294,19 @@ class PdfController extends Controller
 
                 $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('sales','tipo'));
                 $nomearquivo = 'venda-relatório.pdf';
+
+
+                break;
+            case 'products':
+
+                if(!Auth::user()->can('produto_relatorio', Provider::class)){
+                    return redirect('/home')->with('error', 'Você não tem permissão para acessar essa página');
+                }
+
+                $mproducts = MProduct::filterMProducts($request);
+                
+                $pdf = PDF::loadView('dashboard.pdf.relatorios', compact('mproducts','tipo'));
+                $nomearquivo = 'produto-relatório.pdf';
 
 
                 break;

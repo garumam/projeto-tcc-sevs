@@ -649,6 +649,19 @@ class PermissionSeeds extends Seeder
             ]);
         }
 
+        if (!Permission::where('nome', '=', 'produto_relatorio')->count()) {
+            Permission::create([
+                'nome' => 'produto_relatorio',
+                'descricao' => 'Relatório de Produtos'
+            ]);
+        } else {
+            $permission = Permission::where('nome', '=', 'produto_relatorio')->first();
+            $permission->update([
+                'nome' => 'produto_relatorio',
+                'descricao' => 'Relatório de Produtos'
+            ]);
+        }
+
         if (!Permission::where('nome', '=', 'restaurar')->count()) {
             Permission::create([
                 'nome' => 'restaurar',

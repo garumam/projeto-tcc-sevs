@@ -306,6 +306,63 @@
 
                 @break
 
+                @case('products')
+
+
+                <form class="formulario" method="GET" role="form" target="_blank"
+                      action="{{route('pdf.showRelatorio',['tipo'=>$tipo])}}">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h5 class="titulo">Filtros (opcionais)</h5>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="qtd_de">Qtd vendida de:</label>
+                            <input type="number" class="form-control" id="qtd_de" name="qtd_de">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="qtd_ate">até qtd:</label>
+                            <input type="number" class="form-control" id="qtd_ate" name="qtd_ate">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="data-inicial">Data desde:</label>
+                            <input type="date" class="form-control" id="data-inicial" name="data_inicial">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="data-final">até data:</label>
+                            <input type="date" class="form-control" id="data-final" name="data_final">
+                        </div>
+                        <div class="form-group col-md-12 mt-3">
+                            <label class="mr-3">Ordenar por quantidade:</label>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="ordenar" value="nao" checked>Não ordenar
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="ordenar" value="ASC">Menos vendidos
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="ordenar" value="DESC">Mais vendidos
+                                </label>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <button id="bt-pdf-invisible" class="d-none" type="submit"></button>
+
+                </form>
+
+
+                @break
+
                 @default
                 <p>Ocorreu um erro inesperado, reinicie a página!</p>
             @endswitch

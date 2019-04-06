@@ -1475,6 +1475,7 @@ var periodos = ['360 dias', '180 dias', '30 dias', '7 dias', 'hoje'];
 var host = window.location.origin;
 
 graficoVendas();
+graficoProdutos();
 graficofinanceiro();
 graficoOrdens();
 graficoClientes();
@@ -1507,6 +1508,64 @@ function graficoVendas() {
     }
 }
 
+
+function graficoProdutos() {
+    var ctxProdutos = document.getElementById("produtos");
+    if (ctxProdutos) {
+        fetch(host + '/dashboard/products')
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                var graficoProdutos = new Chart(ctxProdutos, {
+                    type: "horizontalBar",
+                    data: {
+                        labels: data.nomes,
+                        datasets: [
+                        
+                            {
+                                label: 'qtd',
+                                data: data.qtds,
+                                backgroundColor: [
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex(),
+                                    getRandomColorHex()],
+                                hoverBackgroundColor: 'rgba(204, 255, 255,0.5)'
+                            }
+                        
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                ticks: {
+                                    suggestedMin: 0,
+                                    stepSize: 1
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+    }
+}
+
+function getRandomColorHex() {
+    var hex = "0123456789ABCDEF",
+        color = "#80";
+    for (var i = 1; i <= 6; i++) {
+      color += hex[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 function graficofinanceiro() {
     var ctxFinanceiro = document.getElementById("financeiro");

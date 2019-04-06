@@ -108,6 +108,18 @@
         </div>
     </div>
 
+    <div class="col-12">
+        <div class="card-material card-shadow-dashboard">
+            <div class="card-header">
+                <h4>Produtos mais vendidos (limite de 10)</h4>
+            </div>
+            <div class="chart-container" style="padding: .5rem; margin-bottom: 1rem;">
+                <canvas id="produtos"></canvas>
+            </div>
+
+        </div>
+    </div>
+
     <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="card-material card-shadow-dashboard">
             <div class="card-header">

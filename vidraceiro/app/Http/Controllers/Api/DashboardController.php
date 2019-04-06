@@ -10,12 +10,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Installment;
+use App\MProduct;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function products(Request $request){
+
+        $request->merge(['ordenar'=>'DESC']);
+        $mproducts = MProduct::filterMProducts($request);
+        $mproducts = $mproducts->take(10);
+        $nomes = [];
+        $qtds = [];
+        foreach($mproducts as $mproduct){
+            $nomes[] = $mproduct->nome;
+            $qtds[] = $mproduct->products->sum('qtd');
+        }
+        return response()->json(array('nomes' => $nomes, 'qtds' => $qtds));
     }
 
     public function sales()
