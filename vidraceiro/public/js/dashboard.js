@@ -1515,7 +1515,6 @@ function graficoProdutos() {
         fetch(host + '/dashboard/products')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 var graficoProdutos = new Chart(ctxProdutos, {
                     type: "horizontalBar",
                     data: {
@@ -1525,18 +1524,10 @@ function graficoProdutos() {
                             {
                                 label: 'qtd',
                                 data: data.qtds,
-                                backgroundColor: [
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex(),
-                                    getRandomColorHex()],
-                                hoverBackgroundColor: 'rgba(204, 255, 255,0.5)'
+                                backgroundColor: ["#800103DE","#8072F175", "#80A832F2", "#80DF6AA3", "#803244C6", "#8089644B", "#80BD8DE8", "#80C5A4C7", "#80E3D688", "#802353D6"],
+                                hoverBackgroundColor: 'rgba(204, 255, 255,0.5)',
+                                borderColor: ["#800103","#8072F1", "#80A832", "#80DF6A", "#803244", "#808964", "#80BD8D", "#80C5A4", "#80E3D6", "#802353"],
+                                borderWidth: 2
                             }
                         
                         ]
@@ -1558,22 +1549,12 @@ function graficoProdutos() {
     }
 }
 
-function getRandomColorHex() {
-    var hex = "0123456789ABCDEF",
-        color = "#80";
-    for (var i = 1; i <= 6; i++) {
-      color += hex[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
 function graficofinanceiro() {
     var ctxFinanceiro = document.getElementById("financeiro");
     if (ctxFinanceiro) {
         fetch(host + '/dashboard/financial')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 var graficoFinanceiro = new Chart(ctxFinanceiro, {
                     type: "line",
                     data: {
@@ -1608,7 +1589,6 @@ function graficoOrdens() {
         fetch(host + '/dashboard/orders')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 var graficoOrdens = new Chart(ctxOrdens, {
                     type: "bar",
                     data: {
@@ -1652,7 +1632,6 @@ function graficoOrcamentos() {
         fetch(host + '/dashboard/budgets')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 var graficoOrcamentos = new Chart(ctxOrcamentos, {
                     type: "bar",
                     data: {
@@ -1726,7 +1705,6 @@ function graficoCaixaFuturo() {
         fetch(host + '/dashboard/futurefinancial')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 var saldofuturo = new Array();
                 for(let i = 0; i < data.receitas.length; i++){
                     saldofuturo.push((data.receitas[i] - data.despesas[i]).toFixed(2));
