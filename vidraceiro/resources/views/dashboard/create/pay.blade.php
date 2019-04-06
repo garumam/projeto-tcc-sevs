@@ -98,8 +98,8 @@
                                     <td style="color: #28a745;">R${{$valorTotal}}</td>
                                     <td><span class="badge badge-{{$installment->status_parcela == 'ABERTO' ? 'danger' : 'success'}}">{{$installment->status_parcela}}</span></td>
                                     <td>
-                                        <input type="checkbox" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
-                                        <label for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
+                                        <input class="form-check-input" type="checkbox" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
+                                        <label class="formulario-label" for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
                                     </td>
                                 </tr>
 

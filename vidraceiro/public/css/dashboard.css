@@ -374,6 +374,10 @@ ul.tabs li {
 
 }
 
+.formulario-label:disabled .form-check-input:disabled {
+    color: #6c757d !important;
+}
+
 /*.form-group .topo {*/
 /*padding: 0 !important;*/
 /*}*/
