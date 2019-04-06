@@ -695,6 +695,17 @@ footer p {
         margin-left: 0;
     }
 }
+@media (max-width: 940px) {
+    #botoespdf a {
+        font-size: 0.7rem !important;
+        padding: 5px;
+    }
+}
+@media (max-width: 440px) {
+    .titulo {
+        font-size: 1.0rem;
+    }
+}
 
 @media (max-width: 320px) {
     .sidebar {

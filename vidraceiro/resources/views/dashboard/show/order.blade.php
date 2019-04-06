@@ -6,7 +6,7 @@
 
             <div class="topo">
                 <h4 class="titulo">{{$title}}</h4>
-                <div>
+                <div id="botoespdf">
                     <a class="btn btn-primary btn-custom" target="_blank"
                        href="{{route('pdf.show',['tipo'=>'order','id'=>$order->id])}}">Gerar PDF</a>
                     <a class="btn btn-primary btn-custom" target="_blank"
