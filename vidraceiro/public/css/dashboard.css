@@ -374,8 +374,8 @@ ul.tabs li {
 
 }
 
-.formulario-label:disabled .form-check-input:disabled {
-    color: #6c757d !important;
+.form-check-input{
+    position: relative;
 }
 
 /*.form-group .topo {*/

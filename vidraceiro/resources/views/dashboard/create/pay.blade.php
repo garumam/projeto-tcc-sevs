@@ -99,7 +99,7 @@
                                     <td><span class="badge badge-{{$installment->status_parcela == 'ABERTO' ? 'danger' : 'success'}}">{{$installment->status_parcela}}</span></td>
                                     <td>
                                         <input class="form-check-input" type="checkbox" @if($installment->status_parcela === 'ABERTO') name="parcelas[]" @else checked disabled @endif id="parcelas" value="{{$installment->id}}">
-                                        <label class="formulario-label" for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
+                                        <label class="form-check-label" for="parcelas">{{$installment->status_parcela === 'ABERTO'? 'Pagar' : 'Pago'}}</label>
                                     </td>
                                 </tr>
 
@@ -112,8 +112,8 @@
                                 
                                 <td><span class="badge badge-success">Pago</span></td>
                                 <td>
-                                    <input type="checkbox" id="aVista" checked disabled>
-                                    <label for="aVista">Pago</label>
+                                    <input class="form-check-input" type="checkbox" id="aVista" checked disabled>
+                                    <label class="form-check-label" for="aVista">Pago</label>
                                 </td>
                                 
 
