@@ -67,6 +67,7 @@ class Glass extends Model
 
         $queryBuilder = self::where('is_modelo', 1)->where(function($c) use ($search){
             $c->where('nome', 'like', '%' . $search . '%')
+            ->orWhere('tipo', 'like', '%' . $search . '%')
             ->orWhereHas('category',function ($q) use ($search){
                 $q->where('nome','like', '%' . $search . '%');
             });
