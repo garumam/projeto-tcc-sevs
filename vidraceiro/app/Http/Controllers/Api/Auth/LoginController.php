@@ -23,17 +23,15 @@ class LoginController extends Controller
             return response()->json(['error' => $validator->messages()], 401);
         }
         if (!Auth::attempt($request->except('remember'))) {
-            return response()->json(['message' => 'Erro ao logar'], 401);
+            return response()->json(['message' => 'Erro no login ou senha'], 401);
         }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        if ($request->remember)
-            $token->expires_at = Carbon::now()->addMinute(1);
-        else
-            $token->expires_at = Carbon::now()->addMinute(1);
-        Passport::tokensExpireIn(Carbon::now()->addMinute(1));
-        Passport::refreshTokensExpireIn(Carbon::now()->addMinute(1));
+      
+        $token->expires_at = Carbon::now()->addMinute(1);
+        // Passport::tokensExpireIn(Carbon::now()->addMinute(1));
+        // Passport::refreshTokensExpireIn(Carbon::now()->addMinute(1));
         $token->save();
         return response()->json([
             'user' => $user,
