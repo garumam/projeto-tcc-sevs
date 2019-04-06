@@ -40,7 +40,9 @@ class Category extends Model
 
         $paginate = $paginate ?? 10;
 
-        $queryBuilder = self::where('nome', 'like', '%' . $search . '%');
+        $queryBuilder = self::where('nome', 'like', '%' . $search . '%')
+                        ->orWhere('tipo', 'like', '%' . $search . '%')
+                        ->orWhere('grupo_imagem', 'like', '%' . $search . '%');
 
         if ($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();

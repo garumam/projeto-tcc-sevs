@@ -92,7 +92,11 @@ class MProduct extends Model
         $paginate = $paginate ?? 10;
 
         $queryBuilder = self::with('category')
-            ->where('nome', 'like', '%' . $search . '%');
+            ->where('nome', 'like', '%' . $search . '%')
+            ->orWhere('descricao', 'like', '%' . $search . '%')
+            ->orWhereHas('category',function($q) use ($search){
+                $q->where('nome','like', '%' . $search . '%');
+            });
 
         if($restore)
             $queryBuilder = $queryBuilder->onlyTrashed();
