@@ -50,10 +50,6 @@ class BudgetController extends Controller
     
     public function create()
     {
-        if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
-        }
-
         $clients = Client::getAllClients();
 
         $clients = $this->mergeLocationAndContactToObjects($clients);

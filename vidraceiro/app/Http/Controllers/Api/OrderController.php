@@ -33,9 +33,6 @@ class OrderController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->can('os_adicionar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
-        }
 
         $budgets = Budget::getBudgetsWhereStatusApproved(null);
 
