@@ -103,7 +103,7 @@ class OrderController extends Controller
                 $order->updateBudgetsStatusByOrderSituation($budgets);
                 return response()->json(['success' => 'Ordem atualizada com sucesso', 'id' => $order->id], 200);
             } else {
-                return response()->json(['error' => 'Não é possível editar esta O.S.'], 202);
+                return response()->json(['error' => 'Não é possível editar esta O.S.','res'=>true], 202);
             }
 
         }
@@ -114,7 +114,7 @@ class OrderController extends Controller
         }
 
         if ($order->situacao !== 'ABERTA') {
-            return response()->json(['error' => 'Não é possível editar esta O.S.'], 202);
+            return response()->json(['error' => 'Não é possível editar esta O.S.','res'=>true], 202);
         }
 
         foreach ($order->budgets as $budget) {
