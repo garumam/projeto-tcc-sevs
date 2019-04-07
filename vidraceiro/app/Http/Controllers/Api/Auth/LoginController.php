@@ -20,10 +20,10 @@ class LoginController extends Controller
     {
         $validator = $this->rules_users($request->all());
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 401);
+            return response()->json(['error' => $validator->messages()], 202);
         }
         if (!Auth::attempt($request->except('remember'))) {
-            return response()->json(['message' => 'Erro no login ou senha'], 401);
+            return response()->json(['message' => 'Erro no login ou senha'], 202);
         }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
@@ -41,7 +41,7 @@ class LoginController extends Controller
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString()
-        ]);
+            ],200);
     }
 
     /**
@@ -55,7 +55,7 @@ class LoginController extends Controller
         $request->user()->token()->delete();
         return response()->json([
             'message' => 'Logout feito com sucesso'
-        ]);
+        ],200);
     }
 
     /**
