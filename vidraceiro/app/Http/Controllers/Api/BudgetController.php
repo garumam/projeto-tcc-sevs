@@ -36,7 +36,7 @@ class BudgetController extends Controller
     public function index(Request $request)
     {
         if (!Auth::user()->can('orcamento_listar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $budgets = $this->budget->getWithSearchAndPagination($request->get('search'), false, false, false, true);
@@ -51,7 +51,7 @@ class BudgetController extends Controller
     public function create()
     {
         if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $clients = Client::getAllClients();
@@ -68,7 +68,7 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->can('orcamento_adicionar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $validado = $this->rules_budget($request->all());
@@ -99,7 +99,7 @@ class BudgetController extends Controller
     public function update(Request $request, $tab, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $validado = $this->rules_budget_exists(['id' => $id]);
@@ -213,7 +213,7 @@ class BudgetController extends Controller
     public function destroy($del, $id)
     {
         if (!Auth::user()->can('orcamento_deletar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página','res'=>true], 401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página','res'=>true], 403);
         }
 
         if ($del == 'budget') {
@@ -259,7 +259,7 @@ class BudgetController extends Controller
     public function updateMaterial(Request $request, $type, $id)
     {
         if (!Auth::user()->can('orcamento_atualizar', Budget::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'],401);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $validado = $this->rules_budget_materiais($request->all(), $type);

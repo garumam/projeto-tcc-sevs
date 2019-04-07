@@ -19,6 +19,7 @@ class ApiVerifyToken
             if (Carbon::parse($request->user()->token()->expires_at) < Carbon::now()) {
                 $request->user()->token()->revoke();
                 $request->user()->token()->delete();
+                return response()->json(['error'], 401);
             }
         }
        

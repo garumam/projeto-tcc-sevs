@@ -22,7 +22,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if (!Auth::user()->can('os_listar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $orders = $this->order->getWithSearchAndPagination($request->get('search'), false, false, false, true);
@@ -34,7 +34,7 @@ class OrderController extends Controller
     public function create()
     {
         if (!Auth::user()->can('os_adicionar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $budgets = Budget::getBudgetsWhereStatusApproved(null);
@@ -62,7 +62,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         if (!Auth::user()->can('os_adicionar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $validado = $this->rules_order($request->all());
@@ -88,7 +88,7 @@ class OrderController extends Controller
     public function update(Request $request, $id, $situacao = null)
     {
         if (!Auth::user()->can('os_atualizar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 202);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $validado = $this->rules_order_exists(['id' => $id]);
@@ -141,7 +141,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         if (!Auth::user()->can('os_deletar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página']);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
         }
 
         $order = $this->order->findOrderById($id);
