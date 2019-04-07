@@ -29,7 +29,7 @@ class LoginController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
       
-        $token->expires_at = Carbon::now()->addMinute(1);
+        $token->expires_at = Carbon::now()->addDay();
         // Passport::tokensExpireIn(Carbon::now()->addMinute(1));
         // Passport::refreshTokensExpireIn(Carbon::now()->addMinute(1));
         $token->save();
