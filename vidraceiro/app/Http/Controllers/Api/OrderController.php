@@ -138,7 +138,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         if (!Auth::user()->can('os_deletar', Order::class)) {
-            return response()->json(['error' => 'Você não tem permissão para acessar essa página'], 403);
+            return response()->json(['error' => 'Você não tem permissão para acessar essa página','res'=>true], 403);
         }
 
         $order = $this->order->findOrderById($id);
@@ -148,7 +148,7 @@ class OrderController extends Controller
             $order->deleteOrder();
             return response()->json(['success' => 'Ordem de serviço deletado com sucesso', 'id' => $id], 200);
         } else {
-            return response()->json(['error' => 'Erro ao deletar ordem de serviço'], 202);
+            return response()->json(['error' => 'Erro ao deletar ordem de serviço','res'=>true], 202);
         }
     }
 
