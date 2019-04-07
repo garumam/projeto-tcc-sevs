@@ -20,10 +20,10 @@ class LoginController extends Controller
     {
         $validator = $this->rules_users($request->all());
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 202);
+            return response()->json(['error' => $validator->messages()], 402);
         }
         if (!Auth::attempt($request->except('remember'))) {
-            return response()->json(['message' => 'Erro no login ou senha'], 202);
+            return response()->json(['message' => 'Erro no login ou senha'], 402);
         }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
