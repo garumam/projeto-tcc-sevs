@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         $orders = $this->order->getWithSearchAndPagination($request->get('search'), false, false, false, true);
 
-        return response()->json(['orders' => $orders]);
+        return response()->json(['orders' => $orders],200);
 
     }
 
@@ -53,7 +53,7 @@ class OrderController extends Controller
             return $b;
         });
 
-        return response()->json(['budgets' => $budgets]);
+        return response()->json(['budgets' => $budgets],200);
     }
 
     public function store(Request $request)

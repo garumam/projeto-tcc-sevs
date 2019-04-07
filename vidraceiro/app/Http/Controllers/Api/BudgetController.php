@@ -43,7 +43,7 @@ class BudgetController extends Controller
 
         $budgets = $this->mergeLocationAndContactToObjects($budgets);
 
-        return response()->json(['budgets' => $budgets]);
+        return response()->json(['budgets' => $budgets],200);
 
     }
 
