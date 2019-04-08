@@ -40,7 +40,7 @@ class RoleSeeds extends Seeder
 
             $userAdmin->roles()->attach($funcionario->id);
 
-            $funcionario->permissions()->attach([5,6,7,9,10,11,12,13,14,15,16,17,18,19,39,40,43]);
+            $funcionario->permissions()->attach([5,6,7,9,10,11,12,13,14,15,16,17,18,19,39,40,43,44]);
         }
     }
 }
