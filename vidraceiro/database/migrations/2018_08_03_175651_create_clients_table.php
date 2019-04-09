@@ -16,7 +16,7 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('documento')->nullable()->unique();
+            $table->string('documento')->unique();
             $table->string('status');
             $table->integer('endereco_id')->unsigned();
             $table->foreign('endereco_id')->references('id')->on('locations');

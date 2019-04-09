@@ -93,7 +93,7 @@ class Category extends Model
 
     }
 
-    public static function getAllCategories($type)
+    public static function getAllCategoriesByTypeApi($type)
     {
 
         return self::with('glasses', 'aluminums', 'components', 'mproducts.glasses', 'mproducts.aluminums', 'mproducts.components')->where('tipo', $type)->get();

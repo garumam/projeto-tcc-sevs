@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="juros_mensal_parcel" class="obrigatorio">Juros para venda a prazo(% ao mês)</label>
+                        <label for="juros_mensal_parcel" class="obrigatorio">Juros para venda a prazo(% por parcela)</label>
                         <input type="number" step=".01" id="juros_mensal_parcel" class="form-control" name="juros_mensal_parcel" value="{{ $configuration->juros_mensal_parcel or old('juros_mensal_parcel')}}"
                                placeholder="5" required>
                     </div>

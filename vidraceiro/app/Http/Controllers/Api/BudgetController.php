@@ -55,7 +55,7 @@ class BudgetController extends Controller
         $clients = $this->mergeLocationAndContactToObjects($clients);
 
         $mproducts = MProduct::getAllMProducts();
-        $categories = Category::getAllCategories("produto");
+        $categories = Category::getAllCategoriesByTypeApi("produto");
         $categoriesmaterials = Category::getAllCategoriesMaterials();
 
         return response()->json(['clients' => $clients, 'mproducts' => $mproducts, 'categories' => $categories,'categoriesmaterials' => $categoriesmaterials], 200);
