@@ -21,7 +21,12 @@
         
         @php 
                 $valorVenda = $sale->valor_venda + $sale->entrada;
-                $faltapagar = $valorVenda - $valorpago;
+                $installments = $sale->installments()->get();
+                $multa = 0;
+                if(!empty($installments)){
+                    $multa = $installments->sum('multa');
+                }
+                $faltapagar = $valorVenda + $multa - $valorpago;
         @endphp
 
 
