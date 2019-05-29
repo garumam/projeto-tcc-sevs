@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Http\Request;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,194 +17,164 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeds::class);
         $this->call(CarregaItens::class);
         $this->call(CarregaItensTeste::class);
-        /*
-        //INICIO FACTORY
+
+        //INICIO NOVO FACTORY
 
         factory(App\Client::class, 10)->create();
+        factory(App\Provider::class, 25)->create();
         factory(App\MProduct::class, 20)->create();
-        factory(App\Provider::class, 48)->create();
-        factory(App\Budget::class, 20)->create();
-        factory(App\Financial::class,20)->create();
-        factory(App\Product::class, 40)->create();
-        $products = App\Product::whereNotIn('id',[1,2,3])->get();
-
+        factory(App\Budget::class, 60)->create();
+        factory(App\Financial::class,100)->create();
+        factory(App\Product::class, 80)->create();
+        $products = App\Product::whereNotIn('id',[1,2,3,4])->get();
         foreach ($products as $product){
             factory(App\Glass::class)->create(['product_id' => $product->id]);
         }
+        factory(App\Aluminum::class, 100)->create();
+        factory(App\Component::class, 100)->create();
 
-        factory(App\Aluminum::class, 65)->create();
-        factory(App\Component::class, 65)->create();
-        $this->atualizaTotal();
+        foreach(App\Budget::all() as $budget){
+            $budget->updateBudgetTotal();
+        }
 
-        $budgets = App\Budget::whereIn('status',['APROVADO','FINALIZADO'])->whereNotIn('id',[1,2,3])->get();
+        $budgets = App\Budget::whereIn('status',['APROVADO','FINALIZADO'])->whereNotIn('id',[1,2,3,4])->get();
 
         foreach ($budgets as $budget){
-            factory(App\Sale::class)->create(['orcamento_id' => $budget->id]);
+            factory(App\Sale::class)->create(['orcamento_id' => $budget->id,'data_venda' => $budget->data]);
         }
 
+        $sales = App\Sale::with('budget')->whereNotIn('id',[1,2])->get();
 
-        $sales = App\Sale::with('budget')->where('tipo_pagamento','A PRAZO')->whereNotIn('id',[1,2])->get();
+        $juros = App\Configuration::first()->juros_mensal_parcel/100;
 
         foreach ($sales as $sale){
-
-            $valor_parcela = $sale->budget->total/$sale->qtd_parcelas;
-
-            $valor_parcela = number_format($valor_parcela, 2, '.', '');
-
-            for($i = 1; $i <= $sale->qtd_parcelas; $i++){
-                $installments = new App\Installment();
-                $dias = $i * 30;
-                $datavencimento = date('Y-m-d', strtotime("+$dias days",strtotime($sale->data_venda)));
-                $installments->create([
-                    'valor_parcela'=>$valor_parcela,
-                    'status_parcela'=>'ABERTO',
-                    'data_vencimento'=> $datavencimento,
-                    'venda_id'=> $sale->id
+            $total = $sale->budget->total;
+            if($sale->tipo_pagamento === 'A PRAZO'){
+                $total = $total * pow(1+$juros,$sale->qtd_parcelas);
+                $total = number_format($total,2,'.','');
+                $request = new Request();
+                $request->merge([
+                    'qtd_parcelas'=>$sale->qtd_parcelas,
+                    'data_venda'=>$sale->data_venda,
+                    'valor_parcela'=>number_format($total/$sale->qtd_parcelas,2,'.',''),
+                    'entrada'=> 0
                 ]);
+                $sale->createSaleInstallments($request,rand(1,2));
+
+                $pagar = rand(0, 1) === 1 ? true : false;
+
+                if($pagar){
+                    $qtd = rand(1,ceil($sale->qtd_parcelas/2));
+
+                    $installments = $sale->installments()->get()->take(ceil($qtd/2));
+                    
+                    foreach ($installments as $installment) {
+                        $valorParcela = $installment->valor_parcela + $installment->multa;
+                        $valorParcela = number_format($valorParcela,2,'.','');
+                        $sale->createSalePayment($installment->data_vencimento,$valorParcela,'Pagamento de parcela de venda a prazo.', rand(1,2));
+
+                        $installment->updateInstallment('status_parcela','PAGO');
+                    }
+
+
+                    $budget = $sale->budget;
+                    $client = new App\Client();
+                    $client = $client->findClientById($budget->cliente_id);
+                    $client->updateStatus();
+
+                }
+
+            }else{
+                $sale->createSalePayment($sale->data_venda,$total,'Pagamento de venda à vista.',$sale->usuario_id);
             }
-
-        }
-
-        $sales = App\Sale::with('budget')->where('tipo_pagamento','A VISTA')->whereNotIn('id',[1,2])->get();
-
-        foreach ($sales as $sale){
-
-            $payment = new App\Payment();
-            $payment = $payment->create([
-                'valor_pago'=> $sale->budget->total,
-                'data_pagamento'=>$sale->data_venda,
-                'venda_id'=>$sale->id
-            ]);
-            App\Financial::create([
-                'tipo'=>'RECEITA',
-                'descricao'=>'Pagamento de venda à vista.',
-                'valor'=>$payment->valor_pago,
-                'pagamento_id'=> $payment->id,
-                'usuario_id'=> 1
-            ]);
+            $sale->update(['valor_venda'=>$total]);
         }
 
 
-        $installments = App\Installment::whereNotIn('id',[1,2])->get();
-        $installarray = $installments->toArray();
-        $quantidade_parcelas = count($installarray);
-        $loopqtd = ceil($quantidade_parcelas/2);
-        for($i = 0;$i < $loopqtd;$i++){
-            $position = rand(0,$quantidade_parcelas-1);
-            $installments[$position]->update([
-                'status_parcela'=>'PAGO'
-            ]);
-        }
-        $installments = App\Installment::where('status_parcela','PAGO')->whereNotIn('id',[1,2])->get();
-        foreach($installments as $installment){
-            $payment = new App\Payment();
-            $payment = $payment->create([
-                'valor_pago'=> $installment->valor_parcela,
-                'data_pagamento'=>$installment->data_vencimento,
-                'venda_id'=>$installment->venda_id
-            ]);
-            App\Financial::create([
-                'tipo'=>'RECEITA',
-                'descricao'=>'Parcelas pagas.',
-                'valor'=>$payment->valor_pago,
-                'pagamento_id'=> $payment->id,
-                'usuario_id'=> 1
-            ]);
-        }
+        $budgets = App\Budget::with('sale')->where('status','FINALIZADO')->whereNotIn('id',[1,2,3,4])->get();
 
-        $budgets = App\Budget::where('status','FINALIZADO')->whereNotIn('id',[1,2,3])->get();
-        $totalOrdem = 0;
-
-        foreach($budgets as $budget){
-            $totalOrdem += $budget->total;
-        }
-
-        if(!empty($budgets)){
-            $totalOrdem = number_format($totalOrdem, 2, '.', '');
-
+        foreach ($budgets as $budget){
+            $data_inicial = date('Y-m-d', strtotime($budget->sale->data_venda));
+            $dias = rand(2, 15);
+            $data_final = date('Y-m-d', strtotime("+$dias days", strtotime($data_inicial)));
             $order = factory(App\Order::class)->create([
-                'nome'=> 'order com orçamentos finalizados',
+                'data_final' => $data_final,
+                'data_inicial' => $data_inicial,
                 'situacao' => 'CONCLUIDA',
-                'total'=> $totalOrdem
+                'total' => $budget->sale->valor_venda,
+                'updated_at' => $data_final
             ]);
+            $budget->update(['ordem_id'=>$order->id]);
+        }
 
-            foreach ($budgets as $budget){
+    
+        $budgets = App\Budget::with('sale')->where('status','APROVADO')->whereNotIn('id',[1,2,3,4])->get();
+      
+        foreach($budgets as $budget){
+            $criarordem = rand(0, 1) === 1 ? true : false;
+            if ($criarordem) {
+                $data_inicial = date('Y-m-d', strtotime($budget->sale->data_venda));
+                $dias = rand(2, 15);
+                $data_final = date('Y-m-d', strtotime("+$dias days", strtotime($data_inicial)));
+                $order = factory(App\Order::class)->create([
+                    'data_final' => $data_final,
+                    'data_inicial' => $data_inicial,
+                    'total' => $budget->sale->valor_venda,
+                    'updated_at' => $data_inicial
+                ]);
                 $budget->update(['ordem_id'=>$order->id]);
             }
+        }
+        
+        $qtdcanceladas = rand(5,15);
 
+        $order = factory(App\Order::class, $qtdcanceladas)->create([
+            'situacao' => 'CANCELADA'
+        ]);
+
+        $storages = App\Storage::all();
+        
+        foreach($storages as $storage){
+            $qtd = rand(0,27);
+            $storage->update(['qtd'=>$qtd]);
         }
 
-        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
-        foreach($budgets as $budget){
+        $providers = App\Provider::all();
 
-            $order = $budget->order()->first();
-            if(!empty($order)){
-                $order->update(['total'=>$budget->total]);
+        $glasses = App\Glass::where('is_modelo',1)->get();
+        $aluminums = App\Aluminum::where('is_modelo',1)->get();
+        $components = App\Component::where('is_modelo',1)->get();
+        
+        foreach($glasses as $glass){
+            $providerRandom = $providers->random(rand(1,5));
+            $ids = [];
+            foreach($providerRandom as $provider){
+                $ids[] = $provider->id;
             }
-
+            $glass->syncProviders($ids);
         }
 
-        $budgets = App\Budget::where('status','APROVADO')->whereNotIn('id',[1,2,3])->get();
-        foreach($budgets as $budget){
-
-            if($budget->sale->tipo_pagamento === 'A PRAZO'){
-                $sale = $budget->sale()->with('installments')->first();
-                $devendo = $sale->installments->where('status_parcela','ABERTO')->shift();
-                if($devendo !== null){
-                    $budget->client()->first()->update(['status'=>'DEVENDO']);
-                }
+        foreach($aluminums as $aluminum){
+            $providerRandom = $providers->random(rand(1,5));
+            $ids = [];
+            foreach($providerRandom as $provider){
+                $ids[] = $provider->id;
             }
-
+            $aluminum->syncProviders($ids);
         }
 
+        foreach($components as $component){
+            $providerRandom = $providers->random(rand(1,5));
+            $ids = [];
+            foreach($providerRandom as $provider){
+                $ids[] = $provider->id;
+            }
+            $component->syncProviders($ids);
+        }
+        
 
-        //FIM FACTORY
-        */
+        //FIM NOVO FACTORY
+
     }
 
-    public function atualizaTotal()
-    {
-
-        $budgets = App\Budget::with('products')->whereNotIn('id',[1,2,3])->get();
-
-        foreach ($budgets as $budgetcriado){
-
-
-            $productsids = array();
-            foreach ($budgetcriado->products as $product) {
-                $productsids[] = $product->id;
-            }
-            $products = App\Product::with('glasses', 'aluminums', 'components')->wherein('id', $productsids)->get();
-
-            $valorTotalDeProdutos = 0.0;
-            foreach ($products as $product) {
-                $resultVidro = 0.0;
-                $m2 = $product['altura'] * $product['largura'] * $product['qtd'];
-                $resultVidro += $m2 * $product->glasses()->sum('preco');
-
-                $resultAluminio = 0.0;
-                foreach ($product->aluminums()->get() as $aluminum) {
-                    //LINHA ONDE O CALCULO ESTÁ SENDO FEITO DIFERENTE DO APP
-                    $resultAluminio += $aluminum['peso'] * $aluminum['preco'] * $aluminum['qtd'];
-                }
-
-                $resultComponente = 0.0;
-                foreach ($product->components()->get() as $component) {
-                    $resultComponente += $component['preco'] * $component['qtd'];
-                }
-
-                $valorTotalDeProdutos += ($resultAluminio + $resultVidro + $resultComponente + $product['valor_mao_obra']);
-
-            }
-
-            $valorTotalDeProdutos *= (1 + $budgetcriado['margem_lucro'] / 100);
-
-            $valorTotalDeProdutos = number_format($valorTotalDeProdutos, 2, '.', '');
-
-            $budgetcriado->update(['total' => $valorTotalDeProdutos]);
-
-
-        }
-
-    }
 }

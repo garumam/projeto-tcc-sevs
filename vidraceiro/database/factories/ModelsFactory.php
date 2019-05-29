@@ -2,19 +2,57 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Client::class, function (Faker $faker) {
+$factory->define(App\Contact::class, function (Faker $faker) {
+    $email = $faker->unique()->word . '@email.com';
     return [
-        'nome' => $faker->name,
+        'telefone' => $faker->numerify('##########'),
+        'celular' => $faker->numerify('##9########'),
+        'email' => $email
+    ];
+});
+
+$factory->define(App\Location::class, function (Faker $faker) {
+    return [
         'bairro' => $faker->streetName,
         'cep' => str_replace('-', '', $faker->postcode),
-        'cpf' => $faker->unique()->cpf(false),
         'cidade' => $faker->city,
         'complemento' => $faker->secondaryAddress,
         'endereco' => $faker->address,
-        'telefone' => $faker->numerify('##########'),
-        'celular' => $faker->numerify('9##########'),
-        'status' => 'EM DIA',
         'uf' => $faker->stateAbbr
+    ];
+});
+
+$factory->define(App\Client::class, function (Faker $faker) {
+    $doc = $faker->numberBetween(1, 2);
+    if($doc == 1){
+        $doc = $faker->unique()->cpf(false);
+    }else{
+        $doc = $faker->unique()->cnpj(false);
+    }
+    return [
+        'nome' => $faker->name,
+        'documento' => $doc,
+        'status' => 'EM DIA',
+        'endereco_id' => function(){
+            return factory(App\Location::class)->create()->id;
+        },
+        'contato_id' => function(){
+            return factory(App\Contact::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(App\Provider::class, function (Faker $faker) {
+    return [
+        'cnpj' => $faker->unique()->cnpj(false),
+        'nome' => $faker->text(25),
+        'situacao' => 'ativo',
+        'endereco_id' => function(){
+            return factory(App\Location::class)->create()->id;
+        },
+        'contato_id' => function(){
+            return factory(App\Contact::class)->create()->id;
+        }
     ];
 });
 
@@ -61,55 +99,59 @@ $factory->define(App\MProduct::class, function (Faker $faker) {
 
 
 $factory->define(App\Budget::class, function (Faker $faker) {
-    $clients = App\Client::whereNotIn('id', [1, 2])->get()->toArray();
+    $clients = App\Client::whereNotIn('id', [1, 2])->get();
 
-    $max = count($clients);
+    $max = count($clients->toArray());
     $position = $faker->numberBetween(0, $max - 1);
+    $endereco = $clients[$position]->location()->first();
+    $contato = $clients[$position]->contact()->first();
 
     $status = $faker->randomElement(['APROVADO', 'AGUARDANDO', 'FINALIZADO']);
 
-    $id_order = null;
-    if ($status === 'APROVADO') {
-        $criarordem = $faker->numberBetween(0, 1) === 1 ? true : false;
-        if ($criarordem) {
-            $order = factory(App\Order::class)->create();
-            $id_order = $order->id;
-        }
-    }
-
+    $dt = $faker->dateTimeBetween('-1 years', 'now');
+    $data = $dt->format("Y-m-d");
 
     return [
         'status' => $status,
-        'bairro' => $clients[$position]['bairro'],
-        'cep' => $clients[$position]['cep'],
-        'cidade' => $clients[$position]['cidade'],
-        'complemento' => $clients[$position]['complemento'],
-        'data' => $faker->date('Y-m-d', 'now'),
+        'data' => $data,
         'margem_lucro' => $faker->randomFloat(2, 0, 100),
         'nome' => 'orçamento ' . $faker->word,
-        'endereco' => $clients[$position]['endereco'],
-        'telefone' => $clients[$position]['telefone'],
         'total' => 0,
-        'ordem_id' => $id_order,
-        'uf' => $clients[$position]['uf'],
-        'cliente_id' => $clients[$position]['id']
+        'ordem_id' => null,
+        'endereco_id' => function() use ($endereco){
+            return App\Location::create([
+                'bairro' => $endereco['bairro'],
+                'cep' => $endereco['cep'],
+                'cidade' => $endereco['cidade'],
+                'complemento' => $endereco['complemento'],
+                'endereco' => $endereco['endereco'],
+                'uf' => $endereco['uf']
+            ])->id;
+        },
+        'contato_id' => function() use ($contato){
+            return App\Contact::create([
+                'telefone' => $contato['telefone']
+            ])->id;
+        },
+        'cliente_id' => $clients[$position]['id'],
+        'usuario_id' => $faker->numberBetween(1, 2)
     ];
 });
 
 $factory->define(App\Product::class, function (Faker $faker) {
     $mproduct = App\MProduct::all()->toArray();
-    $budget = App\Budget::whereNotIn('id', [1, 2, 3])->get()->toArray();
+    $budget = App\Budget::whereNotIn('id', [1, 2, 3, 4])->get()->toArray();
     $max_budget = count($budget);
     $position_budget = $faker->numberBetween(0, $max_budget - 1);
     $max_mproduct = count($mproduct);
     $position_mprod = $faker->numberBetween(0, $max_mproduct - 1);
     return [
-        'altura' => $faker->randomFloat(3, 0, 10),
-        'largura' => $faker->randomFloat(3, 0, 10),
+        'altura' => $faker->randomFloat(3, 0, 4),
+        'largura' => $faker->randomFloat(3, 0, 4),
         'localizacao' => $faker->randomElement(['Quarto', 'Banheiro', 'Sala', 'Varanda', 'Entrada da casa']),
         'm_produto_id' => $mproduct[$position_mprod]['id'],
         'budget_id' => $budget[$position_budget]['id'],
-        'qtd' => 1,
+        'qtd' => $faker->numberBetween(1, 3),
         'valor_mao_obra' => $faker->randomFloat(2, 0, 1000)
     ];
 });
@@ -192,56 +234,49 @@ $factory->define(App\Sale::class, function (Faker $faker) {
     $qtd_parcelas = null;
 
     if ($tipo_pagamento === 'A PRAZO') {
-        $qtd_parcelas = $faker->numberBetween(2, 12);
+        $qtd_parcelas = $faker->numberBetween(1, 12);
     }
-
 
     return [
         'tipo_pagamento' => $tipo_pagamento,
-        'data_venda' => $faker->date('Y-m-d', 'now'),
-        'qtd_parcelas' => $qtd_parcelas
+        'qtd_parcelas' => $qtd_parcelas,
+        'usuario_id'=>$faker->numberBetween(1, 2)
     ];
 });
 
 
 $factory->define(App\Order::class, function (Faker $faker) {
-    $data_inicial = $faker->date('Y-m-d', 'now');
-    $dias = $faker->numberBetween(5, 50);
-    $data_final = date('Y-m-d', strtotime("+$dias days", strtotime($data_inicial)));;
     $situacao = $faker->randomElement(['ABERTA', 'ANDAMENTO']);
 
+    $dt = $faker->dateTimeBetween('-1 years', 'now');
+    $data = $dt->format("Y-m-d");
+
     return [
-        'data_final' => $data_final,
-        'data_inicial' => $data_inicial,
         'nome' => 'order ' . $faker->word,
         'situacao' => $situacao,
-        'total' => 0
+        'data_final' => $data,
+        'data_inicial' => $data,
+        'total' => $faker->randomFloat(2, 500, 10000),
+        'updated_at' => date('Y-m-d', strtotime($data))
     ];
 });
 
 $factory->define(App\Financial::class, function (Faker $faker) {
     $tipo = $faker->randomElement(['RECEITA', 'DESPESA']);
+    $status = $faker->randomElement(['CONFIRMADO', 'PENDENTE']);
+
+    $dt = $faker->dateTimeBetween('-1 years', '+1 years');
+    $dataVencimento = $dt->format("Y-m-d");
 
     return [
         'tipo' => $tipo,
+        'status' => $status,
         'descricao' => $faker->text(100),
-        'valor' => $faker->randomFloat(2, 1, 50000)
+        'valor' => $faker->randomFloat(2, 500, 13000),
+        'usuario_id' => $faker->numberBetween(1, 2),
+        'data_vencimento' => $dataVencimento
     ];
+
 });
 
-$factory->define(App\Provider::class, function (Faker $faker) {
 
-    return [
-        'bairro' => $faker->text(100),
-        'celular' => $faker->randomDigit(10),
-        'cep' => $faker->randomDigit(10),
-        'cidade' => $faker->text(100),
-        'cnpj' => $faker->randomDigit(12),
-        'email' => $faker->text(100),
-        'nome' => $faker->text(25),
-        'endereco' => $faker->text(100),
-        'situacao' => 'ativo',
-        'telefone' => $faker->randomDigit(10),
-        'uf' => $faker->text(10),
-    ];
-});
