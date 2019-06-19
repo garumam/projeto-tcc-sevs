@@ -119,12 +119,14 @@
 <h2>Orçamentos relacionados</h2>
 
 @foreach($budgets as $budget)
-
+    @php 
+        $location = $budget->location()->first();
+    @endphp
     <h3>Dados do orçamento - {{$budget->nome}}</h3>
     <p>Nome: {{$budget->nome}}</p>
-    <p>Endereço: {{$budget->endereco .' - '. $budget->bairro}}</p>
-    <p>Cep: {{$budget->cep}}</p>
-    <p>Complemento: {{$budget->complemento}}</p>
+    <p>Endereço: {{$location->endereco .' - '. $location->bairro}}</p>
+    <p>Cep: {{$location->cep}}</p>
+    <p>Complemento: {{$location->complemento}}</p>
     <h3>Produtos</h3>
     <div class="total">
         <p id="texto-left">Valor total do orçamento: </p>
