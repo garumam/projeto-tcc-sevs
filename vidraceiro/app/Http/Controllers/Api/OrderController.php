@@ -26,6 +26,24 @@ class OrderController extends Controller
         }
 
         $orders = $this->order->getWithSearchAndPagination($request->get('search'), false, false, false, true);
+        
+        $orders = $orders->map(function($o){
+            
+            $o->budgets->transform(function ($b, $key) {
+                $location = $b->location()->first([
+                    'cep',
+                    'endereco',
+                    'bairro',
+                    'uf',
+                    'cidade',
+                    'complemento'
+                ]);
+               
+                return array_merge($b->toArray(),$location->toArray());
+            });  
+
+            return $o;
+        });
 
         return response()->json(['orders' => $orders],200);
 

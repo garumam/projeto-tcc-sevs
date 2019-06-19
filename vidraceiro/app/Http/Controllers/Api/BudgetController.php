@@ -81,7 +81,7 @@ class BudgetController extends Controller
 
         $budgetcriado = $this->budget->createBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro, 'status' => 'AGUARDANDO', 'total' => 0, 'usuario_id' => Auth::user()->id,'endereco_id'=>$location->id,'contato_id'=>$contact->id]));
 
-
+        $budgetcriado->load('client');
         if ($budgetcriado){
             $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
             return response()->json(['success' => 'Orçamento criado com sucesso', 'budget' => $budgetcriado], 200);
@@ -130,7 +130,7 @@ class BudgetController extends Controller
                 $contact->updateContact($request->all());
 
                 $budgetcriado->updateBudget(array_merge($request->except('margem_lucro'), ['margem_lucro' => $margemlucro]));
-                $budgetcriado->load('products.mproduct','products.glasses','products.aluminums','products.components');
+                $budgetcriado->load('client','products.mproduct','products.glasses','products.aluminums','products.components');
                 if ($budgetcriado && $budgetcriado->updateBudgetTotal()){
                     $budgetcriado = $this->mergeLocationAndContactToObject($budgetcriado);
                     return response()->json(['success' => 'Orçamento atualizado com sucesso', 'budget' => $budgetcriado], 200);
