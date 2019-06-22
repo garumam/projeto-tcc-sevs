@@ -45,7 +45,7 @@ class SaleController extends Controller
 
         }
 
-        return view('dashboard.list.sale', compact('sales','salesWithInstallments', 'titulotabs'))->with('title', 'Vendas');
+        return view('dashboard.list.sale', compact('sales', 'titulotabs'))->with('title', 'Vendas');
 
     }
 
