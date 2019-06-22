@@ -924,7 +924,7 @@ $(document).ready(function () {
             } else {
                 $('#option-vazia').prop('selected', true);
                 trocarImagem($('#image-mproduto'), '/img/semimagem.png');
-                $('#descricao-mprod').val('');
+                $('#descricao-mprod').text('');
                 $(this).hide();
             }
         });
@@ -942,7 +942,7 @@ $(document).ready(function () {
             descricao = '';
         }
         trocarImagem($('#image-mproduto'), pathimg);
-        $('#descricao-mprod').val(descricao);
+        $('#descricao-mprod').text(descricao);
     });
 
 

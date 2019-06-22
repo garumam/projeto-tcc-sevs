@@ -21,6 +21,12 @@
                     </button>
                 </div>
         </div>
+        @php 
+        $qtdprodutos = empty($products)? 0 : $products->count(); 
+        @endphp
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <label class="float-right mt-3" style="color: black;"><b>Qtd de produtos:</b> @if(!empty($budgetedit)){{$qtdprodutos . " | "}}@else 0 @endif <b>Total do orçamento:</b> @if(!empty($budgetedit)){{number_format($budgetedit['total']/(1+$budgetedit['margem_lucro']/100),2,'.','')}}@else 0.00 @endif</label>
+        </div>
 
         <!--Inicio Conteudo de cada tab -->
         <div id="nav-{{$titulotabs[0]}}-tab" class="tab-content current">
@@ -207,9 +213,14 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                         <label for="descricao-mprod">Descrição</label>
                         <input type="text" class="form-control" id="descricao-mprod" placeholder="Descrição">
+                    </div> -->
+
+                    <div class="form-group col-md-12">
+                        <label>Descrição - </label>
+                        <label id="descricao-mprod"></label>
                     </div>
 
                     <div class="form-group col-md-4">
