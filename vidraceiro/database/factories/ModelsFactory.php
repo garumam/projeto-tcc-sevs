@@ -134,7 +134,7 @@ $factory->define(App\Budget::class, function (Faker $faker) {
             ])->id;
         },
         'cliente_id' => $clients[$position]['id'],
-        'usuario_id' => $faker->numberBetween(1, 2)
+        'usuario_id' => $faker->randomElement([1, 3])
     ];
 });
 
@@ -273,7 +273,7 @@ $factory->define(App\Financial::class, function (Faker $faker) {
         'status' => $status,
         'descricao' => $faker->text(100),
         'valor' => $faker->randomFloat(2, 500, 13000),
-        'usuario_id' => $faker->numberBetween(1, 2),
+        'usuario_id' => $faker->randomElement([1, 6]),
         'data_vencimento' => $dataVencimento
     ];
 

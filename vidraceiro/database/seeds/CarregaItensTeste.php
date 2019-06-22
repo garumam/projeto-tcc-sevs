@@ -164,7 +164,7 @@ class CarregaItensTeste extends Seeder
             'total'=> 199.75,
             'ordem_id'=> 2,
             'cliente_id' => 2,
-            'usuario_id' => 2,
+            'usuario_id' => 3,
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
         ]);
@@ -212,7 +212,7 @@ class CarregaItensTeste extends Seeder
             'margem_lucro'=> 50.0,
             'nome'=> 'orçamento de porta padrão',
             'total'=> 0,
-            'usuario_id' => 2,
+            'usuario_id' => 3,
             'cliente_id' => 3,
             'endereco_id' => $endereco->id,
             'contato_id' => $contato->id
