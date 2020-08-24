@@ -2,7 +2,18 @@
 
 Este foi o sistema que desenvolvi em conjunto com meu grupo para o nosso projeto de conclusão de curso em sistemas de informação.
 
-## Imagem do App
+## Tecnologias utilizadas
+> **Laravel**
+
+## Criadores
+> **<a href="https://github.com/freirejandre" target="_blank">Lucas Freire</a>**
+
+> **<a href="https://github.com/garumam" target="_blank">Felipe Eufrásio</a>**
+
+> **André Eufrásio**
+
+
+## Imagem 
 
 ![Visão Geral do App](https://github.com/garumam/projeto-tcc-sevs/blob/master/imagens-sistema/visao-geral.png)
 
